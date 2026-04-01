@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sindromul Diareic Infecțios — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:none;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:0;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary)}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.ks-card strong{color:var(--text-primary)}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+@media(max-width:1360px){.knowledge-sidebar{right:-340px;transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0;display:block}.content-wrapper{margin-right:0;max-width:780px}.ks-toggle{display:block}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <div class="logo">CeCitimAzi</div>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="document.querySelector('.knowledge-sidebar').classList.toggle('open');document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#definitii-epidemiologie">Definiții și epidemiologie</a></li>
+<li><a href="#etiologie">Etiologie</a></li>
+<li><a href="#fiziopatologie-mecanisme">Fiziopatologie — Cele 3 mecanisme ale diareii</a></li>
+<li><a href="#diagnostic">Diagnostic — de la anamneză la laborator</a></li>
+<li><a href="#diagnostic-diferential">Diagnostic diferențial și algoritm decizional</a></li>
+<li><a href="#tratament">Principii terapeutice</a></li>
+<li><a href="#profilaxie">Profilaxie</a></li>
+<li><a href="#recapitulare">Componente interactive — Recapitulare</a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Boli Infecțioase · Pre-Stagiu</div>
+  <h1>Sindromul Diareic Infecțios</h1>
+  <p>Mecanisme fiziopatologice · Etiologie · Diagnostic diferențial · Principii terapeutice · Profilaxie</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează</div>
+  <p><strong>Bolile diareice infecțioase produc anual 3-5 miliarde de episoade la nivel mondial și 1,2-1,4 milioane de decese.</strong> În țările dezvoltate, etiologia este predominant virală (70-75%), dar cauzele bacteriene — deși reprezintă doar ~20% — sunt responsabile de cazurile severe, amenințătoare de viață. Ca MF, trebuie să diferențiezi rapid între diareea apoasă (mecanism secretor — prioritate: rehidratare) și diareea cu sânge și mucozități (mecanism inflamator — prioritate: antibiotic + <strong>contraindicație absolută la loperamid</strong>). Evaluarea corectă a deshidratării și decizia de internare pot salva vieți, mai ales la copii și vârstnici.</p>
+</div>
+
+<div class="section" id="definitii-epidemiologie">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Definiții și epidemiologie</h2>
+</div>
+
+<div class="text-block"><p><strong>Boala diareică</strong> reprezintă un sindrom cu severitate variabilă, de la rapid autolimitant (cum se întâmplă în majoritatea toxiinfecțiilor alimentare), la amenințător de viață (cum se întâmplă în diareea cu <em>Clostridium difficile</em>, în special la pacienții vârstnici). Sindromul se caracterizează prin două elemente majore: <strong>creșterea frecvenței scaunelor</strong> și <strong>creșterea fluidității acestora</strong>, cu eliminarea zilnică a unei cantități mai mari de 300 g/24h de materii fecale.</p>
+<p>Clasificarea temporală este esențială pentru orientarea diagnostică. <strong>Diareea acută</strong> are evoluție sub 14 zile și corespunde majorității bolilor diareice infecțioase. <strong>Diareea persistentă</strong> durează între 2 și 4 săptămâni, iar <strong>diareea cronică</strong> depășește 30 de zile — moment în care diagnosticul diferențial se lărgește considerabil spre cauze neinfecțioase. Excepție notabilă face diareea cu <em>Clostridium difficile</em>, care poate depăși 2 săptămâni de evoluție, iar dacă se includ și recidivele (frecvente la vârstnici și imunodeprimați), se poate discuta chiar de o diaree cronică infecțioasă.</p>
+<p>Din perspectivă epidemiologică, la nivel mondial sunt raportate anual <strong>3-5 miliarde de episoade de diaree</strong> și <strong>1,2-1,4 milioane de decese</strong>. În timpul dezastrelor naturale, diareile reprezintă aproximativ 50% dintre cauzele de deces. Etiologia diferă în funcție de zona geografică: în țările în curs de dezvoltare predomină bolile diareice bacteriene (igienă precară, surse de apă contaminate), în timp ce în țările dezvoltate, <strong>infecțiile virale</strong> reprezintă 70-75% din cazuri.</p></div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Regula temporală a diareii</div>
+  <p><strong>Acută (<14 zile)</strong> = cel mai probabil infecțioasă → evaluează mecanismul (secretor vs. inflamator). <strong>Persistentă (14-30 zile)</strong> = reevaluează etiologia, exclude C. difficile și parazitare. <strong>Cronică (>30 zile)</strong> = extinde diagnosticul diferențial spre cauze neinfecțioase (IBD, neoplazie, malabsorbție).</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Pacient de 45 ani, fără antecedente, se prezintă cu diaree apoasă de 3 zile, voluminoasă, fără sânge, fără febră, debut la 6 ore după o masă la un restaurant. Soția are simptome similare. Câte grame de materii fecale pe zi definesc diareea?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) >100 g/24h</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) >500 g/24h</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) >200 g/24h</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">D) >1000 g/24h</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">E) >300 g/24h</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Definiția clasică: eliminarea zilnică a >300 g de materii fecale, asociată cu creșterea frecvenței și a fluidității scaunelor.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — 100 g/zi este o cantitate normală de materii fecale. Nu constituie diaree.<br><strong>B)</strong> GREȘIT — 500 g/zi este o diaree moderată-severă, dar nu este pragul definitoric.<br><strong>C)</strong> GREȘIT — 200 g/zi este la limita superioară a normalului, dar nu definește diareea.<br><strong>D)</strong> GREȘIT — 1000 g/zi ar corespunde unei diarei masive (tip holeriform), dar nu este pragul minim.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="etiologie">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Etiologie</h2>
+</div>
+
+<div class="text-block"><p>Bolile diareice infecțioase sunt caracterizate printr-o mare diversitate etiologică. Identificarea agentului cauzal orientează atât tratamentul, cât și prognosticul.</p>
+<p><strong>Etiologia bacteriană</strong> reprezintă doar aproximativ 20% dintre cauzele de diaree în țările dezvoltate, dar este responsabilă de cazurile severe, uneori amenințătoare de viață. <strong>Enterobacteriile</strong> (bacili Gram negativi aerobi) sunt principala cauză bacteriană: <em>Salmonella enteritidis</em> și <em>S. typhimurium</em> acoperă aproape 70% dintre toxiinfecțiile alimentare, iar <em>Shigella</em> spp. este principala cauză a dizenteriei bacteriene. <em>Yersinia</em> spp. și <em>Campylobacter</em> spp. produc toxiinfecții alimentare de obicei autolimitante, dar pot fi evocate la apariția complicațiilor tardive: artrita reactivă, sindromul Guillain-Barré, eritemul nodos. <em>Escherichia coli</em> produce boli diareice severe prin subtipurile sale: enterotoxigenă (ETEC — diareea călătorului), enteroaderentă și enterohemoragică (EHEC — risc de sindrom hemolitic-uremic la copii).</p>
+<p><strong>Stafilococul auriu</strong> (coc Gram pozitiv) este a doua cauză a toxiinfecțiilor alimentare, prin enterotoxina secretată de tipurile fagice I, III, IV. Sursa principală: focarele infecțioase cutanate și faringiene ale manipulatorilor de alimente.</p>
+<p><strong>Clostridiile</strong> merită atenție specială. <em>Clostridium difficile</em> produce colita pseudomembranoasă — o problemă crescândă de sănătate publică, legată de abuzul de antibiotice și distrugerea florei saprofite intestinale. Riscul de deces este semnificativ la vârstnici și imunodeprimați. <em>Vibrio cholerae</em> produce holera — prototipul diareii prin mecanism toxigen, cu pierderi lichidiene masive.</p></div>
+
+<div class="tags-row"><span class="tag tag-viral">Rotavirus (copii)</span> <span class="tag tag-viral">Norovirus (adulți)</span> <span class="tag tag-viral">Enterovirusuri</span> <span class="tag tag-bact">Salmonella spp. ~70% TIA</span> <span class="tag tag-bact">Staphylococcus aureus</span> <span class="tag tag-bact">Shigella spp. (dizenterie)</span> <span class="tag tag-bact">Clostridium difficile</span> <span class="tag tag-bact">E. coli (ETEC, EHEC)</span> <span class="tag tag-bact">Campylobacter jejuni</span> <span class="tag tag-fungic">Giardia lamblia</span> <span class="tag tag-fungic">Entamoeba histolytica</span> <span class="tag tag-fungic">Cryptosporidium</span> </div>
+
+<div class="text-block"><p><strong>Etiologia virală</strong> (70-75% în țările dezvoltate) este dominată de <strong>Rotavirus</strong> la copii și <strong>Norovirus</strong> la adulți. Enterovirusurile au poartă de intrare digestivă și pot produce, pe lângă episodul diareic tranzitoriu, manifestări cutanate (boala mână-picior-gură), neurologice (meningite, paralizii) și cardiace. Coronavirusurile și adenovirusurile produc episoade diareice tranzitorii.</p>
+<p><strong>Protozoarele</strong> sunt importante mai ales la imunodeprimați: <em>Isospora belli</em> (diaree trenantă la pacienți HIV), <em>Giardia lamblia</em> (intestin subțire + căi biliare — diaree cu vărsături, scădere ponderală, malnutriție), <em>Entamoeba histolytica</em> (colonizare asimptomatică în 90% din cazuri, dar poate produce dizenterie amibiană și abcese hepatice), <em>Cryptosporidium parvum</em> (diaree secretorie masivă la imunodeprimați, cu manifestări respiratorii și hepatobiliare la distanță).</p></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ De ce infecțiile virale domină în țările dezvoltate?</div>
+  <p>Paradoxul etiologic al diareii reflectă <strong>nivelul de igienă</strong>: în țările cu sanitație adecvată și acces la apă potabilă, bacteriile (care necesită de obicei un inocul mare — 10⁵-10⁸ UFC pentru Salmonella) sunt mai greu de transmis. Virusurile însă au inocul extrem de mic (10-100 particule pentru Norovirus) și rezistență crescută în mediu. De aceea, chiar și în spitale din țări dezvoltate apar epidemii nosocomiale cu Norovirus. Excepția: <em>Shigella</em> are inocul foarte mic (10-100 UFC), ceea ce explică de ce dizenteria apare și în condiții de igienă relativă.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">Pacient de 72 ani, internat de 12 zile pentru pneumonie, tratat cu Ceftriaxonă 2g/zi i.v. Dezvoltă diaree apoasă de 3 zile, apoi scaune cu mucozități, febră 38.5°C și dureri abdominale pe cadrul colonic. Care este cel mai probabil agent etiologic?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Rotavirus — infecție virală nosocomială</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Shigella flexneri — dizenterie bacteriană</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">C) Norovirus — gastroenterită nosocomială</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) Salmonella enteritidis — toxiinfecție alimentară nosocomială</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">E) Clostridium difficile — colită post-antibiotică</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Tabloul clasic: pacient vârstnic + antibioterapie prelungită (cefalosporină!) + debut cu diaree apoasă care evoluează spre mucozități + febră + dureri pe cadrul colonic = C. difficile. Antibioticele distrug flora saprofită → colonizare cu C. difficile → producere de toxine A și B → colită pseudomembranoasă.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Rotavirusul afectează predominant copiii. La adult este rar și nu explică contextul de antibioterapie.<br><strong>B)</strong> GREȘIT — Shigella produce dizenterie comunitară (transmitere fecal-orală), nu este asociată cu antibioterapia intraspitalicească.<br><strong>C)</strong> GREȘIT — Norovirusul produce diaree apoasă autolimitată, fără mucozități și de obicei fără febră semnificativă. Contextul de antibioterapie prelungită orientează altfel.<br><strong>D)</strong> GREȘIT — Salmonella produce toxiinfecție alimentară, nu este legată de antibioterapie. Diareea post-antibiotică la vârstnic internalizat are altă etiologie.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="fiziopatologie-mecanisme">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Fiziopatologie — Cele 3 mecanisme ale diareii</h2>
+</div>
+
+<div class="text-block"><p>Înțelegerea mecanismelor fiziopatologice este cheia întregului management al sindromului diareic, deoarece <strong>mecanismul dictează tratamentul</strong>. Nu toate diareile se tratează la fel — iar confundarea lor poate fi fatală (administrarea de loperamid într-o dizenterie bacteriană agravează evoluția).</p>
+<p><strong>Etapele producerii diareii</strong> parcurg o secvență logică: ingestia agentului microbian (cu un inocul suficient — variabil de la 10 UFC pentru Shigella la 10⁵-10⁸ pentru Salmonella) → depășirea barierelor naturale de apărare (lizozimul salivar, acidul gastric, motilitatea intestinală, mucusul, flora saprofită, IgA secretorie) → multiplicarea agentului la nivel intestinal. Barierele explică de ce pacienții cu gastrită hipoacidă sau sub tratament cu inhibitori de pompă de protoni fac mai ușor episoade diareice — acidul gastric este prima linie de apărare.</p>
+<p><strong>a) Diareea prin mecanism secretor (toxic)</strong></p>
+<p>În acest tip de diaree, agentul etiologic secretă o <strong>enterotoxină</strong> care stimulează adenilat ciclaza celulară → crește cantitatea intracelulară de AMPc → se deschide canalul de clor (eliminarea clorului în lumenul intestinal) și se blochează absorbția sodiului. Consecința: în tubul digestiv rămân cantități mari de clor și sodiu → apa urmează gradientul osmotic → <strong>diaree apoasă, voluminoasă, fără produse patologice (fără sânge, fără mucozități), fără febră</strong> în mecanismul toxic pur.</p>
+<p><strong>Prototipul:</strong> holera (<em>Vibrio cholerae</em>). Prin același mecanism: toxiinfecțiile alimentare cu <em>Salmonella</em>, <em>Staphylococcus aureus</em>, <em>E. coli</em> enterotoxigenă, <em>Bacillus cereus</em>, <em>Clostridium perfringens</em>.</p>
+<p>Enterotoxina poate fi <strong>preformată în aliment</strong> (stafilococ, Bacillus cereus forma emetizantă, C. botulinum — incubație scurtă 1-6h) sau <strong>sintetizată în tubul digestiv</strong> după ingestia bacteriei (Salmonella, E. coli ETEC — incubație mai lungă 12-72h).</p>
+<p><strong>Tratament:</strong> Principala măsură = <strong>rehidratarea și reechilibrarea electrolitică</strong>. Antibioticele au indicații limitate: holera, toxiinfecția cu Salmonella la categorii de risc (imunodeprimați, purtători de proteze vasculare/osoase, vârste extreme). Durata antibioterapiei: maxim 5 zile.</p></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ De ce funcționează rehidratarea orală în diareea secretorie?</div>
+  <p>Enterotoxina blochează absorbția <strong>pasivă</strong> a sodiului prin canalul Na⁺ dependent de AMPc. Dar <strong>cotransportul activ Na⁺-glucoză</strong> (transportor SGLT1) rămâne funcțional — nu este afectat de AMPc. De aceea, soluțiile de rehidratare orală (ORS) conțin glucoză: glucoza „trage" sodiul activ în enterocit, iar apa urmează osmotic. Acest mecanism, descoperit în anii 1960, a fost numit de <em>The Lancet</em> „cea mai importantă descoperire medicală a secolului XX" — salvează milioane de vieți anual fără nicio infrastructură spitalicească.</p>
+</div>
+
+<div class="text-block"><p><strong>b) Diareea prin mecanism inflamator (citotoxic)</strong></p>
+<p>Agentul etiologic are factori de agresivitate suplimentari care permit <strong>penetrarea în celula intestinală</strong>. Odată pătrunsă în enterocit, bacteria se multiplică, determinând distrugerea celulei, denudarea mucoasei și paralizia plexului mienteric.</p>
+<p>Consecințele clinice sunt dramatice: <strong>diaree de volum mic</strong> (fecalele stagnează de-a lungul colonului secundar paraliziei plexului mienteric), <strong>cu mucozități și sânge</strong> (din denudarea mucoasei), uneori cu aspect de <strong>scaune mucopiosanguinolente</strong> (spute rectale), <strong>dureri abdominale pe cadrul colonic</strong>, <strong>tenesme rectale</strong> (reflex de defecație dureros, cu eliminare minimă) și <strong>sindrom infecțios general</strong> (febră, frison, alterare stare generală). Riscul major: <strong>depășirea barierei digestive → sepsis</strong>.</p>
+<p><strong>Prototipul:</strong> dizenteria bacteriană (<em>Shigella</em> spp.). Același mecanism: <em>E. coli</em> enterohemoragică, <em>Salmonella</em> spp., <em>Campylobacter</em> spp., <em>Clostridium difficile</em>.</p>
+<p><strong>Tratament:</strong> Antibioticul este <strong>esențial</strong>. Sunt <strong>total contraindicate</strong> antidiareicele de tip loperamid și antispasticele.</p></div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Loperamidul — CONTRAINDICAT ABSOLUT în diareea inflamatorie!</div>
+  <p>Loperamidul inhibă peristaltismul intestinal, ceea ce în diareea inflamatorie <strong>prelungește contactul bacteriei cu mucoasa</strong>, agravează distrucția enterocitară și crește riscul de <strong>megacolon toxic</strong> și <strong>bacteriemie</strong>. Regula de aur: dacă scaunul conține sânge sau mucozități → <strong>NICIODATĂ loperamid</strong>. Aceeași interdicție se aplică și antispasticelor.</p>
+</div>
+
+<div class="text-block"><p><strong>c) Diareea prin mecanism invaziv</strong></p>
+<p>Microorganismul depășește bariera intestinală și se multiplică în <strong>membrana bazală</strong>. Tabloul clinic: scaune de volum mic, <strong>fără sânge</strong>, dar cu semne de impregnare infecțioasă (febră, frison, cefalee, astenie). Riscul principal: diseminare la distanță → sepsis.</p>
+<p><strong>Prototipul:</strong> febra tifoidă (<em>Salmonella typhi</em>) și gastroenterocolitele virale (Rotavirus, Norovirus, enterovirusuri). Tratamentul depinde de etiologie: febra tifoidă necesită antibiotice, gastroenterocolitele virale necesită doar rehidratare și medicație simptomatică.</p>
+<p><strong>d) Diareea prin mecanism mixt</strong> — frecventă la enterobacterii (secretor + inflamator): pacientul asociază febră <strong>și</strong> diaree voluminoasă. Tratamentul include antibiotic.</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Secretor (toxic)</h4>
+    <ul><li>Diaree apoasă, voluminoasă</li><li>Fără febră (mecanism toxic pur)</li><li>Fără produse patologice</li><li>Complicație: deshidratare</li><li>Prototip: holera</li><li>Tratament: REHIDRATARE ± antibiotic</li><li>Loperamid: relativ permis (cazuri ușoare)</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Inflamator (citotoxic)</h4>
+    <ul><li>Diaree de volum mic, cu sânge și mucozități</li><li>Febră, frison, alterarea stării generale</li><li>Tenesme rectale, spute rectale</li><li>Complicație: sepsis, megacolon toxic</li><li>Prototip: dizenterie (Shigella)</li><li>Tratament: ANTIBIOTIC obligatoriu</li><li>Loperamid: CONTRAINDICAT ABSOLUT</li></ul>
+  </div>
+</div>
+
+<div class="img-component">
+  <img src="img2_coprocultura.jpg" alt="Aspectul scaunului în funcție de etiologie — Diarrhea Stool Card" data-titlu="Aspectul scaunului în funcție de etiologie — Diarrhea Stool Card" data-desc="<ul><li><strong>Ce observi:</strong> Patru tipuri de scaun diareic: (a) Rotavirus — scaun lichid, galben-verzui, omogen, fără produse patologice; (b) Holeră — scaun apos tip „apă de orez&quot;, albicios-tulbure, în cantitate mare; (c) ETEC — scaun lichid galben, similar cu Rotavirus, fără sânge; (d) Dizenterie — scaun de volum mic cu sânge vizibil, mucozități și fragmente de țesut, aspect mucopiosanguinolent.</li><li><strong>Ce sugerează:</strong> Aspectul macroscopic al scaunului orientează rapid mecanismul: scaunul apos (a, b, c) → mecanism secretor/invaziv viral → prioritate rehidratare; scaunul cu sânge și mucus (d) → mecanism inflamator → necesită antibiotic, INTERZIS loperamid.</li><li><strong>Diferențial vizual:</strong> Scaunul holeric (b) se distinge de cel rotaviral (a) prin culoarea albicioasă și mirosul „de pește&quot;. Scaunul dizenteric (d) nu trebuie confundat cu rectoragia din hemoroizi (sânge roșu viu pe scaun format) sau cu melena (scaun negru, lucios, din HDS).</li></ul>" data-sursa="https://www.sciencedirect.com/science/article/pii/S2949752324000220">
+  <div class="img-caption">
+    <div class="caption-title">Aspectul scaunului în funcție de etiologie — Diarrhea Stool Card</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Ce observi:</strong> Patru tipuri de scaun diareic: (a) Rotavirus — scaun lichid, galben-verzui, omogen, fără produse patologice; (b) Holeră — scaun apos tip „apă de orez", albicios-tulbure, în cantitate mare; (c) ETEC — scaun lichid galben, similar cu Rotavirus, fără sânge; (d) Dizenterie — scaun de volum mic cu sânge vizibil, mucozități și fragmente de țesut, aspect mucopiosanguinolent.</li></ul></div><div class="img-cap-full"><ul><li><strong>Ce observi:</strong> Patru tipuri de scaun diareic: (a) Rotavirus — scaun lichid, galben-verzui, omogen, fără produse patologice; (b) Holeră — scaun apos tip „apă de orez", albicios-tulbure, în cantitate mare; (c) ETEC — scaun lichid galben, similar cu Rotavirus, fără sânge; (d) Dizenterie — scaun de volum mic cu sânge vizibil, mucozități și fragmente de țesut, aspect mucopiosanguinolent.</li><li><strong>Ce sugerează:</strong> Aspectul macroscopic al scaunului orientează rapid mecanismul: scaunul apos (a, b, c) → mecanism secretor/invaziv viral → prioritate rehidratare; scaunul cu sânge și mucus (d) → mecanism inflamator → necesită antibiotic, INTERZIS loperamid.</li><li><strong>Diferențial vizual:</strong> Scaunul holeric (b) se distinge de cel rotaviral (a) prin culoarea albicioasă și mirosul „de pește". Scaunul dizenteric (d) nu trebuie confundat cu rectoragia din hemoroizi (sânge roșu viu pe scaun format) sau cu melena (scaun negru, lucios, din HDS).</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Femeie de 30 ani se prezintă cu diaree apoasă abundentă de 2 zile, >10 scaune/zi, fără sânge, fără mucozități, fără febră. Dureri abdominale difuze de tip colicativ. Menționează că a participat la un eveniment unde mai multe persoane au simptome similare. Care este mecanismul cel mai probabil al diareii?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Mecanism inflamator — bacterie cu potențial citotoxic</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) Mecanism osmotic — intoleranță la lactoză</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">C) Mecanism autoimun — anticorpi anti-enterocit</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">D) Mecanism secretor — enterotoxină care stimulează adenilat ciclaza</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Mecanism invaziv — penetrare membrană bazală</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Tablou clasic de mecanism secretor: diaree apoasă, voluminoasă, fără sânge, fără febră, context de toxiinfecție alimentară (mai mulți bolnavi de la același eveniment). Enterotoxina → ↑AMPc → secreție de Cl⁻ și blocarea absorbției Na⁺ → diaree osmotică.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Mecanismul inflamator produce diaree de volum mic, cu sânge și mucozități, cu febră. Aici avem diaree apoasă, voluminoasă, fără produse patologice, fără febră.<br><strong>B)</strong> GREȘIT — Intoleranța la lactoză produce diaree osmotică cronică/recurentă, legată de consumul de lactate. Nu explică mai mulți bolnavi de la același eveniment.<br><strong>C)</strong> GREȘIT — Un mecanism autoimun nu explică debutul acut cu multiple cazuri simultane de la același eveniment alimentar.<br><strong>E)</strong> GREȘIT — Mecanismul invaziv produce diaree de volum mic, fără sânge dar cu semne de impregnare (febră, frison). Aici nu avem febră, iar volumul este mare.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Diagnostic — de la anamneză la laborator</h2>
+</div>
+
+<div class="text-block"><p>Diagnosticul bolilor diareice infecțioase se bazează pe trei piloni: <strong>epidemiologic</strong>, <strong>clinic</strong> și <strong>paraclinic</strong>. Abordarea sistematică permite orientarea rapidă și evitarea investigațiilor inutile.</p>
+<p><strong>Diagnosticul epidemiologic</strong> se obține din anamneză. Elementele critice sunt: alimentele consumate anterior debutului (carne insuficient gătită, ouă, lactate nepasteurizate, orez reîncălzit), obiceiuri alimentare particulare, existența de cazuri similare în anturaj (orientează spre toxiinfecție alimentară), contactul cu persoane din colectivități (creșe, spitale), sursa de apă, <strong>călătorii recente</strong> în zone la risc (diareea turistului), terapii prelungite cu antibiotice (C. difficile), utilizarea de IPP (scăderea barierei acide gastrice).</p>
+<p><strong>Diagnosticul clinic</strong> urmărește trei obiective: orientarea etiologică, evaluarea severității (mai ales <strong>gradul de deshidratare</strong>) și decizia privind necesitatea investigațiilor suplimentare.</p>
+<p>Din <strong>anamneză</strong> se obțin: aspectul scaunului (apoasă vs. produse patologice), volumul, frecvența, durata, localizarea durerii (periombilical = intestin subțire, pe cadrul colonic = colon), prezența tenesme lor rectale, asocierea de simptome generale (febră, vărsături, alterarea stării de conștiență), toleranța digestivă.</p>
+<p><strong>Examenul clinic</strong> aduce elemente esențiale privind severitatea. Pentru <strong>evaluarea deshidratării</strong> se folosesc: pliul cutanat (revine lent = deshidratare), aspectul mucoaselor (uscate), aspectul globilor oculari (înfundați), pulsul, tensiunea arterială, prezența crampelor musculare și diureza.</p></div>
+
+<div class="img-component">
+  <img src="img1_deshidratare_semne.jpg" alt="Evaluarea gradului de deshidratare — Tabelul OMS" data-titlu="Evaluarea gradului de deshidratare — Tabelul OMS" data-desc="<p>Acest tabel OMS este instrumentul standard de triaj pentru deshidratare în boala diareică. Utilitatea practică: permite evaluarea rapidă la pat — fără laborator — prin 5 parametri simpli (starea generală, lacrimile, gura/limba, setea, pliul cutanat). <strong>Capcana principală:</strong> la vârstnici, pliul cutanat revine lent și fiziologic (pierderea elasticității dermice cu vârsta) — nu folosiți acest semn izolat la pacienți >65 ani. <strong>Plan A</strong> (fără deshidratare) = rehidratare orală la domiciliu. <strong>Plan B</strong> (deshidratare moderată) = ORS sub supraveghere 4h. <strong>Plan C</strong> (deshidratare severă = letargie/inconștiență, ochi înfundați, incapacitate de a bea, pliu persistent >3 sec) = <strong>trimitere imediată la spital</strong> pentru rehidratare i.v.</p>" data-sursa="https://epidemics.ifrc.org/volunteer/action/07-assessment-dehydration">
+  <div class="img-caption">
+    <div class="caption-title">Evaluarea gradului de deshidratare — Tabelul OMS</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Acest tabel OMS este instrumentul standard de triaj pentru deshidratare în boala diareică. Utilitatea practică: permite evaluarea rapidă la pat — fără laborator — prin 5 parametri simpli (starea generală, lacrimile, gura/limba, setea, pliul cutanat)....</p></div><div class="img-cap-full"><p>Acest tabel OMS este instrumentul standard de triaj pentru deshidratare în boala diareică. Utilitatea practică: permite evaluarea rapidă la pat — fără laborator — prin 5 parametri simpli (starea generală, lacrimile, gura/limba, setea, pliul cutanat). <strong>Capcana principală:</strong> la vârstnici, pliul cutanat revine lent și fiziologic (pierderea elasticității dermice cu vârsta) — nu folosiți acest semn izolat la pacienți >65 ani. <strong>Plan A</strong> (fără deshidratare) = rehidratare orală la domiciliu. <strong>Plan B</strong> (deshidratare moderată) = ORS sub supraveghere 4h. <strong>Plan C</strong> (deshidratare severă = letargie/inconștiență, ochi înfundați, incapacitate de a bea, pliu persistent >3 sec) = <strong>trimitere imediată la spital</strong> pentru rehidratare i.v.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="text-block"><p><strong>Diagnosticul paraclinic</strong> include:</p>
+<p><strong>Nespecific:</strong> Hemograma diferențiază orientativ între etiologia virală (limfocitoză) și bacteriană (leucocitoză cu neutrofilie). Sindromul inflamator biologic (CRP, fibrinogen, VSH) este prezent în bolile diareice bacteriene. Probele biochimice (uree, creatinină, ionogramă) evaluează complicațiile: insuficiența renală acută prerenală din deshidratarea severă, dezechilibrele electrolitice (hipokaliemie, hiponatremie).</p>
+<p><strong>Specific:</strong> <strong>Coprocitograma</strong> — fără leucocite și hematii în diareeile virale/toxiinfecții; cu leucocite și hematii în diareea inflamatorie. <strong>Coprocultura</strong> — se recoltează din zonele cu produse patologice (sânge, mucozități) pe medii specifice (Salmonella, Shigella, Vibrio). <strong>Determinarea de antigene Rotavirus</strong> (imunocromatografie) — la copii. <strong>Toxinele C. difficile</strong> (toxina A și B) — la pacienți cu diaree post-antibiotică. <strong>Coproparazitologic</strong> — examen microscopic direct pentru Giardia, Entamoeba, Cryptosporidium.</p></div>
+
+<h3>Orientarea diagnostică în funcție de aspectul scaunului</h3>
+<div class="table-wrapper"><table>
+  <thead><tr><th>Parametru</th><th>Diaree secretorie</th><th>Diaree inflamatorie</th></tr></thead>
+  <tbody><tr><td>Aspect scaun</td><td>Apoasă, voluminoasă</td><td>Volum mic, sânge + mucozități</td></tr>
+<tr><td>Febră</td><td>Absentă (mecanism toxic pur)</td><td>Prezentă</td></tr>
+<tr><td>Dureri abdominale</td><td>Difuze, colicative</td><td>Pe cadrul colonic</td></tr>
+<tr><td>Tenesme rectale</td><td>Absente</td><td>Prezente</td></tr>
+<tr><td>Coprocitogramă</td><td>Fără leucocite/hematii</td><td>Cu leucocite + hematii</td></tr>
+<tr><td>Hemogramă</td><td>Normală sau hemoconcentrare</td><td>Leucocitoză cu neutrofilie</td></tr>
+<tr><td>Sindrom inflamator</td><td>Absent</td><td>CRP ↑, fibrinogen ↑</td></tr>
+<tr><td>Complicație majoră</td><td>Deshidratare</td><td>Sepsis</td></tr></tbody>
+</table></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ De ce acidul gastric protejează de diaree?</div>
+  <p>Stomacul funcționează ca un adevărat „sterilizator acid" — pH-ul gastric de 1,5-3,5 distruge marea majoritate a bacteriilor și paraziților ingerați. Pacienții cu <strong>gastrită hipoacidă</strong>, <strong>gastrectomie</strong> sau <strong>tratament prelungit cu inhibitori de pompă de protoni (IPP)</strong> pierd această barieră și fac <strong>semnificativ mai ușor</strong> episoade diareice infecțioase, inclusiv infecția cu C. difficile. De aceea, în anamneză, întreabă mereu: „Luați medicamente pentru stomac?" — un IPP cronic poate fi factorul care a transformat un inocul insuficient într-o boală diareică.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic-diferential">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Diagnostic diferențial și algoritm decizional</h2>
+</div>
+
+<div class="text-block"><p>Diagnosticul diferențial al sindromului diareic are două direcții principale:</p>
+<p><strong>1. Diferențierea între diversele etiologii ale diareii infecțioase</strong> — mecanismul fiziopatologic (secretor vs. inflamator vs. invaziv) orientează către grupuri etiologice diferite. Contextul epidemiologic (aliment incriminat, călătorie, antibioterapie) restrânge și mai mult diferențialul. Confirmarea se face prin investigații specifice (coprocultură, antigene, toxine).</p>
+<p><strong>2. Diferențierea între diareea infecțioasă și diareea neinfecțioasă</strong> — mai ales în diareea persistentă sau cronică. Principalele cauze neinfecțioase de reținut: <strong>cancerul de colon</strong> (modificarea tranzitului la >50 ani + rectoragie + scădere ponderală → colonoscopie!), <strong>rectocolita ulcerohemoragică</strong> și <strong>boala Crohn</strong> (diaree cronică cu sânge, manifestări extraintestinale), polipii intestinali, diverticuloza colonică, sindroamele de malabsorbție (boala celiacă, insuficiența pancreatică), invaginația intestinală (la copii), infarctul mezenteric (abdomen acut la vârstnic cu fibrilație atrială) și <strong>falsa diaree a constipatului</strong> (supraflux lichidian peste un fecalom impactat — capcana clasică).</p>
+<p>Investigațiile imagistice (rectosigmoidoscopie, colonoscopie, ecografie abdominală, CT abdominal) nu se folosesc de rutină, dar au un rol important în diferențierea diareilor infecțioase de cele neinfecțioase, mai ales când evoluția nu este cea așteptată.</p></div>
+
+<div class="quiz-container"><div class="quiz-q" id="q4">
+  <div class="q-label">Întrebare · 4</div>
+  <div class="q-text">Bărbat de 68 ani, cu fibrilație atrială fără anticoagulare (a refuzat tratamentul), se prezintă cu durere abdominală bruscă, difuză, intensă, disproporționată față de examenul fizic (abdomen relativ suplu), însoțită de 2 scaune diareice cu sânge. TA 100/60 mmHg, AV 110/min neregulat. Ce diagnostic trebuie exclus prioritar?</div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) Cancer de colon — sângerare tumorală</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) Rectocolită ulcerohemoragică — puseu acut</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) Dizenterie bacteriană — Shigella</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) Colită pseudomembranoasă — Clostridium difficile</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">E) Infarct mezenteric — embolie pe fibrilație atrială</button>
+  <div class="quiz-explanation" id="q4-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — <strong>Red flag absolut</strong>: durere abdominală acută, disproporționată față de examenul fizic, la pacient cu FA neanticoagulat = infarct mezenteric prin embolie arterială până la proba contrarie. Diareea cu sânge apare prin ischemie intestinală. Necesită angio-CT urgent — mortalitatea este >60% dacă nu se intervine rapid.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Cancerul de colon produce sângerare cronică, ocultă sau intermitentă, cu modificarea tranzitului. Nu produce durere acută disproporționată.<br><strong>B)</strong> GREȘIT — RCUH are evoluție cronică/recurentă cu manifestări extraintestinale. Nu explică debutul acut la un pacient cu FA.<br><strong>C)</strong> GREȘIT — Dizenteria bacteriană are context epidemiologic (aliment, călătorie) și evoluție progresivă, nu debut brutal cu durere disproporționată.<br><strong>D)</strong> GREȘIT — C. difficile apare în context de antibioterapie prelungită, nu de fibrilație atrială. Debutul nu este hiperacut cu durere disproporționată.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="tratament">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Principii terapeutice</h2>
+</div>
+
+<div class="text-block"><p>Principiile terapeutice ale diareii infecțioase se bazează pe trei componente: terapia etiologică, terapia simptomatică/patogenică și hidratarea.</p>
+<p><strong>Terapia etiologică (antibioticele)</strong> are indicații precise, nu se administrează în orice diaree:</p>
+<ul><li><strong>Diareea inflamatorie</strong> (dizenterie) — antibioticul este esențial</li><li><strong>Diareea cu C. difficile</strong> — metronidazol (cazuri ușoare-moderate) sau vancomicină orală (cazuri severe/recidive); fidaxomicina ca alternativă</li><li><strong>Febra tifoidă</strong> — antibioterapie obligatorie (fluorochinolone, cefalosporine gen. III, azitromicină)</li><li><strong>Holera</strong> — doxiciclină 300 mg priză unică sau azitromicină</li><li><strong>Toxiinfecția alimentară cu Salmonella</strong> — antibiotic doar la categorii de risc (imunodeprimați, vârste extreme, purtători de proteze)</li><li><strong>Campylobacter</strong> — azitromicină (sensibilitate diminuată la fluorochinolone)</li></ul></div>
+
+<h3>Antibioterapia diareii acute în funcție de etiologie</h3>
+<div class="table-wrapper"><table>
+  <thead><tr><th>Etiologie</th><th>Antibiotic de primă intenție</th><th>Alternative</th><th>Durată</th></tr></thead>
+  <tbody><tr><td>Shigella spp.</td><td>Fluorochinolone</td><td>Cefalosporine gen. III, azitromicină</td><td>3-5 zile</td></tr>
+<tr><td>Salmonella spp.</td><td>Fluorochinolone</td><td>Cefalosporine gen. III, azitromicină</td><td>3-5 zile (7 la imunodeprimați)</td></tr>
+<tr><td>Vibrio cholerae</td><td>Doxiciclină 300 mg priză unică</td><td>Azitromicină (copii, gravide)</td><td>Priză unică</td></tr>
+<tr><td>Campylobacter jejuni</td><td>Azitromicină</td><td>Fluorochinolone (sensibilitate scăzută)</td><td>3-5 zile</td></tr>
+<tr><td>C. difficile</td><td>Metronidazol 500mg x3/zi</td><td>Vancomicină orală, fidaxomicină</td><td>10-14 zile</td></tr>
+<tr><td>Yersinia spp.</td><td>Fluorochinolone</td><td>Cotrimoxazol, doxiciclină</td><td>3-5 zile</td></tr></tbody>
+</table></div>
+
+<div class="text-block"><p><strong>Terapia simptomatică și patogenică</strong> este singura măsură terapeutică în cele mai multe boli diareice acute (toxiinfecții alimentare și gastroenterocolite virale). Include: <strong>diosmectita</strong> (reduce durata diareii prin adsorbție), <strong>probiotice</strong>, antiemetice, antitermice și <strong>dietă</strong> (esențială — alimente ușor digerabile, evitarea lactatelor, a alimentelor grase și a fibrelor în exces).</p>
+<p><strong>Hidratarea și reechilibrarea electrolitică</strong> sunt piatra de temelie a tratamentului. Inițial intravenos (în deshidratare severă — Ringer lactat sau NaCl 0,9%), apoi oral (ORS — soluție de rehidratare orală cu glucoză + electroliți) imediat ce pacientul are toleranță digestivă. Trecerea cât mai rapidă la hidratare orală este un obiectiv terapeutic important.</p></div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Antibioticele în diaree — când DA și când NU</div>
+  <p><strong>DA antibiotic:</strong> diaree inflamatorie (sânge + febră), febra tifoidă, holeră, C. difficile, Salmonella la pacienți de risc. <strong>NU antibiotic:</strong> gastroenterocolite virale, toxiinfecții alimentare la imunocompetenți fără semne de gravitate. <strong>ATENȚIE:</strong> fluorochinolonele, deși eficiente, cresc riscul de C. difficile și au efecte adverse cardiace → se folosesc doar când nu există alternativă.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="profilaxie">
+  <div class="section-label">Capitolul 7</div>
+  <h2>Profilaxie</h2>
+</div>
+
+<div class="text-block"><p>Măsurile profilactice sunt esențiale și se împart în individuale și colective.</p>
+<p><strong>Măsurile individuale</strong> se referă la reguli elementare de igienă: spălarea mâinilor cu apă și săpun înainte de masă și după utilizarea toaletei, spălarea legumelor și fructelor, prepararea termică adecvată a alimentelor pe bază de carne și ouă. Acestea par banale, dar nerespectarea lor este cauza majorității episoadelor diareice.</p>
+<p><strong>Măsurile colective</strong> includ controlul calității apei potabile, controlul calității alimentelor (carne, ouă, lactate), verificarea periodică a personalului din colectivități sau din sectorul alimentar pentru depistarea purtătorilor sănătoși de patogeni intestinali.</p>
+<p><strong>Diareea călătorului</strong> merită atenție specială. Persoanele care călătoresc în zone cu incidență mare de boli diareice trebuie informate: utilizarea apei îmbuteliate (inclusiv pentru spălatul pe dinți), evitarea cuburilor de gheață (se fac din apa de rețea locală), evitarea alimentelor neprelucrate termic (salate, fructe nedecojite), evitarea alimentelor stradale. Profilaxia antibiotică (rifaximina) poate fi luată în considerare la călători cu factori de risc, dar nu se recomandă de rutină.</p></div>
+
+<div class="divider"></div>
+
+<div class="section" id="recapitulare">
+  <div class="section-label">Recapitulare</div>
+  <h2>Componente interactive — Recapitulare</h2>
+</div>
+
+<div class="match-game">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Diaree apoasă + vărsături + fără febră</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Diaree cu sânge + mucozități + tenesme + febră</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Diaree volum mic + febră + frison + fără sânge</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">Diaree post-antibiotică + pseudomembrane</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">Diaree apoasă masivă + „apă de orez"</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'left')">Diaree apoasă + orez reîncălzit</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">Mecanism invaziv (febra tifoidă / viral)</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'right')">Bacillus cereus (toxiinfecție alimentară)</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Mecanism inflamator (dizenterie)</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Holeră (Vibrio cholerae)</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Mecanism secretor (toxiinfecție alimentară)</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Clostridium difficile (colită pseudomembranoasă)</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/6</div>
+</div>
+
+<div class="severity-game">
+  <div class="sev-header">Ordonare severitate</div>
+  <div class="sev-subtitle">Ordonează etiologiile diareii bacteriene după potențialul letal (crescător)</div>
+  <div class="sev-instructions">Ordonează de la ușor la sever făcând click pe pătratul din dreapta. Pentru rapiditate, poți folosi și cifrele de pe tastatură!</div>
+  <div class="severity-layout">
+    <div class="severity-bar">
+      <span class="bar-label top-l">Ușor</span>
+      <span class="bar-label bot-l">Sever</span>
+    </div>
+    <div class="severity-items" id="sevItems"><div class="sev-item" data-correct="5" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Holeră (Vibrio cholerae) — deshidratare masivă în ore, mortalitate >50% fără rehidratare, <1% cu tratament adecvat</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="4" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Colită pseudomembranoasă cu C. difficile — mortalitate >10% la vârstnici, recidive frecvente, megacolon toxic</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="3" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">E. coli enterohemoragică (EHEC O157:H7) — risc de sindrom hemolitic-uremic la copii, fără antibiotic eficient</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="2" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Dizenterie cu Shigella — diaree inflamatorie severă, risc de complicații la copii, dar răspunde la antibiotic</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="1" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Toxiinfecție alimentară cu Salmonella typhimurium — diaree apoasă, autolimitantă la imunocompetent, rehidratare suficientă</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+</div>
+  </div>
+  <button class="sev-btn" onclick="checkSev()">Verifică</button>
+  <div id="sevResult"></div>
+  
+</div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 3 mecanisme fiziopatologice ale diareii infecțioase?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Secretor (toxic)</strong> — toxină → ↑AMPc → diaree apoasă, fără febră. <strong>Inflamator (citotoxic)</strong> — invazie enterocit → diaree cu sânge, febră. <strong>Invaziv</strong> — penetrare membrană bazală → diaree volum mic, semne sistemice.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce este total contraindicat în diareea inflamatorie (cu sânge)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Loperamidul</strong> (antiperistaltic) și <strong>antispasticele</strong> — prelungesc contactul bacteriei cu mucoasa, cresc riscul de megacolon toxic și bacteriemie.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este prototipul diareii secretorii și al celei inflamatorii?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Secretorie:</strong> holera (<em>Vibrio cholerae</em>) — diaree apoasă masivă, „apă de orez". <strong>Inflamatorie:</strong> dizenteria bacteriană (<em>Shigella</em> spp.) — scaune mucopiosanguinolente, tenesme rectale.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce evaluezi pentru a stabili gradul de deshidratare (OMS)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>5 parametri clinici:</strong> starea generală (alert vs. letargic), lacrimile (prezente vs. absente), gura/limba (umedă vs. uscată „ca șmirghelul"), setea (bea normal vs. incapabil să bea), <strong>pliul cutanat</strong> (revine rapid vs. persistent >3 sec). Plan C (sever) = trimitere imediată la spital.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Când este indicat antibioticul în diareea acută?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>DA:</strong> diaree inflamatorie (sânge + febră), C. difficile, holeră, febra tifoidă, Salmonella la imunodeprimați. <strong>NU:</strong> gastroenterocolite virale, toxiinfecții alimentare la imunocompetenți.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">De ce funcționează rehidratarea orală cu glucoză?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Enterotoxina blochează absorbția pasivă Na⁺ (canal AMPc-dependent), dar <strong>cotransportul activ Na⁺-glucoză (SGLT1)</strong> rămâne funcțional. Glucoza din ORS „trage" Na⁺ activ în enterocit → apa urmează osmotic.</p></div>
+  </div>
+</div></div></div>
+
+<div class="case-box">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 5 Etape</div>
+    <h4>Familia de la grătar — toxiinfecție sau altceva?</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Maria, 35 ani, fără antecedente patologice semnificative, se prezintă la cabinetul MF luni dimineața cu diaree de 36 de ore. Menționează că sâmbătă seara a participat la un grătar cu familia. Soțul (38 ani) și socrul (70 ani, cu diabet zaharat tip 2 și tratament cu metformină + omeprazol) au simptome similare. Soacra (68 ani) este asimptomatică — nu a mâncat salata de ouă.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Anamneza</div>
+  <p>Maria descrie >8 scaune/zi, apoase, voluminoase, fără sânge, fără mucozități, cu vărsături repetate în primele 12 ore (acum remise), dureri abdominale difuze de tip colicativ și absența febrei. Debutul a fost la 12 ore după masa respectivă. Menționează că salata de ouă a stat la temperatura camerei câteva ore.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care element anamnestic orientează cel mai puternic etiologia?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) >8 scaune/zi — indică severitate extremă, necesită internare imediată</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">B) Vărsăturile repetate în primele ore — sugerează etiologie virală</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">C) Salata de ouă la temperatura camerei + debut la 12h + mai mulți bolnavi = toxiinfecție alimentară</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) Durerile abdominale difuze — sugerează mecanism inflamator</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) Absența febrei — exclude orice cauză bacteriană</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Triada clasică: aliment suspect (ouă = Salmonella) + incubație 6-12h (toxiinfecție alimentară) + mai mulți bolnavi de la același aliment = toxiinfecție alimentară prin mecanism secretor. Stocarea la temperatura camerei permite multiplicarea bacteriană.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — 8 scaune/zi este diaree moderată. Criteriile de internare includ deshidratarea severă, nu doar numărul de scaune.<br><strong>B)</strong> GREȘIT — Vărsăturile precoce sunt tipice toxiinfecțiilor alimentare (mecanism toxic), nu specific virale. Virusurile au incubație mai lungă (24-72h).<br><strong>D)</strong> GREȘIT — Durerile difuze, colicative sunt tipice mecanismului secretor (hipersecreție + hipermotilitate). Mecanismul inflamator produce dureri localizate pe cadrul colonic.<br><strong>E)</strong> GREȘIT — Absența febrei nu exclude cauza bacteriană — în mecanismul secretor (toxigen), febra lipsește. Exclude doar mecanismul inflamator/invaziv.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Examenul clinic</div>
+  <p>La examenul fizic: TA 110/70 mmHg, AV 90/min, T 36.8°C. Mucoase relativ uscate, pliu cutanat la antebraț revine în ~2 secunde. Abdomen difuz sensibil la palpare, fără apărare musculară, zgomote intestinale vii. Fără iritație peritoneală. Maria este alertă, ușor obosită.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Ce grad de deshidratare are Maria conform clasificării OMS?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Șoc hipovolemic — necesită resuscitare cu cristaloide</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">B) Nu se poate evalua fără ionogramă serică</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">C) Deshidratare severă — Plan C</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Fără deshidratare — Plan A</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">E) Deshidratare ușoară-moderată — Plan B</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era E).</div><div class="case-exp-detail"><strong>E)</strong> CORECT — Conform OMS: alertă dar obosită (stare generală relativ bună), mucoase uscate, pliu cutanat cu revenire la 2 secunde (lent), dar bea normal, lacrimile prezente = deshidratare moderată → Plan B (ORS sub supraveghere 4h).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — TA 110/70 și AV 90/min indică compensare hemodinamică. Șocul hipovolemic presupune hipotensiune (TAs <90 mmHg) și tahicardie marcată.<br><strong>B)</strong> GREȘIT — Evaluarea clinică OMS se face fără laborator — aceasta este forța instrumentului. Ionograma este utilă dar nu este necesară pentru clasificarea OMS.<br><strong>C)</strong> GREȘIT — Deshidratarea severă (Plan C) se caracterizează prin letargie/inconștiență, ochi înfundați, incapacitate de a bea, pliu cutanat persistent >3 sec. Maria este alertă și cooperantă.<br><strong>D)</strong> GREȘIT — Are mucoase uscate și pliu cutanat cu revenire la 2 secunde — aceste semne indică cel puțin deshidratare moderată.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Decizia terapeutică pentru Maria</div>
+  <p>Maria tolerează lichide oral. Nu are febră, scaunele sunt apoase fără sânge.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este conduita corectă pentru Maria?</div>
+  <button class="quiz-option" onclick="ansCase(3,this,false)">A) Loperamid 4mg inițial, apoi 2mg după fiecare scaun neformat — controlul diareii</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">B) Internare pentru rehidratare i.v. și coprocultură — toți pacienții cu toxiinfecție necesită internare</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">C) Rehidratare i.v. (perfuzie NaCl 0,9%) — deshidratarea necesită i.v.</button>
+<button class="quiz-option" onclick="ansCase(3,this,true)">D) Rehidratare orală cu ORS, dietă, diosmectită — fără antibiotic, fără loperamid</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) Rehidratare orală + Ciprofloxacină 500mg x2/zi 3 zile — antibiotic empiric</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era D).</div><div class="case-exp-detail"><strong>D)</strong> CORECT — Toxiinfecție alimentară prin mecanism secretor la pacient imunocompetent, fără semne de gravitate, cu deshidratare moderată și toleranță digestivă bună → rehidratare orală (ORS), dietă (evitare lactate, grăsimi, fibre), diosmectită. Antibioticul nu este indicat. Loperamidul, deși nu este contraindicat absolut în mecanismul secretor pur, nu este recomandat de rutină.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Deși loperamidul nu este contraindicat absolut în mecanismul secretor pur, nu este prima linie de tratament. Prioritatea este rehidratarea, nu oprirea diareii (care este un mecanism de eliminare a agentului patogen).<br><strong>B)</strong> GREȘIT — Nu toți pacienții cu toxiinfecție necesită internare. Maria este tânără, imunocompetentă, cu deshidratare moderată și toleranță digestivă.<br><strong>C)</strong> GREȘIT — Maria are deshidratare moderată (Plan B OMS) și toleranță digestivă → rehidratarea orală este suficientă. I.v. este rezervat pentru Plan C (deshidratare severă) sau intoleranță digestivă.<br><strong>E)</strong> GREȘIT — Antibioticul nu este indicat în toxiinfecția alimentară la imunocompetent fără febră, fără sânge în scaun, fără semne de gravitate. Ciprofloxacina ar crește riscul de C. difficile.</div>
+    <button class="case-btn" onclick="showCaseStep(4)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep4">
+  <div class="step-label">Managementul socrului</div>
+  <p>Socrul Mariei (70 ani, DZ tip 2, metformină + omeprazol cronic) are simptome similare dar mai severe: >12 scaune apoase/zi, vărsături persistente (nu tolerează lichide oral), astenie marcată. La examen: TA 90/55 mmHg, AV 115/min, mucoase foarte uscate, pliu cutanat persistent >3 secunde, somnolent.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este conduita corectă pentru socru?</div>
+  <button class="quiz-option" onclick="ansCase(4,this,false)">A) Internare doar pentru rehidratare i.v., fără antibiotic</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">B) Rehidratare orală la domiciliu, ca la Maria — aceeași toxiinfecție</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">C) Trimitere la chirurgie — abdomen acut</button>
+<button class="quiz-option" onclick="ansCase(4,this,true)">D) Internare urgentă: rehidratare i.v. + evaluare completă (hemogramă, ionogramă, funcție renală) ± coprocultură — vârstnic diabetic cu deshidratare severă</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">E) Rehidratare orală + antibiotic empiric — vârstnic cu factori de risc</button>
+
+  <div class="quiz-explanation" id="caseQ4-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era D).</div><div class="case-exp-detail"><strong>D)</strong> CORECT — Vârstnic (>65 ani) + diabet zaharat + IPP cronic (bariera gastrică compromisă) + deshidratare severă (Plan C) + intoleranță digestivă = <strong>internare obligatorie</strong>. Necesită: rehidratare i.v. agresivă, evaluare completă (funcția renală — risc IRA prerenală, ionogramă — risc hipokaliemie, glicemie — risc decompensare diabetică), coprocultură. Antibioticul poate fi necesar dacă se confirmă Salmonella (categorie de risc: vârstnic diabetic).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Rehidratarea i.v. este necesară, dar la un vârstnic diabetic cu IPP cronic (risc crescut de infecții severe, inclusiv Salmonella bacteriemică), evaluarea completă este obligatorie, nu opțională.<br><strong>B)</strong> GREȘIT — Socrul are deshidratare severă (Plan C OMS: somnolent, TA <90, pliu >3 sec) și nu tolerează lichide oral. Rehidratarea orală este insuficientă.<br><strong>C)</strong> GREȘIT — Nu prezintă semne de iritație peritoneală (apărare musculară, contractură). Diareea cu sensibilitate abdominală difuză nu este abdomen acut chirurgical.<br><strong>E)</strong> GREȘIT — Direcția este corectă (pacient de risc), dar nu poate fi gestionat în ambulator — vărsăturile persistente fac imposibilă administrarea orală.</div>
+    <button class="case-btn" onclick="showCaseStep(5)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep5">
+  <div class="step-label">Sfatul MF — prevenție</div>
+  <p>Maria întreabă: „Ce să facem data viitoare ca să nu se mai repete?"</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este cel mai important sfat de prevenție pe care îl oferiți?</div>
+  <button class="quiz-option" onclick="ansCase(5,this,false)">A) Administrarea profilactică de probiotice la fiecare masă</button>
+<button class="quiz-option" onclick="ansCase(5,this,true)">B) Reguli de igienă alimentară: nu lăsați alimentele cu ouă la temperatura camerei >2h, păstrare la frigider, preparare termică completă</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">C) Vaccinarea anti-Salmonella a întregii familii</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">D) Profilaxie antibiotică cu Ciprofloxacină înainte de grătare</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">E) Evitarea completă a consumului de ouă pe viitor</button>
+
+  <div class="quiz-explanation" id="caseQ5-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Principala cauză a toxiinfecției: <strong>ruperea lanțului frigului</strong>. Alimentele pe bază de ouă (maioneză, salate, creme) sunt mediu optim pentru multiplicarea Salmonella la temperatura camerei. Regula: nu mai mult de 2 ore la >4°C. Prepararea termică completă (>75°C în centrul alimentului) distruge patogenii.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Probioticele au un rol modest în prevenirea diareilor infecțioase. Igiena alimentară este mult mai eficientă.<br><strong>C)</strong> GREȘIT — Nu există vaccin anti-Salmonella de uz curent pentru profilaxia toxiinfecțiilor alimentare. Vaccinul anti-tifoida există, dar e pentru călători în zone endemice.<br><strong>D)</strong> GREȘIT — Profilaxia antibiotică nu este indicată pentru toxiinfecțiile alimentare banale. Ar crește riscul de rezistență și de C. difficile.<br><strong>E)</strong> GREȘIT — Nu este necesar să elimini ouăle din dietă. Problema nu sunt ouăle în sine, ci manipularea incorectă (temperatura, preparare insuficientă).</div>
+    <button class="case-btn" onclick="showCaseStep(6)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep6">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic:</strong> Toxiinfecție alimentară prin mecanism secretor (probabil Salmonella, sursă: salata de ouă stocată incorect).</p>
+<p><strong>Lecții cheie:</strong>
+- Diaree apoasă + fără febră + mai mulți bolnavi = mecanism secretor → prioritate REHIDRATARE
+- Evaluarea deshidratării OMS (5 parametri clinici) dictează conduita: Plan A (domiciliu), Plan B (ORS sub supraveghere), Plan C (internare + i.v.)
+- Antibioticul NU este indicat în toxiinfecția alimentară la imunocompetent
+- Vârstnicii cu comorbidități (DZ, IPP cronic) au risc semnificativ mai mare de evoluție severă → prag scăzut de internare
+- Prevenția prin igienă alimentară (lanțul frigului) este mai eficientă decât orice medicament</p>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/5</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · Sindromul Diareic Infecțios</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"definitii-epidemiologie": {"titlu": "Definiții cheie", "continut": "Diaree = >300 g fecale/24h + ↑ frecvență + ↑ fluiditate · Acută <14 zile · Persistentă 14-30 zile · Cronică >30 zile · Excepție: C. difficile poate fi cronică", "referinta": "Popescu C, Carp CG, Ciresa A. Boli diareice infecțioase — Aspecte generale. În: Ceaușu E (ed). Tratat de Boli Infecțioase, Vol II, pp.1127-1143", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "În condiții fiziologice, tubul digestiv procesează ~9 L/zi (2 L aport oral + 7 L secreții digestive). Intestinul absoarbe ~8,7 L, lăsând doar 200-300 mL pentru scaun. Orice dezechilibru între secreție și absorbție — fie prin creșterea secreției (toxine), fie prin scăderea absorbției (inflamație) — produce diaree.", "stiati_ca": "În zonele defavorizate, diareea este cauza majoră de deces la copii, ajungând până la 50% în unele regiuni. La nivel global, diareea este a patra cauză de deces sub 5 ani, după pneumoniile acute."}, "etiologie": {"titlu": "Spectrul etiologic", "continut": "Bacterii (~20% în țări dezvoltate, dar cazurile severe) · Virusuri (70-75%) · Protozoare (oportuniste la imunodeprimați) · Metazoare (diaree tranzitorie în pasajul intestinal) · Fungi (Candida la imunodeprimați)", "referinta": "Shane AL et al. IDSA Clinical Practice Guidelines for the Diagnosis and Management of Infectious Diarrhea. Clin Infect Dis 2017;65(12):e45-e80", "pmid": "29053792", "url": "", "hint": "", "mnemonic": "<strong>V.B.P.M.F.</strong> · <strong>V</strong>irusuri (Rotavirus, Norovirus — 70-75%) · <strong>B</strong>acterii (Salmonella, Shigella, E. coli — 20%) · <strong>P</strong>rotozoare (Giardia, Entamoeba, Cryptosporidium) · <strong>M</strong>etazoare (Trichinella, Strongyloides) · <strong>F</strong>ungi (Candida — imunodeprimați)", "fiziopatologie": "", "stiati_ca": ""}, "fiziopatologie-mecanisme": {"titlu": "Cele 3 mecanisme", "continut": "Secretor (toxic) = toxină → ↑AMPc → diaree apoasă, fără febră · Inflamator (citotoxic) = invazie enterocit → distrugere → diaree cu sânge, febră · Invaziv = penetrare membrană bazală → diaree volum mic, impregnare · Mixt = combinație secretor + inflamator", "referinta": "DuPont HL. Acute infectious diarrhea in immunocompetent adults. N Engl J Med 2014;370(16):1532-40", "pmid": "24738670", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "diagnostic": {"titlu": "Diagnostic", "continut": "Epidemiologic (alimente, călătorii, contacte, antibiotice) · Clinic (aspectul scaunului, deshidratare) · Paraclinic nespecific (hemogramă, sindrom inflamator, biochimie) · Specific (coprocitogramă, coprocultură, antigene Rotavirus, toxine C. difficile)", "referinta": "Riddle MS et al. ACG Clinical Guideline: Diagnosis, Treatment, and Prevention of Acute Diarrheal Infections in Adults. Am J Gastroenterol 2016;111(5):602-22", "pmid": "27068718", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "diagnostic-diferential": {"titlu": "Diagnostic diferențial", "continut": "Infecțioasă vs. neinfecțioasă · Neinfecțioase: cancer colon, RCUH, boala Crohn, polipi, hemoroizi, invaginație, infarct mezenteric, diverticuloză, malabsorbție, falsa diaree a constipatului", "referinta": "Barr W, Smith A. Acute diarrhea in adults. Am Fam Physician 2014;89(3):180-189", "pmid": "24506120", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": "„Falsa diaree a constipatului\" este o capcană clasică: pacientul constipat cronic prezintă episoade de scaune lichide prin supraproducție de mucus deasupra fecalomului impactat. Tratamentul nu este antidiareic, ci dezimpactare + laxative!"}, "tratament": {"titlu": "Tratament", "continut": "Rehidratare (orală → i.v.) = MEREU · Antibiotic = doar inflamatorie, invazivă, C. difficile, holeră · Simptomatic: antiemetice, antitermice, diosmectită, probiotice · CONTRAINDICAT: loperamid în diaree inflamatorie · Dietă: esențială", "referinta": "Shane AL et al. IDSA Clinical Practice Guidelines. Clin Infect Dis 2017;65(12):e45-e80", "pmid": "29053792", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "profilaxie": {"titlu": "Profilaxie", "continut": "Individuală: spălarea mâinilor, preparare termică alimente, spălarea fructelor/legumelor · Colectivă: controlul apei, controlul alimentelor, verificarea personalului din alimentație · Diareea călătorului: apă îmbuteliată, fără cuburi de gheață, alimente gătite", "referinta": "Connor BA. CDC Yellow Book 2024 — Travelers' Diarrhea", "pmid": "", "url": "https://wwwnc.cdc.gov/travel/yellowbook/2024/preparing/travelers-diarrhea", "hint": "Regula de aur pentru călător: „Boil it, cook it, peel it, or forget it!\" — Fierbe, gătește, curăță sau renunță!", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "recapitulare": {"titlu": "Recapitulare", "continut": "Matching game · Severity sort · Flashcards · Caz clinic interactiv", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Centor Calculator
+const cs={fever:null,exudate:null,lymph:null,noCough:null,age:null};
+function tC(btn,p,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cs[p]=v;calcCentor()}
+function calcCentor(){if(Object.values(cs).some(v=>v===null))return;let s=0;if(cs.fever)s++;if(cs.exudate)s++;if(cs.lymph)s++;if(cs.noCough)s++;if(cs.age==='3-14')s++;else if(cs.age==='45+')s--;if(s<0)s=0;document.getElementById('centorResult').style.display='block';document.getElementById('centorScore').textContent=s;let r,a,c;if(s<=1){r='Risc scăzut (<10%)';a='Tratament simptomatic. Fără investigații.';c='risk-low'}else if(s<=3){r='Risc intermediar (15-35%)';a='Test rapid streptococic. Antibiotic doar dacă pozitiv.';c='risk-med'}else{r='Risc înalt (51-53%)';a='Test rapid +/- antibioterapie empirică.';c='risk-high'}document.getElementById('centorRisk').textContent=r;const ae=document.getElementById('centorAction');ae.textContent=a;ae.className='score-action '+c}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style="color:var(--green)">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Severity Sorter (dropdown version)
+function checkSev(){const items=document.querySelectorAll('#sevItems .sev-item');let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){items.forEach(i=>{i.classList.add('correct');i.querySelector('.sev-select').disabled=true});r.innerHTML='<span style="color:var(--green)">Corect! Ordinea e perfectă.</span>';const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');document.querySelector('.sev-btn').disabled=true;addXP(20)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  let html='<div class="ks-title">'+data.titlu+'</div>';
+  if(data.continut){html+='<div class="ks-card"><div class="ks-label">Rezumat</div>'+data.continut.replace(/·/g,'<br>·')+'</div>'}
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca+'</div>'}
+  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(ks&&ks.classList.contains('open')&&!ks.contains(e.target))ks.classList.remove('open')}})
+
+</script>
+</body>
+</html>

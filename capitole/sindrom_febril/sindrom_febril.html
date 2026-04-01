@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sindromul febril — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:none;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:0;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary)}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.ks-card strong{color:var(--text-primary)}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+@media(max-width:1360px){.knowledge-sidebar{right:-340px;transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0;display:block}.content-wrapper{margin-right:0;max-width:780px}.ks-toggle{display:block}}
+@media(max-width:1024px){.top-nav{position:fixed;top:0;left:0;right:0;width:100%}.page-container{padding-top:52px}.sidebar{top:52px;height:calc(100vh - 52px)}.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <div class="logo">CeCitimAzi</div>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="document.querySelector('.knowledge-sidebar').classList.toggle('open');document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#termoreglare">Termoreglarea și definiția febrei</a></li>
+<li><a href="#fiziopatologie">Fiziopatologia febrei — pirogeni și cascada inflamatorie</a></li>
+<li><a href="#curbe_febrile">Tipurile de curbe febrile și semnificația lor clinică</a></li>
+<li><a href="#febra_vs_hipertermie">Febră vs. Hipertermie — o distincție vitală</a></li>
+<li><a href="#evaluare">Evaluarea pacientului febril — abordare sistematică</a></li>
+<li><a href="#fuo">Febra de origine necunoscută (FUO)</a></li>
+<li><a href="#management">Managementul febrei — când și cum tratăm</a></li>
+<li><a href="#soc_termic">Șocul termic — urgența hipertermică</a></li>
+<li><a href="#recapitulare">Recapitulare și consolidare</a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Boli Infecțioase</div>
+  <h1>Sindromul febril</h1>
+  <p>Febra · Hipertermia · Șocul termic · Febra de origine necunoscută</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează</div>
+  <p>Febra este <strong>cel mai frecvent motiv de prezentare la medic</strong> în întreaga lume și este prezentă în până la <strong>72% din cazurile de pacienți spitalizați</strong> cu patologie infecțioasă. Ca medic de familie, vei fi primul care evaluează un pacient febril — iar deciziile tale din primele minute (investigații, tratament simptomatic vs. trimitere la urgență) pot face diferența între o viroză banală și un sepsis incipient. Înțelegerea mecanismelor termoreglării, a diferenței fundamentale dintre febră și hipertermie, și a algoritmului sistematic de evaluare te va ajuta să triezi rapid și să nu ratezi niciodată „red flag-urile" care necesită intervenție imediată.</p>
+</div>
+
+<div class="section" id="termoreglare">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Termoreglarea și definiția febrei</h2>
+</div>
+
+<div class="text-block"><p>Temperatura corpului uman este menținută într-un echilibru dinamic între <strong>termogeneză</strong> (producerea de căldură) și <strong>termoliză</strong> (disiparea căldurii), sub controlul centrilor termoreglători din hipotalamus. În condiții bazale, ficatul contribuie cu aproximativ 30% din producția de căldură, iar musculatura striată cu 40%. În timpul efortului fizic sau al expunerii la frig, musculatura devine sursa dominantă (>90%), iar frisonul reprezintă cel mai eficient mecanism de termogeneză — declanșat de hipotalamusul posterior prin motoneuronii alfa și gamma.</p>
+<p>Termoliza se realizează prin patru mecanisme principale: <strong>radiația</strong> (60% din pierderea totală de căldură, prin emisie de infraroșu când temperatura ambiantă <35°C), <strong>convecția</strong> (10%, prin curenții de aer), <strong>conducția</strong> (2%, transfer direct — relevant la imersie în apă) și <strong>evaporarea</strong> (28%, prin perspirație insensibilă și sudație activă — devine mecanismul dominant la efort intens sau mediu supraîncălzit, dar ineficient la umiditate crescută).</p>
+<p><strong>Definiția febrei:</strong> creșterea temperaturii bazale <strong>peste 38°C</strong>, în absența activității fizice intense, prin modificarea punctului de echilibru termic hipotalamic. Subfebrilitatea (37,5–38°C) și hiperpirexia (>39°C) sunt extensii ale aceluiași spectru. La <strong>vârstnici</strong> (>65 ani), pragul este mai scăzut: IDSA definește febra ca temperatură orală >37°C sau rectală >37,5°C, deoarece termosenzorii se alterează cu vârsta, iar răspunsul febril poate fi atenuat. La <strong>sugari și copii</strong>, febra se definește ca temperatură rectală ≥38°C.</p></div>
+
+<div class="img-component">
+  <img src="images/img2_termometrie.jpg" alt="Localizările anatomice ale măsurării temperaturii corporale" data-titlu="Localizările anatomice ale măsurării temperaturii corporale" data-desc="<p>Temperatura rectală este cea mai apropiată de temperatura centrală și rămâne standardul de referință. Termometria axilară — cea mai frecventă în practica MF — subestimează temperatura centrală cu ~0,5°C, deci un pacient cu 37,6°C axilar poate avea de fapt 38,1°C central (febril!). Termometria timpanică este rapidă dar imprecisă (cerumen, otită, tehnica incorectă). <strong>Regula practică:</strong> la măsurarea axilară, adaugă mental +0,5°C pentru a estima temperatura reală.</p>" data-sursa="https://www.researchgate.net/figure/Common-temperature-measurement-locations_fig1_382460378">
+  <div class="img-caption">
+    <div class="caption-title">Localizările anatomice ale măsurării temperaturii corporale</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Temperatura rectală este cea mai apropiată de temperatura centrală și rămâne standardul de referință. Termometria axilară — cea mai frecventă în practica MF — subestimează temperatura centrală cu ~0,5°C, deci un pacient cu 37,6°C axilar poate avea de fapt 38,1°C central (febril!)....</p></div><div class="img-cap-full"><p>Temperatura rectală este cea mai apropiată de temperatura centrală și rămâne standardul de referință. Termometria axilară — cea mai frecventă în practica MF — subestimează temperatura centrală cu ~0,5°C, deci un pacient cu 37,6°C axilar poate avea de fapt 38,1°C central (febril!). Termometria timpanică este rapidă dar imprecisă (cerumen, otită, tehnica incorectă). <strong>Regula practică:</strong> la măsurarea axilară, adaugă mental +0,5°C pentru a estima temperatura reală.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Clinical Pearl</div>
+  <p>Temperatura rectală reflectă cel mai fidel temperatura centrală deoarece rectul este bine vascularizat și izolat de factorii externi (respirație, alimente calde/reci, temperatura ambiantă) care afectează măsurătorile orale, axilare sau tegumentare. Temperatura axilară poate subestima febra cu până la 1°C — ceea ce înseamnă că un pacient cu 37,5°C axilar poate avea de fapt 38,5°C central. Aceasta este o capcană frecventă în triajul pacienților vârstnici sau imunosupresați.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Un pacient de 78 de ani, cu diabet zaharat tip 2 și insuficiență renală cronică, se prezintă la cabinetul de medicină de familie cu astenie marcată și anorexie de 3 zile. Temperatura orală măsurată este 37,3°C. Care este interpretarea corectă?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) Se repetă măsurătoarea axilar pentru confirmare</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) Temperatura este normală — se exclud cauzele infecțioase</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">C) Conform criteriilor IDSA pentru vârstnici (>65 ani), temperatura orală >37°C poate indica febră — se inițiază investigații</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">D) Temperatura este subnormală și sugerează hipotiroidism</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">E) Se administrează antipiretic și se reevaluează la 24h</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — C)</strong> CORECT — IDSA definește febra la vârstnici (>65 ani) ca temperatură orală >37°C sau rectală >37,5°C. Valoarea de 37,3°C depășește acest prag și impune investigații active, mai ales în prezența simptomelor constituționale.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Măsurătoarea axilară subestimează temperatura centrală cu până la 1°C. Nu este utilă pentru a confirma febra, ci doar pentru a o rata.<br><strong>B)</strong> GREȘIT — La vârstnici, pragul febrei este mai scăzut. O temperatură orală de 37,3°C poate masca o infecție severă, deoarece răspunsul febril este atenuat cu vârsta.<br><strong>D)</strong> GREȘIT — Hipotiroidismul poate reduce temperatura bazală, dar valoarea de 37,3°C este supra-normală la un vârstnic și nu sugerează hipotermie.<br><strong>E)</strong> GREȘIT — Administrarea de antipiretic fără investigații la un vârstnic cu comorbidități și simptome de 3 zile poate întârzia diagnosticul unei infecții grave (ITU, pneumonie, endocardită).</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="fiziopatologie">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Fiziopatologia febrei — pirogeni și cascada inflamatorie</h2>
+</div>
+
+<div class="text-block"><p>Febra nu este o „defecțiune" a termostatului, ci un <strong>răspuns imun activ, programat</strong> care conferă avantaje biologice. Mecanismul implică o cascadă bine definită: <strong>pirogenii exogeni</strong> (componente bacteriene precum lipopolizaharidele Gram-negative, acizi teicoici Gram-pozitivi, toxine virale, antigene fungice, complexe imune) activează macrofagele, monocitele și alte celule ale imunității înnăscute. Acestea eliberează <strong>pirogeni endogeni</strong> — citokine cu rol regulator: IL-1α și IL-1β, IL-6, TNF-α, interferonii (IFN-α, IFN-β, IFN-γ) și IL-8.</p>
+<p>Pirogenii endogeni acționează la nivelul <strong>organum vasculosum laminae terminalis</strong> (OVLT), o structură neuronală din hipotalamusul anterior lipsită de barieră hemato-encefalică. Aici stimulează producția de <strong>prostaglandină E₂ (PGE₂)</strong> prin activarea ciclooxigenazei (COX-2). PGE₂ acționează ca transmițător central, ridicând „set point-ul" termostatului hipotalamic. Consecința: organismul „percepe" temperatura normală ca fiind prea scăzută și activează mecanismele de termogeneză — vasoconstricție periferică (senzația de frig), creșterea tonusului muscular și frison.</p>
+<p>Endotoxinele bacteriilor Gram-negative (lipopolizaharidele) au o particularitate: pot induce febra atât <strong>direct</strong> (acțiune asupra SNC) cât și <strong>indirect</strong> (prin producția periferică de PGE₂, în special la nivelul celulelor Kupffer hepatice). Aceasta explică de ce bacteriemiile cu Gram-negativi pot produce febră brutală, cu frison solemn, chiar înainte de răspunsul citokinic complet.</p></div>
+
+<div class="img-component">
+  <img src="images/img4_faze_febra.jpg" alt="Fazele reacției febrile — de la pirogeni la defervescență" data-titlu="Fazele reacției febrile — de la pirogeni la defervescență" data-desc="<p>Graficul ilustrează relația dintre set point-ul hipotalamic (linia albastră, care crește brusc la apariția pirogenilor) și temperatura corporală reală (linia roșie, care „aleargă&quot; după noul set point). Fazele — incrementi (frison, vasoconstricție), platou (echilibru la nivel febril) și decrementum (vasodilatație, sudație) — explică de ce pacientul simte frig la debutul febrei, deși temperatura crește.</p>" data-sursa="">
+  <div class="img-caption">
+    <div class="caption-title">Fazele reacției febrile — de la pirogeni la defervescență</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Graficul ilustrează relația dintre set point-ul hipotalamic (linia albastră, care crește brusc la apariția pirogenilor) și temperatura corporală reală (linia roșie, care „aleargă" după noul set point). Fazele — incrementi (frison, vasoconstricție), platou (echilibru la nivel febril) și decrementum...</p></div><div class="img-cap-full"><p>Graficul ilustrează relația dintre set point-ul hipotalamic (linia albastră, care crește brusc la apariția pirogenilor) și temperatura corporală reală (linia roșie, care „aleargă" după noul set point). Fazele — incrementi (frison, vasoconstricție), platou (echilibru la nivel febril) și decrementum (vasodilatație, sudație) — explică de ce pacientul simte frig la debutul febrei, deși temperatura crește.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Clinical Pearl</div>
+  <p>Febra nu este doar un simptom de combătut — este un <strong>mecanism adaptativ</strong> cu beneficii dovedite: crește mobilitatea și fagocitoza neutrofilelor, stimulează producția de interferon (efect antiviral), potențează activitatea celulelor NK, accelerează sinteza hepatică a proteinelor de fază acută (PCR, fibrinogen) și crește eficacitatea antibioticelor. În plus, febra scade nivelul seric de fier, zinc și cupru — cationi esențiali pentru multiplicarea bacteriană. Aceasta explică de ce tratamentul agresiv al febrei moderate (38–39°C) la pacienți imunocompetenți nu este întotdeauna benefic și poate chiar prelungi evoluția unor infecții.</p>
+</div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Atenție</div>
+  <p>Deși febra este un mecanism protector, ea impune costuri metabolice semnificative: fiecare grad Celsius peste normal crește <strong>consumul de oxigen cu 13%</strong>. La pacienți cu rezervă cardiopulmonară limitată (insuficiență cardiacă, BPOC, anemie severă), aceasta poate precipita decompensarea. Alte riscuri: <strong>convulsii febrile</strong> la copii între 6 luni și 5 ani, <strong>delirium</strong> la vârstnici, translocație bacteriană intestinală (care poate precipita sau agrava un sepsis), și <strong>efect teratogen</strong> în primul trimestru de sarcină (risc crescut de defecte cardiace și de tub neural).</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">O pacientă de 45 de ani, fără comorbidități, se prezintă cu febră de 39,2°C, mialgii generalizate și rinoree, în context epidemic de gripă. Se administrează Paracetamol 1g per os. Care este mecanismul prin care Paracetamolul reduce febra?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Acțiune directă pe termosenzorii hipotalamici cu resetarea „set point-ului"</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Vasodilatație periferică directă care crește termoliza prin radiație</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">C) Inhibiția ciclooxigenazei (COX) la nivel central, cu scăderea sintezei de PGE₂ la nivelul hipotalamusului</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) Stimularea producției de criogeni endogeni (vasopresina, α-MSH)</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">E) Inhibiția eliberării de IL-1 și TNF-α din macrofage</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — C)</strong> CORECT — Paracetamolul inhibă COX la nivel central (predominant COX-2 cerebrală), reducând sinteza de PGE₂ la nivelul OVLT. Fără PGE₂, „set point-ul" hipotalamic revine la normal, iar mecanismele de termoliză se activează (vasodilatație, sudație).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Paracetamolul nu acționează direct pe termosenzorii hipotalamici. Efectul este mediat prin inhibiția PGE₂, nu prin acțiune pe receptorii termici.<br><strong>B)</strong> GREȘIT — Vasodilatația periferică este o consecință a scăderii „set point-ului", nu mecanismul primar al Paracetamolului. Paracetamolul nu acționează pe vasele periferice.<br><strong>D)</strong> GREȘIT — Criogenii endogeni (vasopresina argininică, α-MSH) sunt mecanisme endogene de limitare a febrei, dar Paracetamolul nu le stimulează. Acești mediatori limitează febra la un plafon de aproximativ 41°C.<br><strong>E)</strong> GREȘIT — Paracetamolul nu are efect antiinflamator periferic semnificativ și nu inhibă producția de citokine. Aceasta este o diferență importantă față de AINS-urile clasice.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="curbe_febrile">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Tipurile de curbe febrile și semnificația lor clinică</h2>
+</div>
+
+<div class="text-block"><p>Curba febrilă — reprezentarea grafică a temperaturii în timp — este un instrument diagnostic subevaluat în era investigațiilor moderne. Tipul de curbă febrilă poate orienta semnificativ diagnosticul etiologic, mai ales în primele zile de evaluare, înainte de a avea rezultatele microbiologice. Distingem șase tipuri principale de curbe febrile, fiecare cu asocieri etiologice specifice.</p>
+<p><strong>Febra continuă</strong> se caracterizează prin fluctuații zilnice sub 1°C, menținându-se constant la un nivel ridicat. Este pattern-ul clasic al <strong>tifosului</strong> și al <strong>pneumoniei virale</strong> în faza de stare. Stabilitatea temperaturii reflectă un stimul pirogen constant, nemodulat de ciclul circadian. <strong>Febra remitentă</strong> prezintă variații zilnice de peste 1°C, dar temperatura nu revine niciodată la normal. Este tipică pentru <strong>sepsis</strong>, <strong>tuberculoză</strong> și <strong>reumatism articular acut</strong> — condiții în care stimulul pirogen este persistent dar fluctuant.</p>
+<p><strong>Febra intermitentă</strong> este cea mai frecventă în practică: temperatura crește în vârfuri (spikes), dar revine la normal sau sub-normal între episoade. Este caracteristică pentru <strong>sepsis</strong> (mai ales cu Gram-negativi, unde bacteriemiile intermitente produc vârfuri febrile cu frison), <strong>pleurită</strong> și <strong>abcese profunde</strong>. <strong>Febra recurentă</strong> (sau relapsantă) alternează perioade febrile de câteva zile cu perioade complet afebrile. Exemplul clasic este <strong>malaria</strong> (recurențe la intervale fixe) și <strong>borelioza</strong> (recurențe neregulate).</p>
+<p><strong>Febra ondulantă</strong> prezintă creșteri și scăderi graduale pe parcursul a săptămâni — un pattern „în val" caracteristic pentru <strong>bruceloză</strong> (de unde și numele „febra ondulantă a brucilozei") și <strong>limfomul Hodgkin</strong> (febra Pel-Ebstein, cu perioade febrile de 1–2 săptămâni alternând cu perioade afebrile similare). <strong>Febra bifazică</strong> are două episoade febrile separate de un interval afebril de câteva zile — descrisă în unele <strong>viroze</strong> (inclusiv poliomielita și dengue).</p></div>
+
+<div class="img-component">
+  <img src="images/img1_curbe_febrile.jpg" alt="Tipurile de curbe febrile și patologiile asociate" data-titlu="Tipurile de curbe febrile și patologiile asociate" data-desc="<p><strong>Ce observi:</strong> Șase grafice de temperatură vs. timp, fiecare ilustrând un pattern febril distinct: (1) <strong>Febra continuă</strong> — linie aproape dreaptă peste 38°C (tifos, pneumonie virală); (2) <strong>Febra recurentă</strong> — vârfuri febrile separate de intervale complet afebrile (malarie, borelioză, colecistită); (3) <strong>Febra remitentă</strong> — oscilații ample dar mereu peste normal (tifos, sepsis, TBC, RAA); (4) <strong>Febra ondulantă</strong> — creșteri și scăderi graduale, pattern „în val&quot; (bruceloză, tumori/Hodgkin); (5) <strong>Febra intermitentă</strong> — spikes până la 40°C cu revenire la normal (sepsis, pleurită); (6) <strong>Febra bifazică</strong> — două vârfuri febrile cu pauză intermediară (unele viroze).</p>" data-sursa="https://epomedicine.com/clinical-medicine/fever-definition-mechanism-types/">
+  <div class="img-caption">
+    <div class="caption-title">Tipurile de curbe febrile și patologiile asociate</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p><strong>Ce observi:</strong> Șase grafice de temperatură vs. timp, fiecare ilustrând un pattern febril distinct: (1) <strong>Febra continuă</strong> — linie aproape dreaptă peste 38°C (tifos, pneumonie virală); (2) <strong>Febra recurentă</strong> — vârfuri febrile separate de intervale complet afebrile (malarie, borelioză, colecistită);...</p></div><div class="img-cap-full"><p><strong>Ce observi:</strong> Șase grafice de temperatură vs. timp, fiecare ilustrând un pattern febril distinct: (1) <strong>Febra continuă</strong> — linie aproape dreaptă peste 38°C (tifos, pneumonie virală); (2) <strong>Febra recurentă</strong> — vârfuri febrile separate de intervale complet afebrile (malarie, borelioză, colecistită); (3) <strong>Febra remitentă</strong> — oscilații ample dar mereu peste normal (tifos, sepsis, TBC, RAA); (4) <strong>Febra ondulantă</strong> — creșteri și scăderi graduale, pattern „în val" (bruceloză, tumori/Hodgkin); (5) <strong>Febra intermitentă</strong> — spikes până la 40°C cu revenire la normal (sepsis, pleurită); (6) <strong>Febra bifazică</strong> — două vârfuri febrile cu pauză intermediară (unele viroze).</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Un pacient de 32 de ani, întors recent dintr-o călătorie în Africa subsahariană, se prezintă cu episoade febrile recurente la interval de 48 de ore, separate de perioade complet afebrile în care se simte relativ bine. Între episoade, temperatura este 36,5°C. Care este cel mai probabil diagnostic?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Bruceloză — febra ondulantă cu creșteri și scăderi graduale</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">B) Malarie cu Plasmodium vivax sau ovale — febra recurentă terțană la 48h</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">C) Febra tifoidă — febra continuă este tipică pentru Salmonella typhi</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">D) Pneumonie atipică — febra remitentă cu tuse seacă</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Limfom Hodgkin — febra Pel-Ebstein cu perioade febrile de 1-2 săptămâni</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — Pattern-ul clasic de febră recurentă la 48h (terțană) cu intervale complet afebrile, la un călător din zonă endemică, este patognomonic pentru malarie cu P. vivax sau P. ovale. Periodicitatea se datorează ciclului eritrocitar sincronizat al parazitului.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Brucella produce febra ondulantă cu creșteri și scăderi graduale pe săptămâni, nu episoade recurente la 48h cu intervale afebrile.<br><strong>C)</strong> GREȘIT — Febra tifoidă produce clasic o febră continuă (variații <1°C), nu recurentă cu intervale afebrile. De asemenea, pacientul nu prezintă simptomele tipice (bradicardie relativă, hepatosplenomegalie, roseole).<br><strong>D)</strong> GREȘIT — Pneumoniile atipice produc febră remitentă, nu recurentă cu interval fix de 48h.<br><strong>E)</strong> GREȘIT — Febra Pel-Ebstein din limfomul Hodgkin are perioade febrile de 1-2 săptămâni, nu de ore, și nu are periodicitate fixă.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="febra_vs_hipertermie">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Febră vs. Hipertermie — o distincție vitală</h2>
+</div>
+
+<div class="text-block"><p>Distincția dintre febră și hipertermie este <strong>fundamentală pentru tratament</strong> — și este una dintre cele mai frecvente confuzii în practica clinică. Ambele produc creșterea temperaturii corporale, dar prin mecanisme complet diferite, cu implicații terapeutice opuse.</p>
+<p><strong>Febra</strong> este rezultatul unei <strong>modificări active a set point-ului hipotalamic</strong> sub acțiunea PGE₂. Termostatul este „setat" la un nivel superior (de exemplu, 39°C), iar organismul activează mecanism de termogeneză (frison, vasoconstricție) pentru a ajunge la noul prag. Pacientul simte <strong>frig</strong> deși temperatura corporală crește. Temperatura febrilă este autolimitată la aproximativ 41°C datorită criogenilor endogeni (vasopresina argininică, α-MSH). Antipiretice (Paracetamol, Ibuprofen) sunt eficiente deoarece blochează PGE₂ și permit revenirea set point-ului.</p>
+<p><strong>Hipertermia</strong> este rezultatul <strong>incapacității organismului de a disipa căldura</strong>, cu set point-ul hipotalamic <strong>nemodificat</strong>. Termostatul „știe" că temperatura este prea mare, dar mecanismele de termoliză sunt depășite (expunere la căldură extremă, efort fizic intens, umiditate ridicată) sau disfuncționale (anticolinergice, deshidratare, patologii ale glandelor sudoripare). Pacientul simte <strong>cald</strong> și transpiră intens (sau, în formele severe, pielea devine uscată deoarece glandele sudoripare s-au epuizat). Temperatura poate depăși <strong>41°C fără autolimitare</strong>. <strong>Antipiretice sunt complet ineficiente</strong> — inhibarea PGE₂ nu ajută când set point-ul nu este modificat. Tratamentul este <strong>răcire externă</strong> (comprese, gheață, imersie în apă rece).</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">Febră</h4>
+    <ul><li>Febră = Set point hipotalamic modificat (↑) de PGE₂</li><li>Febră = Cauze: infecții, inflamație, neoplasme, medicamente</li><li>Febră = Frison PREZENT (organismul „vrea" să ajungă la noul set point)</li><li>Febră = Temperatura autolimitată la ~41°C (criogeni endogeni)</li><li>Febră = Antipiretice EFICIENTE (blochează COX → PGE₂)</li><li>Febră = Sudație la defervescență</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Hipertermie</h4>
+    <ul><li>Hipertermie = Set point hipotalamic NORMAL — incapacitate de termoliză</li><li>Hipertermie = Cauze: expunere la căldură, efort fizic, anticolinergice, deshidratare</li><li>Hipertermie = Frison ABSENT (organismul încearcă să se răcească)</li><li>Hipertermie = Temperatura poate depăși 41°C fără limită superioară</li><li>Hipertermie = Antipiretice INEFICIENTE — răcire externă obligatorie</li><li>Hipertermie = Piele uscată în formele severe (epuizare sudoripară)</li></ul>
+  </div>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Clinical Pearl</div>
+  <p>Antipiretice (Paracetamol, Ibuprofen, Aspirină) acționează prin inhibarea ciclooxigenazei (COX), blocând sinteza de PGE₂ la nivel hipotalamic. În hipertermie, PGE₂ <strong>nu este implicată</strong> — set point-ul este normal, problema este incapacitatea de disipare a căldurii. Administrarea de antipiretic în șocul termic nu doar că este inutilă, ci poate fi <strong>dăunătoare</strong>: Paracetamolul în doze repetate la un pacient cu hipertermie severă (care deja are suferință hepatică de ischemie) poate precipita hepatotoxicitate. Singurul tratament eficient este <strong>răcirea externă agresivă</strong>.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q4">
+  <div class="q-label">Întrebare · 4</div>
+  <div class="q-text">Un bărbat de 55 de ani, maratonist amator, este adus la urgență în luna iulie, după ce a colabat la km 35. Temperatura rectală este 41,3°C, pielea este uscată și fierbinte, nu transpira. Este confuz, Glasgow 13/15. Se administrează Paracetamol 1g IV. Care este eroarea în management?</div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) Se trebuia administrat Ibuprofen în locul Paracetamolului pentru efect antiinflamator adițional</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) Calea IV nu este indicată — se preferă administrarea orală</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) Doza de Paracetamol este insuficientă — se recomandă 2g</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">D) Paracetamolul este ineficient în hipertermie — pacientul necesită răcire externă agresivă, nu antipiretic</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Paracetamolul este corect, dar trebuia asociat cu hidratare IV concomitentă</button>
+  <div class="quiz-explanation" id="q4-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Pacientul prezintă tabloul clasic de șoc termic (heat stroke): efort fizic intens + căldură ambientală + T >40°C + piele uscată + alterare neurologică. Set point-ul hipotalamic este normal. Tratamentul corect este răcirea externă agresivă (imersie în apă la 2°C, comprese cu gheață la nivelul axilelor/gâtului/inguinal) + resuscitare volemică. Paracetamolul nu doar că este inutil, ci riscă hepatotoxicitate.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Niciun AINS nu este eficient în hipertermie. Ibuprofenul adaugă riscul de nefrotoxicitate la un pacient deja deshidratat.<br><strong>B)</strong> GREȘIT — Calea de administrare nu schimbă faptul că antipireticul nu are efect în hipertermie.<br><strong>C)</strong> GREȘIT — Problema nu este doza, ci indicația. Paracetamolul în orice doză este ineficient în hipertermie deoarece mecanismul nu implică PGE₂.<br><strong>E)</strong> GREȘIT — Hidratarea este necesară, dar afirmația că Paracetamolul este corect este falsă.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="evaluare">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Evaluarea pacientului febril — abordare sistematică</h2>
+</div>
+
+<div class="text-block"><p>Evaluarea pacientului febril urmează o abordare sistematică care pornește de la anamneza direcționată, continuă cu examenul fizic complet și se completează cu investigații paraclinice orientate de tabloul clinic. Scopul nu este doar identificarea etiologiei, ci mai ales <strong>triajul rapid</strong> — separarea pacienților care pot fi gestionați ambulatoriu de cei care necesită internare sau trimitere la urgență.</p>
+<p><strong>Anamneza</strong> trebuie să clarifice: durata și pattern-ul febrei (acută <7 zile, subacută 7-21 zile, prelungită >21 zile), simptomele asociate orientative (tuse, disurie, cefalee, erupție, diaree), călătoriile recente (zone tropicale → malarie, tifoidă), expunerea ocupațională sau la animale, medicamentele noi (febra medicamentoasă apare tipic la 7-10 zile de la inițiere), contactul cu persoane bolnave, statusul imun (HIV, chimioterapie, corticoterapie, splenectomie), și prezența dispozitivelor medicale (catetere, proteze).</p>
+<p><strong>Examenul fizic</strong> trebuie să fie complet și sistematic, nu orientat doar spre simptomul dominant. Atenție specială la: tegumente (erupție, peteșii, escare de inoculare), mucoase (aftoză, enanteme), adenopatii (localizate vs. generalizate), articulații (tumefiere, durere), examenul abdominal (hepatosplenomegalie, apărare), auscultatia pulmonară și cardiacă (sufluri noi → endocardită), și examenul neurologic (rigiditate de ceafă → meningită, alterarea senzoriului → encefalită).</p>
+<p><strong>Investigațiile de primă linie</strong> includ: hemograma cu formulă leucocitară (leucocitoză cu neutrofilie → infecție bacteriană; leucopenie → infecție virală, bruceloză, tifoidă, sepsis sever), <strong>PCR</strong> (marker inflamator rapid), procalcitonina (diferențiază infecție bacteriană de virală), hemocultură (<strong>două seturi, din vene diferite, ÎNAINTE de antibiotic</strong>), sumar urină + urocultură, radiografie toracică, și investigații orientate de tabloul clinic (puncție lombară, ecografie abdominală, CT).</p></div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Important</div>
+  <p><strong>Două seturi de hemocultură, din vene diferite, la interval de minim 15 minute, ÎNAINTE de prima doză de antibiotic.</strong> Fiecare set conține un flacon aerob și un flacon anaerob (20 mL sânge total per set). Prelevarea din cateter venos periferic deja prezent crește rata de contaminare. Practic, hemocultura prelevată DUPĂ antibioterapie are sensibilitatea redusă cu până la 35%.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q5">
+  <div class="q-label">Întrebare · 5</div>
+  <div class="q-text">O femeie de 28 de ani, fără antecedente patologice, se prezintă la medicul de familie cu febră de 38,8°C de 5 zile, asociată cu cefalee frontală, mialgii și fatigabilitate marcată. Examenul fizic relevă faringe eritematoasă fără exudat, microadenopatii cervicale bilaterale. Hemograma arată leucocite 3.800/mm³ cu 45% limfocite și 8% limfocite atipice. Care este etiologia cea mai probabilă?</div>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,true)">A) Infecție virală (sindrom mononucleozic) — leucopenie cu limfocitoză și limfocite atipice</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">B) Febra medicamentoasă — deși pacienta neagă medicament nou</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">C) Bruceloză — leucopenie și febră prelungită</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">D) Leucemie acută — citopenie și adenopatii</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">E) Infecție bacteriană cu streptococ β-hemolitic — leucocitoză tipică</button>
+  <div class="quiz-explanation" id="q5-exp"><div class="fb-correct"><strong>Răspuns corect — A)</strong> CORECT — Tabloul este clasic pentru un sindrom mononucleozic (EBV, CMV): febră cu mialgii, faringe eritematoasă, adenopatii cervicale bilaterale, și leucopenie cu limfocitoză relativă și limfocite atipice (virocite). La 28 de ani, EBV este cel mai probabil.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>B)</strong> GREȘIT — Febra medicamentoasă necesită un medicament nou administrat recent (tipic 7-10 zile înainte). Pacienta neagă medicație.<br><strong>C)</strong> GREȘIT — Brucela produce leucopenie, dar febra ar trebui să fie ondulantă (nu continuă de 5 zile), iar expunerea epidemiologică (contact cu animale, produse lactate nepasteurizate) lipsește.<br><strong>D)</strong> GREȘIT — Leucemia acută poate produce citopenii și adenopatii, dar hemograma ar arăta blaști circulanți sau citopenii pe mai multe linii (anemie, trombocitopenie), nu doar leucopenie izolată cu limfocite atipice.<br><strong>E)</strong> GREȘIT — Infecțiile bacteriene streptococice produc tipic leucocitoză cu neutrofilie, nu leucopenie cu limfocitoză. De asemenea, faringita streptococică se prezintă cu exudat amigdalian, nu faringe eritematoasă difuză.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="fuo">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Febra de origine necunoscută (FUO)</h2>
+</div>
+
+<div class="text-block"><p>Febra de origine necunoscută (FUO — <em>Fever of Unknown Origin</em>) reprezintă una dintre cele mai provocatoare situații clinice, necesitând o abordare sistematică și răbdare diagnostică. Definiția clasică (Petersdorf și Beeson, 1961) include trei criterii simultane: temperatură <strong>>38,3°C</strong> la multiple măsurători, durată <strong>>3 săptămâni</strong>, și diagnostic incert după <strong>o săptămână de investigații în spital</strong> (criteriu adaptat în era modernă la 3 vizite ambulatorii sau 3 zile de spitalizare).</p>
+<p>Etiologia FUO se grupează în <strong>patru categorii mari</strong>: infecțiile (20-40% din cazuri — endocardită infecțioasă, abcese profunde, tuberculoză, osteomielită, infecții asociate cateterelor), neoplasmele (10-20% — limfoame, în special Hodgkin, leucemii, tumori solide cu necroză), bolile autoimune (15-25% — lupus eritematos sistemic, poliarterită nodoasă, arterită cu celule gigante, sarcoidoză) și cauze diverse (15-25% — febra medicamentoasă, embolie pulmonară recurentă, tireoidita, febra factiță). Într-un procent semnificativ (10-15%), diagnosticul rămâne necunoscut chiar după investigații exhaustive — iar prognosticul acestor cazuri este în general favorabil.</p>
+<p>Abordarea diagnostică urmează principiul <strong>de la frecvent la rar</strong> și de la non-invaziv la invaziv. Re-anamneza detaliată (călătorii, contact cu animale, medicamente — inclusiv suplimente alimentare, contacte infecțioase, ocupație, istoric familial de boli autoimune) descoperă un indiciu în până la 25% din cazuri. CT torace-abdomen-pelvis este investigația imagistică centrală. PET-CT devine din ce în ce mai utilizat, având sensibilitate ridicată pentru infecții oculte și neoplasme. Biopsia (ganglion, măduvă osoasă, ficat) este indicată când investigațiile non-invazive nu sunt concludente.</p></div>
+
+<div class="img-component">
+  <img src="images/img3_algoritm_fuo.jpg" alt="Algoritmul diagnostic al febrei de origine necunoscută" data-titlu="Algoritmul diagnostic al febrei de origine necunoscută" data-desc="<p>Algoritmul separă cele 4 mari categorii etiologice ale FUO — infecții, neoplasme, autoimune, alte cauze — și ghidează investigarea sistematică de la frecvent la rar. Util pentru a nu omite nicio categorie în evaluarea unui pacient cu febră prelungită.</p>" data-sursa="https://manualofmedicine.com/topics/fever-of-unknown-origin-fuo-diagnostic-challenge/">
+  <div class="img-caption">
+    <div class="caption-title">Algoritmul diagnostic al febrei de origine necunoscută</div>
+    <div class="caption-text"><p>Algoritmul separă cele 4 mari categorii etiologice ale FUO — infecții, neoplasme, autoimune, alte cauze — și ghidează investigarea sistematică de la frecvent la rar. Util pentru a nu omite nicio categorie în evaluarea unui pacient cu febră prelungită.</p></div>
+  </div>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Clinical Pearl</div>
+  <p>Când investigațiile standard sunt negative, câteva indicii clinice subtile pot deblocă diagnosticul: <strong>bradicardia relativă</strong> (puls care nu crește proporțional cu temperatura) sugerează febra tifoidă, bruceloză, febra medicamentoasă sau limfom. <strong>Febra care răspunde la AINS dar nu la Paracetamol</strong> sugerează limfom sau neoplazie (sensibilitate la Naproxen — „testul Naproxen"). <strong>Erupția evanescentă</strong> (care apare doar în timpul vârfurilor febrile) sugerează boala Still a adultului. <strong>Hepatosplenomegalia</strong> izolată orientează spre limfom, leishmanioza viscerală sau bruceloză. Aceste „perle clinice" nu înlocuiesc investigațiile, dar le orientează eficient.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="management">
+  <div class="section-label">Capitolul 7</div>
+  <h2>Managementul febrei — când și cum tratăm</h2>
+</div>
+
+<div class="text-block"><p>Nu orice febră necesită tratament antipiretic. Aceasta este o nuanță importantă pe care medicul de familie trebuie să o comunice pacienților și familiilor. Febra moderată (38-39°C) la un adult imunocompetent, fără comorbidități cardiopulmonare, este un <strong>răspuns imun benefic</strong> care accelerează clearance-ul infecțios și potențează eficacitatea antibioticelor. Tratarea agresivă a fiecărui episod febril nu doar că nu scurtează boala, ci poate prelungi evoluția unor infecții virale.</p>
+<p><strong>Indicațiile tratamentului antipiretic</strong> includ: disconfort semnificativ al pacientului (cefalee severă, mialgii invalidante, insomnie), temperatură <strong>>39°C</strong>, comorbidități care nu tolerează creșterea consumului de oxigen (insuficiență cardiacă, BPOC, anemie severă), risc de convulsii febrile la copii (6 luni – 5 ani cu antecedente), și sarcină în primul trimestru (risc teratogen dovedit). La vârstnici și imunosupresați, tratamentul antipiretic poate masca semnele de alarmă — se administrează cu prudență și monitorizare.</p>
+<p><strong>Paracetamolul</strong> (500-1000 mg la 6-8 ore, maxim 4 g/zi la adulți) este antipiretice de primă linie: eficacitate bună, profil de siguranță favorabil, fără efecte antiinflamatorii periferice. <strong>Ibuprofenul</strong> (400 mg la 8 ore) este alternativa de a doua linie, cu eficacitate similară dar cu riscuri gastrointestinale și renale adiționale. <strong>Aspirina este CONTRAINDICATĂ la copii sub 16 ani</strong> datorită riscului de sindrom Reye (encefalopatie hepatică acută, potențial letală). Mijloacele fizice (comprese cu apă călduță, nu rece — care produc vasoconstricție paradoxală și frison) sunt complementare, nu de primă linie.</p>
+<p><strong>Antibioterapia empirică</strong> nu este sinonimă cu tratamentul febrei. Antibioticul se inițiază doar când există suspiciune clinică fondată de infecție bacteriană, și <strong>întotdeauna după prelevarea hemoculturilor</strong>. Febra virală, febra medicamentoasă și febra neoplazică nu răspund la antibiotice.</p></div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Atenție</div>
+  <p><strong>NU administra Aspirină (acid acetilsalicilic) copiilor sub 16 ani cu febră!</strong> Sindromul Reye este o encefalopatie hepatică acută rară dar potențial fatală (mortalitate 20-40%), asociată cu administrarea de Aspirină în context viral (în special gripă și varicelă) la copii. Prezentare: vărsături incoercibile, somnolență progresivă, convulsii, comă. Alternative sigure: Paracetamol (15 mg/kg la 6h) sau Ibuprofen (10 mg/kg la 8h).</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="soc_termic">
+  <div class="section-label">Capitolul 8</div>
+  <h2>Șocul termic — urgența hipertermică</h2>
+</div>
+
+<div class="text-block"><p>Șocul termic (<em>heat stroke</em>) este o <strong>urgență medicală cu mortalitate de 10-50%</strong> în absența tratamentului prompt. Se definește prin temperatură corporală <strong>>40°C</strong> asociată cu <strong>disfuncție neurologică</strong> (confuzie, agitație, convulsii, comă), în contextul incapacității de termoreglare. Este forma cea mai severă din spectrul bolilor asociate căldurii (crampe de căldură → epuizare termică → șoc termic).</p>
+<p>Se descriu două forme: <strong>șocul termic clasic</strong> (la vârstnici, bolnavi cronici, în valuri de căldură — piele uscată, fierbinte, anhidroză) și <strong>șocul termic de efort</strong> (la tineri, sportivi, militari — poate păstra transpirația). Factorii de risc includ: vârsta extremă (vârstnici cu termoreglare alterată, sugari cu raport suprafață/volum mare), medicamentele anticolinergice (antihistaminice, antidepresive triciclice, antipsihotice), deshidratarea, obezitatea, și absența aclimatizării la căldură.</p>
+<p>Fiziopatologia implică o spirală vicioasă: hipertermia produce leziuni celulare directe (denaturare proteică, destabilizare membranară), care induc un răspuns inflamator sistemic (similar SIRS), care la rândul său agravează hipertermia prin producție metabolică de căldură. Complicațiile includ: <strong>rabdomioliză</strong> (CK crescut masiv, mioglobinurie → insuficiență renală acută), <strong>coagulopatie intravasculară diseminată (CID)</strong>, insuficiență hepatică acută, sindrom de detresă respiratorie acută (ARDS) și insuficiență multiorganică.</p>
+<p><strong>Managementul</strong> este o urgență temporală: fiecare minut de întârziere în inițierea răcirii crește mortalitatea. Protocolul include: dezbrăcarea completă, <strong>imersie în apă la 2°C</strong> (metoda cea mai eficientă, scade temperatura cu 0,2°C/minut) sau, când nu este disponibilă, aplicarea de comprese cu gheață la nivelul zonelor cu vase mari superficiale (axile, gât, inguinal) + vaporizare cu apă + ventilator. Răcirea se oprește când temperatura atinge <strong>38,5°C</strong> (pentru a preveni hipotermia iatrogenă). Resuscitarea volemică (NaCl 0,9% IV), monitorizarea CK, funcției renale, coagulării și electroliților sunt esențiale. <strong>Antipiretice sunt inutile și potențial dăunătoare</strong> (hepatotoxicitate Paracetamol pe ficat ischemiat).</p></div>
+
+<div class="tags-row"><span class="tag tag-viral">Crampe de căldură: crampetermice</span> <span class="tag tag-viral">Epuizare termică: epuizaretermica</span> <span class="tag tag-viral">Șoc termic clasic: soctermic</span> <span class="tag tag-viral">Șoc termic de efort: soctermic</span> </div>
+
+<div class="quiz-container"><div class="quiz-q" id="q6">
+  <div class="q-label">Întrebare · 6</div>
+  <div class="q-text">Un bărbat de 70 de ani, cu hipertensiune arterială tratată cu Atenolol și diabet zaharat tip 2, este găsit inconștient în apartamentul său în timpul unui val de căldură (40°C exterior, fără aer condiționat). Temperatura rectală este 41,8°C, pielea este uscată și fierbinte, Glasgow 7/15. Care este PRIMA măsură terapeutică?</div>
+    <button class="quiz-option" onclick="checkQuiz('q6',this,false)">A) Administrare de Paracetamol 1g IV pentru scăderea rapidă a temperaturii</button>
+    <button class="quiz-option" onclick="checkQuiz('q6',this,false)">B) Administrare de Dantrolene IV (utilizat în hipertermia malignă)</button>
+    <button class="quiz-option" onclick="checkQuiz('q6',this,false)">C) Bolus de NaCl 0,9% 1000 mL IV rapid pentru repleție volemică</button>
+    <button class="quiz-option" onclick="checkQuiz('q6',this,true)">D) Răcire externă agresivă — dezbrăcare, comprese cu gheață la axile/gât/inguinal, vaporizare cu apă + ventilator</button>
+    <button class="quiz-option" onclick="checkQuiz('q6',this,false)">E) Intubație orotraheală pentru protecția căilor aeriene (Glasgow 7)</button>
+  <div class="quiz-explanation" id="q6-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Răcirea externă agresivă este PRIMA prioritate, înaintea oricărei alte intervenții. Fiecare minut de hipertermie peste 40°C crește leziunile organice. Metoda ideală: imersie în apă rece; alternativă: comprese cu gheață la zonele cu vase mari + vaporizare + ventilator. Ținta: T <39°C, oprire la 38,5°C.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Paracetamolul este ineficient în hipertermie (set point normal) și riscă hepatotoxicitate la un pacient cu ficat deja afectat de ischemie termică.<br><strong>B)</strong> GREȘIT — Dantrolenul este indicat în hipertermia malignă (reacție idiosincratică la anestezice volatile), nu în șocul termic. Mecanismele sunt complet diferite.<br><strong>C)</strong> GREȘIT — Resuscitarea volemică este necesară, dar secundară răcirii. Prioritatea absolută este scăderea temperaturii centrale.<br><strong>E)</strong> GREȘIT — Protecția căilor aeriene este importantă (Glasgow 7 = indicație relativă de intubație), dar NU înaintea răcirii. Un pacient intubat cu T 41,8°C continuă să acumuleze leziuni multiorganice. Răcirea nu necesită echipament special — se poate iniția imediat.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="recapitulare">
+  <div class="section-label">Recapitulare</div>
+  <h2>Recapitulare și consolidare</h2>
+</div>
+
+<div class="match-game">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Febra continuă (fluctuații <1°C, mereu peste normal)</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Febra remitentă (fluctuații >1°C, nu revine la normal)</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Febra intermitentă (spikes cu revenire la normal)</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">Febra recurentă (cicluri febrile cu intervale afebrile)</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">Febra ondulantă (creșteri/scăderi graduale pe săptămâni)</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'left')">Febra bifazică (2 episoade febrile cu pauză)</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">Abces profund, bacteriemie Gram-negativ</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'right')">Dengue, poliomielită</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Sepsis, tuberculoză</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Bruceloză</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Febra tifoidă (Salmonella typhi)</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Malarie (Plasmodium vivax — terțană la 48h)</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/6</div>
+</div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este diferența fundamentală între febră și hipertermie?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Febra</strong> = ridicarea activă a set point-ului hipotalamic de către PGE₂ (antipiretice eficiente, autolimitare la ~41°C). <strong>Hipertermia</strong> = incapacitatea de termoliză cu set point normal (antipiretice inutile, T poate depăși 41°C, urgență!).</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 4 mari categorii etiologice ale FUO?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Infecții</strong> (20-40%): endocardită, TBC, abcese profunde. <strong>Neoplasme</strong> (10-20%): limfom Hodgkin, leucemii. <strong>Autoimune</strong> (15-25%): LES, vasculite, sarcoidoză. <strong>Diverse</strong> (15-25%): febra medicamentoasă, TEP recurent, febra factice.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">De ce este Aspirina contraindicată la copii cu febră?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Risc de <strong>sindrom Reye</strong> — encefalopatie hepatică acută rară dar potențial fatală (mortalitate 20-40%), asociată cu administrarea de Aspirină în context de infecție virală (în special gripă/varicelă) la copii sub 16 ani. Alternative: Paracetamol 15 mg/kg/6h, Ibuprofen 10 mg/kg/8h.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este regula hemoculturilor la pacientul febril?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Două seturi, din vene diferite, la interval de minim 15 minute, ÎNAINTE de prima doză de antibiotic.</strong> Fiecare set = 1 flacon aerob + 1 flacon anaerob (20 mL sânge total/set). Prelevarea după antibiotic scade sensibilitatea cu ~35%.</p></div>
+  </div>
+</div></div></div>
+
+<div class="case-box">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 4 Etape</div>
+    <h4>Febra care nu cedează</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Un bărbat de 34 de ani, fermier din zona rurală a județului Tulcea, se prezintă la cabinetul de medicină de familie acuzând <strong>febră ondulantă</strong> de aproximativ 4 săptămâni. Descrie perioade de febră ridicată (39-40°C) alternând cu perioade în care se simte mai bine, dar nu complet afebril. Asociază transpirații nocturne profuze, astenie marcată și dureri articulare difuze. A luat Paracetamol fără efect semnificativ asupra duratei febrei.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Anamneză direcționată</div>
+  <p>Pacientul este cooperant și dispus să ofere detalii. Completează anamneza.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care element din anamneză este cel mai relevant pentru orientarea diagnostică la acest pacient?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Medicație cronică — febra medicamentoasă</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">B) Contactul cu animale și consumul de produse lactate nepasteurizate — risc de bruceloză</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">C) Istoricul vaccinal — vaccinări recente pot cauza febră</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) Consumul de alcool — hepatita alcoolică poate produce febră</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) Călătorii recente în Africa — risc de malarie</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Fermier din zonă rurală + febră ondulantă + transpirații nocturne + artralgii = tablou clasic de bruceloză. Contactul cu bovine, caprine, ovine și consumul de brânză/lapte nepasteurizat sunt căile principale de transmitere ale Brucella spp. în România.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Febra medicamentoasă apare tipic la 7-10 zile de la un medicament nou. Un sindrom de 4 săptămâni cu transpirații nocturne și artralgii nu se explică prin aceasta.<br><strong>C)</strong> GREȘIT — Reacțiile post-vaccinale produc febră tranzitorie (1-3 zile), nu un sindrom febril ondulant de 4 săptămâni.<br><strong>D)</strong> GREȘIT — Hepatita alcoolică poate produce febră, dar pattern-ul ondulant de 4 săptămâni cu artralgii la un fermier tânăr orientează mai degrabă spre o zoonoză.<br><strong>E)</strong> GREȘIT — Malaria produce febră recurentă (nu ondulantă) cu periodicitate fixă, și necesită expunere în zonă endemică (Africa, Asia de Sud-Est). Tulcea nu este zonă endemică pentru malarie.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Examen fizic</div>
+  <p>Pacientul confirmă că lucrează cu bovine și consumă regulat brânză de casă nepasteurizată. La examenul fizic, obiectivezi: T 39,2°C, AV 88/min (bradicardie relativă!), TA 120/70 mmHg. Hepatosplenomegalie (ficat la 3 cm sub rebordul costal, splina palpabilă). Articulații fără tumefiere evidentă, dar dureroase la mobilizare (sacroiliace bilateral).</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care semn clinic este cel mai sugestiv pentru diagnosticul de bruceloză?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Febra de 39,2°C — dar este nespecifică</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">B) Bradicardia relativă (puls 88/min la T 39,2°C) asociată cu hepatosplenomegalie</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">C) TA normală — exclude sepsisul</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Durerile sacroiliace — sugestive pentru spondilită anchilozantă</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">E) Hepatomegalia izolată — sugestivă pentru hepatită</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Bradicardia relativă (pulsul nu crește proporțional cu temperatura — regula este +10 bpm pentru fiecare grad peste 37°C, deci la 39,2°C ne-am aștepta la ~110 bpm) asociată cu hepatosplenomegalie este un semn clasic de bruceloză. Alte cauze de bradicardie relativă: febra tifoidă, legionella, febra medicamentoasă, limfom.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Febra este nespecifică și prezentă în toate opțiunile diagnostice. Nu discriminează între etiologii.<br><strong>C)</strong> GREȘIT — TA normală nu exclude sepsisul incipient. Sepsisul poate avea TA normală în fazele inițiale (mai ales la tineri cu rezervă hemodinamică bună).<br><strong>D)</strong> GREȘIT — Sacroileita este frecventă în bruceloză (osteoarticulară = cea mai frecventă complicație, 20-40%), dar și în spondilita anchilozantă. Contextul febril ondulant cu hepatosplenomegalie diferențiază.<br><strong>E)</strong> GREȘIT — Hepatomegalia izolată ar sugera hepatită, dar aici avem hepatoSPLENOmegalie — combinația este mai sugestivă pentru o infecție sistemică (bruceloză, tifoidă) sau limfoproliferare.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Investigații</div>
+  <p>Investigații: Leucocite 3.200/mm³ (leucopenie), Hb 13,5 g/dL, Trombocite 130.000/mm³ (trombocitopenie ușoară), VSH 55 mm/h, PCR 45 mg/L, TGO 67 U/L, TGP 89 U/L (citoliză hepatică ușoară). Hemoculturile sunt în curs (necesită incubare prelungită).</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care combinație paraclinică este cea mai sugestivă pentru bruceloză?</div>
+  <button class="quiz-option" onclick="ansCase(3,this,false)">A) Pancitopenie severă cu blaști circulanți</button>
+<button class="quiz-option" onclick="ansCase(3,this,true)">B) Leucopenie + trombocitopenie ușoară + citoliză hepatică + VSH crescut</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">C) Leucocitoză + transaminaze normale + VSH normal</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">D) Leucocitoză cu neutrofilie + PCR crescut</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) Anemie severă + trombocitoză reactivă</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Brucela produce un tablou paraclinic caracteristic: leucopenie (nu leucocitoză!), trombocitopenie ușoară, citoliză hepatică moderată (reflectând hepatita granulomatoasă), VSH crescut. Hemoculturile necesită incubare prelungită (până la 21 de zile) și trebuie semnalate laboratorului.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Pancitopenia severă cu blaști sugerează leucemie acută, nu bruceloză.<br><strong>C)</strong> GREȘIT — Leucocitoza și transaminazele normale nu corespund profilului brucelozei.<br><strong>D)</strong> GREȘIT — Leucocitoza cu neutrofilie este tipică pentru infecții bacteriene piogene (pneumococ, stafilococ), nu pentru bruceloză care produce clasic leucopenie.<br><strong>E)</strong> GREȘIT — Anemia severă cu trombocitoză reactivă nu face parte din tabloul tipic de bruceloză.</div>
+    <button class="case-btn" onclick="showCaseStep(4)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep4">
+  <div class="step-label">Diagnostic</div>
+  <p>Serologia Wright (aglutinare) revine pozitivă cu titru 1:320 (>1:160 = pozitiv). Hemoculturile devin pozitive la ziua 7 cu Brucella melitensis.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este diagnosticul complet și conduita terapeutică corectă?</div>
+  <button class="quiz-option" onclick="ansCase(4,this,false)">A) Bruceloză acută — Rifampicină monoterapie 600 mg/zi, 6 săptămâni</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">B) Bruceloză acută — Amoxicilină 500 mg × 3/zi + Metronidazol, 10 zile</button>
+<button class="quiz-option" onclick="ansCase(4,this,true)">C) Bruceloză acută cu B. melitensis — Doxiciclină 100 mg × 2/zi, 6 săptămâni + Streptomicină 1g/zi IM, primele 2-3 săptămâni (sau Gentamicină 5 mg/kg/zi, 7-14 zile)</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">D) Bruceloză acută — monoterapie cu Doxiciclină 100 mg × 2/zi, 6 săptămâni</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">E) Bruceloză acută — Ciprofloxacin 500 mg × 2/zi, 2 săptămâni</button>
+
+  <div class="quiz-explanation" id="caseQ4-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Regimul OMS de primă linie pentru bruceloză necomplică este Doxiciclină 100 mg × 2/zi PO, 6 săptămâni + aminoglicozid (Streptomicină 1g/zi IM primele 2-3 săptămâni, sau Gentamicină 5 mg/kg/zi, 7-14 zile). Alternativa: Doxiciclină + Rifampicină 600-900 mg/zi, ambele 6 săptămâni (dar cu rată de recidivă ușor mai mare).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Rifampicina monoterapie are rată de recidivă foarte mare și poate induce rezistență rapidă. Se folosește doar în combinație cu Doxiciclină.<br><strong>B)</strong> GREȘIT — Amoxicilina + Metronidazol este un regim pentru infecții anaerobe, nu pentru Brucella. Durata de 10 zile este complet inadecvată.<br><strong>D)</strong> GREȘIT — Monoterapia cu Doxiciclină are rată de recidivă inacceptabil de mare (>30%). Regimul OMS impune obligatoriu biterapie.<br><strong>E)</strong> GREȘIT — Fluorochinolonele nu sunt de primă linie în bruceloză. Durata de 2 săptămâni este insuficientă.</div>
+    <button class="case-btn" onclick="showCaseStep(5)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep5">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic final:</strong> Bruceloză acută cu <em>Brucella melitensis</em>, dobândită prin contact cu bovine și consum de produse lactate nepasteurizate.</p>
+<p><strong>Lecții cheie:</strong>
+- Febra ondulantă + transpirații nocturne + artralgii la un fermier = bruceloză până la proba contrarie
+- Bradicardia relativă + hepatosplenomegalie sunt semne clinice orientative
+- Paraclinic: leucopenie (nu leucocitoză!), trombocitopenie, citoliză hepatică
+- Hemoculturi: necesită incubare prelungită (semnalează laboratorul!)
+- Tratament: OBLIGATORIU biterapie, minim 6 săptămâni (Doxiciclină + aminoglicozid)
+- La medicul de familie: anamneza epidemiologică (ocupație, alimente, animale) este cheia!</p>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/4</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">Scorul tău</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"termoreglare": {"titlu": "Valori de referință", "continut": "Oral: 36,7°C · Rectal: +0,5°C · Axilar: −0,5°C · Subfebrilitate: 37,5–38°C · Febră: >38°C · Hiperpirexie: >39°C", "referinta": "Petersdorf RG, Beeson PB. Fever of unexplained origin: report on 100 cases.", "pmid": "13919710", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "Centrul termoreglării din hipotalamus funcționează ca un termostat: compară temperatura sângelui cu un „set point\" de 37,1°C. Hipotalamusul anterior controlează termoliza (vasodilatație, sudație), iar cel posterior controlează termogeneza (vasoconstricție, frison). Pirogenii endogeni (IL-1, IL-6, TNF-α) modifică acest set point prin intermediul PGE₂.", "stiati_ca": "Temperatura corpului urmează un ritm circadian — minimul este între orele 2–4 dimineața (în somn), iar maximul în jurul orei 18. Diferența poate ajunge la 0,5–1°C, ceea ce face ca o temperatură de 37,5°C seara să fie fiziologică, dar aceeași valoare dimineața să ridice suspiciuni."}, "fiziopatologie": {"titlu": "Cascada pirogeni → febră", "continut": "Pirogeni exogeni (bacterii, virusuri, toxine) → Activare macrofage/monocite → Pirogeni endogeni (IL-1, IL-6, TNF-α, IFN) → PGE₂ la nivel hipotalamic (OVLT) → Ridicare „set point\" → Termogeneză (frison, vasoconstricție) → FEBRĂ", "referinta": "Dinarello CA. Infection, fever, and exogenous and endogenous pyrogens: some concepts have changed.", "pmid": "15039520", "url": "", "hint": "", "mnemonic": "<strong>P.I.P.F.</strong> · <strong>P</strong>irogeni exogeni · <strong>I</strong>nterleukinele (endogeni) · <strong>P</strong>rostaglandine E₂ · <strong>F</strong>ebră", "fiziopatologie": "PGE₂ este mediatorul final comun al febrei. Este sintetizat la nivelul OVLT (organum vasculosum laminae terminalis) — o structură circumventriculară fără barieră hemato-encefalică, ceea ce permite citokinelor circulante să acționeze direct. Aceasta explică de ce antiinflamatoarele (care inhibă COX → blochează PGE₂) sunt eficiente ca antipiretice.", "stiati_ca": ""}, "curbe_febrile": {"titlu": "Curbe febrile — rezumat", "continut": "Continuă (variație <1°C): tifos, pneumonie virală · Remitentă (variație >1°C, nu revine la normal): sepsis, TBC · Intermitentă (revine la normal zilnic): sepsis, pleurită · Recurentă (perioade afebrile de zile): malarie, borelioza · Ondulantă (creșteri/scăderi graduale): bruceloză, limfom Hodgkin · Bifazică (2 vârfuri febrile): unele viroze", "referinta": "Cunha BA. Fever of unknown origin: focused diagnostic approach based on clinical clues from the history, physical examination, and laboratory tests.", "pmid": "17324937", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": "Malaria este diagnosticul clasic asociat febrei intermitente cu periodicitate fixă — la 48h (terțană, P. vivax/ovale) sau 72h (quartană, P. malariae). Dar P. falciparum, forma cea mai gravă, produce febră neregulată care poate mima orice pattern!"}, "febra_vs_hipertermie": {"titlu": "Febră ≠ Hipertermie", "continut": "FEBRA: set point ↑ · răspuns imun · antipiretice eficiente · T < 41°C (autolimitare) · frison prezent. HIPERTERMIE: set point NORMAL · incapacitate termoliză · antipiretice INEFICIENTE · T poate depăși 41°C · frison ABSENT · urgență!", "referinta": "Bouchama A, Knochel JP. Heat stroke.", "pmid": "12076432", "url": "", "hint": "", "mnemonic": "<strong>F.A.S.T.</strong> · <strong>F</strong>ebra are Antipiretice eficiente · <strong>A</strong>ntipiretice funcționează (COX → PGE₂) · <strong>S</strong>et-point modificat de pirogeni · <strong>T</strong>ermostat funcțional (hipertermia = opusul)", "fiziopatologie": "", "stiati_ca": ""}, "evaluare": {"titlu": "Triaj rapid al febrilului", "continut": "Red flags: T >40°C · alterare a stării de conștiență · instabilitate hemodinamică · erupție peteșială · rigiditate de ceafă · imunosupresie · splenectomie · dispnee severă", "referinta": "Petersdorf RG, Beeson PB. Fever of unexplained origin: report on 100 cases.", "pmid": "13919710", "url": "", "hint": "Regula de aur la febrilul acut: HEMOCULTURI ÎNAINTE DE ANTIBIOTIC! Două seturi, din vene diferite, la interval de minim 15 minute.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "fuo": {"titlu": "Definiția clasică FUO", "continut": "Criterii Petersdorf–Beeson: (1) T >38,3°C la multiple măsurători · (2) Durata >3 săptămâni · (3) Diagnostic incert după 1 săptămână de investigații în spital (sau 3 vizite ambulatorii)", "referinta": "Petersdorf RG, Beeson PB. Fever of unexplained origin: report on 100 cases.", "pmid": "13919710", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "FUO reprezintă un subset al febrei prelungite în care investigațiile standard (hemocultură, radiografie toracică, sumar urină, ecografie) nu au stabilit diagnosticul. Cele 4 mari categorii etiologice sunt: infecții (20-40%), neoplasme (10-20%), boli autoimune (15-25%) și cauze diverse/necunoscute (15-25%). Proporțiile variază în funcție de regiune și deceniu.", "stiati_ca": ""}, "management": {"titlu": "Praguri de intervenție", "continut": "T 38–39°C la imunocompetent → hidratare + monitorizare (febra este benefică!) · T >39°C sau disconfort semnificativ → antipiretic · T >40°C → antipiretic + investigații urgente · Copil 6 luni–5 ani cu antecedente de convulsii febrile → antipiretic profilactic de la 38°C · Sarcină trimestrul I → antipiretic de la 38°C (efect teratogen!)", "referinta": "El-Radhi AS. Fever management: Evidence vs current practice.", "pmid": "22339897", "url": "", "hint": "", "mnemonic": "<strong>A.I.N.S.</strong> · <strong>A</strong>cetaminofen (Paracetamol) · <strong>I</strong>buprofen · <strong>N</strong>iciodată Aspirină la copii · <strong>S</strong>upozitor dacă vărsături", "fiziopatologie": "", "stiati_ca": ""}, "soc_termic": {"titlu": "Criterii șoc termic", "continut": "T >40°C (105°F) · Alterare neurologică (confuzie, convulsii, comă) · Piele uscată și fierbinte (clasic) SAU transpirație (efort) · Tahicardie · Hipotensiune · Rabdomioliză (CK↑) · Coagulopatie", "referinta": "Bouchama A, Knochel JP. Heat stroke.", "pmid": "12076432", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "recapitulare": {"titlu": "Mesaje cheie", "continut": "Febra = set point ↑ (benefică, antipiretice eficiente) · Hipertermia = set point normal (periculoasă, antipiretice inutile) · FUO = febra >38,3°C >3 săpt + diagnostic incert · Hemoculturi ÎNAINTE de antibiotic · Nu trata orice febră — febra moderată este un aliat · Aspirina NICIODATĂ la copii <16 ani · Șoc termic = RĂCIRE externă, nu antipiretic", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Centor Calculator
+const cs={fever:null,exudate:null,lymph:null,noCough:null,age:null};
+function tC(btn,p,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cs[p]=v;calcCentor()}
+function calcCentor(){if(Object.values(cs).some(v=>v===null))return;let s=0;if(cs.fever)s++;if(cs.exudate)s++;if(cs.lymph)s++;if(cs.noCough)s++;if(cs.age==='3-14')s++;else if(cs.age==='45+')s--;if(s<0)s=0;document.getElementById('centorResult').style.display='block';document.getElementById('centorScore').textContent=s;let r,a,c;if(s<=1){r='Risc scăzut (<10%)';a='Tratament simptomatic. Fără investigații.';c='risk-low'}else if(s<=3){r='Risc intermediar (15-35%)';a='Test rapid streptococic. Antibiotic doar dacă pozitiv.';c='risk-med'}else{r='Risc înalt (51-53%)';a='Test rapid +/- antibioterapie empirică.';c='risk-high'}document.getElementById('centorRisk').textContent=r;const ae=document.getElementById('centorAction');ae.textContent=a;ae.className='score-action '+c}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style="color:var(--green)">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  let html='<div class="ks-title">'+data.titlu+'</div>';
+  if(data.continut){html+='<div class="ks-card"><div class="ks-label">Rezumat</div>'+data.continut.replace(/·/g,'<br>·')+'</div>'}
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca+'</div>'}
+  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(ks&&ks.classList.contains('open')&&!ks.contains(e.target))ks.classList.remove('open')}})
+
+</script>
+</body>
+</html>

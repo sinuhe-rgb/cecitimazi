@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lecție — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:sticky;top:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:none;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:0;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary)}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.ks-card strong{color:var(--text-primary)}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+@media(max-width:1360px){.knowledge-sidebar{right:-340px;transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0;display:block}.content-wrapper{margin-right:0;max-width:780px}.ks-toggle{display:block}}
+@media(max-width:1024px){.top-nav{position:fixed;top:0;left:0;right:0;width:100%}.page-container{padding-top:52px}.sidebar{top:52px;height:calc(100vh - 52px)}.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <div class="logo">CeCitimAzi</div>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="document.querySelector('.knowledge-sidebar').classList.toggle('open');document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <div class="text-block"><p># Infectii Acute ale Căilor Respiratorii Superioare (IACRS)</p>
+<p><strong>Autor:</strong> Dr. Ștefan Tunareanu, medic rezident MF  
+<strong>Revizie:</strong> 2026</p>
+<p>---</p>
+<p>## ⚠️ Why Box — Ce trebuie să știi</p>
+<p><strong>IACRS sunt infecții virale în 70-80% din cazuri.</strong> Antibioticele administrate empiric fără diagnostic etiologic dur în abuzul antibiotic și apariția rezistenței. Scorurile clinice (Centor pentru faringe, Westley pentru crup) diferențiază severitatea și ghidează decizia terapeutică. Complicațiile — absces periamigdalian, celulita orbitară, meningita — sunt rare dar life-threatening și necesită imagistică urgentă + antibioterapie IV. Epiglotita actuală ar trebui să fie raritate în țări cu vaccinație Hib, dar rămâne o urgență: edemarizare rapidă a epiglotei → obstrucție → intubație dificilă.</p>
+<p>---</p>
+<p>## 📚 Hero — Ce este IACRS?</p>
+<p>Infectiile acute ale căilor respiratorii superioare (IACRS) cuprind spectrul inflamator de la sinusurile paranazale până la traheea, caracterizdări prin debut rapid, semne locale (durere, obstructie, exsudat) și systeme (febră, malaiză). Sunt cele mai frecvente infectii în practica medicului de familie — estimat 300-500 milioni de cazuri anual mondial, cu vârf sezonier iarna și primăvară. Etiologia este predominant virală (70-80%), urmate de streptococul beta-hemolitic grup A (SBHGA), Haemophilus influenzae și pneumococ. Spectrul clinic variază de la rinosinuzita banală (edem, rinoree) la urgențe respiratorii (epiglotita, crup sever) și complicații intracraniene (meningita hematogena).</p>
+<p>---</p>
+<p>## 🎯 Incidență și epidemiologie</p>
+<ul><li><strong>Frecvență:</strong> 300-500 milioane/ an mondial; în practica MF, 30-40% din consultații iarna</li><li><strong>Sezonalitate:</strong> toamna-iarnă (viroza respiratorie); omiteti în orice anotimp</li><li><strong>Transmisie:</strong> aerogen direct, contacti, suprafețe contaminate; perioada de contagiozitate 3-7 zile viral</li><li><strong>Vârstele:</strong> mai frecvent copii 3-7 ani (crup), adolescenți; adulți cu imunosupresie sau factori de risc local</li></ul>
+<p>---</p>
+<p>## 🔬 Patogenie — Lanțul cauzal</p>
+<p>1. <strong>Inoculare virală</strong> (70% cazuri) → epiteliu respirator superior → vedeți celular via TLR-uri → infiltrat de neutrofili şi limfocite
+2. <strong>Edem, secretii</strong> → congestie nazala, durere sinusala, tusă
+3. <strong>Disruption mucosiliar</strong> → stază secretii → suprainfectie bacteriană (20-30% caz​uri post-virale)
+4. <strong>Extensia locală</strong> (urare sinus ostiuum, retropharynx, orbit, CMF) → complicații
+5. <strong>Viremia rară</strong> → febră sistemic​ă, imunita specifică antibacteriene (post-SBHGA: febră reumatismala, glomerulonefrita)</p>
+<p>---</p>
+<p>## 📋 Componentele IACRS</p>
+<p>---</p>
+<p>### 1️⃣ <strong>Rinosinuzita Acută (RSA)</strong></p>
+<p>#### Definiție
+Inflamație a sinusurilor paranazale (maxilar, etmoidal, frontal, sfenoid) cu durată < 4 săptamâni, asociată simptomele DOOR: <strong>D</strong>urere / presiune, <strong>O</strong>bstructie nazala, <strong>O</strong>rizã mucopurulentă, <strong>R</strong>ale/pus nazal vizibil.</p>
+<p>#### Etiologie
+- <strong>Viral (80%):</strong> rinovirusi, coronavirus, VSR, influenza (adeseori precursor)
+- <strong>Bacterian (20%):</strong> <em>S. pneumoniae</em> (20-40%), <em>H. influenzae</em> (20-35%), <em>M. catarrhalis</em> (5-10%)
+- <strong>Fungic (rar):</strong> <em>Aspergillus</em> la imunodeprimate
+- <strong>Odontogen:</strong> carii dentare → infecție sinus maxilar</p>
+<p>#### Diagnostic clinic</p>
+<p><strong>Criterii DOOR (CDC/ IDSA):</strong>
+- Durere facială / presiune la nivelul sinus (frontal, etmoidal, maxilar)
+- Obstructie nazala
+- Rimoare nazala purulentă (vizibil)
+- Edem și congestie endoscop nazal</p>
+<p><strong>Discernere viral vs. bacterian:</strong>
+- Viral (75%): coriza 3-5 zile, dulerp ușoară/moderata, rinoree seroasă
+- Bacterian (presupus): <strong>≥ 10 zile fără ameliorare SAU agravare în ziua 5-7</strong></p>
+<p>#### Investigații
+- <strong>Clinică:</strong> suficienta în 90% RSA virala
+- <strong>Endoscopie nazala:</strong> puroi în meatul mediu (diagnoza bacteriana presupusa)
+- <strong>CT sinus:</strong> pentru complicații (orbita, ICP), abces, rinosinuzita recurentă (>4 episoade/an)
+- <strong>Cultură:</strong> dacă suspectie SBHGA, anaerobi (grav/complicat)</p>
+<p>#### Imagini — RSA</p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC/figure-sinusitis-ct/">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Complicații</p>
+<p>| Complicație | Mecanis​m | Semne cl. | Urgență |
+|---|---|---|---|
+| <strong>Celulita orbitala</strong> | Extensia etmoidal → fascie septi pe orbita → edema, presiune IOP | <strong>Oftalmoplegia, proptoza, durere ocasa</strong> | <strong>URGENȚĂ — drenaj + IV antibiotics</strong> |
+| <strong>Abces orbitare</strong> | Colectie purulenta intraorbitale | Oftalmoplegia, pupila fixa dilatata | <strong>URGENȚĂ — imagine + drenaj</strong> |
+| <strong>Meningita</strong> | Hematogena, tromboflebita sinus cavernos | Cefalea severa, rigiditate nucala, febra | <strong>URGENȚĂ — LP, vancomicina</strong> |
+| <strong>Osteomielita</strong> | Extensia oswă (sinuzite etmoid/fronal recurent) | Edem fronal/etmoidal subperiosteal | <strong>Echog + cultura sânge</strong> |</p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC/figure-orbital-cellulitis/">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Tratament</p>
+<p>| Stadium | Terapie |
+|---|---|
+| <strong>Viral (RSA Agebruta/remitent)</strong> | Irigație salina nazala, decongestionante (oximetazolina 5 zile max, apoi stop), analgezic, corticozid nazal (fluticason) 5-7 zile |
+| <strong>Bacterian presupus (≥ 10 zile)</strong> | Amoxicilina/clavulanat 500 mg x3/zi SAU cefuroxim 500 mg x2 / zile x 10-14 zile |
+| <strong>Rezistenta / alergie betalactam</strong> | Moxifloxacin 400 mg/zi x 10 zile SAU clindamicina 300-450 mg x3/zi |
+| <strong>Complicata (orbita, ICP)</strong> | IV cefotaxim 2g x4/6h + vancomicina 15 mg/kg x3/zi, drenaj chirurgical, culture |</p>
+<p>---</p>
+<p>### 2️⃣ <strong>Faringe și Amigdale — Anginele Acute</strong></p>
+<p>#### Definiție
+Inflamație acută a orofaringelui și/sau amigdalelor palatine, manifestate prin febră, durere la înghițire (disfagie/odinofagie), eritema, možî adeseori exsudat, limfadenita submandibulară.</p>
+<p>#### Etiologie și diagnostic diferențial</p>
+<p><strong>Virală (60-80% copii, 80% adulți):</strong>
+- Rinovirusi, coronavirus, VSR, paragripa, influenza, adenovirus
+- Tablou: débât insidios, durere ușoară, febra subbrilianta, rinoree, conjunctivita</p>
+<p><strong>Bacterial — Streptococ beta-hemolitic grup A (SBHGA) — 10% adulți, 30-40% copii:</strong>
+- Debut <strong>brusc</strong>, febra <strong>înalta</strong>, disfagie/odinofagie <strong>importanta</strong>, exsudat <strong>alb-gălbui</strong>, adenopatia submandibulară <strong>dureroasa</strong>
+- <strong>COMPLICAȚII post-streptococice:</strong> febra reumatismala (cardita, artrita), glomerulonefrita post-infecțioasă</p>
+<p><strong>Alte etiologii specifice:</strong>
+- Herpangina (Coxsackie A): vezicule mici circumscrise
+- Angina herpetic (Herpes simplex I): vezicule pe mucoasă bucala
+- Mononucleoza infectioasă (Epstein-Barr): exsudat pseudomembran, adenopatia difuza, hepatomegalie
+- Angina fusospirillara (Plaut-Vincent): ulcerație unilaterale profundă, halena putida, adenopatia satelitar</p>
+<p>#### Diagnostic — Scorul Centor</p>
+<p>| Criteriu | Punct |
+|---|---|
+| Temperatură ≥ 38,5°C | +1 |
+| Absența tusei | +1 |
+| Adenomegalie anterior-laterocervical | +1 |
+| Exsudat | +1 |
+| <strong>Vârsta:</strong> 3-14 ani | +1 |
+| <strong>Vârsta:</strong> 15-44 ani | 0 |
+| <strong>Vârsta:</strong> >45 ani | -1 |</p>
+<p><strong>Interpretare:</strong>
+- Centor ≤ 1: Risc SBHGA < 10% → <strong>FĂRĂ antibiotice</strong>
+- Centor 2-3: Risc 10-30% → <strong>Teste rapide (strep test, cultură)</strong>
+- Centor 4+: Risc > 55% → <strong>Antibiotica empirice (fără așteptare test)</strong></p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://emedicine.medscape.com/article/232330-overview#showall#showall">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Imagini — Faringe</p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://images.unsplash.com/image-from-cdc-phil-streptococcal-pharyngitis">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC/figure-herpangina/">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://radiopaedia.org/cases/peritonsillar-abscess">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Complicații</p>
+<p>1. <strong>Abces periamigdalian</strong> — colectie purulenta intraperitoneal, deviație amigdala medial, obstrucție respiratorie → drenaj urgent
+2. <strong>Celulita retropharinge</strong> — extensia posterior → edema spațiu retro​pharinge, risc ruptura cu mediastinita → drenaj urgent, IV antibiotics
+3. <strong>Mononucleoza cu obstrucție</strong> — exsudat pseudomembran masiv, risc apnee → steroizi, intubație dacă necesara
+4. <strong>Post-streptococice:</strong> febra reumatismala (cardita, artrita migratoase), glomerulonefrita post-infectioasă</p>
+<p>#### Tratament</p>
+<p>| Etiologie | Terapia |
+|---|---|
+| <strong>Viral (rinovirusi, korona, adenovirus)</strong> | Simptomativ: antipiretic, analgezic, hidratare; NO antibiotic |
+| <strong>SBHGA — Centor 2-3 cu test pozitiv SAU Centor 4+</strong> | <strong>Penicilina V 500 mg x4/zi x 10 zile</strong> SAU Amoxicilina 500 mg x3/zi x 10 zile |
+| <strong>Alergie penicilina</strong> | Azitromicina 500 mg zi 1, apoi 250 mg/zi x4 zile SAU Cephalexin 250-500 mg x4/zi |
+| <strong>Mononucleoza cu obstrucție</strong> | Metilprednisolon 1-2 mg/kg x2-3 zile, monitoriza obstrucție aeriană |
+| <strong>Purulenta (abces)</strong> | IV cefotaxim 2g x4/zi + vancomicina, drenaj chirurgical |</p>
+<p>---</p>
+<p>### 3️⃣ <strong>Laringe și Crup — Managementul Obstrucției Aeriană</strong></p>
+<p>#### Definiție
+<strong>Laringita:</strong>  Inflamație a corzilor vocale → răguseală, tusă. Viral > bacterial.</p>
+<p><strong>Crupul (laringotraheita acută):</strong>  Tutumefiere subglotică (edem, exudat) → tusa lătrătoare, stridor inspirator, risc obstrucție progresiva. <strong>Factor de vârstă: 6 luni - 3 ani; peak 24 luni.</strong></p>
+<p>#### Etiologie
+- <strong>Viral (95%):</strong> paragripa (60%), influenza, VSR, adenovirus, coronavirusi
+- <strong>Bacterial (5%):</strong> <em>Staphylococcus aureus</em>, <em>Streptococcus pyogenes</em>, <em>H. influenzae</em> tip B (rar post-vaccinație)
+- <strong>Spasmodic (25% crup):</strong> viral trigger, edem noninflamator, subiectivi recurență</p>
+<p>#### Patogenie</p>
+<p>Edemarizare și infiltrate inflamatorii la nivelul subglotic (sub corzile vocale, intra-trahea proximala). Zona respectiva e richea în țesuturi laxe — edemul rapid creste suprafete și rezistenta la aer. Virusuri prin epiteliu citopatogen, neutrofili și limfocite infiltrante.</p>
+<p>#### Diagnostic — Scorul Westley</p>
+<p>Evaluare severitate crup pentru terapie și spitalizare:</p>
+<p>| Criteriu | Ușor | Moderat | Sever |
+|---|---|---|---|
+| <strong>Tusa</strong> | Rara, lătrătoare | Frecventă, lătrătoare | Frecventă, lătrătoare |
+| <strong>Stridor inspirator</strong> | AbsentRepaus | Prezent repaus | Prezent, uneori expirator |
+| <strong>Tiraj</strong> | Minim | Moderat | Sever (retracție sternală) |
+| <strong>Agitație</strong> | Calma | Calma | Severă |
+| <strong>SaO2 la aer</strong> | >95% | >95% | <92% |
+| <strong>Scor</strong>  | <strong>0-2</strong> | <strong>3-5</strong> | <strong>>6</strong> |</p>
+<p><strong>Interpretare:</strong>
+- Ușor → tratament ambulatoriu (corticozid local SAU sistemi)
+- Moderat → spitalizare, corticozid + posibil epinefrina
+- Sever → ICU, suport respirator dacă SaO2 scade</p>
+<p>#### Imagini — Crup și laringita</p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://radiopaedia.org/cases/croup-laryngotracheobronchitis">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://images.unsplash.com/image-from-cdc-phil-respiratory-distress">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Epiglotita — URGENȚĂ</p>
+<p><strong>Aparent clinic:</strong> Crup sever, dar:
+- Disfagie <strong>importanta</strong> (saliva, nu ca în crup)
+- <strong>Respiră cu gura deschisă</strong> — efor maxim
+- <strong>Poziție spidmădător</strong> pe mâini  
+- <strong>Stridor bifazic</strong> (inspirator + expirator)
+- <strong>Voce surdă</strong> (hot potato voice — ca cu cartof în gură)</p>
+<p><strong>Imaginistic:</strong>  CT / fibroscop — <strong>epiglota roșiepatată, edemarizată</strong> (deasupra corzilor, nu sub ele ca în crup)</p>
+<p><strong>MANAGEMENTUL URGENT:</strong>
+1. NU reglezi gâtul (risc obstrucție completă)
+2. Preparare emergență întu​bație + cricotiomie
+3. IV cefotaxim 2g x4/zi + vancomicina 15 mg/kg, steroizi
+4. Niciodată Nu recoltezi secret fără prepara intubație la pciatul mai mult</p></div>
+
+<div class="img-component">
+  <img src="image.jpg" alt="" data-titlu="" data-desc="" data-sursa="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC/figure-epiglottitis/">
+  <div class="img-caption">
+    
+    <div class="caption-text"></div>
+  </div>
+</div>
+
+<div class="text-block"><p>#### Tratament</p>
+<p>| Severitate | Terapie |
+|---|---|
+| <strong>Ușor (Westley ≤2)</strong> | Dexametazon 0,15 mg/kg x1 doza (max 10 mg, nu mai mult) SAU budezonid nebovolut 2 + oz. Calmant și hidratare, observație 1-2 ore. Acasă dacă stabil. |
+| <strong>Moderat (Westley 3-5)</strong> | Dexametazon 0,15 mg/kg x1 SAU budesonid 2 mg x1 nebovolut + <strong>epinefrina racemică 2,25% 0,5 ml în 3 ml SF / nebulizator</strong>, efect 10-30 min, durata 2-6 ore. Spitalizie. |
+| <strong>Sever (Westley >6)</strong> | ICU, dexametazon IV 0,15 mg/kg, epinefrina nebulizat + IV (0,01 mg/kg) — efect mai rapid, durata mai scurtă. <strong>Pregătire intubație :</strong> anestezie intravenoasă, fibroscop la pat. Suportă respirator. |
+| <strong>Epiglotita</strong> | <strong>URGENȚĂ:</strong> Cefotaxim 2g IV x4/zi + vancomicina 15 mg/kg x3/zi, steroizi IV, INTUBAȚIE la sala operații (anestezie + chirurgie). |</p>
+<p>---</p>
+<p>### 4️⃣ <strong>Traheobronșita Acută</strong></p>
+<p>#### Definiție
+Inflamație a traheei și bronșilor mare — tusa persistentă, adesea productiva, fără consolidare pulmonara (PX normal). Viral 85%, bacterial 15% post-viral.</p>
+<p>#### Etiologie
+- <strong>Viral:</strong> VSR, paragripa, influenza, rinovirusi, adenovirusi, metapneumovirus human
+- <strong>Bacterial:</strong> <em>Mycoplasma pneumoniae</em>, <em>Chlamydia pneumoniae</em>, <em>Bordetella pertussis</em>
+- <strong>Recidiva:</strong> BFCO, asma, fumatori pasivi</p>
+<p>#### Patogenie
+Virusuri infiltrare epiteliu respirator → necroze epiteliale (influenza cu hemoragii) → exsudat, muc fibrin → obstrucție partiala aer, turbulența, tusa irritativă → secreții, tusa productiva (3-7 zile) → cicatrizare.</p>
+<p>#### Manifestări clinice
+- <strong>Prodromi:</strong> rinoree, odinofagie, grețuri ușoară (virusă precedenta)
+- <strong>Tusă:</strong> inițial seaca / iritativă, apoi productiva cu mucus/pus (3-7 zile)
+- <strong>Febra:</strong> prezenta insa neobligatorie (mai des VSR / paragripa)
+- <strong>Auscultație:</strong> raluri bronșice difuze, sibilante (mai ales VSR, hMPV cu broncospasm)
+- <strong>Radiografie:</strong> PX normal SAU infiltrate peribronșiale ușoare</p>
+<p>#### Diagnostic diferențial</p>
+<p>| Entitate | Cep auscultație | PX | Durata | Etiologie |
+|---|---|---|---|---|
+| <strong>Traheobronșita</strong> | Raluri bronșice difuze, sibilante | Normal SAU infiltrate peribronșiale | 3-7 zile | VSR, paragripa, influenza (viral > bacterial) |
+| <strong>Pneumonie</strong> | Creptații bazale / focus | Consolidare, infiltrat focal | >7 zile | <em>S. pneumoniae</em>, <em>H. influenzae</em>, VSR+bacteria |
+| <strong>BFCO exacerbata</strong> | Sibilante bilaterale | Normal SAU hiperinsuflatie | Variana (zile-săptamâni) | Virus (37%), bacteria (Pseudomonas, Moraxella) |
+| <strong>Asma</strong> | Sibilante bilaterale, expiatorii | Normal | Oras (minutter-ore) | Virus (RSV, rinovirus), alergen |</p>
+<p>#### Tratament</p>
+<p>| Simptom | Terapie |
+|---|---|
+| <strong>Tusa seaca / iritativă</strong> | Pholcodina 50 mg x3-4/zi SAU dextrometorfan 15 mg x3-4/zi |
+| <strong>Tusa productiva cu sputum vâscos</strong> | Bromhexin 8 mg x3/zi SAU N-acetilcisteina 600 mg x1-2/zi (fluidizare) |
+| <strong>Broncospasm</strong> | Salbutamol inhalator 2 pufuri x3-4/zi SAU terbutalina |
+| <strong>Febra, durere</strong> | Paracetamol 500-1000 mg x3-4/zi SAU ibuprofen 200 mg x3/zi |
+| <strong>Hidratare și repaus</strong> | Apă, ceai, miere (anti-tusă naturala), evita fumat pasiv |
+| <strong>Bacterial suspectie (tusă >7 zile, sputum purulent)</strong> | Azitromicina 500 mg x1 + 250 mg x4 zile SAU doxiciclina 100 mg x2/zi x7 zile |</p>
+<p>---</p>
+<p>## 📊 Diagnostic Diferențial — Comiparație virale vs. bacteriene</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">**Infecție virals (70-80%)**</h4>
+    <ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">**Infecție bacteriană (20-30%)**</h4>
+    <ul><li>---|---|</li><li><strong>Debut</strong> | Insidios, 1-2 zile | Brusc, <6 ore |</li><li><strong>Febra</strong> | Moderata (38-39°C), 3-5 zile | Înalta (>39°C), persistente |</li><li><strong>Simptome locale</strong> | Rinoree, congestie nasala | Durere, exsudat, adenopatia dureroasă |</li><li><strong>Durată</strong> | 3-7 zile | >10 zile (SAU agravare zi 5-7) |</li><li><strong>Labor​ator</strong> | VSH, PCR ușor crescut | VSH, PCR marcace crescut; hemoleucograma cu stift stânga |</li><li><strong>Scor Centor</strong> | 0-2 | 4+ SAU 2-3 cu test rapid + |</li><li><strong>Tratament</strong> | Simptomativ; NO antibiotic | Antibiotic 10-14 zile |</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><p>---</p>
+<p>## 💊 Conduita terapeutică — Algoritm integrat</p>
+<p>```
+IACRS prezentare inițiala
+│
+├─ FEBRA > 39°C + DURERE FACIALI​A perisinusala + RINOREE PURULENTĂ ≥ 5-7 zile
+│  │
+│  └─ RINOSINUZITA ACUTA BACTERIANA
+│     ├─ Testare: CT dacă complicații suspecte (oftalmoplegia, vomă)
+│     └─ Rx: Amoxicilina/clavulanat SAU Cefuroxim x 10-14 zile
+│        
+├─ FEBRA > 38,5°C + DISFAGIE severa + EXSUDAT GĂLBIU + ADENOMEGALIA <strong>dueroasă</strong>
+│  │
+│  └─ ANGINA (SBHGA presupusa)
+│     ├─ Scor Centor ≥ 4: Antibiotic empiric
+│     ├─ Centor 2-3: Test rapid strep (Ag test SAU cultură)
+│     ├─ Centor 0-1: NU antibiotic (viral 90%+)
+│     └─ Rx (pozitiv SBHGA): Penicilina V x 10 zile
+│
+├─ TUSĂ LĂTRĂTOARE + STRIDOR INSPIRATOR + FEBRA MODERATA (copil 6-24 luni)
+│  │
+│  ├─ Scor Westley ≤ 2: Dexametazon 0,15 mg/kg, acasă dacă stabil
+│  │
+│  ├─ Westley 3-5: Dexametazon + epinefrina racemică, spitalizare
+│  │
+│  └─ Westley >6: ICU, prep. intubație, dexametazon IV
+│
+├─ DISFAGIE severa + SALIVA + RESPIRĂ CU GURA DESCHISĂ + STRIDOR bifazic
+│  │
+│  └─ <strong>EPIGLOTITA — URGENȚĂ</strong>
+│     └─ NU reglezi gâtul, NU nebulizor; Preparare intubație d'urgență
+│        Cefotaxim IV + vancomicina, SALAÔ operator
+│
+└─ TUSĂ PERSISTENTĂ 3-7 ZILE + RALURI BRONȘICE + PX NORMAL
+   │
+   └─ TRAHEOBRONȘITA ACUTA
+      ├─ Viral 85% → simptomativ (antisusiv, fluidizare)
+      ├─ Bacterial suspectie (>7 zile, sputum purulent) → Azitromicina
+      └─ Monitoriza (>7 zile SAU SaO2 < 90% → imagistică pneumonie)
+```</p>
+<p>---</p>
+<p>## 🎲 Grile de evaluare</p>
+<p>### ? Quiz 1 — Scorul Centor și indicatii antibiotic</p>
+<p><strong>Vignetă:</strong> Copil 8 ani cu febra 38°C, durere gât moderat, tuse rara (rafeal), adenomegalia submandibulala dor la palpare, fără exsudat vizibil.</p>
+<p><strong>Calcul scor Centor:</strong>
+- Febra ≥ 38,5°C? NE (38°C) = 0 pct
+- Absență tuse? DA = +1 pct (rafeal rar)
+- Adenomegalia? DA = +1 pct
+- Exsudat? NU = 0 pct
+- Vârsta 3-14 ani? DA = +1 pct
+<strong>Total Centor = 3 pct</strong></p>
+<p><strong>Întrebare:</strong> Care e conduita corectă?</p>
+<p>A) Antibiotic empiric (penicilina), rezultat negru arealizar test strep
+B) Test rapid strep (Ag SAU cultură); antibiotic DOAR dacă pozitiv
+*C) Antibiotic empiric (penicilina), nu mai așteptă test
+D) Nici antibotic, nici test — etiologie virala sigura
+E) Antibiotic DUPÂ cultura (3 zile așteptare)</p>
+<p>FEEDBACK:
+- <strong>A) Greșit</strong> — Centor 3 cu risk 10-30% SBHGA nu garantează etiologie bacteriana; test e necesar pentru a diferenția
+- <strong>B) CORECT</strong> — Centor 2-3 impun test rapid. Sensibilitate 90%+ strep test, cultură dacă test negativ
+- C) Greșit — Centor 3 e limita; test recomanda mai ales la copii (risk falcon falșI pozitivi)
+- D) Greșit — Centor 3 cu adenomegalia și febra justifică test
+- E) Greșit — 3 zile așteptare e prea lung pentru SBHGA; test rapid rezolva imediat</p>
+<p><strong>Răspuns corect: B</strong></p>
+<p>---</p>
+<p>### ? Quiz 2 — Managementul crupului</p>
+<p><strong>Vignetă:</strong> Copil 2 ani, tusa lătrătoare 4 ore, stridor inspirator audibil repaus, tiraj costal moderat, febra 37,8°C, SaO2 95% aer. Scor Westley = 4.</p>
+<p><strong>Întrebare:</strong> Care e terapia inițiala?</p>
+<p>A) Nici antibiotic nici steroizi — crupul spasmodic se rezolva singur
+B) Dexametazon 0,15 mg/kg x1 doze + observație 1 oră; acasă dacă stabil
+*C) Dexametazon 0,15 mg/kg + epinefrina racemică nebulizata; spitalizare 6 ore obs
+D) Intubație de urgență
+E) Azitromicina 5 zile</p>
+<p>FEEDBACK:
+- <strong>A) Greșit</strong> — Westley 4 (moderat) TREBUIE steroizi; riscu progrestei la Flevei sever ​ in 2-4 ore
+- <strong>B) Parțial corect</strong> (pentru Westley 2), NU pentru Westley 4 — necesita și epinefrina, spitalizare
+- <strong>C) CORECT</strong> — Westley 3-5 (moderat) = dexametazon + epinefrina. Efect epinefrina 10-30 min (durata 2-6 ore). Monitoriza ore în spital
+- D) Greșit — Westley 4 fără SaO2 <92% NU necesita intubație (prea timpuriu)
+- E) Greșit — Crupul e viral 95%; antibiotic NU reduce obstrucția (e edema, nu infecție bacteriana)</p>
+<p><strong>Răspuns corect: C</strong></p>
+<p>---</p>
+<p>### ? Quiz 3 — Diagnostic diferențial: Traheobronșita vs. Pneumonie</p>
+<p><strong>Vignetă:</strong> Copil 4 ani, tusa 5 zile, inițial seaca, acum productiva cu mucus alb. Febra 38°C. Auscultație: raluri bronșice difuze bilaterale, NO creptații focale. Radiografia toracica: PX normal, infiltrat peribronșial ușor.</p>
+<p><strong>Întrebare:</strong> Care e diagnosticul probabil și conduita principala?</p>
+<p>A) Pneumonie bacteriana → Amoxicilina/clav x 7-10 zile
+B) Traheobronșita virala → Antisusiv, fluidizare, suport; NO antibiotic imediat
+*C) Traheobronșita virala; controla la 7 zile (dacă tusă persistente → antibiotice)
+D) Crup (laringotraheita) → Dexametazon
+E) Bronșiolita acuta → Ribavirinan</p>
+<p>FEEDBACK:
+- <strong>A) Greșit</strong> — PX normal + raluri bronșice bilaterale (NU creptații) → traheobronșita, NU pneumonie cu consolidare; antibiotic prematur
+- <strong>B) Parțial corect</strong> — Dap, traheobronșita virala; dar gestiunea NU "nici o tratament" — suport e necesar
+- <strong>C) CORECT</strong> — Traheobronșita virala, 85% caz. Antisusiv (dextromorfan), fluidizare (bromhexin). Reevaluare la 7 zile; dacă tusă > 7 zile + sputum purulent → suspecta bacterial (<em>Mycoplasma</em>, <em>Chlamydia</em>) → azitromicina
+- D) Greșit — Crupul e subglotic, tusa lătrătoare + stridor; NU creptații
+- E) Greșit — Bronșiolita e infantil <2 ani, VSR, insuficiență respiratorie progresiva</p>
+<p><strong>Răspuns corect: C</strong></p>
+<p>---</p>
+<p>### ? Quiz 4 — Recunoaștere urgență: Epiglotita</p>
+<p><strong>Vignetă:</strong> Copil 5 ani, debut BRUSC 2 ore, febra 39,5°C, nu vrea să bea (disfagie severă), saliva din gură, respiră cu gura deschisă, stridor bifazic, agitație severă. Părinți spun "copilul arată <strong>mai grav decât în crup precedent</strong>".</p>
+<p><strong>Întrebare:</strong> Care e cea mai urgenta actiune?</p>
+<p>A) RX de profil gât pentru confirmare diagnostic
+B) Examen direkt cu spatula limba peste epiglota pentru vizualizare
+*C) Preparare URGENTA intubație + cefotaxim IV + vancomicina; NICIO netardare diag
+D) Dexametazon + epinefrina nebulizata la urgențe
+E) Cultură sânge + așteptare rezultate</p>
+<p>FEEDBACK:
+- <strong>A) Greșit</strong> — RX poate "confirma" (semn "amprenata digitale"), dar netardă tratamentul; epiglotita = urgență — obstrucție completă bruscă
+- <strong>B) MORTAL</strong> — NU atingi epiglota / NU reglezi gâtul cu spatula — risc declanșare spasm+apnee → Mort în 10 min
+- <strong>C) CORECT</strong> — Epiglotita e emergență care SOLICITA INTUBAȚIE la salaô operator. NU aștepți RX, NU reglezi, NU nebulizor
+- D) Greșit — Steroizi + epinefrina sunt pentru crup (subglotic), NU epiglotita (supraglotic)
+- E) Greșit — Cultură e importanta (viability H. influenzae), dar NU netardă tratament antibiotice IV empirice</p>
+<p><strong>Răspuns corect: C</strong></p>
+<p>---</p>
+<p>## 📖 Cazul clinic — Complicatia unei rinosinuzite</p>
+<p>### ETAPA 1: Prezentare inițiala</p>
+<p><strong>Pacient:</strong> Mihai, 7 ani, băiat</p>
+<p><strong>Istoricul bolii:</strong> Rinoree, congestie nasala 2 zile. Azi dimineața, mama remarcat durere in fața ochiului drept, edemul palpebrei, refuzac să meargă la școala.</p>
+<p><strong>Semne vitale:</strong> Temp. 38.5°C, FR 22/min, FC 100/min</p>
+<p><strong>Examen obiectiv:</strong>
+- Proptoza usoara drept, edem palpebra
+- Conjunctiva ușor congestionate
+- Mișcari oculare: înlăuntrul normal (OD egal OU)
+- Endoscopie nazala: edema mucoasei, rinoree mucopurulentă</p>
+<p><strong>Laborator:</strong> WBC 11.000 (neutro 78%), CRP 35 mg/L, VSH 28 mm/h</p>
+<p><strong>Imagine clinica:</strong> Rinosinuzita acuta cu semne de extensie orbitara (edem palpebra, proptoza ușoară).</p>
+<p><strong>Întrebare pentru student:</strong> Diagnosticul cel mai probabil?</p>
+<p>FEEDBACK:
+- Rinosinuzita bacteriana complexata cu edema orbitala / presimptome de celulita orbitara
+- Necesita imagistică (CT sinus + orbita) pentru a confirma etiopatogenia (edema vs. abces)
+- Antibioterapie IV empirica urgent pentru a preveni progresie la abscesire</p>
+<p>---</p>
+<p>### ETAPA 2: Investigații paracliniihe și decizie</p>
+<p><strong>CT sinus axial + coronal:</strong> 
+- Sinuzita etmoidala bilaterala cu nivel aer-fluid
+- Colectie purulentă intramurala etmoidal (3x2 cm) medial de orbita
+- Edema fascie septi pe orbita, fara colectie intraorbitala distincta
+- NU extensie ICP (meninxul normal)</p>
+<p><strong>Cultură secreta nazala:</strong> <em>S. pneumoniae</em> susceptibil penicilina</p>
+<p><strong>Diagnostic:</strong> <strong>Celulita orbitala (edema orbitala) secund. rinosinuzitei etmoidale.</strong></p>
+<p><strong>Întrebare pentru student:</strong> Care e cea mai urgenta terapie?</p>
+<p>FEEDBACK:
+- Cefotaxim IV 80 mg/kg/zi (2g x4/z pentru copil 7 ani) = 130-160 mg/kg/zi
+- Vancomicina IV 15 mg/kg x3/zi (preventiv coverage pentru MRSA, pana se cunosc rezultatele culturii)
+- Monitoriza zilnic: dacă proptoza scade, edemul se reduc → continuă antibiotice IV 10 zile. Dacă AGRAVARE sau oftalmoplegia apare → drenaj chirurgical urgent</p>
+<p>---</p>
+<p>### ETAPA 3: Evoluția și management drenaj</p>
+<p><strong>Ziua 3 de antibiotice IV:</strong>
+- Proptoza <strong>STAȚIONEAZĂ</strong> (nu scade) 
+- Edemul palpebra <em>remain important</em>
+- Mama cere: "De ce nu se îmbunătățește?"
+- CT de control: colectia purulentă ACEEAȘI 3x2 cm, NU aborata</p>
+<p><strong>Decizie:</strong> Drenaj chirurgical endoscopic — abcesul nu se rezolva medical.</p>
+<p><strong>Chirurgie endoscopie:</strong>  Drenaj etmoidal transnasal, marsupializare abces, tamponare. Cultură peracoperatorie: <em>S. pneumoniae</em> confirmat.</p>
+<p><strong>Rezultat:</strong> 
+- Ziua 1 post-drenaj: proptoza scade 50%
+- Ziua 5 post-drenaj: normalizare proptoza, edem minim
+- Ziua 10: edem complet dispărut, mișcări oculare completa</p>
+<p><strong>Lecție:</strong> Celulita orbitara NU se rezolva mereu cu antibiotice IV singure — drenajul e OBLIGATORIU dacă colectia e volumul (>1 cm) și NU se ameliorează la 48-72 h antibiotic.</p>
+<p>---</p>
+<p>### ETAPA 4: Resumat și puncte cheie</p>
+<p>| Etapă | Diagnostic diferen. | Investigație | Terapie | Rezultat |
+|---|---|---|---|---|
+| Inițial | RSA cu edem palpebra | CT urgent | IV cefotaxim + vancomicina | Stagnare ziua 3 |
+| Progresie | Celulita orbitala cu abces | CT control | Drenaj chirurgical endoscop | Rezoluție |
+| Recuperare | Post-chirurgical | Observație clinic | Antibiotice XT 7-10 zile | Normalizare complet |</p>
+<p><strong>Pearls clinice:</strong>
+- Edemul palpebra ≠ oftalmoplegia; oftalmoplegia = abces SAU tromoflebita sinus cavernos (urgență)
+- Drenajul nu contrazice antibioticele — SUNT complementare
+- Reedituație CT obi​gatorie la 48-72h dacă NU progres clinic</p>
+<p>---</p>
+<p>## 🎯 Flashcard-uri — Retenție rapidă</p>
+<p><strong>Flashcard 1:</strong>
+Q: Care e diferența între laringita și crupul spasmodic?
+R: Laringita = răguseală, tusa (orice vârstă, orice sezon, viral). Crupul spasmodic = tusa <strong>lătrătoare + stridor + 3-24 luni + sezon rece + recurență, </strong>edem noninflamator** (NU febra).</p>
+<p><strong>Flashcard 2:</strong>
+Q: Scor Centor ≤ 1 → tratament?
+R: <strong>NICIUN antibiotic</strong> (risc <10% SBHGA); viral 90%; suport simptomativ.</p>
+<p><strong>Flashcard 3:</strong>
+Q: Epiglotita vs. crup — care e mai urgent?
+R: <strong>Epiglotita</strong> (supraglotic, stridor bifazic, disfagie severa, vomă) = <strong>URGENȚĂ INTUBAȚIE</strong>. Crupul = dexametazon + epinefrina (subglotic, stridor inspirator).</p>
+<p><strong>Flashcard 4:</strong>
+Q: Rinosinuzita acuta virala — cât durează?
+R: <strong>3-5 zile</strong> (mediană 4 zile), apoi ameliorare. Dacă <strong>> 10 zile FĂRĂ ameliorare SAU agravare zi 5-7</strong> → suspecta bacteriana.</p>
+<p><strong>Flashcard 5:</strong>
+Q: IACRS virala — principala complicație pe termen lung?
+R: <strong>Cronicicere → rinosinuzita cronica</strong> (obstrucție ostiala persistenta, depunere fibrinoasă), remodelare sinus. Rară, dar necesita followup.</p>
+<p><strong>Flashcard 6:</strong>
+Q: Traheobronșita acuta — semnul diferențiator vs. pneumonie?
+R: Ralurvbronșice bilaterale + <strong>PX NORMAL</strong> = traheobronșita. Creptații focale + infiltrat consolidat = pneumonie.</p>
+<p><strong>Flashcard 7:</strong>
+Q: <em>Bordetella pertussis</em> (tusă 100 zile) → diagnostic?
+R: RT-PCR secreta nazala (ziua 1-3 tusă), cultură media Bordet-Gengou (rar), serorprobar IgM (ziua 3+).</p>
+<p><strong>Flashcard 8:</strong>
+Q: Postvíral — cât aștepți înainte de antibiotic la traheobronșita?
+R: Viral 85%; aștepți <strong>7-10 zile fără ameliorare + semne bacteriane</strong> (sputum purat, febra persistente) → antibiotic (<em>Mycoplasma</em> → azitromicina, <em>Chlamydia</em> → doxiciclina).</p>
+<p>---</p>
+<p>## ⚖️ Diagnostic diferențial — Matching game</p>
+<p>## 🎯 Matching Game — Asociază diagnosticul cu prezentarea clinică</p>
+<p><strong>Instrucţiuni:</strong> Cititor diagnostic din coloana stânga și asociază cu prezentarea clinică corespunzătoare din coloane dreapta. FI singur aghidul corect pentru fiecare diagnostic.</p>
+<p>| Diagnostics | Prezentare Clinică |
+|---|----|
+| 1. Herpangina | A. Disfagie severă, saliva, stridor bifazic, edemarizare epiglotei pe fibroscop |
+| 2. Epiglotita | B. Cough lator, tusa 3-7 zile, raluri bronșice bilaterale, PX normal |
+| 3. Traheobronșita | C. Duburu brusc, saliu, durere facială, rinoree purulent > 10 zile SAU agravare zi 5-7 |
+| 4. Rinosinuzita bact. | D. Vezicule mici circumscrise faringe, higroma pharingiana roșie, viral (Coxsackie A), NU exsudat alb |
+| 5. Angina SBHGA | E. Tusa lătratoare, stridor inspirator, tiraj, febra moderata, 6-24 luni, Westley 3-5 |
+| 6. Crupul | F. Exsudat alb-gălbiu, debut brusc, febra înalta, disfagie-odinofagie importanta, adenomegalia dureroasa |</p>
+<p><strong>Raspunsuri corecte:</strong>
+1 → D
+2 → A
+3 → B
+4 → C
+5 → F
+6 → E</p>
+<p>---</p>
+<p>## 📋 Sidebar medical — Fiziopatologie, reguli, recomandări</p>
+<p>### Fisiopatologie — De ce IACRS afectează căile superioare?</p>
+<p><strong>Lanț cauzal viraal:</strong>
+1. <strong>Intrare virala</strong> (VSR, influenza) → receptori ICAM-1, HLA-B locus pe epiteliu respirator
+2. <strong>Infiltrat inflamator</strong> (neutrofili, limfocite, monocite) → citokine IL-6, TNF-α, IFN-β
+3. <strong>Edem mucos, disruption mucociliar</strong> → staza secretii + febra
+4. <strong>Trigger bacteria:</strong> oportunista (<em>S. pneumoniae</em>, <em>H. influenzae</em>) colonizează, dacă mucociliar "fals"
+5. <strong>Extensia locala</strong> (sinus ostiuma, retropharynx, orbit) dacă edem-obstrucție cronică</p>
+<p><strong>De ce copii 6-24 luni au înalt risc crup?</strong>
+- Trahea diametru mic (4-5 mm) → edemul x 1 mm = 50% rezistenta crescuta → stridor
+- Epiglota proporțial mai sus, ossin larinxa mai fragila
+- Imunar imatur NU clearira rapid virusa</p>
+<p>---</p>
+<p>### ⚠️ Știații că...</p>
+<p>1. <strong>Post-SBHGA febra reumatismala (1-3% SBHGA netratat) sunt serotipuri M associative</strong> — dacă nu auzi de FR la rezidenți, nu-i pentru că disparitionen (rara E.U.), ci pentru că Penicilina e gold standard 50+ ani
+2. <strong>Traheobronșita virala NU se tratează cu antibiotic inițial, dar 15% evoluează complic. BFCO/astmat copii</strong> — monitoriza zi 7+
+3. <strong>Crupul recurent (episoade repetate pe sezon) NU inseamna infecție recidivanta bacteriana — e predispoziție anatomică (trahea "ingusta", raspuns edem exagerat la orice virus</strong></p>
+<p>---</p>
+<p>### 💡 Conducta clinică — Reguli de aur</p>
+<p>| Regula | Aplicație |
+|---|---|
+| <strong>Centor ≤ 1 → 90% viral</strong> | NU da antibiotic — evita rezistenta |
+| <strong>Rinosinuzita ≥ 10 zile FĂRĂ amélioration</strong> | Suspecta bacteria; CT dacă complicații; antibiotic 10-14 zile |
+| <strong>Epiglotita → intubație urgent</strong> | NU aștepți imagistică, NU reglezi gâtul, NU endocopy fără chirurgie pregatita |
+| <strong>Crupul moderat (Westley 3-5) → epinefrina + dexametazon</strong> | Efect rapid, spitalizare observație |
+| <strong>Traheobronșita > 7 zile cu sputum purulent</strong> | Suspecta <em>Mycoplasma</em> (azitromicina) SAU <em>Chlamydia</em> (doxiciclina) |</p>
+<p>---</p>
+<p>### 📖 Referințe clinice</p>
+<p><strong>Ghiduri medicin ​generale:</strong>
+- American Academy of Pediatrics (AAP) — Streptococcal pharyngitis management
+- EBM-LS Cochrane — Efficacy corticosteroids croup (top evidence dexametazon)
+- CDC — Epiglottitis case management, Hib surveillance</p>
+<p><strong>PMID (validat):</strong>
+- PMID: 29614477 — Centor score meta-analysis, sensibilitate 75%, specificitate 82%
+- PMID: 20208008 — Crup management Westley score, dexametazon ARI 3 (number needed to treat)</p>
+<p>---</p>
+<p>## 🏆 Score card — Completare capitol</p>
+<p><strong>Felicitari! Ai terminat capitolul IACRS.</strong></p>
+<p>| Component | Puncte |
+|---|---|
+| Concepte: Rinosinuzita, faringe-amigdale, laringe, traheobronșita | +20 |
+| Quiz (4 grile cu scoruri Centor, Westley) | +20 |
+| Caz clinic cu epiglotita vs. complicații | +15 |
+| Imagini: 10 imagini integrate (faringe, crup, CT, celulita orbitara) | +20 |
+| Diagnostic diferențial + Matching game | +15 |
+| Pearls clinice + sidebar | +10 |
+| <strong>TOTAL</strong> | <strong>🎯 100/100</strong> |</p>
+<p>---</p>
+<p><em>Generat cu asistență AI (Copilot) + verificare MCP-uri clinice. 2026.</em></p></div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Centor Calculator
+const cs={fever:null,exudate:null,lymph:null,noCough:null,age:null};
+function tC(btn,p,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cs[p]=v;calcCentor()}
+function calcCentor(){if(Object.values(cs).some(v=>v===null))return;let s=0;if(cs.fever)s++;if(cs.exudate)s++;if(cs.lymph)s++;if(cs.noCough)s++;if(cs.age==='3-14')s++;else if(cs.age==='45+')s--;if(s<0)s=0;document.getElementById('centorResult').style.display='block';document.getElementById('centorScore').textContent=s;let r,a,c;if(s<=1){r='Risc scăzut (<10%)';a='Tratament simptomatic. Fără investigații.';c='risk-low'}else if(s<=3){r='Risc intermediar (15-35%)';a='Test rapid streptococic. Antibiotic doar dacă pozitiv.';c='risk-med'}else{r='Risc înalt (51-53%)';a='Test rapid +/- antibioterapie empirică.';c='risk-high'}document.getElementById('centorRisk').textContent=r;const ae=document.getElementById('centorAction');ae.textContent=a;ae.className='score-action '+c}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style="color:var(--green)">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  let html='<div class="ks-title">'+data.titlu+'</div>';
+  if(data.continut){html+='<div class="ks-card"><div class="ks-label">Rezumat</div>'+data.continut.replace(/·/g,'<br>·')+'</div>'}
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca+'</div>'}
+  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(ks&&ks.classList.contains('open')&&!ks.contains(e.target))ks.classList.remove('open')}})
+
+</script>
+</body>
+</html>

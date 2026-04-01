@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CeCitimAzi · Pre-Stagiu · Boli Infecțioase</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;
+  --card-bg:#1e2736;--card-hover:#243044;
+  --teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);
+  --coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;
+  --text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;
+  --border:rgba(255,255,255,0.08);
+  --radius:12px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Space Grotesk',sans-serif;background:var(--bg-primary);color:var(--text-primary);
+  min-height:100vh;line-height:1.6;
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,17,23,0.85);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);padding:16px 0;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-dim));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:18px;color:#fff;
+}
+.logo-text{font-size:20px;font-weight:700;color:var(--text-primary)}
+.logo-sub{font-size:13px;color:var(--text-secondary);font-weight:400}
+.nav-badge{
+  font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;
+  background:var(--teal-glow);color:var(--teal);border:1px solid var(--teal-border);
+  padding:4px 10px;border-radius:20px;
+}
+
+/* HERO */
+.hero{
+  text-align:center;padding:80px 24px 48px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,191,165,0.08) 0%,transparent 60%);
+}
+.hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;margin-bottom:12px}
+.hero h1 span{
+  background:linear-gradient(135deg,var(--teal),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero p{font-size:18px;color:var(--text-secondary);max-width:640px;margin:0 auto 32px}
+.hero-stats{
+  display:flex;justify-content:center;gap:40px;flex-wrap:wrap;
+}
+.stat{text-align:center}
+.stat-value{font-size:28px;font-weight:700;color:var(--teal)}
+.stat-label{font-size:13px;color:var(--text-muted);margin-top:2px}
+
+/* SECTION HEADER */
+.section-header{
+  max-width:1200px;margin:48px auto 24px;padding:0 24px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-header h2{font-size:22px;font-weight:600}
+.section-header .line{flex:1;height:1px;background:var(--border)}
+.section-header .count{
+  font-family:'JetBrains Mono',monospace;font-size:12px;
+  color:var(--teal);background:var(--teal-glow);
+  padding:3px 10px;border-radius:12px;border:1px solid var(--teal-border);
+}
+
+/* GRID */
+.grid{
+  max-width:1200px;margin:0 auto;padding:0 24px 64px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;
+}
+
+/* CARD */
+.card{
+  background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;position:relative;overflow:hidden;
+  transition:all 0.25s ease;cursor:default;
+  display:flex;flex-direction:column;gap:12px;
+}
+.card.active{cursor:pointer;text-decoration:none;color:inherit}
+.card.active:hover{
+  background:var(--card-hover);border-color:var(--teal-border);
+  transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,191,165,0.1);
+}
+.card.active::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--blue));
+}
+.card.disabled{opacity:0.4;filter:grayscale(0.5)}
+.card-top{display:flex;align-items:center;justify-content:space-between}
+.card-number{
+  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;
+  color:var(--teal);background:var(--teal-glow);
+  padding:3px 10px;border-radius:8px;border:1px solid var(--teal-border);
+}
+.card.disabled .card-number{color:var(--text-muted);background:rgba(255,255,255,0.03);border-color:var(--border)}
+.card-status{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px}
+.card-status.ready{color:var(--green);background:rgba(76,175,80,0.12);border:1px solid rgba(76,175,80,0.25)}
+.card-status.soon{color:var(--text-muted);background:rgba(255,255,255,0.03);border:1px solid var(--border)}
+.card h3{font-size:18px;font-weight:600;line-height:1.3}
+.card p{font-size:14px;color:var(--text-secondary);line-height:1.5}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.card-tag{
+  font-size:11px;font-weight:500;padding:2px 8px;border-radius:6px;
+  background:rgba(255,255,255,0.04);color:var(--text-muted);border:1px solid var(--border);
+}
+.card.active .card-tag{color:var(--text-secondary)}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:32px 24px;border-top:1px solid var(--border);
+  color:var(--text-muted);font-size:13px;
+}
+footer a{color:var(--teal);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero{padding:48px 20px 32px}
+  .hero-stats{gap:24px}
+  .grid{grid-template-columns:1fr;padding:0 16px 48px}
+  .nav-inner{padding:0 16px}
+  .section-header{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">Ce</div>
+      <div>
+        <div class="logo-text">CeCitimAzi</div>
+        <div class="logo-sub">Pre-Stagiu · Boli Infecțioase</div>
+      </div>
+    </a>
+    <div class="nav-badge">v1.0 beta</div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Rotația de <span>Boli Infecțioase</span></h1>
+  <p>Lecții interactive pentru rezidenții de Medicină de Familie. Grile, cazuri clinice, imagini și scoruri — totul într-un singur loc.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-value">6</div><div class="stat-label">Capitole active</div></div>
+    <div class="stat"><div class="stat-value">29</div><div class="stat-label">Capitole planificate</div></div>
+    <div class="stat"><div class="stat-value">100%</div><div class="stat-label">Gratuit</div></div>
+  </div>
+</section>
+
+<div class="section-header">
+  <h2>Capitole disponibile</h2>
+  <div class="line"></div>
+  <div class="count">6 / 29</div>
+</div>
+
+<div class="grid">
+
+  <a class="card active" href="capitole/sindrom_febril/sindrom_febril.html">
+    <div class="card-top">
+      <span class="card-number">01</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Sindromul Febril</h3>
+    <p>Febra — mecanisme, evaluare, diagnostic diferențial și conduită. Tipuri de curbe termice și semnificația lor clinică.</p>
+    <div class="card-tags"><span class="card-tag">Febră</span><span class="card-tag">Termoreglare</span><span class="card-tag">Diagnostic diferențial</span></div>
+  </a>
+
+  <a class="card active" href="capitole/IACRS/IACRS.html">
+    <div class="card-top">
+      <span class="card-number">02</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Infecțiile Acute ale Căilor Respiratorii Superioare</h3>
+    <p>Faringite, amigdalite, otite, sinuzite — etiologie, scorul Centor/McIsaac, indicații de antibioterapie.</p>
+    <div class="card-tags"><span class="card-tag">IACRS</span><span class="card-tag">Centor</span><span class="card-tag">Antibioterapie</span></div>
+  </a>
+
+  <a class="card active" href="capitole/adenopatii/adenopatii.html">
+    <div class="card-top">
+      <span class="card-number">03</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Adenopatiile Infecțioase</h3>
+    <p>Adenopatii localizate și generalizate, diagnostic diferențial infecțios vs. neoplazic, indicații de biopsie.</p>
+    <div class="card-tags"><span class="card-tag">Adenopatii</span><span class="card-tag">Limfadenopatii</span><span class="card-tag">Biopsie</span></div>
+  </a>
+
+  <a class="card active" href="capitole/sepsis/sepsis.html">
+    <div class="card-top">
+      <span class="card-number">04</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Sepsis și Șoc Septic</h3>
+    <p>Criterii Sepsis-3, qSOFA, SOFA, management inițial Hour-1 Bundle, vasopresoare și antibioterapie empirică.</p>
+    <div class="card-tags"><span class="card-tag">Sepsis</span><span class="card-tag">qSOFA</span><span class="card-tag">Șoc septic</span></div>
+  </a>
+
+  <a class="card active" href="capitole/sindrom_diareic/sindrom_diareic.html">
+    <div class="card-top">
+      <span class="card-number">05</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Sindromul Diareic Infecțios</h3>
+    <p>Diaree acută și cronică, agenți etiologici, rehidratare, indicații de antibioterapie, Clostridioides difficile.</p>
+    <div class="card-tags"><span class="card-tag">Diaree</span><span class="card-tag">Rehidratare</span><span class="card-tag">C. difficile</span></div>
+  </a>
+
+  <a class="card active" href="capitole/meningite/meningite.html">
+    <div class="card-top">
+      <span class="card-number">06</span>
+      <span class="card-status ready">Disponibil</span>
+    </div>
+    <h3>Meningitele Infecțioase</h3>
+    <p>Meningita bacteriană, virală, TBC și criptococică. Analiza LCR, antibioterapie empirică, urgența meningococică.</p>
+    <div class="card-tags"><span class="card-tag">Meningită</span><span class="card-tag">LCR</span><span class="card-tag">Urgență</span></div>
+  </a>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">07</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Pneumoniile Comunitare</h3>
+    <p>Pneumonia tipică și atipică, CURB-65, antibioterapie empirică, criterii de internare.</p>
+    <div class="card-tags"><span class="card-tag">Pneumonie</span><span class="card-tag">CURB-65</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">08</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Infecțiile Urinare</h3>
+    <p>Cistita, pielonefrita, ITU la gravide și vârstnici, urocultura, antibioterapie.</p>
+    <div class="card-tags"><span class="card-tag">ITU</span><span class="card-tag">Pielonefrită</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">09</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Erupțiile Febrile</h3>
+    <p>Exanteme virale, rujeolă, varicelă, scarlatină, diagnostic diferențial al erupțiilor cu febră.</p>
+    <div class="card-tags"><span class="card-tag">Exanteme</span><span class="card-tag">Rujeolă</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">10</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Infecțiile Digestive</h3>
+    <p>Gastroenterite, hepatite virale, toxiinfecții alimentare, amibiaza.</p>
+    <div class="card-tags"><span class="card-tag">Gastroenterită</span><span class="card-tag">Hepatite</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">11</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Malaria</h3>
+    <p>Plasmodium spp., ciclul biologic, profilaxie, tratament, malaria severă — urgență tropicală.</p>
+    <div class="card-tags"><span class="card-tag">Malarie</span><span class="card-tag">Tropicală</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">12</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Tetanos</h3>
+    <p>Clostridium tetani, toxina tetanospamină, profilaxie post-expunere, tratament, vaccinare.</p>
+    <div class="card-tags"><span class="card-tag">Tetanos</span><span class="card-tag">Vaccinare</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">13</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Rabia</h3>
+    <p>Virusul rabic, profilaxie post-expunere, schema de vaccinare, conduită la mușcătură de animal.</p>
+    <div class="card-tags"><span class="card-tag">Rabie</span><span class="card-tag">Post-expunere</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">14</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Botulismul</h3>
+    <p>Clostridium botulinum, toxina botulinică, botulism alimentar și al plăgilor, antitoxină.</p>
+    <div class="card-tags"><span class="card-tag">Botulism</span><span class="card-tag">Toxină</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">15</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Toxoplasmoza</h3>
+    <p>Toxoplasma gondii, toxoplasmoza la gravide și imunodeprimați, diagnostic serologic, tratament.</p>
+    <div class="card-tags"><span class="card-tag">Toxoplasmoza</span><span class="card-tag">Sarcină</span></div>
+  </div>
+
+  <div class="card disabled">
+    <div class="card-top">
+      <span class="card-number">16</span>
+      <span class="card-status soon">In curând</span>
+    </div>
+    <h3>Trichineloza</h3>
+    <p>Trichinella spiralis, edem periorbitar, mialgii, eozinofilie, diagnostic și tratament.</p>
+    <div class="card-tags"><span class="card-tag">Trichineloza</span><span class="card-tag">Parazitară</span></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>CeCitimAzi &middot; Pre-Stagiu &middot; Boli Infecțioase &middot; Autor: Ștefan Tunareanu, medic rezident MF</p>
+  <p style="margin-top:8px"><a href="https://www.cecitimazi.ro" target="_blank">www.cecitimazi.ro</a></p>
+</footer>
+
+</body>
+</html>
