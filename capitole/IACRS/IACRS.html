@@ -259,7 +259,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <body>
 <nav class="top-nav">
   <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
-  <div class="logo">CeCitimAzi</div>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
   <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
   <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
   <div class="xp-badge" id="xpBadge">0 XP</div>
