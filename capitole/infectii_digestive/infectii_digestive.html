@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infecții Digestive — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:block;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw;padding-top:52px}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:-340px;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary);transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.ks-card strong{color:var(--text-primary)}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+@media(max-width:1360px){.content-wrapper{margin-right:0;max-width:780px}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.md-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--teal);line-height:1.4}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Algoritm Clinic */
+.algoritm-clinic{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.alg-header{background:linear-gradient(135deg,rgba(0,191,165,0.12),rgba(0,191,165,0.04));border-bottom:1px solid var(--border);padding:14px 22px}
+.alg-badge{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.alg-header h4{font-size:17px;margin-top:3px;color:var(--text-primary)}
+.alg-desc{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.alg-body{padding:30px 22px;overflow-x:auto}
+.alg-canvas{position:relative;min-width:fit-content}
+.alg-grid{display:grid;gap:52px 24px;justify-items:center;align-items:center;position:relative;z-index:2}
+.alg-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.alg-node{padding:12px 18px;border-radius:8px;text-align:center;font-size:13px;font-weight:500;max-width:220px;min-width:100px;position:relative;cursor:default;transition:transform .2s,box-shadow .2s;word-wrap:break-word;z-index:2;justify-self:center}
+.alg-node:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.alg-node-label{color:var(--text-primary);line-height:1.4}
+.alg-start{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));border:2px solid var(--green);border-radius:20px}
+.alg-start .alg-node-label{color:var(--green);font-weight:600}
+.alg-decizie{background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(255,193,7,0.05));border:2px solid var(--amber);border-left:4px solid var(--amber);border-radius:4px}
+.alg-decizie .alg-node-label{color:var(--amber)}
+.alg-actiune{background:linear-gradient(135deg,rgba(100,181,246,0.15),rgba(100,181,246,0.05));border:2px solid var(--blue);border-radius:8px}
+.alg-actiune .alg-node-label{color:var(--blue)}
+.alg-final{background:linear-gradient(135deg,rgba(0,191,165,0.15),rgba(0,191,165,0.05));border:3px solid var(--teal);border-radius:20px}
+.alg-final .alg-node-label{color:var(--teal);font-weight:600}
+.alg-alerta{background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:2px solid var(--coral);border-radius:8px;animation:algPulse 2s ease-in-out infinite}
+.alg-alerta .alg-node-label{color:var(--coral);font-weight:600}
+.alg-node.has-detail{cursor:pointer}
+.alg-node.has-detail:hover{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,191,165,0.2)}
+.alg-detail{display:none}
+@keyframes algDetailIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.alg-ks-container:empty{display:none}
+.alg-ks-container{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.alg-ks-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:14px 16px 14px 14px;margin-bottom:12px;animation:algKsIn .3s ease;font-size:13px;line-height:1.65}
+.alg-ks-card .alg-ks-title{font-size:13px;font-weight:700;margin-bottom:8px;padding-right:20px}
+.alg-ks-card .alg-ks-content{color:var(--text-secondary);font-size:12.5px}
+.alg-ks-card .alg-ks-content strong{color:var(--text-primary)}
+.alg-ks-close{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;transition:color .2s;border-radius:4px}
+.alg-ks-close:hover{color:var(--coral);background:rgba(255,107,107,0.1)}
+@keyframes algKsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes algKsOut{to{opacity:0;transform:translateX(20px)}}
+@keyframes algKsFlash{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 0 4px rgba(0,191,165,0.2)}100%{box-shadow:none}}
+@keyframes algPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.2)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+@media(max-width:600px){.alg-grid{grid-template-columns:1fr!important;gap:12px 0!important}.alg-node{grid-column:1!important;grid-row:auto!important;max-width:100%}.alg-svg{display:none}.alg-node::after{content:'↓';display:block;color:var(--teal-border);font-size:18px;margin-top:6px;line-height:1}.alg-node:last-child::after{display:none}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#h_pylori">Infecția cu Helicobacter pylori</a></li>
+<li><a href="#hepatite">Hepatitele virale acute</a></li>
+<li><a href="#algoritm_hepatita">Algoritm Diagnostic — Hepatita Acută</a></li>
+<li><a href="#mecanisme_diaree">Sindromul diareic infecțios — Mecanisme patogenice</a></li>
+<li><a href="#toxiinfectie">Toxiinfecția alimentară</a></li>
+<li><a href="#dizenterie">Dizenteria bacteriană — Shigella și Salmonella</a></li>
+<li><a href="#gastroenterite_virale">Gastroenteritele virale</a></li>
+<li><a href="#parazitoze">Parazitoze intestinale</a></li>
+<li><a href="#principii_terapeutice">Principii terapeutice în infecțiile digestive</a></li>
+<li><a href="#grile_suplimentare">Grile de autoevaluare</a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Boli Infecțioase · Pre-Stagiu</div>
+  <h1>Infecții Digestive</h1>
+  <p>De la Helicobacter pylori la hepatitele virale și gastroenteritele acute</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează acest capitol?</div>
+  <p>Infecțiile tractului digestiv sunt printre cele mai frecvente patologii infecțioase la nivel global. Organizația Mondială a Sănătății estimează că bolile diareice acute sunt responsabile de peste 1,5 milioane de decese anual, majoritatea la copiii sub 5 ani din țările în curs de dezvoltare. În România, deși mortalitatea este semnificativ mai mică, bolile diareice și hepatitele virale rămân probleme importante de sănătate publică. Capacitatea de a diferenția rapid mecanismul patogenic (secretor vs. inflamator vs. invaziv) ghidează întregul management — de la decizia de a trata simptomatic la indicația de antibioterapie și momentul internării. Fiecare pacient cu diaree acută necesită evaluare a stării de hidratare ÎNAINTE de orice investigație etiologică. Rehidratarea este piatra de temelie a tratamentului, indiferent de etiologie.</p>
+</div>
+
+<div class="section" id="h_pylori">
+  
+  <h2>Infecția cu Helicobacter pylori</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Microbiologia și factorii de virulență</h3>
+<p>Helicobacter pylori este un bacil Gram-negativ, spiralat, microaerofil, care colonizează exclusiv mucoasa gastrică umană. Supraviețuirea în mediul acid gastric este posibilă datorită producției masive de urează — o enzimă care hidrolizează ureea în amoniac și dioxid de carbon, creând un micromediu alcalin protector în jurul bacteriei. Transmiterea se face predominant pe cale fecal-orală și oral-orală, în special în copilărie, în medii cu condiții socio-economice precare.</p>
+<p>Din punct de vedere al virulenței, tulpinile de H. pylori se clasifică în două tipuri majore. <strong>Tulpinile de tip I</strong> (CagA-pozitive, VacA-pozitive) sunt cele mai agresive: proteina CagA (Cytotoxin-Associated Gene A) este injectată direct în celulele epiteliale gastrice printr-un sistem de secreție de tip IV, declanșând semnalizare celulară aberantă, inflamație cronică și, pe termen lung, risc crescut de metaplazie intestinală și adenocarcinom gastric. Toxina VacA (Vacuolating Cytotoxin A) induce formarea de vacuole în celulele epiteliale și inhibă răspunsul imun local. <strong>Tulpinile de tip II</strong> (CagA-negative) sunt mai puțin virulente și mai frecvent asociate cu gastrită cronică superficială fără progresie malignă.</p>
+<h3 class="md-subtitle">Diagnosticul infecției cu H. pylori</h3>
+<p>Metodele diagnostice se împart în două categorii: invazive (necesită endoscopie) și non-invazive.</p>
+<p><strong>Metodele invazive</strong> necesită biopsie gastrică obținută endoscopic:
+- <strong>Testul rapid cu urează (CLO test)</strong> — biopsia este plasată într-un mediu cu uree și indicator de pH. Dacă H. pylori este prezent, ureaza bacteriană descompune ureea, eliberând amoniac care alcalinizează mediul și schimbă culoarea indicatorului (de la galben la roz/roșu). Rezultat disponibil în 1-24 ore. Sensibilitate ~90%, specificitate ~95%.
+- <strong>Examenul histopatologic</strong> — colorații speciale (Giemsa, Warthin-Starry) evidențiază bacteriile spiralate la suprafața mucoasei. Permite și evaluarea gradului de gastrită, prezența metaplaziei intestinale și a atrofiei.
+- <strong>Cultura bacteriană</strong> — cea mai specifică metodă (100%), dar și cea mai dificilă tehnic (necesită medii speciale, atmosferă microaerofilă). Utilă mai ales pentru antibiogramă în cazul eșecului terapeutic.</p>
+<p><strong>Metodele non-invazive</strong> nu necesită endoscopie:
+- <strong>Testul respirator cu uree marcată C13</strong> — pacientul ingeră uree marcată cu carbon-13; dacă H. pylori este prezent, ureaza bacteriană descompune ureea, eliberând CO₂ marcat care este detectat în aerul expirat. Este considerat gold standard-ul non-invaziv pentru diagnostic și pentru controlul eradicării (se efectuează la 4-6 săptămâni post-tratament). Sensibilitate și specificitate >95%.
+- <strong>Antigenul fecal</strong> — detectează antigene ale H. pylori în scaun prin metode imunoenzimatice. Alternativă la testul respirator, utilă mai ales la copii.
+- <strong>Serologia (IgG anti-H. pylori)</strong> — detectează anticorpi circulanți. Limitare importantă: NU diferențiază infecția activă de cea vindecată (anticorpii persistă luni-ani după eradicare). NU este utilă pentru controlul eradicării.</p></div>
+
+<div class="img-component">
+  <img src="images/img1_h_pylori.jpg" alt="Test rapid cu urează (CLO test) pentru detectarea H. pylori" data-titlu="Test rapid cu urează (CLO test) pentru detectarea H. pylori" data-desc="<p>Kituri de test rapid cu urează (CLO test) pentru detectarea H. pylori. Casetele din plastic conțin godeuri circulare galbene cu substrat de uree și indicator de pH. Biopsia gastrică este plasată în godeu — dacă H. pylori este prezent, ureaza bacteriană descompune ureea, alcalinizând mediul și schimbând culoarea indicatorului de la galben la roz. Virarea culorii confirmă prezența infecției.</p>" data-sursa="https://en.wikipedia.org/wiki/Rapid_urease_test">
+  <div class="img-caption">
+    <div class="caption-title">Test rapid cu urează (CLO test) pentru detectarea H. pylori</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Kituri de test rapid cu urează (CLO test) pentru detectarea H. pylori. Casetele din plastic conțin godeuri circulare galbene cu substrat de uree și indicator de pH. Biopsia gastrică este plasată în godeu — dacă H. pylori este prezent, ureaza bacteriană descompune ureea, alcalinizând mediul și...</p></div><div class="img-cap-full"><p>Kituri de test rapid cu urează (CLO test) pentru detectarea H. pylori. Casetele din plastic conțin godeuri circulare galbene cu substrat de uree și indicator de pH. Biopsia gastrică este plasată în godeu — dacă H. pylori este prezent, ureaza bacteriană descompune ureea, alcalinizând mediul și schimbând culoarea indicatorului de la galben la roz. Virarea culorii confirmă prezența infecției.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Tratamentul infecției cu H. pylori</h3>
+<p>Tratamentul standard de primă linie este <strong>tripla terapie clasică</strong>, administrată pe durata de <strong>14 zile</strong> (fostele scheme de 7 zile au fost abandonate din cauza ratei crescute de eșec):</p>
+<ul><li><strong>Amoxicilină</strong> 1 g x 2/zi + <strong>Claritromicină</strong> 500 mg x 2/zi + <strong>Inhibitor de pompă de protoni (IPP)</strong> în doză standard x 2/zi</li></ul>
+<p>În cazul alergiei la penicilină, amoxicilina se înlocuiește cu metronidazol 500 mg x 2/zi.</p>
+<p><strong>Terapia cvadruplă cu bismut</strong> este alternativa de primă linie în zonele cu rezistență crescută la claritromicină (>15%) sau ca tratament de linia a doua după eșecul triplei terapii:
+- IPP x 2/zi + Bismut subsalicilat 524 mg x 4/zi + Metronidazol 250 mg x 4/zi + Tetraciclină 500 mg x 4/zi — 14 zile</p>
+<p><strong>Controlul eradicării</strong> este obligatoriu și se efectuează la minimum 4 săptămâni după terminarea tratamentului (și la minimum 2 săptămâni după oprirea IPP-ului) prin testul respirator C13 sau antigenul fecal. Serologia NU este utilă pentru controlul eradicării.</p></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ De ce eșuează eradicarea H. pylori?</div>
+  <p>Principalele cauze de eșec terapeutic sunt: (1) rezistența la claritromicină — depășește 20% în multe țări europene, inclusiv România; (2) complianța scăzută a pacientului — schema cu 3 medicamente de 2 ori pe zi timp de 14 zile este dificil de respectat; (3) administrarea IPP-ului în doze insuficiente — IPP-ul trebuie administrat cu 30 minute înainte de masă pentru eficacitate maximă. Rata globală de eradicare cu tripla terapie este de ~70-80% (față de >90% în trecut), motiv pentru care ghidurile recente recomandă terapia cvadruplă cu bismut ca alternativă de primă linie în zonele cu rezistență înaltă.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Un pacient de 45 de ani, fumător, se prezintă cu epigastralgii postprandiale tardive de 3 luni, pirosis și grețuri. Endoscopia digestivă superioară evidențiază un ulcer duodenal de 12 mm. Care este metoda cea mai adecvată pentru CONTROLUL ERADICĂRII H. pylori după tratament?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) Serologia IgG anti-Helicobacter pylori</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">B) Testul respirator cu uree marcată C13</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) Testul rapid cu urează (CLO test) pe biopsie endoscopică</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">D) Antigenul fecal H. pylori la 2 săptămâni de la începerea tratamentului</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">E) Cultura din biopsie gastrică cu antibiogramă</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — Testul respirator C13 este gold standard-ul non-invaziv pentru controlul eradicării. Se efectuează la minimum 4 săptămâni după terminarea antibioterapiei și la 2 săptămâni după oprirea IPP. Sensibilitate și specificitate >95%.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — Serologia IgG detectează anticorpi care persistă luni-ani după eradicare. NU diferențiază infecția activă de cea vindecată, deci nu este utilă pentru controlul eradicării.<br><strong>C)</strong> INCORECT — CLO testul necesită endoscopie, care nu se repetă de rutină doar pentru controlul eradicării (este invazivă și costisitoare). Se rezervă pentru cazurile cu indicație endoscopică independentă (ex: ulcer gastric — necesită rebiopsierea pentru excluderea malignității).<br><strong>D)</strong> INCORECT — Antigenul fecal este o alternativă validă pentru controlul eradicării, DAR trebuie efectuat la minimum 4 săptămâni (nu 2) după terminarea tratamentului. La 2 săptămâni riscul de rezultat fals-negativ este crescut.<br><strong>E)</strong> INCORECT — Cultura din biopsie este cea mai specifică metodă, dar este invazivă, costisitoare și dificilă tehnic. Este rezervată cazurilor de eșec terapeutic repetat, pentru antibiogramă.</div></div>
+</div></div>
+
+<div class="section" id="hepatite">
+  
+  <h2>Hepatitele virale acute</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Hepatita A</h3>
+<p>Virusul hepatitei A (HAV) aparține familiei Picornaviridae, este un virus ARN fără anvelopă, extrem de rezistent în mediul extern. Transmiterea se face exclusiv pe cale <strong>fecal-orală</strong> — prin apă și alimente contaminate, sau prin contact direct cu persoane infectate. Perioada de incubație este de aproximativ <strong>28 de zile</strong> (interval 15-50 zile), iar contagiozitatea maximă este în cele 2 săptămâni anterioare debutului icterului, când virusul este excretat masiv în scaun.</p>
+<p>Tabloul clinic variază în funcție de vârstă: la copiii sub 6 ani, infecția este frecvent asimptomatică sau anicterică (>70% din cazuri); la adulți, peste 70% dezvoltă icter clinic, astenie marcată, grețuri, dureri abdominale și urini hipercrome. Evoluția este aproape întotdeauna <strong>autolimitată</strong> — nu cronicizează niciodată. Hepatita fulminantă apare în mai puțin de 0,01% din cazuri, dar riscul crește la pacienții cu hepatopatie cronică preexistentă sau vârstă avansată.</p>
+<p><strong>Diagnosticul</strong> se bazează pe prezența <strong>IgM anti-HAV</strong> — marker de infecție acută, prezent de la debutul simptomelor și persistă 3-6 luni. IgG anti-HAV indică imunitate (post-infecție sau post-vaccinare) și persistă toată viața.</p>
+<p><strong>Tratamentul</strong> este exclusiv suportiv: hidratare, repaus, evitarea hepatotoxicelor (alcool, paracetamol). Nu există tratament antiviral specific.</p>
+<p><strong>Profilaxia</strong> se realizează prin vaccinare (vaccin inactivat, 2 doze la 0 și 6-12 luni) — eficacitate >95%. Vaccinarea post-expunere este eficientă dacă se administrează în primele 2 săptămâni de la contact. Notificarea epidemiologică este obligatorie.</p>
+<h3 class="md-subtitle">Hepatita B</h3>
+<p>Virusul hepatitei B (HBV) aparține familiei Hepadnaviridae, este un virus <strong>ADN</strong> cu anvelopă, cu un mecanism de replicare unic printr-un intermediar ARN (revers-transcriptază). Transmiterea se face pe cale <strong>parenterală, sexuală și verticală</strong> (perinatală). HBV este de 50-100 de ori mai infecțios decât HIV.</p>
+<p>Riscul de cronicizare depinde critic de vârsta la momentul infecției: <strong>90%</strong> la nou-născuții infectați perinatal, <strong>30-50%</strong> la copiii 1-5 ani, și <strong>sub 5%</strong> la adulții imuncompetenți. Această inversare dramatică reflectă imaturitatea răspunsului imun celular la nou-născut.</p>
+<p>#### Markerii serologici ai hepatitei B</p>
+<p>Interpretarea serologiei HBV este esențială și se bazează pe câțiva markeri-cheie:</p>
+<ul><li><strong>HBsAg</strong> (antigenul de suprafață) — prezent în orice infecție activă (acută sau cronică). Persistența >6 luni definește infecția cronică.</li><li><strong>Anti-HBs</strong> (anticorpi anti-suprafață) — marker de imunitate protectoare (post-infecție vindecată sau post-vaccinare). Titru protector: >10 mUI/mL.</li><li><strong>IgM anti-HBc</strong> (anticorpi IgM anti-core) — marker-cheie al infecției <strong>acute</strong>. Prezent doar în infecția recentă (titru înalt) sau reactivare.</li><li><strong>IgG anti-HBc</strong> (anticorpi IgG anti-core) — marker de contact cu virusul (persistă toată viața). Prezent atât în infecția vindecată cât și în cea cronică.</li><li><strong>HBeAg</strong> (antigenul e) — marker de replicare activă și contagiozitate crescută.</li><li><strong>Anti-HBe</strong> — apare la seroconversia e, indică scăderea replicării virale.</li></ul></div>
+
+<div class="img-component">
+  <img src="images/img2_hepatita_markeri.jpg" alt="Evoluția markerilor serologici în hepatita B acută" data-titlu="Evoluția markerilor serologici în hepatita B acută" data-desc="<p>Graficul evoluției markerilor serologici ai hepatitei B în timp (săptămâni după expunere). Se observă apariția secvențială a markerilor: HBsAg apare primul (înainte de simptome), urmat de HBeAg (marker de replicare activă). IgM anti-HBc apare odată cu debutul clinic și este markerul-cheie al infecției acute. Anti-HBe apare la seroconversie, iar anti-HBs apare tardiv, marcând vindecarea și imunitatea protectoare. Fereastra serologică (HBsAg negativ, anti-HBs încă negativ) este acoperită de prezența IgG anti-HBc.</p>" data-sursa="https://cdn.who.int/media/docs/default-source/searo/hiv-hepatitis/training-modules/08-hbv-serological-markers.pdf">
+  <div class="img-caption">
+    <div class="caption-title">Evoluția markerilor serologici în hepatita B acută</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Graficul evoluției markerilor serologici ai hepatitei B în timp (săptămâni după expunere). Se observă apariția secvențială a markerilor: HBsAg apare primul (înainte de simptome), urmat de HBeAg (marker de replicare activă). IgM anti-HBc apare odată cu debutul clinic și este markerul-cheie al infecției acute....</p></div><div class="img-cap-full"><p>Graficul evoluției markerilor serologici ai hepatitei B în timp (săptămâni după expunere). Se observă apariția secvențială a markerilor: HBsAg apare primul (înainte de simptome), urmat de HBeAg (marker de replicare activă). IgM anti-HBc apare odată cu debutul clinic și este markerul-cheie al infecției acute. Anti-HBe apare la seroconversie, iar anti-HBs apare tardiv, marcând vindecarea și imunitatea protectoare. Fereastra serologică (HBsAg negativ, anti-HBs încă negativ) este acoperită de prezența IgG anti-HBc.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Interpretarea serologiei HBV — Cele 4 profile esențiale</div>
+  <ul><li><strong>1. Infecție acută:</strong> HBsAg+, IgM anti-HBc+ (titru înalt), anti-HBs−</li><li><strong>2. Infecție cronică:</strong> HBsAg+ >6 luni, IgM anti-HBc− (sau titru scăzut), anti-HBs−</li><li><strong>3. Imunitate post-infecție:</strong> HBsAg−, anti-HBs+, IgG anti-HBc+</li><li><strong>4. Imunitate post-vaccinare:</strong> HBsAg−, anti-HBs+ (>10 mUI/mL), anti-HBc− (nu a existat contact cu virusul)</li></ul>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Tratamentul hepatitei B</h3>
+<p><strong>Hepatita B acută</strong> la adulți: 95% se vindecă spontan — tratamentul este suportiv. Antiviralele (entecavir sau tenofovir) sunt indicate DOAR în hepatita severă (INR >1.5, encefalopatie) sau prelungită.</p>
+<p><strong>Hepatita B cronică</strong> necesită evaluare complexă (ADN-HBV cantitativ, elastografie hepatică, biopsie). Indicațiile de tratament includ: ADN-HBV >2000 UI/mL cu ALT crescut și/sau fibroză semnificativă. Tratamentul de elecție: <strong>entecavir</strong> 0.5 mg/zi sau <strong>tenofovir disoproxil</strong> 245 mg/zi (sau tenofovir alafenamidă 25 mg/zi) — pe termen nelimitat.</p>
+<p><strong>Vaccinarea</strong> este cea mai eficientă măsură de prevenție: schema 0-1-6 luni, 3 doze intramusculare. Rata de seroconversie >95% la adulții imunocompetenți. Vaccinarea este inclusă în programul național de imunizare în România.</p></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Fereastra serologică în hepatita B</div>
+  <p>Există o perioadă în evoluția hepatitei B acute în care <strong>HBsAg</strong> a fost deja cleared (a dispărut din sânge), dar anti-HBs nu a apărut încă. Aceasta se numește <strong>„fereastra serologică"</strong> și poate dura câteva săptămâni. În această perioadă, <strong>singurul marker</strong> care confirmă diagnosticul este <strong>IgM anti-HBc</strong> (care rămâne pozitiv). Necunoașterea acestui fenomen poate duce la rezultate fals-negative dacă se testează DOAR HBsAg — motiv pentru care panelul serologic complet (HBsAg + IgM anti-HBc + anti-HBs) este obligatoriu în evaluarea hepatitei acute.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">O pacientă de 25 de ani, fără antecedente, se prezintă cu icter scleral instalat de 3 zile, astenie marcată, grețuri și urini hipercrome. Menționează că a călătorit în Egipt acum 4 săptămâni. Biologic: ALT = 2800 U/L, AST = 2100 U/L, bilirubină totală = 8.5 mg/dL. Serologiile arată: IgM anti-HAV negativ, HBsAg negativ, IgM anti-HBc pozitiv, anti-HCV negativ. Care este diagnosticul cel mai probabil?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Hepatită A acută — IgM anti-HAV poate fi fals-negativ în prima săptămână</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Hepatită C acută — anti-HCV este în fereastra serologică</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">C) Hepatită E acută — frecventă în Egipt, necesită IgM anti-HEV</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">D) Hepatită B acută în fereastra serologică — IgM anti-HBc pozitiv confirmă infecția acută B</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">E) Hepatită autoimună tip 1 — transaminazele foarte crescute sugerează cauză autoimună</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Aceasta este o hepatită B acută în fereastra serologică: HBsAg a fost deja clearuit, dar anti-HBs nu a apărut încă. Singurul marker pozitiv este IgM anti-HBc, care confirmă infecția acută cu HBV. Fără testarea IgM anti-HBc, diagnosticul ar fi fost ratat.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — IgM anti-HAV apare cu 5-10 zile ÎNAINTE de debutul simptomelor. La 3 zile de la debut clinic, IgM anti-HAV ar trebui să fie deja pozitiv. Un rezultat negativ exclude practic hepatita A.<br><strong>B)</strong> INCORECT — Deși anti-HCV poate fi negativ în primele 6-8 săptămâni (fereastră serologică), prezența IgM anti-HBc pozitiv oferă deja diagnosticul. Hepatita C ar necesita confirmare cu HCV-ARN (PCR).<br><strong>C)</strong> INCORECT — Hepatita E este frecventă în Egipt (genotipul 1), dar IgM anti-HBc pozitiv confirmă deja infecția cu HBV. Hepatita E rămâne un diferențial în cazul serologiilor complet negative.<br><strong>E)</strong> INCORECT — Hepatita autoimună nu produce de obicei transaminaze >2000 U/L (valorile sunt tipic moderate, 300-500 U/L). IgM anti-HBc pozitiv indică etiologia virală.</div></div>
+</div></div>
+
+<div class="section" id="algoritm_hepatita">
+  
+  <h2>Algoritm Diagnostic — Hepatita Acută</h2>
+</div>
+
+<div class="text-block"><p>Algoritmul de mai jos prezintă conduita diagnostică standard în fața unui pacient cu tablou clinic și biochimic de hepatită acută (creșterea transaminazelor >10x VN, icter, astenie). Evaluarea serologică inițială permite diferențierea rapidă a etiologiei virale.</p></div>
+
+<div class="algoritm-clinic" id="alg_667993">
+  <div class="alg-header">
+    <div class="alg-badge">ALGORITM CLINIC</div>
+    <h4>Evaluare etiologică a hepatitei acute</h4>
+    <p class="alg-desc">Bazat pe ghidurile EASL, APASL și Am Fam Physician (PMID 30811163, 33967551)</p>
+  </div>
+  <div class="alg-body">
+    <div class="alg-canvas">
+      <svg class="alg-svg"></svg>
+      <div class="alg-grid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(7,auto)"
+           data-edges='[{"from": "s1", "to": "s2", "label": ""}, {"from": "s2", "to": "s3", "label": ""}, {"from": "s3", "to": "s4", "label": "DA"}, {"from": "s3", "to": "s5", "label": "NU"}, {"from": "s5", "to": "s6", "label": "DA"}, {"from": "s5", "to": "s7", "label": "NU"}, {"from": "s7", "to": "s8", "label": "DA"}, {"from": "s8", "to": "s9", "label": ""}, {"from": "s7", "to": "s10", "label": "NU"}, {"from": "s10", "to": "s11", "label": "DA"}, {"from": "s10", "to": "s12", "label": "Oricând"}]'>
+        <div class="alg-node alg-start has-detail" data-id="s1" style="grid-row:1;grid-column:1/-1"><span class="alg-node-label">Pacient cu hepatită acută (transaminaze >10x VN, ± icter)</span><div class="alg-detail"><strong>Criterii de hepatită acută:</strong> ALT/AST >10× limita superioară a normalului, cu debut recent (<6 luni). Tablou clinic tipic: icter, astenie marcată, grețuri, durere în hipocondrul drept, urini hipercrome. La pacienții vârstnici sau cu boli hepatice cronice preexistente, tabloul poate fi atipic sau mai sever.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s2" style="grid-row:2;grid-column:1/-1"><span class="alg-node-label">Panel serologic inițial: IgM anti-HAV, HBsAg, IgM anti-HBc, anti-HCV</span><div class="alg-detail"><strong>Panelul serologic de primă linie</strong> cuprinde minimum 4 markeri care acoperă cele 3 cauze virale majore. <strong>IgM anti-HAV</strong> = infecție acută cu virusul A (persistă 3-6 luni post-infecție). <strong>HBsAg + IgM anti-HBc</strong> = distinge infecția acută B de cea cronică (HBsAg singur nu diferențiază). <strong>Anti-HCV</strong> = screening pentru hepatita C; atenție la fereastra serologică (poate fi fals-negativ în primele 6-8 săptămâni). În practica europeană recentă, se recomandă adăugarea <strong>IgM anti-HEV</strong> în panelul inițial datorită creșterii cazurilor autohtone de hepatită E.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s3" style="grid-row:3;grid-column:1/-1"><span class="alg-node-label">IgM anti-HAV pozitiv?</span><div class="alg-detail">IgM anti-HAV apare cu 5-10 zile înaintea simptomelor și persistă 3-6 luni. Confirmarea nu necesită de regulă teste suplimentare — IgM anti-HAV are specificitate >99%. <strong>Atenție:</strong> co-infecții posibile (A+B, A+E) — în cazuri severe, completează panelul chiar dacă IgM anti-HAV e pozitiv.</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s4" style="grid-row:4;grid-column:1"><span class="alg-node-label">Hepatită A acută — tratament suportiv, notificare epidemiologică</span><div class="alg-detail"><strong>Nu există tratament antiviral specific.</strong> Managementul este exclusiv suportiv: hidratare, repaus, evitarea hepatotoxicelor (alcool, paracetamol). Vindecarea completă în >99% din cazuri; nu cronicizează niciodată. <strong>Notificare obligatorie</strong> către DSP (boală transmisibilă). Investigarea contactelor și vaccinarea post-expunere (eficientă dacă se administrează în primele 2 săptămâni). Risc de hepatită fulminantă: <1%, dar crește la pacienții >40 ani sau cu hepatopatie cronică preexistentă.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s5" style="grid-row:4;grid-column:2"><span class="alg-node-label">HBsAg+ și/sau IgM anti-HBc+?</span><div class="alg-detail"><strong>IgM anti-HBc</strong> este markerul cheie: prezent DOAR în infecția acută (titru înalt) sau reactivare. HBsAg singur nu diferențiază infecția acută de cea cronică — poate fi pozitiv în ambele. <strong>Context românesc:</strong> România este zonă endemică pentru virusul Delta (HDV). La orice pacient cu HBsAg+, testarea <strong>anti-HDV</strong> este obligatorie. Co-infecția B+D produce hepatită mai severă și risc crescut de hepatită fulminantă.</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s6" style="grid-row:5;grid-column:1"><span class="alg-node-label">Hepatită B acută — monitorizare, evaluare severitate (INR, factor V)</span><div class="alg-detail"><strong>95% din adulți</strong> vindecă spontan hepatita B acută — tratamentul antiviral NU este necesar de rutină. Indicații pentru antiviral (entecavir/tenofovir): hepatită severă (INR >1.5), hepatită prelungită (>4 săptămâni), sau imunosupresie. <strong>Factorul V</strong> este markerul cel mai sensibil de insuficiență hepatică acută — scade rapid, înaintea INR-ului. Factor V <50% = indicator de prognostic rezervat. <strong>Testează anti-HDV</strong> (anticorpi anti-Delta) — co-infecția B+D crește riscul de fulminantă de la <1% la 5-20%.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s7" style="grid-row:5;grid-column:2"><span class="alg-node-label">Anti-HCV pozitiv?</span><div class="alg-detail"><strong>Atenție la fereastra serologică:</strong> în primele 6-8 săptămâni de la infecție, anti-HCV poate fi negativ. Dacă suspiciunea clinică e înaltă (ex: expunere la ac contaminat, IDU), se solicită direct <strong>HCV-ARN (PCR)</strong> indiferent de rezultatul anticorpilor. Anti-HCV pozitiv nu diferențiază infecția acută de cea cronică — necesită confirmare cu HCV-ARN.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s8" style="grid-row:6;grid-column:1"><span class="alg-node-label">Confirmare cu HCV-ARN (PCR)</span><div class="alg-detail"><strong>HCV-ARN pozitiv</strong> confirmă viremia activă. Se determină și genotipul viral (1-6), deși pangenomicele moderne (sofosbuvir/velpatasvir) acoperă toate genotipurile. HCV-ARN negativ cu anti-HCV pozitiv = infecție vindecată (spontan sau post-tratament) sau fals-pozitiv al anticorpilor.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s10" style="grid-row:6;grid-column:2"><span class="alg-node-label">Toate serologiile negative?</span><div class="alg-detail">Dacă IgM anti-HAV, HBsAg, IgM anti-HBc și anti-HCV sunt toate negative, cauza hepatitei NU este virală clasică (A, B sau C). Diferențialul include: hepatită E (frecvent subdiagnosticată!), hepatită autoimună, boala Wilson, hepatită toxică/medicamentoasă, hepatită ischemică.</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s9" style="grid-row:7;grid-column:1"><span class="alg-node-label">Hepatită C acută — evaluare pentru tratament antiviral direct (DAA)</span><div class="alg-detail"><strong>Abordare modernă:</strong> ghidurile EASL 2023 recomandă tratament precoce cu DAA (antivirale directe), fără a mai aștepta cele 6 luni clasice de clearance spontan. Rate de vindecare (SVR) >95% cu regimuri pangenotipice: <strong>sofosbuvir/velpatasvir</strong> 12 săptămâni. Clearance spontan apare în doar 20-30% din cazuri — amânarea tratamentului riscă cronicizarea.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s11" style="grid-row:7;grid-column:2"><span class="alg-node-label">Evaluare extinsă: anti-HEV IgM, ANA/SMA/LKM (autoimună), ceruloplasmină (Wilson), toxice/medicamente</span><div class="alg-detail"><strong>IgM anti-HEV</strong> — hepatita E este subdiagnosticată în Europa; genotipul 3 este autohton, transmis prin carne de porc/vânat insuficient gătită. La imunosupresați poate croniciza. <strong>ANA, SMA (anti-mușchi neted), anti-LKM</strong> — screening pentru hepatită autoimună (tip 1 vs tip 2). Dacă pozitive + IgG crescut → biopsie hepatică pentru confirmare. <strong>Ceruloplasmină serică</strong> — screening Wilson la pacienții <40 ani. Dacă scăzută → cupremia, cuprurie/24h, examen oftalmo cu lampă cu fantă (inel Kayser-Fleischer). <strong>Anamneza toxicologică</strong> — paracetamol (cauza #1 de IHA medicamentoasă), AINS, statine, amiodaronă, izoniazidă, suplimente naturiste, ciuperci (Amanita phalloides).</div></div>
+      <div class="alg-node alg-alerta has-detail" data-id="s12" style="grid-row:7;grid-column:3"><span class="alg-node-label">Semne de insuficiență hepatică acută? (INR >1.5, encefalopatie) — transfer centru hepatologie</span><div class="alg-detail"><strong>URGENȚĂ MEDICALĂ</strong> — insuficiența hepatică acută (IHA) are mortalitate >50% fără transplant. <strong>Criteriile King's College</strong> ghidează decizia de transplant: INR >6.5 (non-paracetamol) sau pH <7.3 + INR >6.5 + creatinină >3.4 (paracetamol). <strong>Transfer imediat</strong> către centru cu program de transplant hepatic — nu se așteaptă deteriorarea! Monitorizare: INR la 12h, glicemie (hipoglicemia = semn de gravitate), lactat, amoniac, status neurologic (scara West Haven pentru encefalopatie hepatică).</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="mecanisme_diaree">
+  
+  <h2>Sindromul diareic infecțios — Mecanisme patogenice</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Clasificarea patogenică a diareei infecțioase</h3>
+<p>Diareea infecțioasă poate fi clasificată în trei mecanisme patogenice fundamentale, fiecare cu implicații diagnostice și terapeutice distincte. Această clasificare nu este doar un exercițiu academic — ea ghidează direct deciziile clinice: necesitatea coproculturilor, indicația de antibioterapie și intensitatea monitorizării.</p>
+<p><strong>Mecanismul secretor (toxinogen)</strong> — prototipul este holera. Toxina bacteriană acționează asupra enterocitelor fără a le distruge, stimulând secreția activă de apă și electroliți în lumenul intestinal. Toxina colerică, de exemplu, activează permanent adenilat-ciclaza prin ADP-ribozilarea subunității Gs, ducând la creșterea AMPc intracelular și deschiderea canalelor de clor. Rezultatul este o diaree apoasă masivă (scaune „apă de orez"), fără sânge, fără mucus, fără leucocite fecale, fără febră. Deshidratarea poate fi severă și rapid letală dacă nu se intervine cu rehidratare agresivă. Alte exemple: E. coli enterotoxigenă (ETEC — „diareea călătorului"), Vibrio cholerae, Clostridium perfringens, Staphylococcus aureus.</p>
+<p><strong>Mecanismul inflamator (invaziv local)</strong> — prototipul este dizenteria shigellozică. Bacteria invadează mucoasa intestinală (de obicei colonică), producând distrucție tisulară cu răspuns inflamator intens. Scaunele sunt diareice cu sânge, mucus și puroi (dizenterie), leucocitele fecale sunt prezente, pacientul are febră și tenesme rectale. Examenul scaunului arată „spută rectală" — mucus sanguinolent cu leucocite. Alte exemple: Salmonella non-tifoidică, Campylobacter, E. coli enteroinvazivă (EIEC), Entamoeba histolytica.</p>
+<p><strong>Mecanismul invaziv (sistemic)</strong> — prototipul este febra tifoidă (Salmonella typhi). Bacteria nu doar invadează mucoasa, ci traversează bariera intestinală și diseminează hematogen, producând bacteriemie și afectare sistemică. Tabloul clinic este dominat de febră înaltă, nu de diaree (care poate fi chiar absentă sau moderată). Alte exemple: Salmonella paratyphi, Listeria monocytogenes, Yersinia enterocolitica (forme septicemice).</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Secretorie (toxinogenă)</h4>
+    <ul><li>Toxina acționează pe enterocite fără a le distruge</li><li>Scaune apoase, voluminoase, fără sânge</li><li>Leucocite fecale absente</li><li>Febră de obicei absentă</li><li>Localizare: intestin subțire predominant</li><li>Deshidratare severă, rapidă (risc vital)</li><li>Tenesme rectale absente</li><li>Prototip: Vibrio cholerae</li><li>Tratament: rehidratare (piatra de temelie)</li><li>Coprocultură de obicei nu este necesară</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Inflamatorie (invazivă)</h4>
+    <ul><li>Bacteria invadează și distruge mucoasa</li><li>Scaune cu sânge, mucus, puroi (dizenterie)</li><li>Leucocite fecale prezente (>5/câmp)</li><li>Febră prezentă, frecvent >38.5°C</li><li>Localizare: colon predominant</li><li>Deshidratare moderată</li><li>Tenesme rectale prezente</li><li>Prototip: Shigella dysenteriae</li><li>Tratament: rehidratare + antibioterapie (selectiv)</li><li>Coprocultură indicată (ghidează antibioterapia)</li></ul>
+  </div>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Rehidratarea — regula universală în diareea acută</div>
+  <p>Indiferent de mecanismul patogenic, REHIDRATAREA este piatra de temelie a tratamentului diareei acute. Soluția de rehidratare orală (SRO) OMS conține: 2.6 g NaCl + 2.9 g citrat trisodic + 1.5 g KCl + 13.5 g glucoză per litru de apă. Glucoza este esențială — cotransportul Na⁺-glucoză (SGLT1) rămâne funcțional chiar și în prezența toxinei colerice, permițând absorbția de apă. Acest mecanism fiziopatologic simplu a salvat milioane de vieți și a fost numit de revista Lancet „cea mai importantă descoperire medicală a secolului XX".</p>
+</div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Când NU dai antidiareice!</div>
+  <p>Loperamidul (Imodium) și alte antidiareice de motilitate sunt CONTRAINDICATE în diareea inflamatorie (dizenterie) — reducerea motilității intestinale prelungește contactul toxinelor și bacteriilor invazive cu mucoasa, crescând riscul de megacolon toxic și perforație. Regula practică: dacă scaunele conțin sânge sau pacientul are febră înaltă, NU administra antidiareice de motilitate. Rehidratarea rămâne singura intervenție universal sigură.</p>
+</div>
+
+<div class="section" id="toxiinfectie">
+  
+  <h2>Toxiinfecția alimentară</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Principalii agenți etiologici</h3>
+<p>Toxiinfecțiile alimentare (TIA) sunt printre cele mai frecvente boli infecțioase la nivel global. Diagnosticul etiologic se bazează pe triada: <strong>alimentul suspect + intervalul de incubație + tabloul clinic dominant</strong>. Această corelație permite orientarea diagnostică chiar înainte de confirmarea microbiologică.</p></div>
+
+<h3>Agenții principali ai toxiinfecțiilor alimentare</h3>
+<div class="table-wrapper"><table>
+  <thead><tr><th>Agent etiologic</th><th>Aliment tipic</th><th>Incubație</th><th>Tablou clinic</th><th>Observații</th></tr></thead>
+  <tbody><tr><td><strong>S. aureus</strong></td><td>Produse lactate, creme, salate cu maioneză</td><td>1-6 ore</td><td>Vărsături predominante, diaree moderată, afebril</td><td>Toxină preformată (termorezistentă) — alimentul poate fi reîncălzit fără efect</td></tr>
+<tr><td><strong>B. cereus</strong> (emetică)</td><td>Orez reîncălzit, paste</td><td>1-6 ore</td><td>Vărsături predominante, similare cu S. aureus</td><td>Toxina cereulide — termorezistentă, nu se distruge la reîncălzire</td></tr>
+<tr><td><strong>B. cereus</strong> (diareică)</td><td>Carne, legume, sosuri</td><td>8-16 ore</td><td>Diaree apoasă, crampe abdominale</td><td>Toxină diferită de forma emetică — termolabilă</td></tr>
+<tr><td><strong>C. perfringens</strong></td><td>Carne reîncălzită, tocături</td><td>8-16 ore</td><td>Diaree apoasă, crampe, fără febră</td><td>Toxina se produce în intestin (nu e preformată). Formă ușoară, autolimitată 24h</td></tr>
+<tr><td><strong>Salmonella</strong> spp.</td><td>Ouă, pui, produse lactate nepasteurizate</td><td>12-48 ore</td><td>Diaree (verde-gălbuie), febră, crampe</td><td>Autolimitată 3-7 zile. Antibioticele NU la imuncompetenți</td></tr>
+<tr><td><strong>E. coli O157:H7</strong></td><td>Carne insuficient gătită, lapte nepasteurizat</td><td>1-8 zile</td><td>Diaree sanguinolentă, crampe severe, fără febră</td><td>RISC DE SHU (sindrom hemolitic-uremic) — NU antibiotice (cresc riscul)!</td></tr>
+<tr><td><strong>Norovirus</strong></td><td>Fructe de mare (scoici), salate</td><td>24-48 ore</td><td>Vărsături + diaree, foarte contagios</td><td>Cel mai frecvent agent de gastroenterită acută la adulți</td></tr>
+<tr><td><strong>Campylobacter</strong></td><td>Pui insuficient gătit, lapte nepasteurizat</td><td>2-5 zile</td><td>Diaree (poate fi sanguinolentă), febră, crampe</td><td>Risc de sindrom Guillain-Barré post-infecție (1/1000 cazuri)</td></tr></tbody>
+</table></div>
+
+<div class="quiz-container"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Un grup de 15 persoane participă la o petrecere. La 2 ore după masă, 8 dintre ele dezvoltă vărsături abundente, grețuri severe și crampe abdominale, dar fără febră și fără diaree semnificativă. Toate au consumat o salată cu maioneză preparată în dimineața evenimentului și păstrată la temperatura camerei. Care este agentul etiologic cel mai probabil?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Norovirus — transmitere directă persoană la persoană</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) Bacillus cereus forma diareică — orezul reîncălzit</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">C) Clostridium perfringens — carnea reîncălzită</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">D) Staphylococcus aureus — toxină preformată în aliment</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Salmonella enteritidis — incubație scurtă la inoculul mare</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Tabloul este clasic pentru intoxicația stafilococică: incubație foarte scurtă (1-6 ore), predomină VĂRSĂTURILE (nu diareea), pacienții sunt AFEBRILI, alimentul incriminat este un produs cu maioneză păstrat la temperatura camerei (permite multiplicarea S. aureus și producția de enterotoxină termorezistentă). Toxina este PREFORMATĂ în aliment — de aceea debutul este extrem de rapid.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — Norovirus are incubație de 24-48 ore și produce atât vărsături cât și diaree. Transmiterea persoană la persoană nu explică debutul simultan la 2 ore după masă.<br><strong>B)</strong> INCORECT — B. cereus forma diareică are incubație de 8-16 ore și predomină DIAREEA (nu vărsăturile). Forma emetică (cu vărsături) este asociată cu orezul reîncălzit, nu cu salata cu maioneză.<br><strong>C)</strong> INCORECT — C. perfringens are incubație de 8-16 ore (nu 2 ore) și este asociat cu carnea reîncălzită. Tabloul este predominant diareic, nu cu vărsături.<br><strong>E)</strong> INCORECT — Salmonella are incubație de 12-48 ore, chiar și la inocul mare. Ar produce febră și diaree, nu vărsături fără febră la 2 ore.</div></div>
+</div></div>
+
+<div class="section" id="dizenterie">
+  
+  <h2>Dizenteria bacteriană — Shigella și Salmonella</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Shigelloza</h3>
+<p>Shigella este un bacil Gram-negativ, nemobil, din familia Enterobacteriaceae, cu 4 serogrupe principale:
+- <strong>Serogrupa A</strong> (S. dysenteriae) — cea mai virulentă, produce toxina Shiga (Stx). Responsabilă de epidemii severe în țările în curs de dezvoltare, cu risc de SHU.
+- <strong>Serogrupa B</strong> (S. flexneri) — cea mai frecventă în țările în curs de dezvoltare.
+- <strong>Serogrupa C</strong> (S. boydii) — rară, localizată mai ales în India.
+- <strong>Serogrupa D</strong> (S. sonnei) — cea mai frecventă în țările industrializate, producând forme mai ușoare.</p>
+<p>Caracteristica epidemiologică esențială este <strong>doza infecțioasă extrem de mică</strong>: 50-100 CFU sunt suficiente pentru a produce boala (față de 10⁵-10⁸ CFU pentru Salmonella). Aceasta explică transmiterea eficientă persoană la persoană, prin contact direct, și epidemiile în colectivități (grădinițe, cămine, instituții de îngrijire).</p>
+<p>Tabloul clinic clasic al dizenteriei shigellozice include: diaree apoasă inițială (primele 24-48 ore), urmată de scaune frecvente (10-30/zi) cu sânge, mucus și puroi, tenesme rectale dureroase, febră înaltă (39-40°C) și crampe abdominale predominant în fosa iliacă stângă (afectarea rectosigmoidiană). Aspectul scaunelor a fost descris clasic ca <strong>„spută rectală"</strong> — mici cantități de mucus sanguinolent cu puroi, fără materii fecale.</p>
+<h3 class="md-subtitle">Salmoneloza (enterocolita non-tifoidică)</h3>
+<p>Salmonella non-tifoidică (S. enteritidis, S. typhimurium) produce o enterocolită de obicei autolimitată, cu diaree apoasă sau mucoasă (rar sanguinolentă), scaune tipic descrise ca <strong>galben-verzui</strong>, febră moderată, crampe abdominale și, ocazional, vărsături. Durata tipică este de 3-7 zile, cu rezoluție spontană.</p>
+<p>Particularitatea terapeutică importantă: <strong>antibioticele NU sunt indicate la pacienții imuncompetenți</strong> — nu scurtează durata bolii și cresc riscul de portaj cronic (excreția bacteriană în scaun persistă mai mult timp la pacienții tratați cu antibiotice). Antibioticele sunt indicate DOAR la: vârstnici >65 ani, copii <3 luni, imunodeprimați, pacienți cu proteze vasculare/articulare, și forme severe (bacteriemie, febră >5 zile).</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Shigella (dizenterie)</h4>
+    <ul><li>Doză infecțioasă foarte mică (50-100 CFU)</li><li>Transmitere predominant persoană la persoană</li><li>Scaune sanguinolente, mucupurulente, „spută rectală"</li><li>Febră înaltă (39-40°C)</li><li>Tenesme prezente, marcate</li><li>Localizare: rectosigmoid (colon distal)</li><li>Durată 5-7 zile (fără tratament)</li><li>Antibioterapie indicată (azitromicină/ciprofloxacin)</li><li>Complicații: SHU (S. dysenteriae tip 1)</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--yellow)">
+    <h4 style="color:var(--yellow)">Salmonella (enterocolită)</h4>
+    <ul><li>Doză infecțioasă mare (10⁵-10⁸ CFU)</li><li>Transmitere predominant alimentară (ouă, pui)</li><li>Scaune galben-verzui, apoase sau mucoase</li><li>Febră moderată (38-39°C)</li><li>Tenesme absente sau ușoare</li><li>Localizare: ileon terminal + colon</li><li>Durată 3-7 zile (autolimitată)</li><li>Antibioterapie NU la imuncompetenți (crește portajul)</li><li>Complicații: bacteriemie, osteomielită (drepanocitari)</li></ul>
+  </div>
+</div>
+
+<div class="section" id="gastroenterite_virale">
+  
+  <h2>Gastroenteritele virale</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Rotavirus vs. Norovirus</h3>
+<p>Rotavirusul și norovirusul sunt cei doi protagoniști ai gastroenteritelor virale, cu epidemiologie și management diferite. Ambele sunt virusuri ARN fără anvelopă, ceea ce le conferă rezistență deosebită în mediul extern și la dezinfecția cu soluții alcoolice (necesită dezinfectanți pe bază de clor sau peroxid de hidrogen).</p>
+<p><strong>Rotavirusul</strong> (familia Reoviridae) este principala cauză de diaree severă la copiii sub 5 ani, cu vârf de incidență între 6 luni și 2 ani. Sezonalitate marcată: iarna și începutul primăverii în zonele temperate. Tabloul clinic tipic: debut brusc cu vărsături (primele 24-48 ore), urmate de diaree apoasă profuză (5-10 scaune/zi), febră moderată și deshidratare rapidă. Durata medie este 3-7 zile. Mecanismul patogenic este dual: enterotoxina NSP4 produce secreție activă, iar distrucția enterocitelor mature reduce absorbția (vezi sidebar).</p>
+<p>Tratamentul rotavirusului este suportiv: <strong>SRO (soluție de rehidratare orală)</strong> este piatra de temelie, suplimentată cu <strong>zinc</strong> (20 mg/zi la copii >6 luni, 10 mg/zi la copii <6 luni, timp de 10-14 zile) — suplimentarea cu zinc reduce durata și severitatea episodului diareic și previne recidivele în următoarele 2-3 luni. <strong>Vaccinarea</strong> anti-rotavirus (vaccin viu atenuat, oral — Rotarix 2 doze sau RotaTeq 3 doze, începând de la 6 săptămâni de viață) a redus dramatic incidența și mortalitatea la nivel global.</p>
+<p><strong>Norovirusul</strong> (familia Caliciviridae) este principala cauză de gastroenterită acută la adulți și cea mai frecventă cauză de epidemii în colectivități (spitale, nave de croazieră, cămine pentru vârstnici). Extrem de contagios — doza infecțioasă este de doar 18-100 particule virale. Transmiterea se face fecal-oral, prin alimente contaminate (în special fructe de mare, salate), apă contaminată sau contact direct. Incubația este scurtă (12-48 ore), iar tabloul clinic combină vărsături abundente cu diaree apoasă, crampe abdominale și, frecvent, mialgii. Durata este scurtă (24-72 ore), dar contagiozitatea persistă >48 ore după rezoluția simptomelor.</p></div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--purple)">
+    <h4 style="color:var(--purple)">Rotavirus</h4>
+    <ul><li>Copii <5 ani (6 luni — 2 ani)</li><li>Sezonalitate: iarna (zone temperate)</li><li>Incubație 1-3 zile</li><li>Simptom dominant: diaree apoasă profuză</li><li>Febră moderată (38-39°C)</li><li>Durată 3-7 zile</li><li>Deshidratare frecvent severă (copii mici)</li><li>Vaccin disponibil: DA (Rotarix, RotaTeq)</li><li>Tratament: SRO + zinc</li><li>Infectează practic toți copiii până la 5 ani</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--green)">
+    <h4 style="color:var(--green)">Norovirus</h4>
+    <ul><li>Toate vârstele, predominant adulți</li><li>Tot anul (epidemii mai frecvente iarna)</li><li>Incubație 12-48 ore</li><li>Simptom dominant: vărsături predominante</li><li>Febră ușoară sau absentă</li><li>Durată 24-72 ore</li><li>Deshidratare moderată</li><li>Vaccin disponibil: NU</li><li>Tratament: SRO (suportiv)</li><li>Cea mai frecventă cauză de epidemii în colectivități</li></ul>
+  </div>
+</div>
+
+<div class="timeline"><div class="timeline-item">
+  <h4>Ziua 0: Expunere (contact cu copil bolnav sau suprafață contaminată) | Incubație 1-3 zile, virusul se replică în enterocitele intestinului subțire proximal.</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 1-2: Debut brusc cu vărsături repetate | Vărsăturile sunt de obicei primul simptom. Febra apare concomitent (38-39°C). Copilul refuză alimentația.</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 2-3: Diareea apoasă profuză se instalează | Scaune apoase, explozive, 5-10/zi, fără sânge. Risc maxim de deshidratare. Se inițiază SRO agresiv.</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 3-5: Vărsăturile cedează, diareea persistă | Febra scade. Se continuă SRO + zinc. Alimentația se reintroduce treptat (NU se oprește laptele matern).</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 5-7: Rezoluția diareei, recuperare completă | Scaunele se normalizează. Excreția virală poate continua 7-10 zile post-rezoluție clinică (risc de transmitere).</h4>
+  <p></p>
+</div>
+</div>
+
+<div class="section" id="parazitoze">
+  
+  <h2>Parazitoze intestinale</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Protozoare intestinale</h3>
+<p>Protozoarele intestinale sunt organisme unicelulare care parazitează tractul digestiv, producând diaree acută sau cronică. Cele mai importante clinic sunt:</p>
+<p><strong>Giardia lamblia (G. duodenalis)</strong> — cel mai frecvent parazit intestinal patogen la nivel global. Transmitere fecal-orală (apă contaminată, contact persoană la persoană). Tablou clinic: diaree cronică cu scaune grăsoase (steatoree), balonare marcată, flatulență, crampe abdominale, pierdere ponderală. Poate fi asimptomatică. Diagnostic: examenul coproparazitologic (chisturi în scaun), antigen fecal (test rapid, sensibilitate >90%), sau PCR. Tratament: <strong>metronidazol</strong> 250 mg x 3/zi, 5-7 zile (prima linie), sau tinidazol 2 g doză unică (alternativă cu complianță superioară).</p>
+<p><strong>Cryptosporidium parvum</strong> — important mai ales la imunodeprimați (HIV/SIDA cu CD4 <200). La imuncompetenți produce diaree acută autolimitată. La pacienții cu SIDA poate cauza diaree cronică severă, cu deshidratare masivă și colangiopatie. Diagnostic: colorație Ziehl-Neelsen modificată (oochisturi acid-alcoolo-rezistente) sau PCR. Tratament: <strong>nitazoxanidă</strong> 500 mg x 2/zi, 3 zile la imuncompetenți. La pacienții HIV, tratamentul esențial este <strong>inițierea ART</strong> (restaurarea imunității) — nitazoxanida are eficacitate limitată la imunocompromiși.</p>
+<p><strong>Isospora (Cystoisospora) belli</strong> — parazit oportunist, aproape exclusiv la imunodeprimați. Produce diaree apoasă cu eozinofilie periferică (un indiciu diagnostic important — este singura cauză de diaree cu eozinofilie la pacienții HIV). Diagnostic: colorație Ziehl-Neelsen (oochisturi mari, ovale). Tratament: <strong>cotrimoxazol (TMP-SMX)</strong> forte, 160/800 mg x 2/zi, 10 zile, urmat de profilaxie secundară.</p>
+<p><strong>Cyclospora cayetanensis</strong> — transmis prin fructe și legume contaminate (zmeură, busuioc importate). Tablou clinic similar giardiei. Tratament: <strong>cotrimoxazol</strong>.</p>
+<p><strong>Balantidium coli</strong> — singurul ciliat patogen la om. Asociat cu contactul cu porci. Produce diaree dizenteriformă (diaree sanguinolentă cu ulcerații colonice). Tratament: <strong>tetraciclină</strong> 500 mg x 4/zi, 10 zile, sau metronidazol.</p>
+<h3 class="md-subtitle">Diagnosticul parazitologic</h3>
+<p>Diagnosticul parazitozelor intestinale necesită o abordare metodică:</p>
+<ul><li><strong>Examenul coproparazitologic direct</strong> (preparat nativ + colorare Lugol) — examinarea directă a scaunului proaspăt pentru identificarea trofozoiților (forme mobile) și chisturilor. Sensibilitate limitată cu o singură probă (~50-70%).</li><li><strong>Tehnica de concentrare</strong> (flotare sau sedimentare) — crește sensibilitatea pentru ouă de helminți și chisturi de protozoare.</li><li><strong>Testul cu bandă adezivă (Scotch tape)</strong> — specific pentru Enterobius vermicularis (oxiuri). Se aplică dimineața, înainte de igienă, în zona perianală. Detectează ouăle depuse de femela adultă în timpul nopții.</li><li><strong>Colorația Ziehl-Neelsen modificată</strong> — esențială pentru Cryptosporidium și Isospora (oochisturi acid-alcoolo-rezistente), care NU se văd la examenul direct obișnuit.</li><li><strong>PCR fecal</strong> — specificitate superioară, mai ales pentru E. histolytica (diferențierea de E. dispar, care este nepatogenă și morfologic identică).</li><li><strong>Regula celor 3 probe</strong> — se recomandă recoltarea a minimum 3 probe de scaun la interval de 2-3 zile (pe o perioadă de 10 zile) pentru a compensa eliminarea intermitentă a paraziților.</li></ul></div>
+
+<div class="img-component">
+  <img src="images/img3_paraziti_intestinali.jpg" alt="Imagini microscopice comparative ale ouălor și chisturilor de paraziți intestinali" data-titlu="Imagini microscopice comparative ale ouălor și chisturilor de paraziți intestinali" data-desc="<p>Grilă cu imagini microscopice ale principalelor ouă și chisturi de paraziți intestinali. Sunt prezentate 16 forme parazitare diferite: ouă de Ascaris (fertilizat și nefertilizat — cu coajă mamelonată caracteristică), Diphyllobothrium (oul cu opercul), Enterobius (oul planoconvex), Fasciola (oul mare, operculat), Hymenolepis diminuta și nana, ouă de ankylostomide (Hookworm), Paragonimus, Schistosoma (3 specii — mansoni cu spin lateral, haematobium cu spin terminal, japonicum rotund fără spin), Taenia (oul cu embriofor radial striat), Trichuris (oul bipolat „în formă de lămâie&quot;), și chistul de Giardia. Plașa permite identificarea comparativă a principalelor forme parazitare la examenul coproparazitologic.</p>" data-sursa="https://www.semanticscholar.org/paper/An-expert-diagnosis-system-for-classification-of-on-Avc%C4%B1-Varol/93fb035b08c0c2a6a315919c9d7cf6cdb3246bfd/figure/2">
+  <div class="img-caption">
+    <div class="caption-title">Imagini microscopice comparative ale ouălor și chisturilor de paraziți intestinali</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Grilă cu imagini microscopice ale principalelor ouă și chisturi de paraziți intestinali. Sunt prezentate 16 forme parazitare diferite: ouă de Ascaris (fertilizat și nefertilizat — cu coajă mamelonată caracteristică), Diphyllobothrium (oul cu opercul), Enterobius (oul planoconvex), Fasciola (oul mare...</p></div><div class="img-cap-full"><p>Grilă cu imagini microscopice ale principalelor ouă și chisturi de paraziți intestinali. Sunt prezentate 16 forme parazitare diferite: ouă de Ascaris (fertilizat și nefertilizat — cu coajă mamelonată caracteristică), Diphyllobothrium (oul cu opercul), Enterobius (oul planoconvex), Fasciola (oul mare, operculat), Hymenolepis diminuta și nana, ouă de ankylostomide (Hookworm), Paragonimus, Schistosoma (3 specii — mansoni cu spin lateral, haematobium cu spin terminal, japonicum rotund fără spin), Taenia (oul cu embriofor radial striat), Trichuris (oul bipolat „în formă de lămâie"), și chistul de Giardia. Plașa permite identificarea comparativă a principalelor forme parazitare la examenul coproparazitologic.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este tratamentul de primă linie al giardiei?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Metronidazol</strong> 250 mg x 3/zi, 5-7 zile. Alternativa cu complianță superioară: <strong>tinidazol</strong> 2 g doză unică. Metronidazol acționează prin generarea de radicali liberi toxici care distrug ADN-ul parazitului. Atenție: NU se consumă alcool pe durata tratamentului (efect disulfiram-like).</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este tratamentul esențial al criptosporidiozei la pacientul HIV?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Inițierea terapiei antiretrovirale (ART)</strong> pentru restaurarea imunității (CD4 >100). La imuncompetenți: <strong>nitazoxanidă</strong> 500 mg x 2/zi, 3 zile. La imunocompromiși, nitazoxanida are eficacitate limitată — numai recuperarea imunologică controlează efectiv infecția.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce parazit oportunist produce diaree cu eozinofilie la pacienții HIV?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Isospora (Cystoisospora) belli</strong> — singurul parazit intestinal care produce <strong>eozinofilie periferică</strong> la pacienții imunocompromiși. Acest indiciu de laborator este un diferențial important față de Cryptosporidium (care NU produce eozinofilie). Tratament: <strong>cotrimoxazol</strong> (TMP-SMX) forte, 160/800 mg x 2/zi, 10 zile.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Cum diferențiezi E. histolytica patogenă de E. dispar nepatogenă?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>PCR fecal</strong> — este singura metodă fiabilă, deoarece cele două specii sunt <strong>morfologic identice</strong> la examenul microscopic. E. histolytica produce dizenterie amoebiană și abces hepatic; E. dispar este comensală nepatogenă. Antigenul fecal specific pentru E. histolytica (test ELISA) este o alternativă la PCR.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce metodă diagnostică este specifică pentru oxiuri (Enterobius)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Testul cu bandă adezivă (Scotch tape)</strong> — se aplică dimineața, ÎNAINTE de igienă, în zona perianală. Detectează ouăle depuse de femela adultă în timpul nopții. Examenul coproparazitologic clasic are sensibilitate foarte scăzută pentru oxiuri (<5%), deoarece ouăle sunt depuse perianal, nu în scaun.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este regula celor 3 probe în diagnosticul parazitologic?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Se recomandă recoltarea a <strong>minimum 3 probe de scaun</strong> la interval de 2-3 zile, pe o perioadă de <strong>10 zile</strong>. Eliminarea paraziților este intermitentă — o singură probă are sensibilitate de doar 50-70%. Cu 3 probe, sensibilitatea crește la >90%. Probele se recoltează ÎNAINTE de administrarea antibioticelor, laxativelor sau substanțelor de contrast baritat.</p></div>
+  </div>
+</div></div></div>
+
+<div class="match-game">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Cryptosporidium / Isospora</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Enterobius vermicularis (oxiuri)</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Entamoeba histolytica vs. E. dispar</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">Giardia lamblia</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">Schistosoma mansoni</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">PCR fecal (diferențierea speciilor morfologic identice)</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Examen scaun + biopsie rectală (ouă cu spin lateral)</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Test cu bandă adezivă (Scotch tape) perianal, dimineața</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Antigen fecal rapid sau examen coproparazitologic (chisturi în scaun)</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Colorație Ziehl-Neelsen modificată (acid-alcoolo-rezistență)</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/5</div>
+</div>
+
+<div class="section" id="principii_terapeutice">
+  
+  <h2>Principii terapeutice în infecțiile digestive</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Indicațiile antibioterapiei în diareea acută</h3>
+<p>Majoritatea episoadelor de diaree acută sunt autolimitate și necesită DOAR rehidratare. Antibioterapia empirică este indicată în situații specifice, bine definite:</p>
+<p><strong>Indicații clare de antibioterapie:</strong>
+- Dizenterie (diaree cu sânge + febră) — suspiciune de Shigella
+- Diareea călătorului moderată-severă (>4 scaune/zi, febră, sânge)
+- Pacienți imunodeprimați cu diaree acută (indiferent de aspect)
+- Suspiciune de holeră (diaree apoasă masivă în context epidemiologic)
+- Vârstnici >65 ani cu semne de toxicitate sistemică</p>
+<p><strong>Antibioterapia empirică de primă linie:</strong>
+- <strong>Azitromicină</strong> 500 mg/zi, 3 zile — preferată în România și Europa (rezistența crescută la fluorochinolone a Campylobacter și Salmonella)
+- <strong>Ciprofloxacin</strong> 500 mg x 2/zi, 3 zile — alternativă (atenție la rezistență)</p>
+<p><strong>Situații în care antibioticele sunt CONTRAINDICATE sau dăunătoare:</strong>
+- Salmonella non-tifoidică la imuncompetenți — antibioticele cresc durata portajului
+- E. coli O157:H7 (EHEC) — antibioticele cresc riscul de SHU (sindrom hemolitic-uremic) prin liza bacteriană masivă cu eliberare de toxină Shiga
+- Diaree virală — antibioticele sunt ineficiente și promovează rezistența</p></div>
+
+<div class="section" id="grile_suplimentare">
+  
+  <h2>Grile de autoevaluare</h2>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q4">
+  <div class="q-label">Întrebare · 4</div>
+  <div class="q-text">Un copil de 18 luni este adus la urgență în ianuarie cu vărsături de 2 zile și diaree apoasă profuză (10 scaune/zi) instalată de 24 de ore. Febră 38.5°C. Examenul obiectiv arată semne de deshidratare moderată. Scaunele NU conțin sânge. Care este diagnosticul cel mai probabil și tratamentul corect?</div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) Salmonelloză — antibioterapie empirică cu azitromicină + rehidratare</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">B) Gastroenterită cu Rotavirus — rehidratare orală (SRO) + suplimentare cu zinc</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) Shigella sonnei — ciprofloxacin + rehidratare orală</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) Norovirus — rehidratare IV obligatorie + ondansetron</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Giardiază acută — metronidazol + rehidratare</button>
+  <div class="quiz-explanation" id="q4-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — Tabloul este clasic pentru gastroenterita cu Rotavirus: copil 18 luni (vârf de incidență), iarnă (sezonalitate), debut cu vărsături urmate de diaree apoasă profuză, febră moderată, FĂRĂ sânge în scaun. Tratamentul este SRO + zinc (20 mg/zi la copii >6 luni, 10-14 zile). Nu există tratament antiviral specific. Vaccinarea preventivă este disponibilă dar se administrează de la 6 săptămâni de viață.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — Salmoneloza la copii produce mai frecvent diaree cu mucus galben-verzui și febră, dar nu este prima ipoteză la 18 luni cu diaree apoasă fără sânge, iarna. Mai important, antibioticele NU sunt indicate de rutină în salmoneloza la copii imuncompetenți.<br><strong>C)</strong> INCORECT — Shigella produce dizenterie (sânge, mucus, tenesme), nu diaree apoasă fără sânge.<br><strong>D)</strong> INCORECT — Norovirusul afectează predominant adulții. La copii sub 5 ani, rotavirusul este mult mai frecvent ca etiologie a gastroenteritei virale severe. Rehidratarea IV nu este obligatorie dacă copilul tolerează per os.<br><strong>E)</strong> INCORECT — Giardiaza produce diaree CRONICĂ cu steatoree (scaune grăsoase), balonare și flatulență, nu diaree apoasă acută cu vărsături și febră.</div></div>
+</div></div>
+
+<div class="case-box">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 3 Etape</div>
+    <h4>Caz clinic — Diaree acută la întoarcerea din vacanță</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Un bărbat de 32 de ani, fără antecedente medicale semnificative, se prezintă la camera de gardă cu diaree acută instalată de 2 zile. Menționează că s-a întors acum 3 zile dintr-o vacanță de 2 săptămâni în India. De la revenire prezintă scaune apoase frecvente (8-10/zi), crampe abdominale difuze, grețuri și o stare generală de slăbiciune.</p>
+<p>Examenul obiectiv: T = 37.2°C, TA = 110/70 mmHg, AV = 92 bpm, mucoase uscate, pliu cutanat leneș (revine în 2-3 secunde), abdomen sensibil difuz fără apărare musculară.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Pe baza prezentării inițiale, care este primul pas în management?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Hemoleucogramă completă și proteina C reactivă</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">B) Examen coproparazitologic pentru Entamoeba histolytica</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">C) Coprocultura urgentă cu antibioterapie empirică cu ciprofloxacin</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">D) Evaluarea gradului de deshidratare și inițierea rehidratării orale/IV</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) Loperamid 4 mg inițial, apoi 2 mg după fiecare scaun neformat</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era D).</div><div class="case-exp-detail"><strong>D)</strong> CORECT — La orice pacient cu diaree acută, PRIMUL pas este evaluarea stării de hidratare și inițierea rehidratării. Acest pacient prezintă semne de deshidratare moderată (mucoase uscate, pliu cutanat leneș 2-3 sec, tahicardie). Rehidratarea orală (SRO) sau IV (ser fiziologic/Ringer lactat) trebuie inițiată ÎNAINTE de orice investigație etiologică.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — Analizele de laborator sunt utile pentru evaluare, dar nu au prioritate față de rehidratare la un pacient cu semne clinice de deshidratare.<br><strong>B)</strong> INCORECT — Examenul coproparazitologic este indicat (călătorie în India), dar nu este urgent. Rehidratarea nu poate fi amânată.<br><strong>C)</strong> INCORECT — Coprocultură da, dar nu este PRIMUL pas. La un pacient cu semne de deshidratare (mucoase uscate, pliu cutanat leneș, tahicardie), prioritatea este stabilizarea hemodinamică prin rehidratare.<br><strong>E)</strong> INCORECT — Loperamidul poate fi utilizat cu prudență în diareea apoasă FĂRĂ febră și FĂRĂ sânge, dar nu este primul pas. Prioritatea rămâne rehidratarea.</div>
+    <button class="case-btn" onclick="showCaseStep(1)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Evoluție la 24 ore</div>
+  <p>Pacientul a primit 2L Ringer lactat IV și SRO. Starea generală s-a ameliorat — mucoasele sunt acum umede, AV = 78 bpm. Totuși, diareea persistă (6-8 scaune/zi), iar în ultimele 12 ore au apărut scaune cu mucus sanguinolent, tenesme rectale și febră (38.8°C).</p>
+<p>Analize: Hb = 13.2 g/dL, Leucocite = 14.200/mm³ (neutrofilie 82%), PCR = 85 mg/L. Leucocite fecale: prezente abundent.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Având în vedere schimbarea tabloului clinic, care este cel mai probabil diagnostic și conduita corectă?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) E. coli O157:H7 — antibioticele sunt contraindicate, se monitorizează funcția renală</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">B) Colită pseudomembranoasă (C. difficile) — se inițiază vancomicină orală</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">C) Amebiază intestinală — se inițiază metronidazol 750 mg x 3/zi</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Gastroenterită virală agravată — se continuă doar rehidratarea</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">E) Dizenterie bacteriană (probabil Shigella) — se inițiază antibioterapie empirică cu azitromicină</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era E).</div><div class="case-exp-detail"><strong>E)</strong> CORECT — Tabloul clinic este clasic pentru dizenterie bacteriană: diaree cu sânge și mucus, tenesme rectale, febră, leucocitoză cu neutrofilie, leucocite fecale abundente. Călătoria în India și doza infecțioasă mică a Shigella fac shigelloza diagnosticul cel mai probabil. Azitromicina 500 mg/zi, 3-5 zile este prima linie (evitarea ciprofloxacinei din cauza rezistenței crescute în Asia de Sud).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — E. coli O157:H7 este transmis prin carne insuficient gătită (nu prin călătorie în India) și produce tipic diaree sanguinolentă FĂRĂ febră (afebril). Prezența febrei înalte și a context-ului de călătorie favorizează Shigella.<br><strong>B)</strong> INCORECT — C. difficile este asociat cu antibioterapia recentă (care lipsește din anamneză). Nu este diagnosticul de primă intenție la un călător din India.<br><strong>C)</strong> INCORECT — Amebiaza intestinală este un diferențial valid (călătorie în India), dar debutul acut cu febră înaltă și leucocitoză marcată favorizează etiologia bacteriană. Amebiaza are de obicei debut mai insidios, fără febră marcată (sau cu febră mai ușoară).<br><strong>D)</strong> INCORECT — Gastroenteritele virale NU produc scaune sanguinolente cu leucocite fecale și febră înaltă. Tabloul s-a transformat de la secretor la inflamator/dizenteric.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Rezultatele investigațiilor</div>
+  <p>Coprocultura revine pozitivă pentru <strong>Shigella flexneri</strong> sensibilă la azitromicină și ciprofloxacin, rezistentă la ampicilină și cotrimoxazol. Sub tratament cu azitromicină, pacientul se ameliorează progresiv: febra cedează la 48 ore, scaunele devin neformate dar fără sânge la ziua 3, iar la ziua 5 scaunele sunt normale.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este conduita la externare?</div>
+  <button class="quiz-option" onclick="ansCase(3,this,false)">A) Continuarea azitromicină încă 7 zile pentru prevenirea recidivei</button>
+<button class="quiz-option" onclick="ansCase(3,this,true)">B) Educație sanitară (igienă mâini, apă sigură) și coprocultura de control nu este necesară de rutină</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">C) Profilaxie cu ciprofloxacin 250 mg/zi pentru următoarele călătorii</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">D) Coprocultura de control obligatorie la 48 ore după terminarea antibioticului</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) Vaccinare anti-Shigella înainte de următoarea călătorie</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — După rezoluția clinică completă, coprocultura de control NU este necesară de rutină la pacienții imuncompetenți. Educația sanitară (spălarea mâinilor, consumul de apă sigură și alimente preparate termic adecvat) este cea mai importantă măsură de prevenție.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> INCORECT — Durata tratamentului shigellozei este de 3-5 zile (nu 12 zile). Prelungirea inutilă a antibioterapiei crește riscul de efecte adverse și rezistență.<br><strong>C)</strong> INCORECT — Profilaxia antibiotică de rutină NU este recomandată pentru diareea călătorului. Riscurile (rezistență, C. difficile) depășesc beneficiile.<br><strong>D)</strong> INCORECT — Coprocultura de control este indicată doar în cazuri specifice: lucrători în industria alimentară, personal medical, sau la pacienți cu recurență clinică.<br><strong>E)</strong> INCORECT — Nu există vaccin anti-Shigella disponibil pe piață (în 2024, mai multe vaccinuri sunt în studii clinice avansate, dar niciunul nu este aprobat).</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Rezumat</div>
+  <p>Acest caz ilustrează principiile esențiale ale managementului diareei acute la călător:</p>
+<p>1. <strong>Rehidratarea este MEREU prioritatea #1</strong> — indiferent de etiologie, stabilizarea hemodinamică precedă investigațiile etiologice.
+2. <strong>Monitorizarea evoluției este crucială</strong> — un tablou inițial secretor (diaree apoasă, afebril) se poate transforma în inflamator/dizenteric (sânge, febră, leucocite fecale).
+3. <strong>Triada dizenteriei</strong> = sânge în scaun + febră + leucocite fecale → antibioterapie empirică indicată.
+4. <strong>Shigella</strong> este un diagnostic de luat în considerare la călătorii din regiuni endemice, datorită dozei infecțioase extrem de mici.
+5. <strong>Azitromicina</strong> este prima linie pentru dizenteria călătorului (rezistența la fluorochinolone este crescută în Asia de Sud și de Sud-Est).
+6. <strong>Educația sanitară</strong> este cea mai eficientă măsură de prevenție a diareei călătorului.</p>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/3</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · Infecții Digestive</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="alg-ks-container" id="algKsContainer"></div>
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"h_pylori": {"titlu": "H. pylori — Esențial", "continut": "H. pylori este un bacil Gram-negativ, spiralat, microaerofil, care colonizează mucoasa gastrică. Produce urează abundentă, care alcalinizează mediul local, permițând supraviețuirea în pH-ul extrem de acid gastric. Infecția afectează aproximativ 50% din populația globală, cu prevalență mai mare în țările în curs de dezvoltare. Este principala cauză de gastrită cronică, ulcer duodenal (>90% din cazuri) și ulcer gastric (70-80%), și factor de risc dovedit pentru adenocarcinomul gastric și limfomul MALT.", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Mecanismul ureazei:</strong> H. pylori produce urează care descompune ureea în CO₂ + NH₃. Amoniacul neutralizează HCl local, creând un micromediu cu pH ~7 la suprafața bacteriei. Acest mecanism este exploatat diagnostic prin testul rapid cu urează (CLO test) și testul respirator cu C13.", "stiati_ca": "Tulpinile de tip I (CagA+/VacA+) sunt cele mai virulente — proteina CagA este injectată direct în celula gastrică prin sistemul de secreție de tip IV, declanșând cascada inflamatorie și proliferare celulară anormală. Prezența CagA crește riscul de adenocarcinom gastric de 2-3 ori."}, "hepatite": {"titlu": "Hepatite virale — Cadru general", "continut": "Cele 5 virusuri hepatitice majore (A-E) diferă fundamental în ceea ce privește calea de transmitere, potențialul de cronicizare și severitatea. Hepatitele A și E sunt transmise fecal-oral și NU cronicizează la imuncompetenți (excepția importantă: HEV genotip 3 la imunodeprimați). Hepatitele B, C și D sunt transmise parenteral/sexual și pot croniciza. Diferențierea serologică rapidă este esențială pentru managementul corect și notificarea epidemiologică.", "referinta": "From Hepatitis A to E: A Critical Review of Available Therapies — World J Gastroenterol 2021", "pmid": "33967551", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Citoliză hepatică:</strong> Creșterea transaminazelor (ALT > AST în hepatitele virale) reflectă distrucția hepatocitelor. ALT este mai specifică pentru ficat decât AST. În hepatita acută, valorile pot depăși 10-100× limita superioară a normalului. Bilirubina crește mai tardiv, producând icterul clinic vizibil la valori >2-3 mg/dL.", "stiati_ca": ""}, "mecanisme_diaree": {"titlu": "Cele 3 mecanisme", "continut": "Diferențierea celor 3 mecanisme patogenice ale diareei infecțioase este fundamentală pentru decizia terapeutică. Diareea secretorie (toxinogenă) necesită DOAR rehidratare. Diareea inflamatorie (invazivă local) poate necesita antibioterapie. Diareea invazivă (sistemică) necesită MEREU antibioterapie și internare.", "referinta": "Acute Diarrhea in Adults — Am Fam Physician 2022", "pmid": "35839362", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Mecanismul secretor:</strong> Toxina bacteriană (ex: toxina colerică) activează adenilat-ciclaza din enterocite → creșterea AMPc → deschiderea canalelor de Cl⁻ → secreție masivă de apă și electroliți în lumen, FĂRĂ lezarea mucoasei. De aceea scaunele sunt apoase, fără sânge sau leucocite, iar pacientul este afebril. <strong>Mecanismul inflamator:</strong> Bacteria invadează mucoasa (ex: Shigella, Salmonella) → distrucție tisulară → scaune cu sânge, mucus, leucocite fecale prezente, febră. <strong>Mecanismul invaziv (sistemic):</strong> Bacteria traversează mucoasa și diseminează hematogen (ex: Salmonella typhi) → bacteriemie, febră înaltă, afectare sistemică.", "stiati_ca": ""}, "toxiinfectie": {"titlu": "TIA — Principii", "continut": "Toxiinfecțiile alimentare sunt cauzate de ingestia de alimente contaminate cu bacterii sau toxinele lor. Cheia diagnosticului este INTERVALUL DE INCUBAȚIE — acesta orientează puternic spre agentul etiologic. Incubație scurtă (<6 ore) = toxină preformată (S. aureus, B. cereus forma emetică). Incubație medie (8-16 ore) = toxină produsă in vivo (C. perfringens, B. cereus forma diareică). Incubație lungă (>16 ore) = infecție invazivă (Salmonella, Campylobacter, E. coli).", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "dizenterie": {"titlu": "Dizenteria", "continut": "Dizenteria este un sindrom clinic caracterizat prin scaune frecvente cu sânge, mucus și puroi, însoțite de tenesme rectale, febră și crampe abdominale. Principalii agenți sunt Shigella (dizenteria bacilară) și Entamoeba histolytica (dizenteria amoebiană). Shigella este cea mai importantă cauză de dizenterie bacteriană, remarcabilă prin doza infecțioasă extrem de mică (50-100 CFU — suficient pentru transmitere persoană la persoană) și prin severitatea tabloului clinic, mai ales cu S. dysenteriae tip 1 (producătoare de toxină Shiga).", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Toxina Shiga (Stx):</strong> Produsă de S. dysenteriae tip 1 și de E. coli O157:H7 (EHEC). Mecanismul: toxina se leagă de receptorul Gb3 de pe celulele endoteliale (abundent în rinichi și SNC) → inhibă sinteza proteică ribozomală → moarte celulară → microangiopatie trombotică. Aceasta explică complicațiile extraintestinale: sindromul hemolitic-uremic (SHU) — triada anemie hemolitică microangiopatică + trombocitopenie + insuficiență renală acută.", "stiati_ca": ""}, "gastroenterite_virale": {"titlu": "Virusuri enterice", "continut": "Gastroenteritele virale sunt cea mai frecventă cauză de diaree acută la nivel global. Rotavirusul este principala cauză la copiii sub 5 ani (responsabil de ~200.000 decese/an înaintea introducerii vaccinului), iar norovirusul este principala cauză la adulți și cea mai frecventă cauză de epidemii de gastroenterită în colectivități (spitale, nave de croazieră, cămine). Ambele virusuri sunt extrem de contagioase și rezistente la dezinfectanții obișnuiți pe bază de alcool.", "referinta": "Acute Diarrhea in Adults — Am Fam Physician 2022", "pmid": "35839362", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Rotavirus — mecanism dual:</strong> (1) Proteina NSP4 acționează ca enterotoxină virală — activează secreția de Cl⁻ prin mecanisme Ca²⁺-dependente, producând diaree secretorie. (2) Virusul distruge enterocitele mature de la vârful vilozităților, reducând suprafața de absorbție și producând deficit de dizaharidaze (lactază) → diaree osmotică. Acest mecanism dual explică severitatea diareei la copii.", "stiati_ca": ""}, "parazitoze": {"titlu": "Paraziți intestinali", "continut": "Parazitozele intestinale afectează peste 1 miliard de persoane la nivel global. În România, cele mai frecvente sunt giardiaza, oxiuraza (Enterobius vermicularis) și ascaridiaza. La pacienții imunocompromiși (HIV/SIDA), paraziți oportuniști precum Cryptosporidium, Isospora și Cyclospora pot cauza diaree cronică severă, refractară la tratament.", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "<strong>Giardia lamblia</strong> aderă la mucoasa duodenală prin discul ventral (structură de aderență specializată), fără a o invada. Produce malabsorbție prin acoperirea suprafeței de absorbție, inflamație submucoasă și alterarea joncțiunilor strânse intercelulare. Rezultatul clinic: diaree cronică cu scaune grăsoase (steatoree), balonare, flatulență și pierdere ponderală.", "stiati_ca": ""}, "principii_terapeutice": {"titlu": "Reguli de prescripție", "continut": "Cele mai importante principii în managementul infecțiilor digestive sunt: (1) rehidratarea este MEREU prioritatea #1, (2) antibioticele sunt indicate selectiv — doar în dizenterie, forme severe, imunocompromiși, (3) antidiareicele de motilitate sunt CONTRAINDICATE în diareea inflamatorie, (4) coproculturile sunt indicate DOAR în diaree sanguinolentă, febră >48h, suspiciune de focar epidemic sau pacient imunocompromis.", "referinta": "Acute Diarrhea in Adults — Am Fam Physician 2022", "pmid": "35839362", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Auto-open knowledge sidebar on desktop
+if(window.innerWidth>1360){var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');if(ks){ks.classList.add('open');if(cw)cw.style.marginRight='320px'}}
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Centor Calculator
+const cs={fever:null,exudate:null,lymph:null,noCough:null,age:null};
+function tC(btn,p,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cs[p]=v;calcCentor()}
+function calcCentor(){if(Object.values(cs).some(v=>v===null))return;let s=0;if(cs.fever)s++;if(cs.exudate)s++;if(cs.lymph)s++;if(cs.noCough)s++;if(cs.age==='3-14')s++;else if(cs.age==='45+')s--;if(s<0)s=0;document.getElementById('centorResult').style.display='block';document.getElementById('centorScore').textContent=s;let r,a,c;if(s<=1){r='Risc scăzut (<10%)';a='Tratament simptomatic. Fără investigații.';c='risk-low'}else if(s<=3){r='Risc intermediar (15-35%)';a='Test rapid streptococic. Antibiotic doar dacă pozitiv.';c='risk-med'}else{r='Risc înalt (51-53%)';a='Test rapid +/- antibioterapie empirică.';c='risk-high'}document.getElementById('centorRisk').textContent=r;const ae=document.getElementById('centorAction');ae.textContent=a;ae.className='score-action '+c}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style="color:var(--green)">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  let html='<div class="ks-title">'+data.titlu+'</div>';
+  if(data.continut){html+='<div class="ks-card"><div class="ks-label">Rezumat</div>'+data.continut.replace(/·/g,'<br>·')+'</div>'}
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca+'</div>'}
+  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(window.innerWidth<=1360&&ks&&ks.classList.contains('open')&&!ks.contains(e.target)){ks.classList.remove('open')}}})
+
+// Algoritm Clinic — SVG connectors
+function drawAlgConnectors(){
+  document.querySelectorAll('.alg-grid').forEach(function(grid){
+    var ed=grid.dataset.edges;if(!ed)return;
+    var edges;try{edges=JSON.parse(ed)}catch(ex){return}
+    var canvas=grid.parentElement;
+    var svg=canvas.querySelector('.alg-svg');if(!svg)return;
+    var w=canvas.scrollWidth,h=canvas.scrollHeight;
+    svg.setAttribute('width',w);svg.setAttribute('height',h);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.innerHTML='<defs><marker id="algArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(0,191,165,0.5)"/></marker></defs>';
+    var cRect=canvas.getBoundingClientRect();
+    edges.forEach(function(e){
+      var fromEl=grid.querySelector('[data-id="'+e.from+'"]');
+      var toEl=grid.querySelector('[data-id="'+e.to+'"]');
+      if(!fromEl||!toEl)return;
+      var fR=fromEl.getBoundingClientRect();
+      var tR=toEl.getBoundingClientRect();
+      var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var d='';
+      var sameRow=Math.abs(fR.top-tR.top)<10;
+      if(sameRow){
+        var sx,sy,ex,ey;
+        if(fR.left<tR.left){sx=fR.right-cRect.left;ex=tR.left-cRect.left}
+        else{sx=fR.left-cRect.left;ex=tR.right-cRect.left}
+        sy=fR.top+fR.height/2-cRect.top;ey=tR.top+tR.height/2-cRect.top;
+        d='M'+sx+','+sy+'L'+ex+','+ey;
+      }else{
+        var x1=fR.left+fR.width/2-cRect.left,y1=fR.bottom-cRect.top;
+        var x2=tR.left+tR.width/2-cRect.left,y2=tR.top-cRect.top;
+        if(Math.abs(x1-x2)<3){d='M'+x1+','+y1+'L'+x2+','+y2}
+        else{
+          // Find max bottom of all nodes on the source row to avoid overlap
+          var fRow=fromEl.style.gridRow||'1';
+          var maxBottom=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){
+            var nRow=n.style.gridRow||'1';
+            if(nRow===fRow){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBottom)maxBottom=nb}
+          });
+          var dropY=maxBottom+14;
+          d='M'+x1+','+y1+'L'+x1+','+dropY+'L'+x2+','+dropY+'L'+x2+','+y2
+        }
+      }
+      path.setAttribute('d',d);path.setAttribute('stroke','rgba(0,191,165,0.4)');
+      path.setAttribute('stroke-width','2');path.setAttribute('fill','none');
+      path.setAttribute('marker-end','url(#algArr)');svg.appendChild(path);
+      if(e.label){
+        var lx,ly;
+        if(sameRow){var sx2=fR.left<tR.left?fR.right-cRect.left:fR.left-cRect.left;var ex2=fR.left<tR.left?tR.left-cRect.left:tR.right-cRect.left;lx=(sx2+ex2)/2;ly=Math.min(fR.top,tR.top)+Math.min(fR.height,tR.height)/2-cRect.top-14}
+        else{var x1b=fR.left+fR.width/2-cRect.left,x2b=tR.left+tR.width/2-cRect.left;if(Math.abs(x1b-x2b)<3){lx=x1b+10;ly=(fR.bottom-cRect.top+tR.top-cRect.top)/2}else{
+          var fRow2=fromEl.style.gridRow||'1';var maxBot2=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){var nR=n.style.gridRow||'1';if(nR===fRow2){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBot2)maxBot2=nb}});
+          lx=(x1b+x2b)/2;ly=maxBot2+12}}
+        var bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        var tw=e.label.length*7+10;
+        bg.setAttribute('x',lx-tw/2);bg.setAttribute('y',ly-10);bg.setAttribute('width',tw);bg.setAttribute('height',18);
+        bg.setAttribute('rx','4');bg.setAttribute('fill','#1c2333');bg.setAttribute('stroke','rgba(255,255,255,0.08)');bg.setAttribute('stroke-width','1');
+        svg.appendChild(bg);
+        var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x',lx);txt.setAttribute('y',ly+3);txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');txt.setAttribute('fill','#9ca3af');
+        txt.setAttribute('font-family','Space Grotesk,sans-serif');txt.textContent=e.label;svg.appendChild(txt);
+      }
+    });
+  });
+}
+// Draw connectors after layout is stable
+requestAnimationFrame(function(){setTimeout(drawAlgConnectors,200)});
+window.addEventListener('resize',function(){setTimeout(drawAlgConnectors,100)});
+
+// Algoritm Clinic — click to push detail to knowledge sidebar
+document.addEventListener('click',function(e){
+  var node=e.target.closest('.alg-node.has-detail');
+  if(!node)return;
+  var detailEl=node.querySelector('.alg-detail');
+  if(!detailEl)return;
+  var container=document.getElementById('algKsContainer');
+  var ksSidebar=document.querySelector('.knowledge-sidebar');
+  if(!container||!ksSidebar)return;
+  var labelEl=node.querySelector('.alg-node-label');
+  var fullLabel=labelEl?labelEl.textContent:'';
+  var shortTitle=fullLabel.length>30?fullLabel.substring(0,30)+'…':fullLabel;
+  var nodeId=node.dataset.id;
+  // Check if card already exists
+  var existing=container.querySelector('[data-node="'+nodeId+'"]');
+  if(existing){existing.style.animation='none';existing.offsetHeight;existing.style.animation='algKsFlash .4s ease';existing.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  // Determine color from node type
+  var tc='var(--teal)';
+  if(node.classList.contains('alg-start'))tc='var(--green)';
+  else if(node.classList.contains('alg-decizie'))tc='var(--amber)';
+  else if(node.classList.contains('alg-actiune'))tc='var(--blue)';
+  else if(node.classList.contains('alg-alerta'))tc='var(--coral)';
+  // Brief highlight on node
+  node.style.boxShadow='0 0 0 3px '+tc;setTimeout(function(){node.style.boxShadow=''},600);
+  // Build card
+  var card=document.createElement('div');card.className='alg-ks-card';card.dataset.node=nodeId;card.style.borderLeftColor=tc;
+  card.innerHTML='<button class="alg-ks-close" title="×">×</button><div class="alg-ks-title" style="color:'+tc+'">'+shortTitle+'</div><div class="alg-ks-content">'+detailEl.innerHTML+'</div>';
+  card.querySelector('.alg-ks-close').addEventListener('click',function(ev){ev.stopPropagation();card.style.animation='algKsOut .2s ease forwards';setTimeout(function(){card.remove()},200)});
+  container.appendChild(card);
+  // Open sidebar if closed
+  if(!ksSidebar.classList.contains('open')){ksSidebar.classList.add('open');var cw=document.querySelector('.content-wrapper');if(cw&&window.innerWidth>1360)cw.style.marginRight='320px'}
+  setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
+});
+
+</script>
+</body>
+</html>
