@@ -476,50 +476,6 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p><strong>Parametrii w</strong> sunt antrenați pe milioane de carduri Anki și disponibili în paper-ul original (Han et al., 2023).</p></div>
 </div>
 
-<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Timeline</strong>. Rolul lui este de a prezenta o secvență cronologică de evenimente, etape sau milestones. În context clinic, este utilizat pentru evoluția naturală a bolilor, scheme terapeutice secvențiale sau perioade de incubație. Aici îl folosim pentru roadmap-ul proiectului.</p></div>
-
-<div class="timeline"><div class="timeline-item">
-  <h4>Q4 2024: Lansare MVP — primele capitole de Boli Infecțioase live pe cecitimazi.ro, build pipeline MD→HTML, 100+ utilizatori organici | Proof of concept</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q1 2025: Consolidare conținut — 6 capitole complete cu grile, cazuri clinice, algoritmi interactivi. Integrare MCP-uri medicale pentru verificare automată a conținutului | Infrastructură de calitate</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q2 2025: RAG Knowledge Base — ChromaDB cu PubMed, StatPearls, ghiduri clinice. Căutare semantică pentru referințe free full-text. Sistem de imagini open-license | Bază de cunoștințe proprie</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q3 2025: Echipa completă — Andrei Ciuparu (design experimental), Ștefan Isac (dezvoltare software), Prof. Mihai Craiu (coordonare academică). Protocol de studiu redactat | De la proiect solo la echipă</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q4 2025: Finalizare 29 capitole Boli Infecțioase — conținut complet pentru modulul Pre-Stagiu. Aviz Comisie de Etică UMF. Power analysis cu statisticianul | Pregătire studiu</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q1 2026: Implementare FSRS + dashboard — algoritm spaced repetition adaptiv per utilizator, calendar personalizat de repetiții, tracking progres | De la conținut static la platformă adaptivă</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q2 2026: Analiză rezultate pilot intern — testare tehnică end-to-end, iterare pe baza feedback-ului echipei, pregătire infrastructură colectare date | Pregătire studiu</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q3 2026: Aviz Comisie de Etică + onboarding — procedura de anonimizare cu secretariatul, power analysis cu statisticianul, termeni de utilizare actualizați | Ultimele pregătiri</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q4 2026 (Octombrie): Studiu pilot Catedra de Pediatrie — prima serie de studenți an 5, acces liber la platformă, colectare date de utilizare + scoruri examen | Prima validare empirică</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q1 2027: Analiză rezultate + studiu principal — regresie OLS, analiza valorii adăugate. Dacă β₁ semnificativ → extindere la 2-3 serii și lansare model de abonament | De la validare la produs</h4>
-  <p></p>
-</div>
-</div>
-
 <div class="divider"></div>
 
 <div class="section" id="echipa">
@@ -596,6 +552,38 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
     <button class="quiz-option" onclick="checkQuiz('q3',this,true)">E) Quasi-experiment observațional prospectiv — toți primesc acces, stratificare post-hoc după uz, control statistic pentru confounders</button>
   <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Quasi-experimentul observațional prospectiv cu grupuri naturale este designul optim când RCT-ul nu e fezabil. Toți studenții au acces egal (etic), iar variabilitatea naturală în uz permite comparația. Controlul statistic prin regresie multiplă (media anterioară + prezență + serie) izolează contribuția independentă a platformei. Analiza valorii adăugate (residuali) oferă argumentul cel mai robust.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Crossover-ul presupune că efectul dispare când oprești intervenția (washout). Educația nu funcționează așa — ce ai învățat nu se „șterge" la schimbarea grupului.<br><strong>B)</strong> GREȘIT — RCT cu randomizare individuală nu este fezabil: (1) contaminarea între studenți — comunică între ei, împart materiale; (2) etic discutabil — privarea deliberată a unui grup de o resursă educațională.<br><strong>C)</strong> GREȘIT — Case-control introduce selection bias maxim. Studenții cu note mari probabil folosesc toate resursele disponibile — nu poți separa efectul platformei de motivația generală.<br><strong>D)</strong> GREȘIT — Comparația istorică nu controlează pentru diferențele între cohorte (dificultatea examenului, calitatea predării, caracteristicile studenților). Confounding masiv temporal.</div></div>
 </div></div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Timeline</strong>. Rolul lui este de a prezenta o secvență cronologică de evenimente sau milestones. În context clinic, este utilizat pentru evoluția naturală a bolilor, scheme terapeutice secvențiale sau perioade de incubație. Aici îl folosim pentru roadmap-ul proiectului.</p></div>
+
+<div class="timeline"><div class="timeline-item">
+  <h4>Q1 2025: Lansare prima versiune CeCitimAzi — capitole de Boli Infecțioase live pe cecitimazi.ro, pipeline de generare conținut cu verificare MCP, 100+ utilizatori organici | Prima versiune publică</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Q2 2025: Consolidare conținut + RAG Knowledge Base — ChromaDB cu PubMed, StatPearls, ghiduri clinice. Căutare semantică pentru referințe free full-text | Infrastructură de calitate</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Q3 2025: Echipa completă + protocol de studiu — Andrei Ciuparu (design experimental), Ștefan Isac (dezvoltare software), Prof. Mihai Craiu (coordonare academică) | De la proiect solo la echipă</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Q1 2026: Finalizare 29 capitole Boli Infecțioase + implementare FSRS cu dashboard personalizat | Platformă completă</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Septembrie 2026: Prima fază a studiului pe studenții de Pediatrie — studenți an 5 în rotația Prof. Craiu, acces liber la platformă, colectare date de utilizare + scoruri examen | Prima validare empirică</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Q4 2026: Primele rezultate ale studiului — regresie OLS, analiza valorii adăugate, publicare rezultate preliminare | Date reale</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Q1 2027: Platforma devine validată științific — 1.000 utilizatori lunari activi, model de abonament la 18€/lună | De la validare la produs</h4>
+  <p></p>
+</div>
+</div>
 
 <div class="divider"></div>
 
@@ -699,29 +687,24 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p>Mai jos aveți exemplificat componentul <strong>Quiz Grupat</strong>. Rolul lui este de a testa evaluarea simultană a mai multor afirmații, nu doar selecția unui singur răspuns corect. Studentul trebuie să analizeze fiecare afirmație individual și apoi să identifice combinația corectă — un exercițiu care testează raționamentul analitic, nu recunoașterea de pattern-uri.</p></div>
 
 <div class="quiz-container"><div class="quiz-q" id="q4">
-  <div class="q-label">Vaccinarea pediatrică</div>
+  <div class="q-label">Complement Grupat · Vaccinarea pediatrică</div>
   <div class="q-text">
-    <strong>Un medic de familie evaluează schema de vaccinare a unui sugar de 6 luni. Identificați afirmațiile corecte:</strong>
-    <div class="afirmatii">1. Vaccinul hexavalent (DTPa-VPI-Hib-HepB) se administrează la 2, 4 și 11 luni conform calendarului românesc<br>2. Vaccinul ROR (rujeolă-oreion-rubeolă) se administrează prima doză la 6 luni<br>3. BCG se administrează în maternitate (ziua 2-7 de viață)<br>4. Vaccinul antigripal este recomandat tuturor copiilor începând de la vârsta de 6 luni<br>5. Vaccinul pneumococic conjugat (PCV13) se administrează la 2, 4 și 11 luni</div>
+    <strong>Despre schema de vaccinare a unui sugar de 6 luni, care dintre următoarele afirmații sunt corecte?</strong>
+    <div class="afirmatii">1. Vaccinul hexavalent (DTPa-VPI-Hib-HepB) se administrează la 2, 4 și 11 luni conform calendarului românesc<br>2. Vaccinul ROR (rujeolă-oreion-rubeolă) se administrează prima doză la 6 luni<br>3. BCG se administrează în maternitate (ziua 2-7 de viață)<br>4. Vaccinul antigripal este recomandat tuturor copiilor începând de la vârsta de 6 luni</div>
     <span class="grila-hint">A=1,2,3 | B=1,3 | C=2,4 | D=doar 4 | E=toate</span>
   </div>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) 1, 3 și 4</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) 2, 3 și 5</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) 1, 2, 3 și 5</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">D) 1, 3, 4 și 5</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Toate afirmațiile sunt corecte</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) GREȘIT — Afirmațiile 1, 3 și 4 sunt corecte, dar lipsește afirmația 5 care este, de asemenea, corectă. PCV13 se administrează la 2, 4 și 11 luni.</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) GREȘIT — Afirmația 2 este incorectă. Prima doză de ROR se administrează la 12 luni, nu la 6 luni. La 6 luni, anticorpii materni sunt încă parțial prezenți și ar neutraliza vaccinul viu atenuat.</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) GREȘIT — Include afirmația 2 care este incorectă (ROR la 6 luni în loc de 12 luni).</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) CORECT — (1) Hexavalentul: schema 2+1 la 2, 4 și 11 luni — corect. (2) ROR prima doză la 12 luni, nu 6 — incorect. (3) BCG la naștere (ziua 2-7) — corect. (4) Antigripal recomandat de la 6 luni — corect. (5) PCV13 schema 2+1 la 2, 4 și 11 luni — corect.</button>
-    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) GREȘIT — Afirmația 2 este incorectă.</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">A) Afirmațiile 1, 3 și 4</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) Afirmațiile 1, 2 și 3</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) Numai afirmația 3</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) Afirmațiile 2 și 4</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Toate afirmațiile</button>
   <div class="quiz-explanation" id="q4-exp"></div>
 </div></div>
 
 <div class="text-block"><h3 class="md-subtitle">Algoritm clinic interactiv</h3>
 <p>Mai jos aveți exemplificat componentul <strong>Algoritm Clinic</strong> (flowchart interactiv de decizie). Rolul lui este de a structura vizual un protocol de evaluare sau triaj, cu noduri colorate pe tip (start, decizie, acțiune, final, alertă) și conectori SVG. La click pe fiecare nod, se deschide un Knowledge Sidebar cu explicații detaliate. Baza științifică: reprezentarea vizuală a algoritmilor de decizie facilitează gândirea procedurală și reduce erorile de omisiune în practica clinică (clinical decision trees).</p></div>
 
-<div class="algoritm-clinic" id="alg_039f0c">
+<div class="algoritm-clinic" id="alg_dbab30">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Evaluare etiologică a hepatitei acute</h4>
