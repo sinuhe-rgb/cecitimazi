@@ -338,7 +338,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 
 <div class="text-block"><p>În 1972, <strong>Archie Cochrane</strong> publica <em>Effectiveness and Efficiency</em>, în care arăta că majoritatea intervențiilor medicale practicate la acea vreme nu aveau suport empiric adecvat. Practica clinică era ghidată preponderent de raționament fiziopatologic și experiență personală, nu de studii controlate. În 1991, <strong>Gordon Guyatt</strong> introduce formal termenul „evidence-based medicine", propunând un cadru metodologic sistematic pentru evaluarea intervențiilor terapeutice.</p>
 <h3 class="md-subtitle">Studii care au evidențiat necesitatea EBM</h3>
-<p>Mai multe studii clinice au produs rezultate care contraziceau predicțiile bazate pe raționamentul mecanicist, ilustrând limitele acestui tip de abordare.</p></div>
+<p>Mai multe studii clinice au produs rezultate care contraziceau predicțiile bazate pe raționamentul mecanicist, ilustrând limitele acestui tip de abordare.</p>
+<p>Mai jos aveți exemplificat componentul <strong>Pearl</strong> (Clinical Pearl). Rolul lui este de a evidenția un concept-cheie sau o lecție clinică esențială pe care studentul trebuie să o rețină. Pearl-urile sunt proiectate ca elemente de ancorare mnezică — informație condensată, cu impact clinic direct.</p></div>
 
 <div class="card pearl">
   <div class="card-label">⚡ Studiul CAST (1989) — Când tratezi markerul, nu pacientul</div>
@@ -350,10 +351,14 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <p>Torcetrapibul (inhibitor CETP) creștea HDL-colesterolul cu aproximativ 70%. Ipoteza: creșterea farmacologică a HDL-ului ar replica efectul protector cardiovascular observat epidemiologic la persoanele cu HDL nativ crescut. Studiul ILLUMINATE a fost oprit prematur din cauza mortalității cardiovasculare semnificativ crescute în grupul tratat. Concluzia este consistentă cu cea din CAST: <strong>modificarea farmacologică a unui biomarker nu reproduce neapărat mecanismul biologic prin care acel biomarker conferă protecție în mod natural.</strong></p>
 </div>
 
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Warning</strong>. Rolul lui este de a semnala o capcană clinică, o eroare frecventă sau o limitare importantă care poate avea consecințe semnificative dacă este ignorată. Baza științifică: feedback-ul corectiv imediat (Hattie & Timperley, 2007) — effect size 0.73 pe retenție.</p></div>
+
 <div class="card warning">
   <div class="card-label">⚠️ Educația medicală nu a beneficiat de aceeași rigoare metodologică</div>
   <p>În practica clinică, orice intervenție terapeutică trebuie validată prin studii controlate înainte de a fi adoptată pe scară largă. În educația medicală, această exigență lipsește: metodele de predare și evaluare sunt adoptate prin tradiție instituțională, nu prin testare sistematică. Experiența didactică a profesorilor este valoroasă, dar insuficientă în sine — la fel cum experiența clinică a unui medic, oricât de vastă, nu înlocuiește dovezile din studii. <strong>CeCitimAzi</strong> propune aplicarea aceluiași cadru metodologic: fiecare decizie de design pedagogic este fundamentată pe dovezi din științele cognitive ale învățării, nu pe intuiție sau pe convenție.</p>
 </div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Quiz</strong> (grilă MCQ cu 5 opțiuni). Rolul lui este de a aplica retrieval practice imediat după expunerea la informație. Fiecare opțiune include feedback elaborat care explică nu doar de ce răspunsul corect este corect, ci și de ce fiecare distractor este greșit. Baza științifică: Roediger & Karpicke (2006) — testarea activă produce retenție superioară relecturii; Hattie & Timperley (2007) — feedback-ul elaborat per variantă are effect size 0.73.</p></div>
 
 <div class="quiz-container"><div class="quiz-q" id="q1">
   <div class="q-label">Întrebare · 1</div>
@@ -375,12 +380,15 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 
 <div class="text-block"><p>CeCitimAzi este o platformă de e-learning medical destinată rezidenților de <strong>Medicină de Familie</strong> din România. Modulul curent — <strong>Pre-Stagiu Boli Infecțioase</strong> — cuprinde 29 de capitole planificate, din care 6 sunt disponibile, cu peste 100 de utilizatori activi.</p>
 <h3 class="md-subtitle">Structura unui capitol</h3>
-<p>Fiecare capitol urmează o structură pedagogică standardizată: ancorare în relevanța clinică a subiectului, text didactic cu mecanismele fiziopatologice relevante, grile MCQ intercalate imediat după paragraful corespunzător (retrieval practice), elemente vizuale (algoritmi de decizie, imagistică, tabele comparative) și cazuri clinice interactive progresive. Un <strong>Knowledge Sidebar</strong> persistent acompaniază fiecare secțiune cu rezumate, mnemonice și note de fiziopatologie.</p></div>
+<p>Fiecare capitol urmează o structură pedagogică standardizată: ancorare în relevanța clinică a subiectului, text didactic cu mecanismele fiziopatologice relevante, grile MCQ intercalate imediat după paragraful corespunzător (retrieval practice), elemente vizuale (algoritmi de decizie, imagistică, tabele comparative) și cazuri clinice interactive progresive. Un <strong>Knowledge Sidebar</strong> persistent acompaniază fiecare secțiune cu rezumate, mnemonice și note de fiziopatologie.</p>
+<p>Mai jos aveți exemplificat componentul <strong>Highlight</strong>. Rolul lui este de a izola vizual o informație-cheie sau o regulă clinică esențială care trebuie reținută. Spre deosebire de Pearl (care prezintă un raționament), Highlight-ul sintetizează fapte concrete, rapid accesibile la o recitire ulterioară.</p></div>
 
 <div class="card highlight">
   <div class="card-label">ℹ️ Stack-ul tehnic CeCitimAzi</div>
   <p><strong>Frontend:</strong> HTML self-contained (fără CDN extern, doar Google Fonts) generat de `cecitimazi_build.py` (~1900 linii Python). <strong>Conținut:</strong> Markdown cu directive `:::component` — un limbaj de markup propriu care permite 21 tipuri de componente interactive. <strong>Verificare medicală:</strong> 4 servere MCP (Open Medicine, Healthcare MCP, Medical MCP, RAG ChromaDB). <strong>Spaced repetition:</strong> FSRS (Free Spaced Repetition Scheduler) — algoritmul implicit Anki din v23.10.</p>
 </div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Comparison</strong> (comparație lado-a-lado). Rolul lui este de a facilita discriminarea activă între două entități frecvent confundate sau care necesită diferențiere explicită. Fiecare coloană reprezintă o entitate distinctă, iar rândurile evidențiază diferențele punct cu punct. Baza științifică: procesarea comparativă facilitează codificarea diferențelor distinctive (Gentner & Markman, 1997).</p></div>
 
 <div class="comparison-grid">
   <div class="comparison-card" style="border-top:3px solid var(--teal)">
@@ -392,6 +400,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
     <ul><li>Doar flashcard-uri, fără predare</li><li>Conținut creat manual de utilizator</li><li>Nu suportă cazuri clinice</li><li>FSRS adaptiv per card (secunde)</li><li>Fără verificare automată</li><li>Interfață minimalistă</li></ul>
   </div>
 </div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Table</strong> (tabel structurat). Rolul lui este de a organiza informația în format tabelar cu coloane definite, facilitând scanarea rapidă și compararea atributelor. Spre deosebire de Comparison (care compară două entități pe orizontală), Table-ul prezintă itemi independenți pe verticală, fiecare rând fiind o unitate autonomă.</p></div>
 
 <h3>Componente interactive disponibile în fiecare capitol</h3>
 <div class="table-wrapper"><table>
@@ -442,7 +452,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 </div>
 
 <div class="text-block"><p><strong>SM-2</strong> (SuperMemo 2, Woźniak, anii '80) a fost standardul de aur al spaced repetition timp de decenii. Calculează intervalul următor bazat doar pe ultimul răspuns, fără memorie pe termen lung despre istoricul itemului.</p>
-<p><strong>FSRS</strong> (Free Spaced Repetition Scheduler, Jarvis Han, 2022-2023) folosește un model psihologic bazat pe <strong>trei variabile</strong>: Stabilitatea (câte zile pot trece înainte ca probabilitatea de recall să scadă la 90%), Dificultatea (cât de greu este materialul specific pentru acest utilizator, pe o scară de 1-10) și Retrievability (probabilitatea actuală că utilizatorul își amintește).</p></div>
+<p><strong>FSRS</strong> (Free Spaced Repetition Scheduler, Jarvis Han, 2022-2023) folosește un model psihologic bazat pe <strong>trei variabile</strong>: Stabilitatea (câte zile pot trece înainte ca probabilitatea de recall să scadă la 90%), Dificultatea (cât de greu este materialul specific pentru acest utilizator, pe o scară de 1-10) și Retrievability (probabilitatea actuală că utilizatorul își amintește).</p>
+<p>Mai jos aveți exemplificat componentul <strong>Calculator clinic</strong>. Rolul lui este de a permite calcularea interactivă a scorurilor clinice validate (Centor, qSOFA, CURB-65, Wells etc.) direct în lecție. Studentul introduce parametrii pacientului și primește scorul cu interpretarea clinică. Baza științifică: învățarea activă prin manipularea variabilelor consolidează înțelegerea pragurilor de decizie clinică mai eficient decât memorarea tabelelor statice.</p></div>
 
 <div class="calc-box">
   <h4>Calculator Centor / McIsaac — Demo</h4>
@@ -454,6 +465,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <div class="calc-result" id="centorResult" style="display:none"><div class="score-num" id="centorScore">0</div><div class="score-risk" id="centorRisk"></div><div class="score-action" id="centorAction"></div></div>
 </div>
 
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Collapsible</strong> (secțiune expandabilă). Rolul lui este de a ascunde informație suplimentară de tip referință sau detaliu tehnic care ar aglomera fluxul principal de lectură, dar rămâne accesibilă la cerere. Reduce încărcătura cognitivă fără a sacrifica completitudinea (Sweller, 1988 — Cognitive Load Theory).</p></div>
+
 <div class="collapsible">
   <div class="collapsible-header" onclick="toggleC(this)">
     <span>Formulele matematice FSRS — detalii tehnice</span><span class="icon">▼</span>
@@ -462,6 +475,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p><strong>La repetiții ulterioare:</strong> Retrievability la momentul review-ului: R = (1 + t / (9 × S))^(-1), unde t = zile de la ultima repetiție. Stabilitate nouă după răspuns corect: S' = S × e^(w₁₇ × (11-D) × S^(-w₁₈) × (e^(w₁₉×(1-R)) - 1) + 1). Interval următor: I = S' × ln(0.9) / ln(R_target), unde R_target = 0.90.</p>
 <p><strong>Parametrii w</strong> sunt antrenați pe milioane de carduri Anki și disponibili în paper-ul original (Han et al., 2023).</p></div>
 </div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Timeline</strong>. Rolul lui este de a prezenta o secvență cronologică de evenimente, etape sau milestones. În context clinic, este utilizat pentru evoluția naturală a bolilor, scheme terapeutice secvențiale sau perioade de incubație. Aici îl folosim pentru roadmap-ul proiectului.</p></div>
 
 <div class="timeline"><div class="timeline-item">
   <h4>Q4 2024: Lansare MVP — primele capitole de Boli Infecțioase live pe cecitimazi.ro, build pipeline MD→HTML, 100+ utilizatori organici | Proof of concept</h4>
@@ -513,7 +528,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 </div>
 
 <div class="text-block"><p>Proiectul CeCitimAzi este construit de o echipă interdisciplinară care combină practica clinică, dezvoltarea software, neuroștiințele cognitive și cercetarea academică.</p>
-<h3 class="md-subtitle">Fondatorul</h3></div>
+<h3 class="md-subtitle">Fondatorul</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Image</strong> (imagine cu legendă expandabilă). Rolul lui este de a integra imagini clinice, imagistică sau fotografii cu descrieri detaliate vizibile la click. Descrierea se adaptează tipului de imagine: pentru fotografii clinice se descrie ce se vede; pentru diagrame se explică utilitatea clinică. Fiecare imagine include sursa originală, vizibilă în lightbox.</p></div>
 
 <div class="img-component">
   <img src="images/radu_tunareanu.jpg" alt="Dr. Radu-Dimitrie Tunareanu — Fondator CeCitimAzi" data-titlu="Dr. Radu-Dimitrie Tunareanu — Fondator CeCitimAzi" data-desc="<ul><li><strong>Radu-Dimitrie Tunareanu</strong> este medic rezident de Medicină de Familie și fondatorul platformei CeCitimAzi. Absolvent al UMF Carol Davila (2017-2023), bilingv româno-englez (Cambridge CAE — C2), cu studii suplimentare în Psihologie la Universitatea Titu Maiorescu (2025-2028).</li><li>A construit și lansat platforma CeCitimAzi de la zero, creând studii de caz clinice, bănci de grile MCQ și rezumate structurate din manuale medicale, toate generate cu asistență AI și verificate riguros. A elaborat sute de prompturi medicale pe Claude și Gemini, dezvoltând expertiză în identificarea erorilor de raționament clinic ale modelelor AI.</li></ul>" data-sursa="">
@@ -533,7 +549,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   </div>
 </div>
 
-<div class="text-block"><h3 class="md-subtitle">Specialist în Design Experimental și Neuroștiințe Cognitive</h3></div>
+<div class="text-block"><h3 class="md-subtitle">Specialist în Design Experimental și Coordonator Academic</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Image Pair</strong> (două imagini afișate lado-a-lado). Rolul lui este de a permite compararea vizuală directă între două imagini — în context clinic, folosit frecvent pentru comparații „înainte/după", diagnostic diferențial vizual sau variante anatomice. Fiecare imagine poate avea descriere și sursă independentă.</p></div>
 
 <div class="image-pair">
   <div class="image-pair-item">
@@ -561,7 +578,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 
 <div class="text-block"><p>CeCitimAzi nu este încă validată empiric pe populația-țintă. Studiul de la <strong>Catedra de Pediatrie</strong> a Prof. Dr. Mihai Craiu este primul pas.</p>
 <h3 class="md-subtitle">Design-ul studiului</h3>
-<p>Toți studenții din rotația de Pediatrie (an 5) primesc acces liber la platformă. Post-hoc, se stratifică după uzul real: engagement ridicat, mediu și scăzut. Se compară scorurile la examenul final, controlând statistic pentru performanța academică anterioară (media anilor 1-4), prezența la cursuri și seria de rotație.</p></div>
+<p>Toți studenții din rotația de Pediatrie (an 5) primesc acces liber la platformă. Post-hoc, se stratifică după uzul real: engagement ridicat, mediu și scăzut. Se compară scorurile la examenul final, controlând statistic pentru performanța academică anterioară (media anilor 1-4), prezența la cursuri și seria de rotație.</p>
+<p>Mai jos aveți un al doilea exemplu de componentul <strong>Highlight</strong>, aplicat aici la metodologia statistică a studiului.</p></div>
 
 <div class="card highlight">
   <div class="card-label">ℹ️ Strategia pentru eliminarea selection bias</div>
@@ -587,7 +605,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 </div>
 
 <div class="text-block"><p>Această secțiune demonstrează componentele interactive disponibile în platformă, folosind exemple de <strong>Pediatrie</strong> — disciplina pe care o vom valida în primul studiu.</p>
-<h3 class="md-subtitle">Matching game — Discriminare între erupțiile exantematice ale copilăriei</h3></div>
+<h3 class="md-subtitle">Matching game</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Matching Game</strong>. Rolul lui este de a solicita discriminarea activă între entități clinice frecvent confundate, prin asocierea fiecărei entități cu setul său de caracteristici distinctive. Studentul trebuie să conecteze fiecare boală cu trăsăturile sale patognomonice — un exercițiu de retrieval practice aplicat la diagnostic diferențial. Baza științifică: interleaving-ul și discriminarea activă (Kornell & Bjork, 2008) îmbunătățesc capacitatea de a distinge între categorii similare.</p></div>
 
 <div class="match-game">
   <div class="match-title">Alege perechile:</div>
@@ -609,7 +628,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <div id="matchScore" class="match-score">Potriviri: 0/6</div>
 </div>
 
-<div class="text-block"><h3 class="md-subtitle">Severity sort — Ordonează gradele de deshidratare pediatrică după severitate</h3></div>
+<div class="text-block"><h3 class="md-subtitle">Severity sort</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Severity Sort</strong> (ordonare după severitate). Rolul lui este de a testa raționamentul clinic prin ordonarea unor entități pe un gradient de severitate. Spre deosebire de memorarea unei clasificări, ordonarea cere studentului să evalueze activ diferențele relative între stadii — un proces cognitiv mai profund. Baza științifică: <em>desirable difficulties</em> (Bjork & Bjork, 2011) — sarcina de ordonare este mai dificilă decât recunoașterea, dar produce retenție superioară.</p></div>
 
 <div class="severity-game">
   <div class="sev-header">Ordonare severitate</div>
@@ -647,7 +667,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   
 </div>
 
-<div class="text-block"><h3 class="md-subtitle">Flashcard-uri pediatrice</h3></div>
+<div class="text-block"><h3 class="md-subtitle">Flashcard-uri</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Flashcard</strong>. Rolul lui este de a testa retrieval practice prin întrebări deschise cu răspunsuri pe verso. Spre deosebire de grilele MCQ (unde opțiunile oferă indicii), flashcard-ul solicită generarea liberă a răspunsului — un nivel de dificultate mai mare care produce retenție superioară (Dunlosky et al., 2013). Fiecare capitol conține minimum 4 flashcard-uri (număr par).</p></div>
 
 <div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
   <div class="flip-card-inner">
@@ -674,7 +695,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   </div>
 </div></div></div>
 
-<div class="text-block"><h3 class="md-subtitle">Quiz grupat — Vaccinarea pediatrică</h3></div>
+<div class="text-block"><h3 class="md-subtitle">Quiz grupat</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Quiz Grupat</strong>. Rolul lui este de a testa evaluarea simultană a mai multor afirmații, nu doar selecția unui singur răspuns corect. Studentul trebuie să analizeze fiecare afirmație individual și apoi să identifice combinația corectă — un exercițiu care testează raționamentul analitic, nu recunoașterea de pattern-uri.</p></div>
 
 <div class="quiz-container"><div class="quiz-q" id="q4">
   <div class="q-label">Vaccinarea pediatrică</div>
@@ -696,9 +718,10 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <div class="quiz-explanation" id="q4-exp"></div>
 </div></div>
 
-<div class="text-block"><h3 class="md-subtitle">Algoritm clinic — Evaluarea etiologică a hepatitei acute</h3></div>
+<div class="text-block"><h3 class="md-subtitle">Algoritm clinic interactiv</h3>
+<p>Mai jos aveți exemplificat componentul <strong>Algoritm Clinic</strong> (flowchart interactiv de decizie). Rolul lui este de a structura vizual un protocol de evaluare sau triaj, cu noduri colorate pe tip (start, decizie, acțiune, final, alertă) și conectori SVG. La click pe fiecare nod, se deschide un Knowledge Sidebar cu explicații detaliate. Baza științifică: reprezentarea vizuală a algoritmilor de decizie facilitează gândirea procedurală și reduce erorile de omisiune în practica clinică (clinical decision trees).</p></div>
 
-<div class="algoritm-clinic" id="alg_d82725">
+<div class="algoritm-clinic" id="alg_039f0c">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Evaluare etiologică a hepatitei acute</h4>
@@ -726,6 +749,8 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   </div>
 </div>
 
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Tags</strong>. Rolul lui este de a marca temele principale ale unei secțiuni, facilitând navigarea și căutarea în platformă.</p></div>
+
 <div class="tags-row"><span class="tag tag-viral">Pediatrie, Dispnee, Bronșiolită, Crup, Astm, Triaj</span> </div>
 
 <div class="divider"></div>
@@ -736,12 +761,15 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 </div>
 
 <div class="text-block"><p>CeCitimAzi se află în <strong>faza de validare</strong>. Cele 29 de capitole de Boli Infecțioase sunt construite și livrate gratuit, iar studiul de la Catedra de Pediatrie va oferi primele date despre eficacitatea platformei.</p>
-<p>Dacă studiul confirmă că platforma aduce valoare măsurabilă independent de motivația intrinsecă a studentului, următorul pas este implementarea completă a <strong>dashboard-ului FSRS</strong> cu calendar personalizat de repetiții, urmată de extinderea la alte discipline (Pneumologie, Cardiologie, Nefrologie) și introducerea unui <strong>model de abonament</strong> pentru acces la conținut premium.</p></div>
+<p>Dacă studiul confirmă că platforma aduce valoare măsurabilă independent de motivația intrinsecă a studentului, următorul pas este implementarea completă a <strong>dashboard-ului FSRS</strong> cu calendar personalizat de repetiții, urmată de extinderea la alte discipline (Pneumologie, Cardiologie, Nefrologie) și introducerea unui <strong>model de abonament</strong> pentru acces la conținut premium.</p>
+<p>Mai jos aveți un al doilea exemplu de componentul <strong>Warning</strong>, aplicat aici pentru a semnala transparent o limitare metodologică a proiectului.</p></div>
 
 <div class="card warning">
   <div class="card-label">⚠️ Limitare fundamentală — Platforma nu este încă validată empiric</div>
   <p>CeCitimAzi este construită pe principii pedagogice solide, dar <strong>eficacitatea sa pe populația-țintă nu a fost demonstrată</strong>. Studiul de la Catedra de Pediatrie este primul pas. Orice afirmație despre superioritatea platformei față de metodele tradiționale rămâne o ipoteză de testat, nu o concluzie. Această onestitate intelectuală este, paradoxal, cel mai bun argument pentru seriozitatea proiectului.</p>
 </div>
+
+<div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Case</strong> (caz clinic interactiv progresiv). Rolul lui este de a simula raționamentul clinic secvențial: studentul primește informația în etape (prezentare → examen clinic → investigații → evoluție), ia decizii la fiecare etapă și primește feedback elaborat. Acest format reproduce procesul decizional real din practica clinică, aplicând principiile de situated learning (Lave & Wenger, 1991) și problem-based learning. Fiecare capitol include minimum un caz clinic cu 3-9 etape.</p></div>
 
 <div class="case-box">
   <div class="case-header">
