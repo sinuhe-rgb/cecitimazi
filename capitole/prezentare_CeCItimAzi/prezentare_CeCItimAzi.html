@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CeCitimAzi — Platformă de E-Learning Medical — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:block;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw;padding-top:52px}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:-340px;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary);transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.7}
+.ks-card strong{color:var(--text-primary)}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+@media(max-width:1360px){.content-wrapper{margin-right:0;max-width:780px}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.md-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--teal);line-height:1.4}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Algoritm Clinic */
+.algoritm-clinic{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.alg-header{background:linear-gradient(135deg,rgba(0,191,165,0.12),rgba(0,191,165,0.04));border-bottom:1px solid var(--border);padding:14px 22px}
+.alg-badge{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.alg-header h4{font-size:17px;margin-top:3px;color:var(--text-primary)}
+.alg-desc{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.alg-body{padding:30px 22px;overflow-x:auto}
+.alg-canvas{position:relative;min-width:fit-content}
+.alg-grid{display:grid;gap:52px 28px;justify-items:center;align-items:center;position:relative;z-index:2}
+.alg-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.alg-node{padding:12px 18px;border-radius:8px;text-align:center;font-size:13px;font-weight:500;max-width:220px;min-width:100px;position:relative;cursor:default;transition:transform .2s,box-shadow .2s;word-wrap:break-word;z-index:2;justify-self:center}
+.alg-node:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.alg-node-label{color:var(--text-primary);line-height:1.4}
+.alg-start{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));border:2px solid var(--green);border-radius:20px}
+.alg-start .alg-node-label{color:var(--green);font-weight:600}
+.alg-decizie{background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(255,193,7,0.05));border:2px solid var(--amber);border-left:4px solid var(--amber);border-radius:4px}
+.alg-decizie .alg-node-label{color:var(--amber)}
+.alg-actiune{background:linear-gradient(135deg,rgba(100,181,246,0.15),rgba(100,181,246,0.05));border:2px solid var(--blue);border-radius:8px}
+.alg-actiune .alg-node-label{color:var(--blue)}
+.alg-final{background:linear-gradient(135deg,rgba(0,191,165,0.15),rgba(0,191,165,0.05));border:3px solid var(--teal);border-radius:20px}
+.alg-final .alg-node-label{color:var(--teal);font-weight:600}
+.alg-alerta{background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:2px solid var(--coral);border-radius:8px;animation:algPulse 2s ease-in-out infinite}
+.alg-alerta .alg-node-label{color:var(--coral);font-weight:600}
+.alg-node.has-detail{cursor:pointer}
+.alg-node.has-detail:hover{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,191,165,0.2)}
+.alg-detail{display:none}
+@keyframes algDetailIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.alg-ks-container:empty{display:none}
+.alg-ks-container{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.alg-ks-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:14px 16px 14px 14px;margin-bottom:12px;animation:algKsIn .3s ease;font-size:13px;line-height:1.65}
+.alg-ks-card .alg-ks-title{font-size:13px;font-weight:700;margin-bottom:8px;padding-right:20px}
+.alg-ks-card .alg-ks-content{color:var(--text-secondary);font-size:12.5px}
+.alg-ks-card .alg-ks-content strong{color:var(--text-primary)}
+.alg-ks-close{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;transition:color .2s;border-radius:4px}
+.alg-ks-close:hover{color:var(--coral);background:rgba(255,107,107,0.1)}
+@keyframes algKsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes algKsOut{to{opacity:0;transform:translateX(20px)}}
+@keyframes algKsFlash{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 0 4px rgba(0,191,165,0.2)}100%{box-shadow:none}}
+@keyframes algPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.2)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+@media(max-width:600px){.alg-grid{grid-template-columns:1fr!important;gap:12px 0!important}.alg-node{grid-column:1!important;grid-row:auto!important;max-width:100%}.alg-svg{display:none}.alg-node::after{content:'↓';display:block;color:var(--teal-border);font-size:18px;margin-top:6px;line-height:1}.alg-node:last-child::after{display:none}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#context-ebm">Contextul — De ce medicina are nevoie de o altă educație?</a></li>
+<li><a href="#platforma-descriere">Platforma CeCitimAzi — Ce oferim</a></li>
+<li><a href="#principii-pedagogice">Principii pedagogice — Dovezile din spatele designului</a></li>
+<li><a href="#algoritm-fsrs">Algoritmul FSRS — Spaced Repetition Adaptiv</a></li>
+<li><a href="#echipa">Echipa</a></li>
+<li><a href="#protocol-studiu">Protocolul de studiu — Validarea platformei</a></li>
+<li><a href="#demo-componente">Componente interactive — Demo live</a></li>
+<li><a href="#viziune">Viziunea — Ce urmează</a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">CeCitimAzi · Despre Proiect</div>
+  <h1>CeCitimAzi — Platformă de E-Learning Medical</h1>
+  <p>Principii pedagogice bazate pe dovezi · Spaced repetition adaptiv · Conținut verificat prin AI · Showroom de componente interactive</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează acest proiect?</div>
+  <p><strong>Medicina bazată pe dovezi a schimbat practica clinică, dar educația medicală a rămas în urmă.</strong> Cursurile magistrale, manualele enciclopedice și examenele bazate pe memorare domină în continuare formarea medicală. CeCitimAzi este o platformă de e-learning construită pe premisa că <strong>metoda prin care un medic rezident învață contează la fel de mult ca informația pe care o învață</strong>. Fiecare decizie de design pedagogic are la bază dovezi din științele cognitive ale învățării — retrieval practice, spaced repetition, elaborative interrogation, curiozitate epistemică — transformând lectura pasivă în învățare activă, măsurabilă și adaptivă.</p>
+</div>
+
+<div class="section" id="context-ebm">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Contextul — De ce medicina are nevoie de o altă educație?</h2>
+</div>
+
+<div class="text-block"><p>În anii '70, medicul britanic <strong>Archie Cochrane</strong> demonstra că majoritatea intervențiilor medicale practicate la acea vreme nu aveau nicio dovadă solidă în spate. Medicina era construită pe tradiție, autoritate și raționament fiziopatologic, nu pe demonstrație empirică. În 1991, <strong>Gordon Guyatt</strong> formalizează termenul „evidence-based medicine" și construiește o metodologie care devine standard global.</p>
+<h3 class="md-subtitle">Lecțiile care au schimbat medicina</h3>
+<p>Mișcarea EBM a produs studii cu rezultate dramatic contraintuitive — nu au generat EBM, ci au demonstrat de ce era nevoie de ea.</p></div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Studiul CAST (1989) — Când tratezi markerul, nu pacientul</div>
+  <p>Encainida și flecainida suprimau eficient aritmiile ventriculare post-infarct. Raționament fiziopatologic: mai puține aritmii = mai puține decese subite. <strong>Realitate:</strong> pacienții tratați mureau mai repede decât cei din grupul placebo. Studiul a fost oprit prematur din motive etice. Lecția fundamentală: <strong>un surrogate endpoint nu este echivalent cu un outcome clinic relevant.</strong> O asociere epidemiologică, oricât de robustă, nu demonstrează cauzalitate.</p>
+</div>
+
+<div class="card pearl">
+  <div class="card-label">⚡ Torcetrapibul — Studiul ILLUMINATE (2006)</div>
+  <p>Torcetrapibul creștea HDL-colesterolul cu până la 70%. Pfizer a investit peste 800 de milioane de dolari. Raționament: HDL mare = protecție cardiovasculară. <strong>Realitate:</strong> mortalitate cardiovasculară semnificativ crescută în grupul tratat. A crește artificial un marker nu reproduce mecanismul biologic prin care acel marker era benefic în mod natural. <strong>Aceeași lecție, cu un miliard de dolari mai târziu.</strong></p>
+</div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Educația medicală nu a primit același tratament</div>
+  <p>Medicina are RCT-uri, meta-analize și ghiduri clinice. Educația medicală are în continuare cursuri magistrale, manuale enciclopedice și examene bazate pe memorare pură. <strong>CeCitimAzi</strong> aplică principiile EBM la educația medicală: fiecare decizie de design pedagogic trebuie să aibă o bază în dovezi din științele cognitive.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Studiul DIG (1997) a arătat că digoxinul, folosit de peste 200 de ani în insuficiența cardiacă, deși îmbunătățea simptomele și reducea spitalizările, nu aducea niciun beneficiu pe mortalitate și putea crește riscul de deces la doze mai mari. Ce principiu EBM ilustrează cel mai bine acest studiu?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) Studiile observaționale sunt întotdeauna superioare RCT-urilor</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) Meta-analizele nu pot evalua medicamente utilizate de secole</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) Tratamentele tradiționale sunt întotdeauna ineficiente</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">D) Principiul precauției farmacologice — orice medicament vechi trebuie retras</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">E) Surrogate endpoints (simptome, spitalizări) nu sunt echivalente cu outcome-uri clinice dure (mortalitatea)</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Digoxinul îmbunătățea simptomele și reducea spitalizările (surrogate endpoints), dar NU reducea mortalitatea (hard endpoint). Aceasta este lecția centrală: un medicament poate face pacientul să se simtă mai bine fără să-l facă să trăiască mai mult. Deciziile terapeutice trebuie ghidate de outcome-uri clinice relevante, nu doar de markeri intermediari.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Studiul DIG a fost un RCT, și tocmai el a demonstrat limitările observațiilor anterioare. RCT-urile sunt standardul de aur.<br><strong>B)</strong> GREȘIT — Meta-analizele pot evalua orice intervenție pentru care există studii. Vechimea unui medicament nu limitează posibilitatea de evaluare.<br><strong>C)</strong> GREȘIT — Afirmație prea categorică. Digoxinul rămâne util în anumite situații. EBM nu înseamnă respingerea tradițiilor, ci validarea lor riguroasă.<br><strong>D)</strong> GREȘIT — Digoxinul nu a fost retras; este în continuare utilizat la doze mici, cu indicații precise. Principiul precauției nu implică retragerea automată.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="platforma-descriere">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Platforma CeCitimAzi — Ce oferim</h2>
+</div>
+
+<div class="text-block"><p>CeCitimAzi este o platformă de e-learning medical destinată rezidenților și specialiștilor de <strong>Medicină de Familie</strong> din România. Modulul curent — <strong>Pre-Stagiu Boli Infecțioase</strong> — conține 29 de capitole planificate, din care 6 sunt deja disponibile, cu peste 100 de utilizatori activi.</p>
+<h3 class="md-subtitle">Structura unui capitol</h3>
+<p>Fiecare capitol urmează o arhitectură pedagogică bazată pe dovezi: pornește de la ancorarea în relevanță clinică („De ce contează"), traversează mecanismele fiziopatologice cu text substanțial, intercalează grile MCQ imediat după paragraful relevant (retrieval practice), include elemente vizuale (algoritmi, fotografii clinice, tabele comparative), și culminează cu cazuri clinice interactive progresive. Pe parcurs, un <strong>Knowledge Sidebar</strong> persistent oferă rezumate, mnemonice și curiozități epistemice.</p></div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Stack-ul tehnic CeCitimAzi</div>
+  <p><strong>Frontend:</strong> HTML self-contained (fără CDN extern, doar Google Fonts) generat de `cecitimazi_build.py` (~1900 linii Python). <strong>Conținut:</strong> Markdown cu directive `:::component` — un limbaj de markup propriu care permite 21 tipuri de componente interactive. <strong>Verificare medicală:</strong> 4 servere MCP (Open Medicine, Healthcare MCP, Medical MCP, RAG ChromaDB). <strong>Spaced repetition:</strong> FSRS (Free Spaced Repetition Scheduler) — algoritmul implicit Anki din v23.10.</p>
+</div>
+
+<div class="comparison-grid">
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">CeCitimAzi</h4>
+    <ul><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Anki</h4>
+    <ul><li>Predare integrată + retrieval practice | Doar flashcard-uri, fără predare |</li><li>Conținut pre-construit, verificat medical | Conținut creat manual de utilizator |</li><li>Cazuri clinice interactive progresive | Nu suportă cazuri clinice |</li><li>FSRS adaptiv per lecție (15 min) | FSRS adaptiv per card (secunde) |</li><li>Verificare MCP la generare | Fără verificare automată |</li><li>Engagement-first design | Interfață minimalistă |</li></ul>
+  </div>
+</div>
+
+<h3>Componente interactive disponibile în fiecare capitol</h3>
+<div class="table-wrapper"><table>
+  <thead><tr><th>Componentă</th><th>Rol pedagogic</th><th>Baza de dovezi</th></tr></thead>
+  <tbody><tr><td>Card „De ce contează"</td><td>Ancorare în relevanță clinică</td><td>Psihologie motivațională (Eccles, 1983)</td></tr>
+<tr><td>Grile MCQ intercalate</td><td>Retrieval practice imediat</td><td>Roediger & Karpicke, 2006 — effect size 0.50</td></tr>
+<tr><td>Knowledge Sidebar</td><td>Elaborative interrogation + curiozitate</td><td>Woloshyn 1992; Gruber 2014</td></tr>
+<tr><td>Flashcard-uri</td><td>Retrieval practice cu feedback elaborat</td><td>Dunlosky et al., 2013</td></tr>
+<tr><td>Cazuri clinice</td><td>Situated learning + raționament clinic</td><td>Lave & Wenger, 1991</td></tr>
+<tr><td>Matching game</td><td>Discriminare activă între entități</td><td>Problem-based learning</td></tr>
+<tr><td>Ordonare severitate</td><td>Raționament clinic aplicat</td><td>Desirable difficulties (Bjork, 2011)</td></tr>
+<tr><td>Algoritm clinic interactiv</td><td>Gândire decizională structurată</td><td>Clinical decision trees</td></tr>
+<tr><td>Spaced repetition FSRS</td><td>Retenție pe termen lung</td><td>Ebbinghaus 1885; Cepeda 2006</td></tr>
+<tr><td>Feedback elaborat per variantă</td><td>Corectare misconcepții</td><td>Hattie & Timperley, 2007 — effect size 0.73</td></tr></tbody>
+</table></div>
+
+<div class="divider"></div>
+
+<div class="section" id="principii-pedagogice">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Principii pedagogice — Dovezile din spatele designului</h2>
+</div>
+
+<div class="text-block"><p>CeCitimAzi nu folosește tehnici pedagogice la întâmplare. Fiecare element de design este justificat prin dovezi din științele cognitive ale învățării — aceleași standarde de rigoare pe care le cerem de la practica clinică.</p>
+<h3 class="md-subtitle">Retrieval practice — Testarea activă bate relectura</h3>
+<p>Studiul seminal Roediger & Karpicke (2006) a demonstrat că <strong>testarea activă</strong> (retrieval practice) produce retenție pe termen lung semnificativ superioară relecturii repetate. Studenții care se testau pe material rețineau mai mult decât cei care recitau de 4 ori același text. De aceea, CeCitimAzi intercalează grile MCQ <strong>imediat după paragrafele relevante</strong>, nu la finalul capitolului.</p>
+<h3 class="md-subtitle">Curiozitatea epistemică — Deschide o fereastră de encoding</h3>
+<p>Studiul Gruber et al. (2014) a demonstrat că starea de curiozitate activează circuitul dopaminergic mezolimbic (VTA → nucleus accumbens) și hipocampul, îmbunătățind retenția nu doar a informației țintite, ci și a informației incidentale prezentate simultan. Cardurile „Știați că?" din sidebar sunt proiectate specific pentru a induce această stare.</p>
+<h3 class="md-subtitle">Tensiunea engagement vs. retenție</h3>
+<p>Bjork & Bjork (2011) au demonstrat că condițiile de învățare care par mai ușoare produc adesea retenție mai slabă pe termen lung (<em>desirable difficulties</em>). Totuși, un material pe care utilizatorul îl închide după 3 minute are retenție zero. <strong>Engagement-ul nu e scopul — e precondița.</strong> Spaced repetition nu este doar pedagogie — este și un mecanism de re-engagement.</p></div>
+
+<div class="quiz-container"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">Un grup de studenți la medicină studiază un capitol de farmacologie. Grupul A recitește materialul de 4 ori. Grupul B citește o dată, apoi se testează de 3 ori (cu feedback). Conform studiilor lui Roediger & Karpicke (2006), care grup va reține mai mult la o săptămână?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Ambele grupuri vor avea rezultate identice, deoarece timpul total este egal</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Grupul A — repetiția este cheia memoriei pe termen lung</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">C) Grupul A la testarea imediată, Grupul B la testarea întârziată — dar diferența nu este semnificativă</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) Niciunul — farmacologia necesită memorare mecanică, nu retrieval practice</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">E) Grupul B — retrieval practice produce retenție superioară relecturii, chiar și cu mai puțin timp de studiu</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Roediger & Karpicke (2006) au arătat un efect clar: retrieval practice produce retenție pe termen lung semnificativ superioară relecturii. Mecanismul: fiecare act de retrieval consolidează traseul de acces la informație, făcându-l mai robust. Relectura doar re-expune, fără a consolida accesul. CeCitimAzi aplică acest principiu intercalând grile imediat după textul relevant.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Timpul total nu este variabila critică. Tipul de procesare contează mai mult: retrieval (extragere din memorie) vs. re-encoding (recodificare pasivă).<br><strong>B)</strong> GREȘIT — Relectura repetată creează o „iluzie de fluență" — materialul pare familiar, dar nu este accesibil la recall activ. Familiaritatea nu este echivalentă cu învățarea.<br><strong>C)</strong> GREȘIT — Parțial corect (Grupul A poate părea mai bun imediat), dar diferența devine semnificativă la testarea întârziată, nu nesemnificativă. Effect size ~0.50 la o săptămână.<br><strong>D)</strong> GREȘIT — Retrieval practice funcționează indiferent de domeniu. Farmacologia beneficiază masiv de testare activă cu feedback elaborat.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="algoritm-fsrs">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Algoritmul FSRS — Spaced Repetition Adaptiv</h2>
+</div>
+
+<div class="text-block"><p><strong>SM-2</strong> (SuperMemo 2, Woźniak, anii '80) a fost standardul de aur al spaced repetition timp de decenii. Calculează intervalul următor bazat doar pe ultimul răspuns, fără memorie pe termen lung despre istoricul itemului.</p>
+<p><strong>FSRS</strong> (Free Spaced Repetition Scheduler, Jarvis Han, 2022-2023) folosește un model psihologic bazat pe <strong>trei variabile</strong>: Stabilitatea (câte zile pot trece înainte ca probabilitatea de recall să scadă la 90%), Dificultatea (cât de greu este materialul specific pentru acest utilizator, pe o scară de 1-10) și Retrievability (probabilitatea actuală că utilizatorul își amintește).</p></div>
+
+<div class="calc-box">
+  <h4>Mapping MCQ → Rating FSRS</h4>
+  <div class="calc-row"><label>Temperatură >38°C</label><div class="calc-toggle"><button onclick="tC(this,'fever',false)">Nu</button><button onclick="tC(this,'fever',true)">Da</button></div></div>
+  <div class="calc-row"><label>Exudat/tumefiere amigdaliană</label><div class="calc-toggle"><button onclick="tC(this,'exudate',false)">Nu</button><button onclick="tC(this,'exudate',true)">Da</button></div></div>
+  <div class="calc-row"><label>Adenopatie cervicală anterioară sensibilă</label><div class="calc-toggle"><button onclick="tC(this,'lymph',false)">Nu</button><button onclick="tC(this,'lymph',true)">Da</button></div></div>
+  <div class="calc-row"><label>Absența tusei</label><div class="calc-toggle"><button onclick="tC(this,'noCough',false)">Nu</button><button onclick="tC(this,'noCough',true)">Da</button></div></div>
+  <div class="calc-row"><label>Vârstă</label><div class="calc-toggle"><button onclick="tC(this,'age','3-14')">3-14</button><button onclick="tC(this,'age','15-44')">15-44</button><button onclick="tC(this,'age','45+')">≥45</button></div></div>
+  <div class="calc-result" id="centorResult" style="display:none"><div class="score-num" id="centorScore">0</div><div class="score-risk" id="centorRisk"></div><div class="score-action" id="centorAction"></div></div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleC(this)">
+    <span>Formulele matematice FSRS — detalii tehnice</span><span class="icon">▼</span>
+  </div>
+  <div class="collapsible-body"><p><strong>La prima lectură (inițializare):</strong> D₀ = 7 - 3 × (rating - 1). Rating 1 (Again) → D = 7 (dificil). Rating 4 (Easy) → D = 4 (ușor). Stabilitatea inițială: Again → S = 0.40 zile; Hard → S = 1.18 zile; Good → S = 3.17 zile; Easy → S = 8.93 zile.</p>
+<p><strong>La repetiții ulterioare:</strong> Retrievability la momentul review-ului: R = (1 + t / (9 × S))^(-1), unde t = zile de la ultima repetiție. Stabilitate nouă după răspuns corect: S' = S × e^(w₁₇ × (11-D) × S^(-w₁₈) × (e^(w₁₉×(1-R)) - 1) + 1). Interval următor: I = S' × ln(0.9) / ln(R_target), unde R_target = 0.90.</p>
+<p><strong>Parametrii w</strong> sunt antrenați pe milioane de carduri Anki și disponibili în paper-ul original (Han et al., 2023).</p></div>
+</div>
+
+<div class="timeline"><div class="timeline-item">
+  <h4>Ziua 1-5: Prima săptămână — 1 lecție nouă/zi (15 min) + prima repetiție la +1 zi | ~30 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 6-7: Weekend — doar repetiții din săptămâna anterioară | ~15 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 8-14: Săptămâna 2 — lecții noi + repetiții la +1 și +7 zile acumulate | ~45 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 15-30: Săptămânile 3-4 — ritmul crește, repetiții la +14 zile se adaugă | max 60 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 31: „Cruising speed" — sistemul atinge ritmul stabil de 4-5 sesiuni/zi | ~75 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 31-61: Faza de consolidare — lecții noi + repetiții la +1, +7, +14 și +30 zile | 45-75 min/zi</h4>
+  <p></p>
+</div>
+<div class="timeline-item">
+  <h4>Ziua 61: Final program — 45 lecții completate, 187 sesiuni totale, ~47 ore de studiu | Evaluare finală</h4>
+  <p></p>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="echipa">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Echipa</h2>
+</div>
+
+<div class="text-block"><p>Proiectul CeCitimAzi este construit de o echipă interdisciplinară care combină practica clinică, dezvoltarea software, neuroștiințele cognitive și cercetarea academică.</p>
+<h3 class="md-subtitle">Fondatorul</h3></div>
+
+<div class="img-component">
+  <img src="images/radu_tunareanu.jpg" alt="Dr. Radu-Dimitrie Tunareanu — Fondator CeCitimAzi" data-titlu="Dr. Radu-Dimitrie Tunareanu — Fondator CeCitimAzi" data-desc="<ul><li><strong>Radu-Dimitrie Tunareanu</strong> este medic rezident de Medicină de Familie și fondatorul platformei CeCitimAzi. Absolvent al UMF Carol Davila (2017-2023), bilingv româno-englez (Cambridge CAE — C2), cu studii suplimentare în Psihologie la Universitatea Titu Maiorescu (2025-2028).</li><li>A construit și lansat platforma CeCitimAzi de la zero, creând studii de caz clinice, bănci de grile MCQ și rezumate structurate din manuale medicale, toate generate cu asistență AI și verificate riguros. A elaborat sute de prompturi medicale pe Claude și Gemini, dezvoltând expertiză în identificarea erorilor de raționament clinic ale modelelor AI.</li></ul>" data-sursa="">
+  <div class="img-caption">
+    <div class="caption-title">Dr. Radu-Dimitrie Tunareanu — Fondator CeCitimAzi</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Radu-Dimitrie Tunareanu</strong> este medic rezident de Medicină de Familie și fondatorul platformei CeCitimAzi. Absolvent al UMF Carol Davila (2017-2023), bilingv româno-englez (Cambridge CAE — C2), cu studii suplimentare în Psihologie la Universitatea Titu Maiorescu (2025-2028).</li></ul></div><div class="img-cap-full"><ul><li><strong>Radu-Dimitrie Tunareanu</strong> este medic rezident de Medicină de Familie și fondatorul platformei CeCitimAzi. Absolvent al UMF Carol Davila (2017-2023), bilingv româno-englez (Cambridge CAE — C2), cu studii suplimentare în Psihologie la Universitatea Titu Maiorescu (2025-2028).</li><li>A construit și lansat platforma CeCitimAzi de la zero, creând studii de caz clinice, bănci de grile MCQ și rezumate structurate din manuale medicale, toate generate cu asistență AI și verificate riguros. A elaborat sute de prompturi medicale pe Claude și Gemini, dezvoltând expertiză în identificarea erorilor de raționament clinic ale modelelor AI.</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Co-fondatorul</h3></div>
+
+<div class="img-component">
+  <img src="images/stefan_isac.jpg" alt="Ștefan Isac — Co-fondator și Lead Developer" data-titlu="Ștefan Isac — Co-fondator și Lead Developer" data-desc="<ul><li><strong>Ștefan Isac</strong> este software developer cu peste 4 ani de experiență în arhitectura aplicațiilor web și soluțiilor Microsoft Power Platform. Studii în curs la Facultatea de Informatică (Universitatea din București) și Facultatea de Finanțe (ASE).</li><li>Experiență solidă în dezvoltare PHP, WordPress, WooCommerce și SQL Server, cu focus pe performanță și scalabilitate. Aduce expertiza tehnică necesară pentru transformarea CeCitimAzi dintr-un proiect de conținut într-o platformă scalabilă cu sistem de abonamente și dashboard personalizat.</li></ul>" data-sursa="">
+  <div class="img-caption">
+    <div class="caption-title">Ștefan Isac — Co-fondator și Lead Developer</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Ștefan Isac</strong> este software developer cu peste 4 ani de experiență în arhitectura aplicațiilor web și soluțiilor Microsoft Power Platform. Studii în curs la Facultatea de Informatică (Universitatea din București) și Facultatea de Finanțe (ASE).</li></ul></div><div class="img-cap-full"><ul><li><strong>Ștefan Isac</strong> este software developer cu peste 4 ani de experiență în arhitectura aplicațiilor web și soluțiilor Microsoft Power Platform. Studii în curs la Facultatea de Informatică (Universitatea din București) și Facultatea de Finanțe (ASE).</li><li>Experiență solidă în dezvoltare PHP, WordPress, WooCommerce și SQL Server, cu focus pe performanță și scalabilitate. Aduce expertiza tehnică necesară pentru transformarea CeCitimAzi dintr-un proiect de conținut într-o platformă scalabilă cu sistem de abonamente și dashboard personalizat.</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Specialist în Design Experimental și Neuroștiințe Cognitive</h3></div>
+
+<div class="image-pair">
+  <div class="image-pair-item">
+    <div class="img-component"><img src="left.jpg" alt="" data-titlu="" data-desc="<ul><li><strong>Andrei Cătălin Ciuparu</strong> (stânga) — MSc Cognitive Neuroscience (Research) de la Radboud University / Donders Institute (Nijmegen, Olanda). Research Assistant la Transylvanian Institute of Neuroscience (TINS) din 2018, cu publicații în European Journal of Neuroscience, Neurocomputing și Cerebral Cortex. Expertiza sa în EEG, eye tracking, machine learning și design experimental este esențială pentru construcția și validarea protocolului de studiu care va evalua eficacitatea platformei.</li><li><strong>Prof. Dr. Mihai Craiu</strong> (dreapta) — Conferențiar Universitar la UMF Carol Davila, Șef Secție Pediatrie V – Pneumologie Pediatrică la IOMC Alfred Rusescu. Peste 20 de ani de experiență clinică și didactică, instructor PALS (Pediatric Advanced Life Support), membru al Societății Române de Pediatrie și al European Respiratory Society. Va coordona studiul de validare al platformei pe studenții din rotația de Pediatrie.</li></ul>" data-sursa=""></div>
+    <div class="img-caption">
+      
+      <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Andrei Cătălin Ciuparu</strong> (stânga) — MSc Cognitive Neuroscience (Research) de la Radboud University / Donders Institute (Nijmegen, Olanda). Research Assistant la Transylvanian Institute of Neuroscience (TINS) din 2018, cu publicații în European Journal of Neuroscience, Neurocomputing și Cerebral Cortex. Expertiza sa în EEG, eye tracking, machine learning și design experimental este esențială pentru construcția și validarea protocolului de studiu care va evalua eficacitatea platformei.</li></ul></div><div class="img-cap-full"><ul><li><strong>Andrei Cătălin Ciuparu</strong> (stânga) — MSc Cognitive Neuroscience (Research) de la Radboud University / Donders Institute (Nijmegen, Olanda). Research Assistant la Transylvanian Institute of Neuroscience (TINS) din 2018, cu publicații în European Journal of Neuroscience, Neurocomputing și Cerebral Cortex. Expertiza sa în EEG, eye tracking, machine learning și design experimental este esențială pentru construcția și validarea protocolului de studiu care va evalua eficacitatea platformei.</li><li><strong>Prof. Dr. Mihai Craiu</strong> (dreapta) — Conferențiar Universitar la UMF Carol Davila, Șef Secție Pediatrie V – Pneumologie Pediatrică la IOMC Alfred Rusescu. Peste 20 de ani de experiență clinică și didactică, instructor PALS (Pediatric Advanced Life Support), membru al Societății Române de Pediatrie și al European Respiratory Society. Va coordona studiul de validare al platformei pe studenții din rotația de Pediatrie.</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+    </div>
+  </div>
+  <div class="image-pair-item">
+    <div class="img-component"><img src="right.jpg" alt="" data-titlu="" data-desc="" data-sursa=""></div>
+    <div class="img-caption">
+      
+      <div class="caption-text"></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="protocol-studiu">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Protocolul de studiu — Validarea platformei</h2>
+</div>
+
+<div class="text-block"><p>CeCitimAzi nu este încă validată empiric pe populația-țintă. Studiul de la <strong>Catedra de Pediatrie</strong> a Prof. Dr. Mihai Craiu este primul pas.</p>
+<h3 class="md-subtitle">Design-ul studiului</h3>
+<p>Toți studenții din rotația de Pediatrie (an 5) primesc acces liber la platformă. Post-hoc, se stratifică după uzul real: engagement ridicat, mediu și scăzut. Se compară scorurile la examenul final, controlând statistic pentru performanța academică anterioară (media anilor 1-4), prezența la cursuri și seria de rotație.</p></div>
+
+<div class="card highlight">
+  <div class="card-label">ℹ️ Strategia pentru eliminarea selection bias</div>
+  <p><strong>Problema centrală:</strong> studentul motivat folosește mai mult platforma ȘI ia note mai bune. Nu poți ști direct dacă platforma a cauzat performanța. <strong>Soluția:</strong> construiești un model predictiv al scorului așteptat pe baza notelor anterioare și prezenței. Calculezi pentru fiecare student residualul (scor actual − scor prezis). Dacă studenții care au folosit platforma au reziduali pozitivi sistematic — au performat mai bine decât preziceau caracteristicile lor anterioare — ai argumentul cel mai puternic posibil.</p>
+</div>
+
+<div class="quiz-container"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Profesorul Craiu vrea să evalueze dacă platforma CeCitimAzi îmbunătățește performanța studenților la examenul de Pediatrie. Are ~35 studenți/serie. Un RCT clasic (grup experimental vs. control) nu este fezabil. Care este cel mai adecvat design?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Studiu crossover — jumătate primesc platforma în prima lună, cealaltă jumătate în a doua</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) RCT cu randomizare individuală — jumătate din studenți primesc acces, jumătate nu</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">C) Case-control — selectezi studenții cu note mari și compari uzul platformei</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">D) Studiu retrospectiv — compară notele din anii anteriori (fără platformă) cu cele din anul curent (cu platformă)</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">E) Quasi-experiment observațional prospectiv — toți primesc acces, stratificare post-hoc după uz, control statistic pentru confounders</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Quasi-experimentul observațional prospectiv cu grupuri naturale este designul optim când RCT-ul nu e fezabil. Toți studenții au acces egal (etic), iar variabilitatea naturală în uz permite comparația. Controlul statistic prin regresie multiplă (media anterioară + prezență + serie) izolează contribuția independentă a platformei. Analiza valorii adăugate (residuali) oferă argumentul cel mai robust.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Crossover-ul presupune că efectul dispare când oprești intervenția (washout). Educația nu funcționează așa — ce ai învățat nu se „șterge" la schimbarea grupului.<br><strong>B)</strong> GREȘIT — RCT cu randomizare individuală nu este fezabil: (1) contaminarea între studenți — comunică între ei, împart materiale; (2) etic discutabil — privarea deliberată a unui grup de o resursă educațională.<br><strong>C)</strong> GREȘIT — Case-control introduce selection bias maxim. Studenții cu note mari probabil folosesc toate resursele disponibile — nu poți separa efectul platformei de motivația generală.<br><strong>D)</strong> GREȘIT — Comparația istorică nu controlează pentru diferențele între cohorte (dificultatea examenului, calitatea predării, caracteristicile studenților). Confounding masiv temporal.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="demo-componente">
+  <div class="section-label">Capitolul 7</div>
+  <h2>Componente interactive — Demo live</h2>
+</div>
+
+<div class="text-block"><p>Această secțiune demonstrează componentele interactive disponibile în platformă, folosind exemple de <strong>Pediatrie</strong> — disciplina pe care o vom valida în primul studiu.</p>
+<h3 class="md-subtitle">Matching game — Discriminare între erupțiile exantematice ale copilăriei</h3></div>
+
+<div class="match-game">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Rujeola</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Rubeola</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Varicela</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">Scarlatina</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">Megaleritemul (boala a cincea)</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'left')">Exantemul subit (rozeola)</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">Vezicule „în picătură de rouă" pe fond eritematos + erupție în valuri (leziuni de vârste diferite) + prurit intens</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'right')">Febră 40°C × 3-5 zile urmată de erupție maculoasă DUPĂ defervescență + HHV-6</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Erupție fină roză cu adenopatii retroauriculare + artalgii la adolescente + risc teratogen major</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Eritem facial bilateral „obraz pălmuit" + eritem reticulat pe membre + Parvovirus B19</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Erupție maculo-papulară craniocaudală + semnul Köplik (pete albe pe mucoasa jugală) + febră în 2 valuri</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Eritem difuz aspru „ca hârtia de șmirghel" + limbă zmeurie + paloare circumorală (triunghiul Filatov)</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/6</div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Severity sort — Ordonează gradele de deshidratare pediatrică după severitate</h3></div>
+
+<div class="severity-game">
+  <div class="sev-header">Ordonare severitate</div>
+  <div class="sev-subtitle">Ordonează gradele de deshidratare la copil după severitatea clinică (crescător)</div>
+  <div class="sev-instructions">Ordonează de la ușor la sever făcând click pe pătratul din dreapta. Pentru rapiditate, poți folosi și cifrele de pe tastatură!</div>
+  <div class="severity-layout">
+    <div class="severity-bar">
+      <span class="bar-label top-l">Ușor</span>
+      <span class="bar-label bot-l">Sever</span>
+    </div>
+    <div class="severity-items" id="sevItems">
+      <div class="sev-item" data-correct="1" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Deshidratare ușoară (<5% pierdere ponderală) — sete ușoară, mucoase moderat uscate, pliu cutanat normal, diureză normală, fontanelă normotensivă, rehidratare orală cu SRO</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+    </div>
+<div class="sev-item" data-correct="3" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Deshidratare severă (>10% pierdere ponderală) — șoc hipovolemic, puls filiform, TRC >3 secunde, anurie, fontanelă foarte deprimată, letargie sau comă, bolus NaCl 0,9% 20 mL/kg URGENT</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+    </div>
+<div class="sev-item" data-correct="4" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Șoc hipovolemic decompensat — hipotensiune arterială (semn TARDIV la copil!), bradicardie paradoxală, GCS scăzut, puls absent periferic, acidoză metabolică severă, risc imediat de stop cardiac</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+    </div>
+<div class="sev-item" data-correct="2" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Deshidratare moderată (5-10% pierdere ponderală) — tahicardie, fontanelă deprimată, pliu cutanat persistent 1-2 secunde, oligurie, extremități reci, iritabilitate, rehidratare orală agresivă sau i.v.</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select>
+    </div>
+
+      <div class="sev-success-overlay" id="sevOverlay"><div class="sev-success-burst">🏆</div></div>
+    </div>
+  </div>
+  <button class="sev-btn" onclick="checkSev()">Verifică</button>
+  <div id="sevResult"></div>
+  <div class="sev-banner" id="sevBanner"><div class="sev-banner-title">Excelent! Ordinea perfectă!</div><div class="sev-banner-sub">Ai demonstrat raționament clinic solid.</div></div>
+  
+</div>
+
+<div class="text-block"><h3 class="md-subtitle">Flashcard-uri pediatrice</h3></div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este formula de calcul a necesarului de lichide de întreținere la copil (regula Holliday-Segar)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>0-10 kg:</strong> 100 mL/kg/zi. <strong>10-20 kg:</strong> 1000 mL + 50 mL/kg pentru fiecare kg peste 10. <strong>>20 kg:</strong> 1500 mL + 20 mL/kg pentru fiecare kg peste 20. Exemplu: copil de 25 kg = 1000 + 500 + 100 = <strong>1600 mL/zi</strong> (~67 mL/h).</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">La ce vârstă dispare reflexul Moro și ce patologie sugerează persistența sa?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Reflexul Moro (abducție + extensie brațe, apoi adducție „în îmbrățișare") dispare la <strong>4-6 luni</strong>. Persistența după 6 luni sugerează <strong>leziune neurologică centrală</strong> (paralizie cerebrală). Absența unilaterală la nou-născut sugerează <strong>paralizie de plex brahial</strong> (leziune Erb-Duchenne) sau <strong>fractură de claviculă</strong>.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este diferența între convulsiile febrile simple și complexe la copil?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Simple:</strong> durată <15 minute, generalizate, un singur episod în 24h, fără deficit post-ictal. Vârf la 12-18 luni. <strong>Complexe:</strong> durată >15 minute SAU focale SAU multiple în 24h SAU cu deficit post-ictal. Cele complexe necesită investigații suplimentare (EEG, eventual neuroimagistică). Ambele apar la copii 6 luni – 5 ani cu febră >38°C.</p></div>
+  </div>
+</div>
+<div class="flip-card" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce semnifică „iritabilitatea paradoxală" la sugar?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Sugarul plânge mai tare când este luat în brațe (mișcarea agravează durerea). Este <strong>echivalentul semnelor meningeale</strong> la sugar (care nu poate exprima cefalee sau fotofobie). Combinația <strong>fontanelă bombată + iritabilitate paradoxală + febră</strong> la sugar = suspiciune de meningită până la proba contrarie.</p></div>
+  </div>
+</div></div></div>
+
+<div class="text-block"><h3 class="md-subtitle">Quiz grupat — Vaccinarea pediatrică</h3></div>
+
+<div class="quiz-container"><div class="quiz-q" id="q4">
+  <div class="q-label">Vaccinarea pediatrică</div>
+  <div class="q-text">
+    <strong>Un medic de familie evaluează schema de vaccinare a unui sugar de 6 luni. Identificați afirmațiile corecte:</strong>
+    <div class="afirmatii">1. Vaccinul hexavalent (DTPa-VPI-Hib-HepB) se administrează la 2, 4 și 11 luni conform calendarului românesc<br>2. Vaccinul ROR (rujeolă-oreion-rubeolă) se administrează prima doză la 6 luni<br>3. BCG se administrează în maternitate (ziua 2-7 de viață)<br>4. Vaccinul antigripal este recomandat tuturor copiilor începând de la vârsta de 6 luni<br>5. Vaccinul pneumococic conjugat (PCV13) se administrează la 2, 4 și 11 luni</div>
+    <span class="grila-hint">A=1,2,3 | B=1,3 | C=2,4 | D=doar 4 | E=toate</span>
+  </div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) 1, 3 și 4</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) 2, 3 și 5</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) 1, 2, 3 și 5</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">D) 1, 3, 4 și 5</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Toate afirmațiile sunt corecte</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) GREȘIT — Afirmațiile 1, 3 și 4 sunt corecte, dar lipsește afirmația 5 care este, de asemenea, corectă. PCV13 se administrează la 2, 4 și 11 luni.</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">B) GREȘIT — Afirmația 2 este incorectă. Prima doză de ROR se administrează la 12 luni, nu la 6 luni. La 6 luni, anticorpii materni sunt încă parțial prezenți și ar neutraliza vaccinul viu atenuat.</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) GREȘIT — Include afirmația 2 care este incorectă (ROR la 6 luni în loc de 12 luni).</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) CORECT — (1) Hexavalentul: schema 2+1 la 2, 4 și 11 luni — corect. (2) ROR prima doză la 12 luni, nu 6 — incorect. (3) BCG la naștere (ziua 2-7) — corect. (4) Antigripal recomandat de la 6 luni — corect. (5) PCV13 schema 2+1 la 2, 4 și 11 luni — corect.</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) GREȘIT — Afirmația 2 este incorectă.</button>
+  <div class="quiz-explanation" id="q4-exp"></div>
+</div></div>
+
+<div class="text-block"><h3 class="md-subtitle">Algoritm clinic — Evaluarea dispneei acute la copil</h3></div>
+
+<div class="algoritm-clinic" id="alg_e136dc">
+  <div class="alg-header">
+    <div class="alg-badge">ALGORITM CLINIC</div>
+    <h4>Evaluarea dispneei acute la copil — Triaj în urgență</h4>
+    <p class="alg-desc">Algoritm de decizie bazat pe ghidurile NICE și GINA pentru evaluarea și managementul dispneei acute pediatrice</p>
+  </div>
+  <div class="alg-body">
+    <div class="alg-canvas">
+      <svg class="alg-svg"></svg>
+      <div class="alg-grid" style="grid-template-columns:repeat(3,minmax(170px,1fr));grid-template-rows:repeat(5,auto)"
+           data-edges='[{"from": "s1", "to": "s2", "label": ""}, {"from": "s2", "to": "s3", "label": "DA"}, {"from": "s2", "to": "s4", "label": "NU"}, {"from": "s3", "to": "s8", "label": "Stabilizat"}, {"from": "s4", "to": "s5", "label": "DA"}, {"from": "s4", "to": "s6", "label": "NU"}, {"from": "s5", "to": "s8", "label": ""}, {"from": "s6", "to": "s7", "label": "DA"}, {"from": "s6", "to": "s8", "label": "NU — altă cauză"}, {"from": "s7", "to": "s8", "label": ""}]'>
+        <div class="alg-node alg-start has-detail" data-id="s1" style="grid-row:1;grid-column:1/-1"><span class="alg-node-label">Copil cu dispnee acută</span><div class="alg-detail"><strong>Evaluare inițială rapidă (sub 60 secunde):</strong> Stare generală, efort respirator vizibil, colorație, nivel de conștiență. Triunghiul de evaluare pediatrică (TEP): Aspect — Respirație — Circulație.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s2" style="grid-row:2;grid-column:1/-1"><span class="alg-node-label">Semne de insuficiență respiratorie severă?</span><div class="alg-detail"><strong>Red flags:</strong> Cianoză centrală, tiraj intercostal/suprasternal marcat, geamăt expirator (grunting), respirație paradoxală (balans toraco-abdominal), bradicardie, alterare conștiență (letargie/agitație extremă), SaO₂ <90%. Prezența oricăruia = insuficiență severă.</div></div>
+      <div class="alg-node alg-alerta has-detail" data-id="s3" style="grid-row:3;grid-column:1"><span class="alg-node-label">Resuscitare imediată — A-B-C</span><div class="alg-detail"><strong>Acțiune imediată:</strong> Oxigen 15L/min pe mască cu rezervor. Poziție confortabilă (nu forța decubitul). Monitorizare continuă SaO₂, FC, FR. Pregătire pentru intubație dacă GCS <8 sau apnee. Acces venos. NU întârzia pentru investigații!</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s4" style="grid-row:3;grid-column:2"><span class="alg-node-label">Stridor inspirator prezent?</span><div class="alg-detail"><strong>Stridorul inspirator</strong> = obstrucție a căilor aeriene superioare (supraglotice/glotice/subglotice). Evaluează: debut brusc (corp străin?) vs. progresiv (crup?), febră prezentă?, voce răgușită sau afonie?, disfagie/sialoreea (epiglotită!)?</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s8" style="grid-row:4;grid-column:1"><span class="alg-node-label">Plan terapeutic individualizat</span><div class="alg-detail">Stabilește diagnosticul etiologic, inițiază tratamentul specific și decide internare vs. ambulatoriu. Criterii de internare: SaO₂ <92%, efort respirator sever, vârsta <3 luni, incapacitate de alimentare, mediu social nesigur.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s5" style="grid-row:4;grid-column:2"><span class="alg-node-label">Evaluare crup vs. epiglotită vs. corp străin</span><div class="alg-detail"><strong>Crup (laringotraheită):</strong> tuse lătrătoare, stridor, voce răgușită, febră moderată. Scorul Westley ghidează severitatea. <strong>Epiglotită:</strong> febră înaltă, disfagie, sialoreea, copil în „tripod position" — NU examina orofaringele! <strong>Corp străin:</strong> debut brusc fără febră, wheezing unilateral.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s6" style="grid-row:4;grid-column:3"><span class="alg-node-label">Wheezing expirator prezent?</span><div class="alg-detail"><strong>Wheezing-ul expirator</strong> = obstrucție a căilor aeriene inferioare (bronhospasm, bronșiolită). Evaluează: vârsta (sub 2 ani = probabil bronșiolită), recurența (astm?), febra, sezonalitatea (iarna = VRS).</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s7" style="grid-row:5;grid-column:1/-1"><span class="alg-node-label">Evaluare bronșiolită vs. astm vs. pneumonie</span><div class="alg-detail"><strong>Bronșiolită (< 2 ani):</strong> rinoree, tuse, wheezing, tahipnee, ± febră. VRS cel mai frecvent. Tratament: suportiv (aspirare nazală, hidratare, oxigen dacă SaO₂ <92%). <strong>Astm (> 2 ani):</strong> wheezing recurent, răspunde la β2-agoniști. <strong>Pneumonie:</strong> febră, tuse productivă, raluri crepitante, sindrom de condensare.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tags-row"><span class="tag tag-viral">Pediatrie, Dispnee, Bronșiolită, Crup, Astm, Triaj</span> </div>
+
+<div class="divider"></div>
+
+<div class="section" id="viziune">
+  <div class="section-label">Capitolul 8</div>
+  <h2>Viziunea — Ce urmează</h2>
+</div>
+
+<div class="text-block"><p>CeCitimAzi se află în <strong>faza de validare</strong>. Cele 29 de capitole de Boli Infecțioase sunt construite și livrate gratuit, iar studiul de la Catedra de Pediatrie va oferi primele date despre eficacitatea platformei.</p>
+<p>Dacă studiul confirmă că platforma aduce valoare măsurabilă independent de motivația intrinsecă a studentului, următorul pas este implementarea completă a <strong>dashboard-ului FSRS</strong> cu calendar personalizat de repetiții, urmată de extinderea la alte discipline (Pneumologie, Cardiologie, Nefrologie) și introducerea unui <strong>model de abonament</strong> pentru acces la conținut premium.</p></div>
+
+<div class="card warning">
+  <div class="card-label">⚠️ Limitare fundamentală — Platforma nu este încă validată empiric</div>
+  <p>CeCitimAzi este construită pe principii pedagogice solide, dar <strong>eficacitatea sa pe populația-țintă nu a fost demonstrată</strong>. Studiul de la Catedra de Pediatrie este primul pas. Orice afirmație despre superioritatea platformei față de metodele tradiționale rămâne o ipoteză de testat, nu o concluzie. Această onestitate intelectuală este, paradoxal, cel mai bun argument pentru seriozitatea proiectului.</p>
+</div>
+
+<div class="case-box">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 2 Etape</div>
+    <h4>Bronșiolita lui Andrei — Urgența din garda de noapte</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Ești medic rezident de Medicină de Familie în gardă la urgența pediatrică. Este decembrie, sezon de infecții respiratorii. Mama aduce un sugar de 4 luni, Andrei, care „respiră greu" de ieri seară. A avut rinoree apoasă de 2 zile, apoi a început să tușească și să refuze sânul. Nu are antecedente patologice, născut la termen, vaccinuri la zi.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Evaluare inițială</div>
+  <p>Examinezi sugarul: FR 58/min, FC 152/min, SaO₂ 91% în aer ambiant, T 37,8°C. Tiraj subcostal vizibil, wheezing expirator audibil la distanță, rinoree abundentă, tuse uscată. Se alimentează cu dificultate (suge 2-3 minute, apoi se oprește epuizat). Fontanela normotensivă, nu prezintă iritabilitate paradoxală.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este diagnosticul cel mai probabil?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Tuse convulsivă (pertussis) — necesită Azitromicină</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">B) Bronșiolită acută virală (probabil VRS) — tratament suportiv</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">C) Pneumonie bacteriană — necesită antibioterapie imediată</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) Astm bronșic — necesită salbutamol inhalator</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) Laringotraheită acută (crup) — necesită adrenalină nebulizată</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Tablou clasic de bronșiolită acută: sugar <12 luni, sezon rece (decembrie = vârf VRS), prodrom de rinoree → tuse + wheezing expirator + tahipnee + tiraj. SaO₂ 91% = bronșiolită moderată-severă. Tratamentul este suportiv: aspirare secreții nazale, oxigen suplimentar, hidratare. Antibioticele NU sunt indicate.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Tusea convulsivă are paroxisme de tuse cu reprize, whoop inspirator și vărsături post-tuse. Nu produce wheezing expirator difuz.<br><strong>C)</strong> GREȘIT — Pneumonia bacteriană la sugar are de obicei febră mai înaltă, raluri crepitante focale și sindrom de condensare. Wheezing-ul expirator difuz este mai sugestiv pentru bronșiolită.<br><strong>D)</strong> GREȘIT — Diagnosticul de astm nu se pune sub vârsta de 2 ani (imposibil de confirmat spirometric). Salbutamolul nu a demonstrat beneficiu în bronșiolita la sugar în meta-analizele recente.<br><strong>E)</strong> GREȘIT — Crupul se manifestă prin stridor INSPIRATOR și tuse lătrătoare, nu wheezing expirator. Obstrucția este supraglotică/subglotică, nu bronșică.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Management</div>
+  <p>Aplici oxigen pe canulă nazală (2L/min), SaO₂ crește la 95%. Aspiri secreții nazale cu bulb syringe. Sugarul se liniștește și reîncepe să sugă, dar se oprește după 5 minute epuizat. Mama întreabă dacă poate merge acasă.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Ce decizie iei?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Transfer la ATI pediatric pentru intubație electivă</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">B) Internare — SaO₂ <92% fără oxigen suplimentar, alimentație compromisă, vârsta <6 luni</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">C) Externare cu prescripție de salbutamol sirop și antibiotic oral</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Externare cu recomandare de revenire dacă se agravează</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">E) Internare doar dacă SaO₂ scade sub 85%</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era B).</div><div class="case-exp-detail"><strong>B)</strong> CORECT — Criterii de internare îndeplinite: (1) SaO₂ <92% în aer ambiant, (2) alimentație compromisă (factor de risc pentru deshidratare), (3) vârsta <6 luni (risc crescut de apnee). Managementul: oxigen suplimentar (țintă SaO₂ ≥92%), aspirare nazală, alimentare fracționată sau gavaj dacă nu tolerează oral, monitorizare apnee.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — SaO₂ 95% sub oxigen suplimentar și stare de conștiență normală = nu necesită ATI. Transferul la ATI este indicat la SaO₂ <90% sub oxigen maximal, apnee recurentă sau epuizare respiratorie.<br><strong>C)</strong> GREȘIT — Salbutamolul NU are indicație în bronșiolita la sugar (meta-analizele nu arată beneficiu). Antibioticele sunt inutile în infecția virală necomplicată.<br><strong>D)</strong> GREȘIT — Sugar de 4 luni cu SaO₂ 91% în aer ambiant și alimentație compromisă necesită internare. Externarea expune la risc de decompensare acasă (apnee, deshidratare).<br><strong>E)</strong> GREȘIT — Pragul de SaO₂ pentru internare este <92%, nu <85%. La 85% fără oxigen suplimentar, vorbim deja de insuficiență respiratorie severă care necesită ATI.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic final:</strong> Bronșiolită acută moderată-severă, probabil VRS, la sugar de 4 luni.</p>
+<p><strong>Lecții cheie:</strong>
+- <strong>Bronșiolita</strong> este cea mai frecventă cauză de internare la sugari sub 1 an în sezonul rece
+- <strong>Tratamentul este SUPORTIV:</strong> oxigen, aspirare nazală, hidratare — NU salbutamol, NU antibiotice, NU corticosteroizi
+- <strong>Criterii de internare:</strong> SaO₂ <92%, alimentație compromisă, vârsta <6 luni, apnee
+- <strong>Vârful VRS</strong> = noiembrie-martie, cu maximul în decembrie-ianuarie</p>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/2</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · CeCitimAzi — Despre Proiect</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="alg-ks-container" id="algKsContainer"></div>
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"context-ebm": {"titlu": "Evidence-Based Medicine", "continut": "EBM = decizii clinice bazate pe dovezi, nu pe tradiție · Archie Cochrane (1972) — majoritatea intervențiilor fără dovezi solide · Gordon Guyatt (1991) — formalizează termenul EBM · Surrogate endpoints ≠ outcome-uri clinice relevante", "referinta": "Dunlosky J et al. Psychol Sci Public Interest 2013;14(1):4-58 — Improving Students' Learning With Effective Learning Techniques", "pmid": "26173288", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "Mecanismul prin care EBM a schimbat medicina: observație epidemiologică → formulare ipoteză → RCT → meta-analiză → ghid clinic → implementare în practică. Fiecare pas filtrează biasuri cognitive ale medicului individual. Educația medicală nu a trecut prin acest filtru — majoritatea metodelor pedagogice sunt adoptate prin tradiție, nu prin validare experimentală.", "stiati_ca": "Studiul CAST (1989) a fost oprit prematur deoarece antiaritmicele care suprimau eficient aritmiile ventriculare post-infarct ucideau de fapt pacienții mai repede decât placebo. A tratat markerul, nu pacientul — exact tipul de eroare pe care EBM a fost construită să prevină."}, "platforma-descriere": {"titlu": "CeCitimAzi", "continut": "Platformă e-learning medical pentru rezidenți MF România · Conținut generat cu AI + verificat prin MCP-uri medicale · FSRS adaptiv (algoritmul implicit Anki din 2023) · Lecții de 15 minute · 29 capitole de Boli Infecțioase planificate · 100% gratuit în faza de validare", "referinta": "Roediger HL, Karpicke JD. Psychol Sci 2006;17(3):249-255 — Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention", "pmid": "16507066", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "Pipeline-ul de generare: surse academice RO (Ceaușu, ghiduri) → AI generează conținutul → MCP-uri medicale (Open Medicine, PubMed, Healthcare MCP) verifică fiecare afirmație, scor clinic și doză → build automat generează HTML interactiv. Acest flux înlocuiește „copy-paste din manual\" cu un sistem de verificare multiplă.", "stiati_ca": "CeCitimAzi folosește 4 servere MCP diferite pentru verificarea conținutului medical: Open Medicine (scoruri clinice calculate determinist), Healthcare MCP (PubMed, FDA, ICD-10), Medical MCP (Google Scholar, NEJM) și un RAG server propriu cu ChromaDB pentru căutare semantică în baza de cunoștințe locală."}, "principii-pedagogice": {"titlu": "Principii pedagogice", "continut": "10 principii bazate pe dovezi · Retrieval practice > relectură (Roediger 2006) · Spaced repetition reduce repetițiile cu ~20% (FSRS vs SM-2) · Curiozitatea epistemică activează circuitul dopaminergic (Gruber 2014) · Feedback elaborat — effect size 0.73 (Hattie 2007)", "referinta": "Gruber MJ, Gelman BD, Ranganath C. Neuron 2014;84(2):486-496 — States of Curiosity Modulate Hippocampus-Dependent Learning via the Dopaminergic Circuit", "pmid": "25284006", "url": "", "hint": "", "mnemonic": "<strong>R.E.C.I.F.</strong> · <strong>R</strong>etrieval practice · <strong>E</strong>laborative interrogation · <strong>C</strong>uriozitate epistemică · <strong>I</strong>nterleaving · <strong>F</strong>eedback elaborat", "fiziopatologie": "", "stiati_ca": "Studiul Gruber, Gelman & Ranganath (2014, Neuron) a arătat că starea de curiozitate nu doar îmbunătățește retenția informației țintite, ci și retenția informației incidentale prezentate simultan. Un card „Știați că?\" care induce curiozitate autentică pregătește creierul pentru o fereastră în care encoding-ul oricărei informații care urmează este mai eficient."}, "algoritm-fsrs": {"titlu": "FSRS vs SM-2", "continut": "SM-2 (SuperMemo, anii '80): interval bazat doar pe ultimul răspuns · FSRS (2022-2023): model cu 3 variabile — Stability, Difficulty, Retrievability · Reduce repetițiile cu ~15-20% pentru același nivel de retenție · Algoritm implicit Anki din v23.10", "referinta": "Roediger HL, Karpicke JD. Psychol Sci 2006;17(3):249-255 — Test-Enhanced Learning", "pmid": "16507066", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "FSRS modelează uitarea prin formula: R = (1 + t/(9×S))^(-1), unde R = retrievability (probabilitatea de recall), t = zile de la ultima repetiție, S = stability. Când R scade sub 90% (pragul țintă), se programează repetiția. Parametrii sunt antrenați pe milioane de carduri Anki reale — nu sunt estimări teoretice.", "stiati_ca": "Ebbinghaus a descoperit curba uitării în 1885, memorând serii de silabe fără sens. 135 de ani mai târziu, FSRS formalizează matematic exact aceeași curbă — dar cu parametri adaptați individual fiecărui student și fiecărui item de învățat."}, "echipa": {"titlu": "Echipa CeCitimAzi", "continut": "Radu Tunareanu — Fondator, medic rezident MF, UMF Carol Davila · Ștefan Isac — Co-fondator, software developer · Andrei Ciuparu — Specialist în design experimental și neuroștiințe cognitive · Prof. Mihai Craiu — Coordonator academic, Catedra de Pediatrie UMF Carol Davila", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": "Echipa combină expertiză din 4 domenii diferite: medicină clinică (Radu Tunareanu), dezvoltare software (Ștefan Isac), neuroștiințe cognitive și design experimental (Andrei Ciuparu) și pediatrie academică cu experiență în cercetare clinică (Prof. Mihai Craiu). Această interdisciplinaritate este esențială pentru un proiect care trebuie să fie simultan corect medical, utilizabil tehnic, validat științific și relevant academic."}, "protocol-studiu": {"titlu": "Protocol de studiu", "continut": "Quasi-experiment observațional prospectiv · Populație: studenți an 5, rotație Pediatrie · Variabila de interes: uzul platformei (lecții completate × scor MCQ) · Outcome primar: scorul la examen · Confounders controlați: media anilor 1-4, prezență cursuri, serie", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "Problema selection bias: studentul bun folosește mai mult platforma ȘI ia note mai bune. Soluție: regresie multiplă OLS cu control pentru confounders + analiza valorii adăugate (residual = scor_actual − scor_prezis pe baza notelor anterioare). Dacă studenții cu uz mare au reziduali pozitivi sistematic → platforma adaugă valoare independent de performanța anterioară.", "stiati_ca": "Un RCT clasic nu este fezabil pentru validarea unei platforme educaționale: contaminarea între studenți (comunică între ei) face controlul iluzoriu, iar privarea deliberată a unui grup de o resursă educațională este discutabilă etic. De aceea, designul ales este quasi-experimental cu grupuri naturale."}, "demo-componente": {"titlu": "Demo componente", "continut": "21 tipuri de componente interactive · Fiecare componentă are rol pedagogic specific · Matching game = discriminare activă · Severity sort = raționament clinic · Flashcard-uri = retrieval practice · Algoritm clinic = gândire decizională", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>CRAFT</strong> · <strong>C</strong>ase clinic interactiv · <strong>R</strong>etrieval practice (quiz + flashcard) · <strong>A</strong>lgoritm clinic vizual · <strong>F</strong>eedback elaborat per variantă · <strong>T</strong>able comparative + matching", "fiziopatologie": "", "stiati_ca": ""}, "viziune": {"titlu": "Roadmap", "continut": "Faza 1 (curentă): 29 capitole Boli Infecțioase, acces gratuit, validare pe Catedra de Pediatrie · Faza 2: implementare FSRS cu dashboard personalizat · Faza 3: extindere la alte discipline (Pneumologie, Cardiologie) · Faza 4: model de abonament dacă studiul confirmă eficacitatea", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Auto-open knowledge sidebar on desktop
+if(window.innerWidth>1360){var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');if(ks){ks.classList.add('open');if(cw)cw.style.marginRight='320px'}}
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Centor Calculator
+const cs={fever:null,exudate:null,lymph:null,noCough:null,age:null};
+function tC(btn,p,v){btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');cs[p]=v;calcCentor()}
+function calcCentor(){if(Object.values(cs).some(v=>v===null))return;let s=0;if(cs.fever)s++;if(cs.exudate)s++;if(cs.lymph)s++;if(cs.noCough)s++;if(cs.age==='3-14')s++;else if(cs.age==='45+')s--;if(s<0)s=0;document.getElementById('centorResult').style.display='block';document.getElementById('centorScore').textContent=s;let r,a,c;if(s<=1){r='Risc scăzut (<10%)';a='Tratament simptomatic. Fără investigații.';c='risk-low'}else if(s<=3){r='Risc intermediar (15-35%)';a='Test rapid streptococic. Antibiotic doar dacă pozitiv.';c='risk-med'}else{r='Risc înalt (51-53%)';a='Test rapid +/- antibioterapie empirică.';c='risk-high'}document.getElementById('centorRisk').textContent=r;const ae=document.getElementById('centorAction');ae.textContent=a;ae.className='score-action '+c}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style="color:var(--green)">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  let html='<div class="ks-title">'+data.titlu+'</div>';
+  if(data.continut){html+='<div class="ks-card"><div class="ks-label">Rezumat</div>'+data.continut.replace(/·/g,'<br>·')+'</div>'}
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca+'</div>'}
+  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(window.innerWidth<=1360&&ks&&ks.classList.contains('open')&&!ks.contains(e.target)){ks.classList.remove('open')}}})
+
+// Algoritm Clinic — SVG connectors
+function drawAlgConnectors(){
+  document.querySelectorAll('.alg-grid').forEach(function(grid){
+    var ed=grid.dataset.edges;if(!ed)return;
+    var edges;try{edges=JSON.parse(ed)}catch(ex){return}
+    var canvas=grid.parentElement;
+    var svg=canvas.querySelector('.alg-svg');if(!svg)return;
+    var w=canvas.scrollWidth,h=canvas.scrollHeight;
+    svg.setAttribute('width',w);svg.setAttribute('height',h);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.innerHTML='<defs><marker id="algArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(0,191,165,0.5)"/></marker></defs>';
+    var cRect=canvas.getBoundingClientRect();
+    // Count edges per source node for label staggering
+    var edgesPerSource={};edges.forEach(function(e){edgesPerSource[e.from]=(edgesPerSource[e.from]||0)+1});
+    var edgeSourceIdx={};
+    edges.forEach(function(e){
+      var fromEl=grid.querySelector('[data-id="'+e.from+'"]');
+      var toEl=grid.querySelector('[data-id="'+e.to+'"]');
+      if(!fromEl||!toEl)return;
+      var fR=fromEl.getBoundingClientRect();
+      var tR=toEl.getBoundingClientRect();
+      var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var d='';
+      var sameRow=Math.abs(fR.top-tR.top)<10;
+      if(sameRow){
+        var sx,sy,ex,ey;
+        if(fR.left<tR.left){sx=fR.right-cRect.left;ex=tR.left-cRect.left}
+        else{sx=fR.left-cRect.left;ex=tR.right-cRect.left}
+        sy=fR.top+fR.height/2-cRect.top;ey=tR.top+tR.height/2-cRect.top;
+        d='M'+sx+','+sy+'L'+ex+','+ey;
+      }else{
+        var x1=fR.left+fR.width/2-cRect.left,y1=fR.bottom-cRect.top;
+        var x2=tR.left+tR.width/2-cRect.left,y2=tR.top-cRect.top;
+        if(Math.abs(x1-x2)<3){d='M'+x1+','+y1+'L'+x2+','+y2}
+        else{
+          // Find max bottom of all nodes on the source row to avoid overlap
+          var fRow=fromEl.style.gridRow||'1';
+          var maxBottom=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){
+            var nRow=n.style.gridRow||'1';
+            if(nRow===fRow){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBottom)maxBottom=nb}
+          });
+          var dropY=maxBottom+14;
+          d='M'+x1+','+y1+'L'+x1+','+dropY+'L'+x2+','+dropY+'L'+x2+','+y2
+        }
+      }
+      path.setAttribute('d',d);path.setAttribute('stroke','rgba(0,191,165,0.4)');
+      path.setAttribute('stroke-width','2');path.setAttribute('fill','none');
+      path.setAttribute('marker-end','url(#algArr)');svg.appendChild(path);
+      if(e.label){
+        // Track stagger index for this source node
+        if(!edgeSourceIdx[e.from])edgeSourceIdx[e.from]=0;
+        var stIdx=edgeSourceIdx[e.from]++;
+        var totalFromSource=edgesPerSource[e.from]||1;
+        var lx,ly;
+        if(sameRow){var sx2=fR.left<tR.left?fR.right-cRect.left:fR.left-cRect.left;var ex2=fR.left<tR.left?tR.left-cRect.left:tR.right-cRect.left;lx=(sx2+ex2)/2;ly=Math.min(fR.top,tR.top)+Math.min(fR.height,tR.height)/2-cRect.top-14}
+        else{var x1b=fR.left+fR.width/2-cRect.left,x2b=tR.left+tR.width/2-cRect.left;if(Math.abs(x1b-x2b)<3){lx=x1b+10;ly=(fR.bottom-cRect.top+tR.top-cRect.top)/2}else{
+          var fRow2=fromEl.style.gridRow||'1';var maxBot2=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){var nR=n.style.gridRow||'1';if(nR===fRow2){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBot2)maxBot2=nb}});
+          lx=(x1b+x2b)/2;ly=maxBot2+12}}
+        // Place label near target node (above it) when fan-out is wide
+        if(totalFromSource>=4){lx=tR.left+tR.width/2-cRect.left;ly=tR.top-cRect.top-14}
+        var bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        var tw=e.label.length*7+10;
+        bg.setAttribute('x',lx-tw/2);bg.setAttribute('y',ly-10);bg.setAttribute('width',tw);bg.setAttribute('height',18);
+        bg.setAttribute('rx','4');bg.setAttribute('fill','#1c2333');bg.setAttribute('stroke','rgba(255,255,255,0.08)');bg.setAttribute('stroke-width','1');
+        svg.appendChild(bg);
+        var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x',lx);txt.setAttribute('y',ly+3);txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');txt.setAttribute('fill','#9ca3af');
+        txt.setAttribute('font-family','Space Grotesk,sans-serif');txt.textContent=e.label;svg.appendChild(txt);
+      }
+    });
+  });
+}
+// Draw connectors after layout is stable
+requestAnimationFrame(function(){setTimeout(drawAlgConnectors,200)});
+window.addEventListener('resize',function(){setTimeout(drawAlgConnectors,100)});
+
+// Algoritm Clinic — click to push detail to knowledge sidebar
+document.addEventListener('click',function(e){
+  var node=e.target.closest('.alg-node.has-detail');
+  if(!node)return;
+  var detailEl=node.querySelector('.alg-detail');
+  if(!detailEl)return;
+  var container=document.getElementById('algKsContainer');
+  var ksSidebar=document.querySelector('.knowledge-sidebar');
+  if(!container||!ksSidebar)return;
+  var labelEl=node.querySelector('.alg-node-label');
+  var fullLabel=labelEl?labelEl.textContent:'';
+  var shortTitle=fullLabel.length>30?fullLabel.substring(0,30)+'…':fullLabel;
+  var nodeId=node.dataset.id;
+  // Check if card already exists
+  var existing=container.querySelector('[data-node="'+nodeId+'"]');
+  if(existing){existing.style.animation='none';existing.offsetHeight;existing.style.animation='algKsFlash .4s ease';existing.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  // Determine color from node type
+  var tc='var(--teal)';
+  if(node.classList.contains('alg-start'))tc='var(--green)';
+  else if(node.classList.contains('alg-decizie'))tc='var(--amber)';
+  else if(node.classList.contains('alg-actiune'))tc='var(--blue)';
+  else if(node.classList.contains('alg-alerta'))tc='var(--coral)';
+  // Brief highlight on node
+  node.style.boxShadow='0 0 0 3px '+tc;setTimeout(function(){node.style.boxShadow=''},600);
+  // Build card
+  var card=document.createElement('div');card.className='alg-ks-card';card.dataset.node=nodeId;card.style.borderLeftColor=tc;
+  card.innerHTML='<button class="alg-ks-close" title="×">×</button><div class="alg-ks-title" style="color:'+tc+'">'+shortTitle+'</div><div class="alg-ks-content">'+detailEl.innerHTML+'</div>';
+  card.querySelector('.alg-ks-close').addEventListener('click',function(ev){ev.stopPropagation();card.style.animation='algKsOut .2s ease forwards';setTimeout(function(){card.remove()},200)});
+  container.appendChild(card);
+  // Open sidebar if closed
+  if(!ksSidebar.classList.contains('open')){ksSidebar.classList.add('open');var cw=document.querySelector('.content-wrapper');if(cw&&window.innerWidth>1360)cw.style.marginRight='320px'}
+  setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
+});
+
+</script>
+</body>
+</html>
