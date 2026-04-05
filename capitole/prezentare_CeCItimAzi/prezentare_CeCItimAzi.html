@@ -64,7 +64,8 @@ h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
 .card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
 .card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
 .card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
-.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.card-icon{flex-shrink:0}
 .card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
 .why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
 .why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
@@ -342,19 +343,19 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p>Mai jos aveți exemplificat componentul <strong>Pearl</strong> (Clinical Pearl). Rolul lui este de a evidenția un concept-cheie sau o lecție clinică esențială pe care studentul trebuie să o rețină. Pearl-urile sunt proiectate ca elemente de ancorare mnezică — informație condensată, cu impact clinic direct.</p></div>
 
 <div class="card pearl">
-  <div class="card-label">⚡ Studiul CAST (1989) — Când tratezi markerul, nu pacientul</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Studiul CAST (1989) — Când tratezi markerul, nu pacientul</div>
   <p>Encainida și flecainida suprimau eficient aritmiile ventriculare post-infarct miocardic. Ipoteza mecanicistă: reducerea aritmiilor ar trebui să reducă mortalitatea subită. Rezultatele au arătat însă o mortalitate semnificativ mai mare în grupul tratat față de placebo, iar studiul a fost oprit prematur. Concluzia: <strong>îmbunătățirea unui surrogate endpoint nu garantează un beneficiu pe outcome-ul clinic primar.</strong></p>
 </div>
 
 <div class="card pearl">
-  <div class="card-label">⚡ Torcetrapibul — Studiul ILLUMINATE (2006)</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Torcetrapibul — Studiul ILLUMINATE (2006)</div>
   <p>Torcetrapibul (inhibitor CETP) creștea HDL-colesterolul cu aproximativ 70%. Ipoteza: creșterea farmacologică a HDL-ului ar replica efectul protector cardiovascular observat epidemiologic la persoanele cu HDL nativ crescut. Studiul ILLUMINATE a fost oprit prematur din cauza mortalității cardiovasculare semnificativ crescute în grupul tratat. Concluzia este consistentă cu cea din CAST: <strong>modificarea farmacologică a unui biomarker nu reproduce neapărat mecanismul biologic prin care acel biomarker conferă protecție în mod natural.</strong></p>
 </div>
 
 <div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Warning</strong>. Rolul lui este de a semnala o capcană clinică, o eroare frecventă sau o limitare importantă care poate avea consecințe semnificative dacă este ignorată. Baza științifică: feedback-ul corectiv imediat (Hattie & Timperley, 2007) — effect size 0.73 pe retenție.</p></div>
 
 <div class="card warning">
-  <div class="card-label">⚠️ Educația medicală nu a beneficiat de aceeași rigoare metodologică</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Educația medicală nu a beneficiat de aceeași rigoare metodologică</div>
   <p>În practica clinică, orice intervenție terapeutică trebuie validată prin studii controlate înainte de a fi adoptată pe scară largă. În educația medicală, această exigență lipsește: metodele de predare și evaluare sunt adoptate prin tradiție instituțională, nu prin testare sistematică. Experiența didactică a profesorilor este valoroasă, dar insuficientă în sine — la fel cum experiența clinică a unui medic, oricât de vastă, nu înlocuiește dovezile din studii. <strong>CeCitimAzi</strong> propune aplicarea aceluiași cadru metodologic: fiecare decizie de design pedagogic este fundamentată pe dovezi din științele cognitive ale învățării, nu pe intuiție sau pe convenție.</p>
 </div>
 
@@ -384,7 +385,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p>Mai jos aveți exemplificat componentul <strong>Highlight</strong>. Rolul lui este de a izola vizual o informație-cheie sau o regulă clinică esențială care trebuie reținută. Spre deosebire de Pearl (care prezintă un raționament), Highlight-ul sintetizează fapte concrete, rapid accesibile la o recitire ulterioară.</p></div>
 
 <div class="card highlight">
-  <div class="card-label">ℹ️ Stack-ul tehnic CeCitimAzi</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Stack-ul tehnic CeCitimAzi</div>
   <p><strong>Frontend:</strong> HTML self-contained (fără CDN extern, doar Google Fonts) generat de `cecitimazi_build.py` (~1900 linii Python). <strong>Conținut:</strong> Markdown cu directive `:::component` — un limbaj de markup propriu care permite 21 tipuri de componente interactive. <strong>Verificare medicală:</strong> 4 servere MCP (Open Medicine, Healthcare MCP, Medical MCP, RAG ChromaDB). <strong>Spaced repetition:</strong> FSRS (Free Spaced Repetition Scheduler) — algoritmul implicit Anki din v23.10.</p>
 </div>
 
@@ -538,7 +539,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p>Mai jos aveți un al doilea exemplu de componentul <strong>Highlight</strong>, aplicat aici la metodologia statistică a studiului.</p></div>
 
 <div class="card highlight">
-  <div class="card-label">ℹ️ Strategia pentru eliminarea selection bias</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Strategia pentru eliminarea selection bias</div>
   <p><strong>Problema centrală:</strong> studentul motivat folosește mai mult platforma ȘI ia note mai bune. Nu poți ști direct dacă platforma a cauzat performanța. <strong>Soluția:</strong> construiești un model predictiv al scorului așteptat pe baza notelor anterioare și prezenței. Calculezi pentru fiecare student residualul (scor actual − scor prezis). Dacă studenții care au folosit platforma au reziduali pozitivi sistematic — au performat mai bine decât preziceau caracteristicile lor anterioare — ai argumentul cel mai puternic posibil.</p>
 </div>
 
@@ -556,31 +557,27 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <div class="text-block"><p>Mai jos aveți exemplificat componentul <strong>Timeline</strong>. Rolul lui este de a prezenta o secvență cronologică de evenimente sau milestones. În context clinic, este utilizat pentru evoluția naturală a bolilor, scheme terapeutice secvențiale sau perioade de incubație. Aici îl folosim pentru roadmap-ul proiectului.</p></div>
 
 <div class="timeline"><div class="timeline-item">
-  <h4>Q1 2025: Lansare prima versiune CeCitimAzi — capitole de Boli Infecțioase live pe cecitimazi.ro, pipeline de generare conținut cu verificare MCP, 100+ utilizatori organici | Prima versiune publică</h4>
+  <h4>Martie 2026: Prima versiune de test a CeCitimAzi — lansare cu modulul de Boli Infecțioase, pipeline de generare conținut cu verificare MCP, 100+ utilizatori organici | Prima versiune publică</h4>
   <p></p>
 </div>
 <div class="timeline-item">
-  <h4>Q2 2025: Consolidare conținut + RAG Knowledge Base — ChromaDB cu PubMed, StatPearls, ghiduri clinice. Căutare semantică pentru referințe free full-text | Infrastructură de calitate</h4>
+  <h4>Aprilie 2026: Finalizare modul Boli Infecțioase — 29 capitole complete cu grile, cazuri clinice, algoritmi interactivi, imagini și Knowledge Sidebar | Conținut complet BI</h4>
   <p></p>
 </div>
 <div class="timeline-item">
-  <h4>Q3 2025: Echipa completă + protocol de studiu — Andrei Ciuparu (design experimental), Ștefan Isac (dezvoltare software), Prof. Mihai Craiu (coordonare academică) | De la proiect solo la echipă</h4>
+  <h4>Mai–Septembrie 2026: Pregătire studiu — design experimental (Andrei Ciuparu), implementare FSRS cu dashboard personalizat (Ștefan Isac), generare capitole de Pediatrie pentru studiu, aviz Comisie de Etică UMF | De la conținut la platformă validabilă</h4>
   <p></p>
 </div>
 <div class="timeline-item">
-  <h4>Q1 2026: Finalizare 29 capitole Boli Infecțioase + implementare FSRS cu dashboard personalizat | Platformă completă</h4>
+  <h4>Octombrie 2026: Etapa I — prima serie de 50 studenți an 5 în rotația de Pediatrie (Prof. Craiu), acces liber la platformă, colectare date de utilizare + scoruri examen | Prima validare empirică</h4>
   <p></p>
 </div>
 <div class="timeline-item">
-  <h4>Septembrie 2026: Prima fază a studiului pe studenții de Pediatrie — studenți an 5 în rotația Prof. Craiu, acces liber la platformă, colectare date de utilizare + scoruri examen | Prima validare empirică</h4>
+  <h4>Ianuarie 2027: Etapa II — a doua serie de studenți, acumulare date suplimentare, iterare pe baza feedback-ului din prima etapă | Consolidare statistică</h4>
   <p></p>
 </div>
 <div class="timeline-item">
-  <h4>Q4 2026: Primele rezultate ale studiului — regresie OLS, analiza valorii adăugate, publicare rezultate preliminare | Date reale</h4>
-  <p></p>
-</div>
-<div class="timeline-item">
-  <h4>Q1 2027: Platforma devine validată științific — 1.000 utilizatori lunari activi, model de abonament la 18€/lună | De la validare la produs</h4>
+  <h4>Aprilie 2027: Etapa III — a treia serie de studenți, publicare rezultate, analiză finală cu regresie OLS și analiza valorii adăugate | Validare completă</h4>
   <p></p>
 </div>
 </div>
@@ -704,7 +701,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <div class="text-block"><h3 class="md-subtitle">Algoritm clinic interactiv</h3>
 <p>Mai jos aveți exemplificat componentul <strong>Algoritm Clinic</strong> (flowchart interactiv de decizie). Rolul lui este de a structura vizual un protocol de evaluare sau triaj, cu noduri colorate pe tip (start, decizie, acțiune, final, alertă) și conectori SVG. La click pe fiecare nod, se deschide un Knowledge Sidebar cu explicații detaliate. Baza științifică: reprezentarea vizuală a algoritmilor de decizie facilitează gândirea procedurală și reduce erorile de omisiune în practica clinică (clinical decision trees).</p></div>
 
-<div class="algoritm-clinic" id="alg_c49a0e">
+<div class="algoritm-clinic" id="alg_acfd9c">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Evaluare etiologică a hepatitei acute</h4>
@@ -748,7 +745,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <p>Mai jos aveți un al doilea exemplu de componentul <strong>Warning</strong>, aplicat aici pentru a semnala transparent o limitare metodologică a proiectului.</p></div>
 
 <div class="card warning">
-  <div class="card-label">⚠️ Limitare fundamentală — Platforma nu este încă validată empiric</div>
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Limitare fundamentală — Platforma nu este încă validată empiric</div>
   <p>CeCitimAzi este construită pe principii pedagogice solide, dar <strong>eficacitatea sa pe populația-țintă nu a fost demonstrată</strong>. Studiul de la Catedra de Pediatrie este primul pas. Orice afirmație despre superioritatea platformei față de metodele tradiționale rămâne o ipoteză de testat, nu o concluzie. Această onestitate intelectuală este, paradoxal, cel mai bun argument pentru seriozitatea proiectului.</p>
 </div>
 
