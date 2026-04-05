@@ -452,6 +452,11 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <h2>Algoritmul FSRS — Spaced Repetition Adaptiv</h2>
 </div>
 
+<div class="card highlight">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Cum funcționează spaced repetition în CeCitimAzi</div>
+  <p>Spaced repetition este una dintre tehnicile de învățare cu cele mai solide dovezi de eficacitate (Cepeda et al., 2006; Dunlosky et al., 2013). În CeCitimAzi, după parcurgerea fiecărei lecții, studentul rezolvă <strong>10 grile de tip complement multiplu</strong>. În funcție de performanța obținută, algoritmul FSRS decide intervalul optim până la repetiția următoare: un scor ridicat programează repetiția la un interval mai lung (materialul e consolidat), iar un scor scăzut declanșează repetiția mai devreme (materialul necesită re-expunere). Astfel, fiecare student primește un calendar de repetiții personalizat — mai puțin timp pe ce știe deja, mai mult pe ce nu știe.</p>
+</div>
+
 <div class="text-block"><p><strong>SM-2</strong> (SuperMemo 2, Woźniak, anii '80) a fost standardul de aur al spaced repetition timp de decenii. Calculează intervalul următor bazat doar pe ultimul răspuns, fără memorie pe termen lung despre istoricul itemului.</p>
 <p><strong>FSRS</strong> (Free Spaced Repetition Scheduler, Jarvis Han, 2022-2023) folosește un model psihologic bazat pe <strong>trei variabile</strong>: Stabilitatea (câte zile pot trece înainte ca probabilitatea de recall să scadă la 90%), Dificultatea (cât de greu este materialul specific pentru acest utilizator, pe o scară de 1-10) și Retrievability (probabilitatea actuală că utilizatorul își amintește).</p>
 <p>Mai jos aveți exemplificat componentul <strong>Calculator clinic</strong>. Rolul lui este de a permite calcularea interactivă a scorurilor clinice validate (Centor, qSOFA, CURB-65, Wells etc.) direct în lecție. Studentul introduce parametrii pacientului și primește scorul cu interpretarea clinică. Baza științifică: învățarea activă prin manipularea variabilelor consolidează înțelegerea pragurilor de decizie clinică mai eficient decât memorarea tabelelor statice.</p></div>
@@ -701,7 +706,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
 <div class="text-block"><h3 class="md-subtitle">Algoritm clinic interactiv</h3>
 <p>Mai jos aveți exemplificat componentul <strong>Algoritm Clinic</strong> (flowchart interactiv de decizie). Rolul lui este de a structura vizual un protocol de evaluare sau triaj, cu noduri colorate pe tip (start, decizie, acțiune, final, alertă) și conectori SVG. La click pe fiecare nod, se deschide un Knowledge Sidebar cu explicații detaliate. Baza științifică: reprezentarea vizuală a algoritmilor de decizie facilitează gândirea procedurală și reduce erorile de omisiune în practica clinică (clinical decision trees).</p></div>
 
-<div class="algoritm-clinic" id="alg_a31215">
+<div class="algoritm-clinic" id="alg_ad2a36">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Evaluare etiologică a hepatitei acute</h4>
