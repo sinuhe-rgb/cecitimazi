@@ -619,7 +619,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <h2>Algoritm de evaluare a PAC</h2>
 </div>
 
-<div class="algoritm-clinic" id="alg_26492e" data-block-id="pneumonii_algoritm_evaluare">
+<div class="algoritm-clinic" id="alg_36de93" data-block-id="pneumonii_algoritm_evaluare">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Algoritm de evaluare și management al PAC</h4>
@@ -4098,14 +4098,14 @@ document.addEventListener('click',function(e){
       h+=srcHtml(srcs[0]);
       if(srcs.length>1){
         var uid='src_more_'+bid.replace(/[^a-z0-9]/g,'_');
-        h+='<button class="src-more-toggle" onclick="var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(srcs.length-1)+' surse</button>';
+        h+='<button class="src-more-toggle" onclick="var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(srcs.length-1)+' resurse</button>';
         h+='<div class="src-more-items" id="'+uid+'">';
         for(var j=1;j<srcs.length;j++)h+=srcHtml(srcs[j]);
         h+='</div>';
       }
       popup.innerHTML=h;
     }else{
-      popup.innerHTML='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div><div class="src-none">Nicio sursa gasita pentru aceasta sectiune.</div>';
+      popup.innerHTML='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div><div class="src-none">Nicio resursa gasita pentru aceasta sectiune.</div>';
     }
     el.appendChild(btn);el.appendChild(popup);
     btn.addEventListener('click',function(ev){
