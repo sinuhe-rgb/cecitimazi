@@ -543,9 +543,39 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   </div>
 </div>
 
+<div class="calc-box" data-block-id="curb_65" id="calc_curb_65" data-calc-config="{&quot;params&quot;: [&quot;confusion&quot;, &quot;urea&quot;, &quot;resp_rate&quot;, &quot;bp&quot;, &quot;age65&quot;], &quot;scoring&quot;: {&quot;type&quot;: &quot;sum&quot;, &quot;rules&quot;: [{&quot;param&quot;: &quot;confusion&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;urea&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;bp&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;age65&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}]}, &quot;interpretation&quot;: [{&quot;range&quot;: [0, 1], &quot;risk&quot;: &quot;Mortalitate scăzută (&lt;3%)&quot;, &quot;action&quot;: &quot;Tratament ambulator. Reevaluare la 48h.&quot;, &quot;class&quot;: &quot;low&quot;}, {&quot;range&quot;: [2, 2], &quot;risk&quot;: &quot;Mortalitate intermediară (9%)&quot;, &quot;action&quot;: &quot;Internare scurtă sau supraveghere atentă ambulatorie.&quot;, &quot;class&quot;: &quot;med&quot;}, {&quot;range&quot;: [3, 5], &quot;risk&quot;: &quot;Mortalitate ridicată (15–40%)&quot;, &quot;action&quot;: &quot;Internare urgentă. Scor ≥4: evaluare pentru ATI.&quot;, &quot;class&quot;: &quot;high&quot;}]}">
+  <h4>Calculator CURB-65</h4>
+  <p class="calc-desc">Severitate pneumonie comunitară — decizie internare</p>
+  <div class="calc-row"><label>Confuzie (AMT ≤8 sau dezorientare)</label><div class="calc-toggle"><button onclick="calcSet('calc_curb_65','confusion',false,this)">Nu</button><button onclick="calcSet('calc_curb_65','confusion',true,this)">Da</button></div></div>
+<div class="calc-row"><label>Uree >7 mmol/L (BUN >19 mg/dL)</label><div class="calc-toggle"><button onclick="calcSet('calc_curb_65','urea',false,this)">Nu</button><button onclick="calcSet('calc_curb_65','urea',true,this)">Da</button></div></div>
+<div class="calc-row"><label>Frecvență respiratorie ≥30/min</label><div class="calc-toggle"><button onclick="calcSet('calc_curb_65','resp_rate',false,this)">Nu</button><button onclick="calcSet('calc_curb_65','resp_rate',true,this)">Da</button></div></div>
+<div class="calc-row"><label>TA sistolică <90 mmHg sau diastolică ≤60 mmHg</label><div class="calc-toggle"><button onclick="calcSet('calc_curb_65','bp',false,this)">Nu</button><button onclick="calcSet('calc_curb_65','bp',true,this)">Da</button></div></div>
+<div class="calc-row"><label>Vârstă ≥65 ani</label><div class="calc-toggle"><button onclick="calcSet('calc_curb_65','age65',false,this)">Nu</button><button onclick="calcSet('calc_curb_65','age65',true,this)">Da</button></div></div>
+  <div class="calc-result" id="calc_curb_65_result" style="display:none">
+    <div class="score-num" id="calc_curb_65_score">0</div>
+    <div class="score-risk" id="calc_curb_65_risk"></div>
+    <div class="score-action" id="calc_curb_65_action"></div>
+  </div>
+</div>
+
 <div class="text-block"><h3 class="md-subtitle" data-block-id="crb-65-varianta-pentru-cabinet">CRB-65 — varianta pentru cabinet</h3>
-<p>CRB-65 este versiunea simplificată, fără ureea (nu necesită analize de laborator), ideală pentru <strong>medicul de familie</strong> în cabinet. Aceleași criterii minus U: Confuzie, Respirație ≥30/min, Blood pressure scăzut, ≥65 ani. Scor 0 = risc foarte scăzut → tratament la domiciliu. Scor ≥1 = trimite la urgență pentru evaluare.</p>
-<h3 class="md-subtitle" data-block-id="psi-port">PSI/PORT</h3>
+<p>CRB-65 este versiunea simplificată, fără ureea (nu necesită analize de laborator), ideală pentru <strong>medicul de familie</strong> în cabinet. Aceleași criterii minus U: Confuzie, Respirație ≥30/min, Blood pressure scăzut, ≥65 ani. Scor 0 = risc foarte scăzut → tratament la domiciliu. Scor ≥1 = trimite la urgență pentru evaluare.</p></div>
+
+<div class="calc-box" data-block-id="crb_65" id="calc_crb_65" data-calc-config="{&quot;params&quot;: [&quot;confusion&quot;, &quot;resp_rate&quot;, &quot;bp&quot;, &quot;age65&quot;], &quot;scoring&quot;: {&quot;type&quot;: &quot;sum&quot;, &quot;rules&quot;: [{&quot;param&quot;: &quot;confusion&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;bp&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;age65&quot;, &quot;value&quot;: true, &quot;points&quot;: 1}]}, &quot;interpretation&quot;: [{&quot;range&quot;: [0, 0], &quot;risk&quot;: &quot;Risc scăzut (mortalitate &lt;1%)&quot;, &quot;action&quot;: &quot;Tratament ambulator.&quot;, &quot;class&quot;: &quot;low&quot;}, {&quot;range&quot;: [1, 2], &quot;risk&quot;: &quot;Risc intermediar (mortalitate 1–10%)&quot;, &quot;action&quot;: &quot;Consideră internare.&quot;, &quot;class&quot;: &quot;med&quot;}, {&quot;range&quot;: [3, 4], &quot;risk&quot;: &quot;Risc înalt (mortalitate >10%)&quot;, &quot;action&quot;: &quot;Internare urgentă.&quot;, &quot;class&quot;: &quot;high&quot;}]}">
+  <h4>Calculator CRB-65 (fără laborator)</h4>
+  <p class="calc-desc">Versiune simplificată CURB-65 (fără laborator) — pentru medicul de familie</p>
+  <div class="calc-row"><label>Confuzie (dezorientare nouă)</label><div class="calc-toggle"><button onclick="calcSet('calc_crb_65','confusion',false,this)">Nu</button><button onclick="calcSet('calc_crb_65','confusion',true,this)">Da</button></div></div>
+<div class="calc-row"><label>Frecvență respiratorie ≥30/min</label><div class="calc-toggle"><button onclick="calcSet('calc_crb_65','resp_rate',false,this)">Nu</button><button onclick="calcSet('calc_crb_65','resp_rate',true,this)">Da</button></div></div>
+<div class="calc-row"><label>TA sistolică <90 mmHg sau diastolică ≤60 mmHg</label><div class="calc-toggle"><button onclick="calcSet('calc_crb_65','bp',false,this)">Nu</button><button onclick="calcSet('calc_crb_65','bp',true,this)">Da</button></div></div>
+<div class="calc-row"><label>Vârstă ≥65 ani</label><div class="calc-toggle"><button onclick="calcSet('calc_crb_65','age65',false,this)">Nu</button><button onclick="calcSet('calc_crb_65','age65',true,this)">Da</button></div></div>
+  <div class="calc-result" id="calc_crb_65_result" style="display:none">
+    <div class="score-num" id="calc_crb_65_score">0</div>
+    <div class="score-risk" id="calc_crb_65_risk"></div>
+    <div class="score-action" id="calc_crb_65_action"></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="psi-port">PSI/PORT</h3>
 <p>Scorul PSI (<em>Pneumonia Severity Index</em>) utilizează un algoritm în 2 pași cu 20 de variabile (vârstă, sex, comorbidități, parametri fizici și de laborator) pentru a clasifica pacienții în 5 clase de risc. Clasele I-III = risc scăzut (mortalitate <1-2,8%) → tratament ambulator sau internare scurtă. Clasa IV = risc moderat (mortalitate ~9,3%) → internare. Clasa V = risc înalt (mortalitate ~27%) → ATI. Avantajul PSI: validare extensivă, predicție excelentă a mortalității. Dezavantajul: complexitate, necesită analize, poate subestima severitatea la tineri (punctajul este puternic influențat de vârstă și comorbidități).</p></div>
 
 <div class="quiz-container" data-block-id="pneumonii_quiz_curb65"><div class="quiz-q" id="q3">
@@ -626,7 +656,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <h2>Algoritm de evaluare a PAC</h2>
 </div>
 
-<div class="algoritm-clinic" id="alg_dbad8f" data-block-id="pneumonii_algoritm_evaluare">
+<div class="algoritm-clinic" id="alg_cc594b" data-block-id="pneumonii_algoritm_evaluare">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Algoritm de evaluare și management al PAC</h4>
