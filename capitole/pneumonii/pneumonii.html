@@ -49,7 +49,17 @@
 .ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
 .src-btn{position:absolute;top:6px;right:6px;background:var(--bg-primary);border:1px solid rgba(77,199,191,0.2);color:var(--teal);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,transform .2s;z-index:10;padding:0;line-height:1}
 [data-block-id]{position:relative}[data-block-id]:hover .src-btn{opacity:.6}.src-btn:hover{opacity:1!important;transform:scale(1.1);border-color:var(--teal)}
-@media(max-width:768px){.src-btn{opacity:.45!important}}
+@media(max-width:768px){.src-btn{display:none!important}}
+.ks-sources{background:var(--bg-card);border:1px solid rgba(77,199,191,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px}
+.ks-sources .ks-src-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:4px}
+.ks-sources .ks-src-title svg{transition:transform .2s}
+.ks-sources.open .ks-src-title svg{transform:rotate(180deg)}
+.ks-sources .ks-src-body{display:none}.ks-sources.open .ks-src-body{display:block}
+.ks-sources .ks-src-item{padding:6px 0;border-bottom:1px solid var(--border)}.ks-sources .ks-src-item:last-child{border-bottom:none}
+.ks-sources .ks-src-item-title{color:var(--text-primary);font-weight:500;font-size:11.5px;margin-bottom:2px}
+.ks-sources .ks-src-item-meta{color:var(--text-muted);font-size:10.5px}
+.ks-sources .ks-src-item-meta a{color:var(--blue);text-decoration:none}
+.ks-sources .ks-src-item-meta a:hover{text-decoration:underline}
 .src-popup{display:none;position:absolute;top:36px;right:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:14px;min-width:280px;max-width:360px;z-index:20;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-size:12px;max-height:320px;overflow-y:auto}
 .src-popup.show{display:block;animation:fadeIn .2s ease}
 .src-popup-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
@@ -619,7 +629,7 @@ tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:t
   <h2>Algoritm de evaluare a PAC</h2>
 </div>
 
-<div class="algoritm-clinic" id="alg_36de93" data-block-id="pneumonii_algoritm_evaluare">
+<div class="algoritm-clinic" id="alg_1222ea" data-block-id="pneumonii_algoritm_evaluare">
   <div class="alg-header">
     <div class="alg-badge">ALGORITM CLINIC</div>
     <h4>Algoritm de evaluare și management al PAC</h4>
@@ -3928,9 +3938,43 @@ function updateKnowledgeSidebar(sectionId){
   if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
   if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+data.fiziopatologie.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')+'</div>'}
   if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+data.stiati_ca.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')+'</div>'}
-  if(data.referinta){let refHtml='<div class="ks-ref"><span class="ref-icon">📄</span> '+data.referinta;if(data.pmid){refHtml+='<br><a href="https://pubmed.ncbi.nlm.nih.gov/'+data.pmid+'/" target="_blank">PubMed: '+data.pmid+'</a>'}else if(data.url){refHtml+='<br><a href="'+data.url+'" target="_blank">Deschide ghidul →</a>'}else{refHtml+='<br><a href="https://scholar.google.com/scholar?q='+encodeURIComponent(data.referinta)+'" target="_blank">Caută pe Google Scholar →</a>'}refHtml+='</div>';html+=refHtml}
   if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+data.hint+'</div>'}
-  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease'
+  html+='<div id="ksSrcSlot"></div>';
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease';
+  updateSourcesCard(sectionId)
+}
+
+function buildSourcesHtml(bid){
+  if(!window.sourcesData||!window.sourcesData[bid]||!window.sourcesData[bid].sources||!window.sourcesData[bid].sources.length)return'';
+  var ss=window.sourcesData[bid].sources;
+  var h='<div class="ks-sources" onclick="this.classList.toggle(\'open\')"><div class="ks-src-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Citeste mai mult ('+ss.length+' resurse)</div><div class="ks-src-body">';
+  ss.forEach(function(s){
+    var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+    h+='<div class="ks-src-item"><div class="ks-src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="ks-src-item-meta">';
+    if(s.pmid)h+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank" onclick="event.stopPropagation()">PubMed</a>';
+    else if(s.url)h+='<a href="'+s.url+'" target="_blank" onclick="event.stopPropagation()">Link</a>';
+    if(s.nbk_id)h+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank" onclick="event.stopPropagation()">NCBI Books</a>';
+    h+='</div></div>';
+  });
+  h+='</div></div>';return h
+}
+
+function updateSourcesCard(bid){
+  var slot=document.getElementById('ksSrcSlot');
+  if(!slot)return;
+  slot.innerHTML=buildSourcesHtml(bid)
+}
+
+// Mobile: track h3 headings for sources in sidebar
+var isMobile=window.innerWidth<=768;
+if(isMobile&&window.sourcesData){
+  var h3els=Array.from(document.querySelectorAll('h3.md-subtitle[data-block-id]'));
+  var curH3='';
+  window.addEventListener('scroll',function(){
+    var cur='';
+    for(var i=0;i<h3els.length;i++){if(window.scrollY>=h3els[i].offsetTop-120)cur=h3els[i].getAttribute('data-block-id')}
+    if(cur&&cur!==curH3){curH3=cur;updateSourcesCard(cur)}
+  })
 }
 
 // Lightbox
