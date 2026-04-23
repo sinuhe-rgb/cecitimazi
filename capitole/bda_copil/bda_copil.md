@@ -235,7 +235,22 @@ sidebar_hint: Antidiareicele (loperamidul, difenoxilatul) sunt **CONTRAINDICATE*
 
 **Colita cu *Clostridium difficile*** (ICD) — numită și *colita determinată de antibioticoterapie* sau *colita pseudomembranoasă* — este o inflamație a mucoasei colonului cauzată de proliferarea bacteriei *C. difficile* (bacil anaerob gram-pozitiv, toxinogen).
 
-Infecția e consecința **dezechilibrului florei intestinale** produs de antibiotice: clindamicina, penicilinele (amoxicilină, ampicilină) și cefalosporinele (ex. cefalexina) sunt cel mai frecvent implicate, dar aproape orice antibiotic poate cauza dezechilibrul. Eritromicina, sulfonamidele, cloramfenicolul, tetraciclinele și fluorochinolonele sunt și ele implicate.
+Infecția e consecința **dezechilibrului florei intestinale** produs de antibiotice: clindamicina, penicilinele (amoxicilină, ampicilină) și cefalosporinele (ex. cefalexina) sunt cel mai frecvent implicate, dar aproape orice antibiotic poate cauza dezechilibrul. Eritromicina, sulfonamidele (sulfametoxazol), cloramfenicolul, tetraciclinele și fluorochinolonele (norfloxacină) sunt și ele implicate. **ICD poate apărea și după unele chimioterapice** — nu doar după antibiotice.
+
+:::list
+id: bda_copil_list_factori_risc_icd
+titlu: Factori de risc pentru infecția cu *C. difficile*
+stil: bullet
+---
+**Antibioterapie** — pe orice cale (orală, i.m., i.v.); riscul persistă până la **2 luni** după oprire.
+**Chimioterapice** — unele scheme pot decima flora intestinală similar antibioticelor.
+**Boli severe de bază** — imunosupresie, comorbidități multiple.
+**Spitalizare prelungită** — risc nosocomial crescut; suspicionează ICD la diaree apărută >72h de la internare.
+**Instituționalizare** — azil, instituții de îngrijire pe termen lung (mai relevant la adult).
+**Convalescența post-chirurgicală gastrointestinală** — flora locală perturbată + antibioprofilaxie perioperatorie.
+**Tratamente ce scad aciditatea gastrică** — inhibitori de pompă de protoni (IPP) cronic, blocanți H2; aciditatea gastrică e barieră naturală contra sporilor.
+**Vârsta** — extremele (nou-născuți prin purtaj crescut, vârstnici prin imunosenescență).
+:::
 
 :::image
 id: bda_copil_image_colita_pseudomembranoasa
@@ -259,10 +274,19 @@ id: bda_copil_list_simptome_icd
 titlu: Spectrul clinic al ICD
 stil: bullet
 ---
+**Debut** — tipic la **5-10 zile** după începerea antibioticului; uneori din **prima zi** de tratament, alteori până la **10 zile după oprirea** antibioticului.
 **Forme ușoare** — diaree apoasă 3-6 scaune/zi, crampe abdominale, febră joasă.
-**Forme moderate** — scaune diareice abundente, deseori cu sânge, febră 38-39°C, leucocitoză.
+**Forme moderate** — scaune diareice abundente, **deseori cu sânge**, febră 38-39°C, leucocitoză.
 **Forme severe** — leucocitoză ≥ 15.000/mm³, creatinină > 1,5× bazal, dureri abdominale intense.
 **Formă fulminantă** — sindrom grav de deshidratare cu pericol vital, hipotensiune, **megacolon toxic**, perforație colonică. Rară dar potențial letală.
+**De notat:** grețurile și vărsăturile sunt **rare** — predomină diareea cu sânge + febră + dureri abdominale.
+:::
+
+:::highlight
+id: bda_copil_highlight_diagnostic_icd
+Diagnosticul — sensibilitatea testului toxinei A/B
+---
+**Suspiciune clinică** → diaree apărută în primele **2 luni post-antibiotic** sau la >72h de la internare. **Confirmare** → identificarea **toxinei A/B în scaun** (test imunoenzimatic sau PCR). Atenție la sensibilitate: toxina se detectează la doar **~20% din cazurile ușoare**, dar la **>90% din cazurile severe**. Într-un caz cu suspiciune clinică înaltă și test negativ, **repetă proba** — uneori sunt necesare 2-3 recoltări succesive. **Sigmoidoscopia/colonoscopia** (care evidențiază pseudomembranele) NU se face de rutină — se rezervă pentru cazuri selectate (diagnostic incert, suspiciune fulminantă).
 :::
 
 :::table
@@ -278,6 +302,17 @@ coloane: Situație clinică | Tratament | Durată
 | **Recurențe multiple** | Vancomicină + *S. boulardii*, secvențial cu rifaximină, imunoglobuline 400 mg/kg/lună | Individualizat |
 | **Formă fulminantă** (ileus, megacolon) | Vancomicină pe sondă naso-gastrică sau clismă + metronidazol i.v. ± tigeciclină i.v. | Individualizat |
 | **Non-răspuns medical** | Colectomie ca măsură salvatoare de viață | — |
+:::
+
+:::list
+id: bda_copil_list_adjuvante_icd
+titlu: Măsuri adjuvante și prevenție
+stil: bullet
+---
+**❌ CONTRAINDICATE:** medicamente antiperistaltice (loperamid, difenoxilat) — prelungesc contactul toxinei cu mucoasa și favorizează megacolonul toxic + perforația.
+**✅ Utile ca adjuvante:** *Saccharomyces boulardii* (probiotic) · bacitracina · rezine care leagă toxina (**colestiramina**) · **transplant de materii fecale (FMT)** — clismă cu floră de la donator sănătos, eficient în recurențele multiple · **gamma-globulină i.v.** (imunomodulare pasivă).
+**🔬 În studiu:** **rifaximina** (alternativă la vancomicină) · **vaccinul anti-*C. difficile*** (toxoid A+B în trialuri fază III).
+**🛡️ Prevenție:** spălarea corectă a mâinilor cu apă și săpun (bacteria se găsește și în gunoaie, apă, animale de companie — **gelurile alcoolice NU distrug sporii**) · utilizarea judicioasă a antibioticelor (antibiotic stewardship) · **izolarea pacienților infectați** în secții de spital (contact precautions) · curățarea suprafețelor cu soluții sporocide (clor activ).
 :::
 
 :::quiz
