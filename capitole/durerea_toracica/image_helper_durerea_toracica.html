@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CeCitimAzi — Durerea Toracică · Image Helper</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --bg2: #161b22;
+  --bg3: #1c2333;
+  --bg4: #1e2736;
+  --teal: #00bfa5;
+  --teal-dim: #00897b;
+  --teal-glow: rgba(0,191,165,0.15);
+  --teal-border: rgba(0,191,165,0.3);
+  --coral: #ff6b6b;
+  --amber: #ffc107;
+  --green: #4caf50;
+  --purple: #bb86fc;
+  --text: #e6edf3;
+  --text2: #9ca3af;
+  --text3: #6b7280;
+  --border: rgba(255,255,255,0.08);
+  --font: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  padding: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.toolbar-left { display: flex; align-items: center; gap: 10px; flex: 1; }
+.toolbar-right { display: flex; align-items: center; gap: 10px; }
+
+.folder-status {
+  color: var(--text2);
+  font-size: 12px;
+  font-family: var(--mono);
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folder-status.active { color: var(--green); }
+
+.counter {
+  color: var(--amber);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--teal);
+  color: var(--bg);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font);
+  transition: filter 0.2s ease;
+  white-space: nowrap;
+}
+.btn:hover { filter: brightness(1.15); }
+
+.btn-secondary {
+  background: var(--bg3);
+  color: var(--teal);
+  border: 1px solid var(--teal-border);
+}
+.btn-secondary:hover { background: rgba(0,191,165,0.1); }
+
+h1 { color: var(--teal); font-size: 24px; margin-bottom: 2px; }
+.subtitle { color: var(--text2); font-size: 13px; margin-bottom: 20px; }
+
+.info-banner {
+  background: rgba(0,191,165,0.06);
+  border: 1px solid var(--teal-border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.info-banner strong { color: var(--teal); }
+.info-banner code {
+  background: var(--bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.section-group {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.section-group:hover { border-color: var(--teal-border); }
+.section-group.has-all-done { border-color: rgba(76,175,80,0.35); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg3);
+  user-select: none;
+}
+
+.section-icon { font-size: 14px; flex-shrink: 0; }
+
+.section-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.section-folder {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal-dim);
+  background: rgba(0,191,165,0.08);
+  border: 1px solid var(--teal-border);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.section-progress {
+  font-size: 11px;
+  color: var(--text3);
+  white-space: nowrap;
+}
+.section-progress.complete { color: var(--green); }
+
+.btn-open-all {
+  background: var(--bg3);
+  color: var(--purple);
+  border: 1px solid rgba(187,134,252,0.3);
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: var(--font);
+  font-weight: 500;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.btn-open-all:hover { background: rgba(187,134,252,0.12); }
+
+.section-body {
+  display: block;
+  padding: 8px 12px 10px;
+}
+
+.img-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 4px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+  border-radius: 6px;
+}
+.img-row:last-child { border-bottom: none; }
+.img-row:hover { background: rgba(255,255,255,0.02); }
+
+.row-status {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--text3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text3);
+  flex-shrink: 0;
+  font-weight: bold;
+}
+.row-status.done {
+  border-color: var(--green);
+  background: rgba(76,175,80,0.15);
+  color: var(--green);
+}
+
+.row-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  width: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-drop {
+  width: 70px;
+  height: 52px;
+  border: 2px dashed var(--teal-border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: all 0.15s ease;
+  background: rgba(0,191,165,0.04);
+  position: relative;
+}
+.mini-drop:hover { border-color: var(--teal); background: rgba(0,191,165,0.1); }
+.mini-drop.dragover { border-color: var(--teal); background: rgba(0,191,165,0.18); }
+.mini-drop.filled { border-style: solid; border-color: var(--green); }
+
+.mini-drop-icon { font-size: 20px; color: var(--text3); pointer-events: none; }
+
+.mini-preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0; left: 0;
+}
+.mini-preview.visible { display: block; }
+
+.row-url {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 6px 10px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  transition: border-color 0.2s;
+  min-width: 0;
+}
+.row-url:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 6px var(--teal-glow);
+}
+.row-url::placeholder { color: var(--text3); }
+
+.btn-row-search {
+  background: var(--bg3);
+  color: var(--teal);
+  border: 1px solid var(--teal-border);
+  padding: 5px 9px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.btn-row-search:hover { background: rgba(0,191,165,0.12); }
+
+.row-desc {
+  font-size: 11px;
+  color: var(--text3);
+  margin-left: 30px;
+  margin-top: -4px;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--teal-dim); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--teal); }
+</style>
+</head>
+<body>
+
+<h1>🫀 Durerea Toracică — Image Helper</h1>
+<p class="subtitle">3 imagini · Conversie automată WebP/PNG → JPG · Salvare în <code style="color:var(--teal);font-size:11px">images/</code></p>
+
+<div class="info-banner">
+  <strong>Cum funcționează:</strong> Apasă <strong>📂 Alege folderul durerea toracica</strong> (selectează exact folderul <code>capitole/durerea toracica/</code>). Apoi trage imaginile (orice format: WebP, PNG, AVIF, JPG) în cele 3 zone. Se convertesc automat la JPG și se salvează în <code>images/</code>. URL-urile se salvează automat în <code>surse_poze.json</code> când ieși din input (blur).
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <button class="btn btn-secondary" id="btnFolder">📂 Alege folderul durerea toracica</button>
+    <span class="folder-status" id="folderStatus">Folder neales</span>
+  </div>
+  <div class="toolbar-right">
+    <span class="counter" id="counter">0 / 3 completate</span>
+  </div>
+</div>
+
+<div id="sectionsContainer"></div>
+
+<script>
+const data = [
+  {
+    title: "4.1.2 Durerea toracică — Medicina de Familie",
+    folder: "durerea toracica",
+    images: [
+      {
+        name: "img1_ecg_comparativ.jpg",
+        desc: "ECG comparativ: STEMI (supradenivelare ST — sad face) vs Pericardită (supradenivelare difuză + subdenivelare PR — happy face) vs TEP (aspect S1Q3T3)",
+        q: "STEMI vs pericarditis vs pulmonary embolism ECG comparison S1Q3T3"
+      },
+      {
+        name: "img2_iradiere_angina.jpg",
+        desc: "Diagramă anatomică: iradierea durerii anginoase (retrosternală + umeri, brațe, gât, mandibulă, epigastru) — tipar clasic vs atipic",
+        q: "angina pectoris pain radiation pattern diagram referred pain cardiac"
+      },
+      {
+        name: "img3_rx_panel.jpg",
+        desc: "Panel radiografii cu semne-cheie: mediastin lărgit (disecție aortă), pneumotorax, semnul Hampton (TEP), colecție pericardică",
+        q: "chest X-ray differential diagnosis pneumothorax aortic dissection Hampton hump pericardial effusion"
+      }
+    ]
+  }
+];
+
+let chapterFolder = null;   // direct handle to capitole/durerea toracica/
+let imageStates = {};
+
+const TOTAL = data.reduce((s, sec) => s + sec.images.length, 0);
+
+data.forEach((sec, sIdx) => {
+  sec.images.forEach((img, iIdx) => {
+    imageStates[`${sIdx}-${iIdx}`] = { done: false, preview: null, url: '' };
+  });
+});
+
+function googleImgUrl(q) {
+  return "https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(q);
+}
+
+function updateCounter() {
+  const done = Object.values(imageStates).filter(s => s.done).length;
+  document.getElementById('counter').textContent = `${done} / ${TOTAL} completate`;
+}
+
+function sectionDoneCount(sIdx) {
+  const sec = data[sIdx];
+  return sec.images.filter((_, iIdx) => imageStates[`${sIdx}-${iIdx}`].done).length;
+}
+
+// chapterFolder is already capitole/durerea toracica/ — just get images/ subfolder
+async function getImagesHandle() {
+  if (!chapterFolder) return null;
+  try {
+    return await chapterFolder.getDirectoryHandle('images', { create: true });
+  } catch (err) {
+    console.error('Cannot navigate to images/:', err);
+    return null;
+  }
+}
+
+async function saveUrlsForSection(sIdx) {
+  if (!chapterFolder) return;
+  const sec = data[sIdx];
+
+  const map = {};
+  sec.images.forEach((img, iIdx) => {
+    const url = imageStates[`${sIdx}-${iIdx}`].url.trim();
+    if (url) map[img.name] = url;
+  });
+
+  try {
+    const handle   = await chapterFolder.getFileHandle('surse_poze.json', { create: true });
+    const writable = await handle.createWritable();
+    await writable.write(JSON.stringify(map, null, 2));
+    await writable.close();
+  } catch (err) {
+    console.warn('Could not save surse_poze.json:', err);
+  }
+}
+
+function renderSectionGroup(container, sec, sIdx) {
+    const doneCount = sectionDoneCount(sIdx);
+    const allDone = doneCount === sec.images.length;
+
+    const group = document.createElement('div');
+    group.className = `section-group${allDone ? ' has-all-done' : ''}`;
+    group.id = `section-${sIdx}`;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+
+    const icon = document.createElement('span');
+    icon.className = 'section-icon';
+    icon.textContent = allDone ? '✅' : '🫀';
+
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'section-title';
+    titleSpan.textContent = sec.title;
+
+    const folderBadge = document.createElement('span');
+    folderBadge.className = 'section-folder';
+    folderBadge.textContent = `images/`;
+
+    const progress = document.createElement('span');
+    progress.className = `section-progress${allDone ? ' complete' : ''}`;
+    progress.id = `progress-${sIdx}`;
+    progress.textContent = `${doneCount}/${sec.images.length}`;
+
+    const openAllBtn = document.createElement('button');
+    openAllBtn.className = 'btn-open-all';
+    openAllBtn.textContent = '🔍 Toate';
+    openAllBtn.title = 'Deschide toate căutările Google Images';
+    openAllBtn.onclick = () => openAllSearches(sIdx);
+
+    header.appendChild(icon);
+    header.appendChild(titleSpan);
+    header.appendChild(folderBadge);
+    header.appendChild(progress);
+    header.appendChild(openAllBtn);
+
+    const body = document.createElement('div');
+    body.className = 'section-body';
+
+    sec.images.forEach((img, iIdx) => {
+      const key = `${sIdx}-${iIdx}`;
+      const state = imageStates[key];
+
+      // Description (above the row)
+      const descWrap = document.createElement('div');
+      descWrap.style.marginTop = iIdx === 0 ? '4px' : '10px';
+      descWrap.style.padding = '4px 4px 0';
+      descWrap.style.fontSize = '11px';
+      descWrap.style.color = 'var(--text2)';
+      descWrap.style.lineHeight = '1.5';
+      descWrap.textContent = img.desc;
+
+      const row = document.createElement('div');
+      row.className = 'img-row';
+      row.id = `row-${key}`;
+
+      const statusDot = document.createElement('div');
+      statusDot.className = `row-status${state.done ? ' done' : ''}`;
+      statusDot.id = `status-${key}`;
+      statusDot.textContent = state.done ? '✓' : '○';
+
+      const nameLabel = document.createElement('div');
+      nameLabel.className = 'row-name';
+      nameLabel.title = img.name;
+      nameLabel.textContent = img.name;
+
+      const miniDrop = document.createElement('div');
+      miniDrop.className = `mini-drop${state.done ? ' filled' : ''}`;
+      miniDrop.id = `drop-${key}`;
+      miniDrop.title = 'Trage imagine sau click (WebP/PNG/AVIF → JPG auto)';
+
+      const dropIcon = document.createElement('div');
+      dropIcon.className = 'mini-drop-icon';
+      dropIcon.textContent = '🖼';
+      dropIcon.id = `dropicon-${key}`;
+      if (state.done) dropIcon.style.display = 'none';
+
+      const miniPreview = document.createElement('img');
+      miniPreview.className = `mini-preview${state.preview ? ' visible' : ''}`;
+      miniPreview.id = `preview-${key}`;
+      if (state.preview) miniPreview.src = state.preview;
+
+      miniDrop.appendChild(dropIcon);
+      miniDrop.appendChild(miniPreview);
+
+      miniDrop.ondragover  = (e) => { e.preventDefault(); miniDrop.classList.add('dragover'); };
+      miniDrop.ondragleave = () => miniDrop.classList.remove('dragover');
+      miniDrop.ondrop      = (e) => { e.preventDefault(); miniDrop.classList.remove('dragover'); handleFile(key, sIdx, e.dataTransfer.files); };
+      miniDrop.onclick     = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (e) => handleFile(key, sIdx, e.target.files);
+        input.click();
+      };
+
+      const urlInput = document.createElement('input');
+      urlInput.className = 'row-url';
+      urlInput.type = 'text';
+      urlInput.placeholder = 'https://sursa-imagine.com/...';
+      urlInput.value = state.url;
+      urlInput.oninput = (e) => { imageStates[key].url = e.target.value; };
+      urlInput.onblur  = () => saveUrlsForSection(sIdx);
+
+      const searchBtn = document.createElement('button');
+      searchBtn.className = 'btn-row-search';
+      searchBtn.title = img.q;
+      searchBtn.textContent = '🔍';
+      searchBtn.onclick = () => window.open(googleImgUrl(img.q), '_blank');
+
+      row.appendChild(statusDot);
+      row.appendChild(nameLabel);
+      row.appendChild(miniDrop);
+      row.appendChild(urlInput);
+      row.appendChild(searchBtn);
+
+      body.appendChild(descWrap);
+      body.appendChild(row);
+    });
+
+    group.appendChild(header);
+    group.appendChild(body);
+    container.appendChild(group);
+}
+
+function renderAll() {
+  const container = document.getElementById('sectionsContainer');
+  container.innerHTML = '';
+  data.forEach((sec, sIdx) => renderSectionGroup(container, sec, sIdx));
+  updateCounter();
+}
+
+function openAllSearches(sIdx) {
+  data[sIdx].images.forEach(img => {
+    window.open(googleImgUrl(img.q), '_blank');
+  });
+}
+
+function convertToJpg(dataUrl, quality = 0.92) {
+  return new Promise((resolve) => {
+    const imgEl = new Image();
+    imgEl.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width  = imgEl.naturalWidth;
+      canvas.height = imgEl.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(imgEl, 0, 0);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    imgEl.src = dataUrl;
+  });
+}
+
+function dataUrlToBlob(dataUrl) {
+  const [header, b64] = dataUrl.split(',');
+  const mime = header.match(/:(.*?);/)[1];
+  const bytes = atob(b64);
+  const arr = new Uint8Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) arr[i] = bytes.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
+
+async function handleFile(key, sIdx, files) {
+  if (!files || !files.length) return;
+  const file = files[0];
+  const iIdx = parseInt(key.split('-')[1]);
+  const img = data[sIdx].images[iIdx];
+
+  const targetName = img.name.replace(/\.[^.]+$/, '.jpg');
+
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const rawDataUrl = e.target.result;
+    const dataUrl = await convertToJpg(rawDataUrl);
+    const saveBlob = dataUrlToBlob(dataUrl);
+
+    imageStates[key].done = true;
+    imageStates[key].preview = dataUrl;
+
+    const preview = document.getElementById(`preview-${key}`);
+    const dropIcon = document.getElementById(`dropicon-${key}`);
+    preview.src = dataUrl;
+    preview.classList.add('visible');
+    if (dropIcon) dropIcon.style.display = 'none';
+
+    const drop = document.getElementById(`drop-${key}`);
+    drop.classList.add('filled');
+
+    const status = document.getElementById(`status-${key}`);
+    status.classList.add('done');
+    status.textContent = '✓';
+
+    const sec = data[sIdx];
+    const doneCount = sectionDoneCount(sIdx);
+    const prog = document.getElementById(`progress-${sIdx}`);
+    if (prog) {
+      prog.textContent = `${doneCount}/${sec.images.length}`;
+      prog.className = `section-progress${doneCount === sec.images.length ? ' complete' : ''}`;
+    }
+    const grp = document.getElementById(`section-${sIdx}`);
+    if (grp && doneCount === sec.images.length) grp.classList.add('has-all-done');
+
+    updateCounter();
+
+    const imagesDir = await getImagesHandle();
+
+    if (imagesDir) {
+      try {
+        const handle = await imagesDir.getFileHandle(targetName, { create: true });
+        const writable = await handle.createWritable();
+        await writable.write(saveBlob);
+        await writable.close();
+        drop.style.boxShadow = '0 0 8px rgba(76,175,80,0.5)';
+        setTimeout(() => drop.style.boxShadow = '', 1200);
+      } catch (err) {
+        console.warn('Save failed, downloading instead:', err);
+        triggerDownload(dataUrl, targetName);
+      }
+    } else {
+      triggerDownload(dataUrl, targetName);
+    }
+
+    await saveUrlsForSection(sIdx);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function triggerDownload(dataUrl, filename) {
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = filename;
+  a.click();
+}
+
+document.getElementById('btnFolder').onclick = async () => {
+  try {
+    chapterFolder = await window.showDirectoryPicker({ mode: 'readwrite' });
+    const name = chapterFolder.name || 'Folder selectat';
+    const status = document.getElementById('folderStatus');
+    status.textContent = `✓ ${name}`;
+    status.classList.add('active');
+  } catch (err) {
+    console.error('Folder picker cancelled:', err);
+  }
+};
+
+renderAll();
+</script>
+</body>
+</html>

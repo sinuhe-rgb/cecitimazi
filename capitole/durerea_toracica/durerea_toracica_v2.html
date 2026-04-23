@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Durerea Toracică — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:block;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw;padding-top:52px}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:-340px;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary);transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 14px 10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.5}
+.ks-card strong{color:var(--text-primary)}
+.ks-card em{color:var(--text-primary);font-style:italic}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;line-height:1.35}
+.ks-list{list-style:none;padding:0;margin:0}
+.ks-list li{position:relative;padding:2px 0 2px 12px;font-size:12px;line-height:1.45}
+.ks-list li:before{content:"·";position:absolute;left:2px;color:var(--teal);font-weight:700}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.src-btn{position:absolute;top:6px;right:6px;background:var(--bg-primary);border:1px solid rgba(77,199,191,0.2);color:var(--teal);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,transform .2s;z-index:10;padding:0;line-height:1}
+[data-block-id]{position:relative}[data-block-id]:hover .src-btn{opacity:.6}.src-btn:hover{opacity:1!important;transform:scale(1.1);border-color:var(--teal)}
+@media(max-width:768px){.src-btn{display:none!important}}
+.ks-sources{background:var(--bg-card);border:1px solid rgba(77,199,191,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px}
+.ks-sources .ks-src-title-static{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.ks-sources .ks-src-item{padding:6px 0;border-bottom:1px solid var(--border)}.ks-sources .ks-src-item:last-child{border-bottom:none}
+.ks-sources .ks-src-item-title{color:var(--text-primary);font-weight:500;font-size:11.5px;margin-bottom:2px}
+.ks-sources .ks-src-item-meta{color:var(--text-muted);font-size:10.5px}
+.ks-sources .ks-src-item-meta a{color:var(--blue);text-decoration:none}
+.ks-sources .ks-src-item-meta a:hover{text-decoration:underline}
+.src-popup{display:none;position:absolute;top:36px;right:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:14px;min-width:280px;max-width:360px;z-index:20;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-size:12px;max-height:320px;overflow-y:auto}
+.src-popup.show{display:block;animation:fadeIn .2s ease}
+.src-popup-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.src-item{padding:8px 0;border-bottom:1px solid var(--border)}.src-item:last-child{border-bottom:none}
+.src-item-title{color:var(--text-primary);font-weight:500;font-size:12px;margin-bottom:3px}
+.src-item-meta{color:var(--text-muted);font-size:11px}.src-item-meta a{color:var(--blue);text-decoration:none}.src-item-meta a:hover{text-decoration:underline}
+.src-tag-free{display:inline-block;background:rgba(76,175,80,0.15);color:var(--green);padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:4px;letter-spacing:.5px;vertical-align:middle}
+.src-none{color:var(--text-muted);font-style:italic;font-size:11px}
+.src-more-toggle{display:flex;align-items:center;gap:4px;color:var(--text-muted);font-size:11px;cursor:pointer;padding:6px 0;border:none;background:none;width:100%}
+.src-more-toggle:hover{color:var(--teal)}
+.src-more-toggle svg{transition:transform .2s}
+.src-more-toggle.open svg{transform:rotate(180deg)}
+.src-more-items{display:none}.src-more-items.open{display:block}
+@media(max-width:1360px){.content-wrapper{margin-right:0;max-width:780px}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.md-link{color:var(--teal);text-decoration:underline;text-decoration-color:rgba(0,191,165,0.35);text-decoration-thickness:1px;text-underline-offset:2px;transition:text-decoration-color 0.15s ease,color 0.15s ease}
+.md-link:visited{color:var(--teal)}
+.md-link:hover{color:var(--teal);text-decoration-color:var(--teal);text-decoration-thickness:2px}
+.md-link::after{content:' ↗';font-size:0.82em;opacity:0.55;margin-left:1px}
+.list-component{margin:18px 0;padding:16px 18px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px}
+.list-component .list-titlu{font-size:13px;font-weight:600;color:var(--teal);margin-bottom:12px;letter-spacing:0.3px}
+.list-component .list-body{list-style:none;padding:0;margin:0;counter-reset:none}
+.list-component .list-item{display:flex;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.list-component .list-item:last-child{border-bottom:none}
+.list-component .list-content{flex:1;color:var(--text);line-height:1.55;font-size:14.5px}
+.list-component .list-content strong{color:var(--text);font-weight:600}
+.list-component .list-badge{flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,191,165,0.12);color:var(--teal);font-weight:700;font-size:12px;font-family:var(--mono,monospace);margin-top:1px;border:1px solid var(--teal-border)}
+.list-component .list-badge.list-check{background:rgba(76,175,80,0.12);color:var(--green);border-color:rgba(76,175,80,0.3)}
+.list-component.list-stil-bullet .list-item::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:10px}
+.list-component.list-stil-bullet .list-badge{display:none}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.card-icon{flex-shrink:0}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-desc{color:var(--text-muted);font-size:13px;margin-bottom:14px;font-style:italic}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.md-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--teal);line-height:1.4}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Algoritm Clinic */
+.algoritm-clinic{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.alg-header{background:linear-gradient(135deg,rgba(0,191,165,0.12),rgba(0,191,165,0.04));border-bottom:1px solid var(--border);padding:14px 22px}
+.alg-badge{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.alg-header h4{font-size:17px;margin-top:3px;color:var(--text-primary)}
+.alg-desc{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.alg-body{padding:30px 22px;overflow-x:auto}
+.alg-canvas{position:relative;min-width:fit-content}
+.alg-grid{display:grid;gap:52px 28px;justify-items:center;align-items:center;position:relative;z-index:2}
+.alg-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.alg-node{padding:12px 18px;border-radius:8px;text-align:center;font-size:13px;font-weight:500;max-width:220px;min-width:100px;position:relative;cursor:default;transition:transform .2s,box-shadow .2s;word-wrap:break-word;z-index:2;justify-self:center}
+.alg-node:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.alg-node-label{color:var(--text-primary);line-height:1.4}
+.alg-start{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));border:2px solid var(--green);border-radius:20px}
+.alg-start .alg-node-label{color:var(--green);font-weight:600}
+.alg-decizie{background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(255,193,7,0.05));border:2px solid var(--amber);border-left:4px solid var(--amber);border-radius:4px}
+.alg-decizie .alg-node-label{color:var(--amber)}
+.alg-actiune{background:linear-gradient(135deg,rgba(100,181,246,0.15),rgba(100,181,246,0.05));border:2px solid var(--blue);border-radius:8px}
+.alg-actiune .alg-node-label{color:var(--blue)}
+.alg-final{background:linear-gradient(135deg,rgba(0,191,165,0.15),rgba(0,191,165,0.05));border:3px solid var(--teal);border-radius:20px}
+.alg-final .alg-node-label{color:var(--teal);font-weight:600}
+.alg-alerta{background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:2px solid var(--coral);border-radius:8px;animation:algPulse 2s ease-in-out infinite}
+.alg-alerta .alg-node-label{color:var(--coral);font-weight:600}
+.alg-node.has-detail{cursor:pointer}
+.alg-node.has-detail:hover{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,191,165,0.2)}
+.alg-detail{display:none}
+@keyframes algDetailIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.alg-ks-container:empty{display:none}
+.alg-ks-container{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.alg-ks-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:14px 16px 14px 14px;margin-bottom:12px;animation:algKsIn .3s ease;font-size:13px;line-height:1.65}
+.alg-ks-card .alg-ks-title{font-size:13px;font-weight:700;margin-bottom:8px;padding-right:20px}
+.alg-ks-card .alg-ks-content{color:var(--text-secondary);font-size:12.5px}
+.alg-ks-card .alg-ks-content strong{color:var(--text-primary)}
+.alg-ks-close{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;transition:color .2s;border-radius:4px}
+.alg-ks-close:hover{color:var(--coral);background:rgba(255,107,107,0.1)}
+@keyframes algKsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes algKsOut{to{opacity:0;transform:translateX(20px)}}
+@keyframes algKsFlash{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 0 4px rgba(0,191,165,0.2)}100%{box-shadow:none}}
+@keyframes algPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.2)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+@media(max-width:600px){.alg-grid{grid-template-columns:1fr!important;gap:12px 0!important}.alg-node{grid-column:1!important;grid-row:auto!important;max-width:100%}.alg-svg{display:none}.alg-node::after{content:'↓';display:block;color:var(--teal-border);font-size:18px;margin-top:6px;line-height:1}.alg-node:last-child::after{display:none}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#etiologie">Etiologia — abordarea în 4 pași</a></li>
+<li><a href="#diagnostic-clinic">Diagnostic clinic — triajul pacienților cu DT</a></li>
+<li><a href="#diagnostic-paraclinic">Diagnostic paraclinic — ECG, radiografie, teste</a></li>
+<li><a href="#diagnostic-diferential">Diagnostic diferențial</a></li>
+<li><a href="#management">Managementul pacienților cu DT de cauză coronariană</a></li>
+<li><a href="#ghiduri-vs-carte">Ghidurile actuale vs Esențialul în Medicina de Familie</a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Medicină de Familie · Pre-Stagiu</div>
+  <h1>Durerea Toracică</h1>
+  <p>4.1.2 · Cauze · Triaj · Management coronarian · Esențialul în Medicina de Familie (Ghilencea, Bejan)</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează</div>
+  <p>Durerea toracică e un simptom frecvent întâlnit în practica medicală. Reprezintă un disconfort sau o durere pe care pacientul o simte la nivelul toracelui, <strong>între gât și abdomenul superior</strong>. Pentru MF, abordarea corectă înseamnă să <strong>nu ratezi</strong> o cauză amenințătoare de viață și să <strong>nu temporizezi</strong> o trimitere de urgență.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="etiologie" data-block-id="etiologie">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Etiologia — abordarea în 4 pași</h2>
+</div>
+
+<div class="text-block"><p>Durerea toracică poate avea cauze cu impact major — <strong>amenințătoare de viață</strong>, sau minore, fără gravitate imediată. Orice țesut sau organ de la nivelul toracelui poate fi o sursă a durerii incluzând: inima, plămânii, esofagul, mușchii, coastele, tendoanele sau nervii. Abordarea pacientului cu durere toracică se face în <strong>patru pași</strong>:</p></div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_pas1">
+  <div class="list-titlu">Pasul 1 — Cauze amenințătoare de viață (necesită abordare imediată)</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Sindroamele coronariene acute</strong></div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Disecția de aortă</strong></div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Tromboembolismul pulmonar</strong></div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Pneumotoraxul în tensiune</strong></div></li>
+<li class="list-item"><span class="list-badge">5</span><div class="list-content"><strong>Ruptura de esofag</strong></div></li>
+
+  </ol>
+</div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_pas2">
+  <div class="list-titlu">Pasul 2 — Afecțiuni cronice cu complicații severe (dacă se elimină cauzele amenințătoare)</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Angina cronică</strong> (stabilă/de efort)</div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Stenoza aortică strânsă</strong></div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Hipertensiunea pulmonară</strong></div></li>
+
+  </ol>
+</div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_pas3">
+  <div class="list-titlu">Pasul 3 — Afecțiuni acute cu tratament specific</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Pneumonia acută</strong></div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Zona zoster preveziculară</strong></div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Pleurita acută</strong></div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Miopericardita acută</strong></div></li>
+
+  </ol>
+</div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_pas4">
+  <div class="list-titlu">Pasul 4 — Afecțiuni iradiate (gastro-intestinale, musculo-scheletale)</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Colecistita acută sau cronică</strong></div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Ulcerul peptic</strong></div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Boala de reflux gastro-esofagian</strong></div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Discita</strong></div></li>
+<li class="list-item"><span class="list-badge">5</span><div class="list-content"><strong>Discopatii cervico-toracale</strong></div></li>
+<li class="list-item"><span class="list-badge">6</span><div class="list-content"><strong>Sindromul Tietze</strong> (costocondrita sternală)</div></li>
+
+  </ol>
+</div>
+
+<div class="text-block"><p>Algoritmul de mai jos sintetizează parcursul decizional în cele 4 trepte — click pe fiecare nod pentru detalii.</p></div>
+
+<div class="algoritm-clinic" id="alg_2fae09" data-block-id="durerea_toracica_v2_algoritm_4pasi">
+  <div class="alg-header">
+    <div class="alg-badge">ALGORITM CLINIC</div>
+    <h4>Abordarea durerii toracice în 4 pași ierarhici</h4>
+    <p class="alg-desc">Bazat pe cap. 4.1.2.1 — Esențialul în Medicina de Familie</p>
+  </div>
+  <div class="alg-body">
+    <div class="alg-canvas">
+      <svg class="alg-svg"></svg>
+      <div class="alg-grid" style="grid-template-columns:repeat(2,minmax(170px,1fr));grid-template-rows:repeat(5,auto)"
+           data-edges='[{"from": "s1", "to": "s2", "label": ""}, {"from": "s2", "to": "s3", "label": "DA"}, {"from": "s2", "to": "s4", "label": "NU"}, {"from": "s4", "to": "s5", "label": "DA"}, {"from": "s4", "to": "s6", "label": "NU"}, {"from": "s6", "to": "s7", "label": "DA"}, {"from": "s6", "to": "s8", "label": "NU"}]'>
+        <div class="alg-node alg-start has-detail" data-id="s1" style="grid-row:1;grid-column:1/-1"><span class="alg-node-label">Pacient cu durere toracică</span><div class="alg-detail">Durere/disconfort între gât și abdomenul superior. Abordare ierarhică în 4 pași — nu sări etapele.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s2" style="grid-row:2;grid-column:1/-1"><span class="alg-node-label">Pasul 1 — cauză AMENINȚĂTOARE DE VIAȚĂ?</span><div class="alg-detail"><strong>5 cauze:</strong> SCA · Disecție aortă · TEP · Pneumotorax în tensiune · Ruptură esofag. Necesită abordare imediată.</div></div>
+      <div class="alg-node alg-alerta has-detail" data-id="s3" style="grid-row:3;grid-column:1"><span class="alg-node-label">Abordare IMEDIATĂ — transfer de urgență</span><div class="alg-detail">Trimitere la UPU cu ambulanță dotată corespunzător.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s4" style="grid-row:3;grid-column:2"><span class="alg-node-label">Pasul 2 — afecțiune CRONICĂ cu complicații severe?</span><div class="alg-detail"><strong>3 afecțiuni:</strong> Angină cronică (stabilă/de efort) · Stenoză aortică strânsă · HTP.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s5" style="grid-row:4;grid-column:1"><span class="alg-node-label">Evaluare cardiologică</span><div class="alg-detail">Plan de lucru pentru angina stabilă (cap. 4.3.3).</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s6" style="grid-row:4;grid-column:2"><span class="alg-node-label">Pasul 3 — afecțiune ACUTĂ cu tratament specific?</span><div class="alg-detail"><strong>4 afecțiuni:</strong> Pneumonie acută · Zona zoster preveziculară · Pleurită acută · Miopericardită acută.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s7" style="grid-row:5;grid-column:1"><span class="alg-node-label">Tratament etiologic specific</span><div class="alg-detail">Tratament în funcție de diagnosticul specific.</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s8" style="grid-row:5;grid-column:2"><span class="alg-node-label">Pasul 4 — afecțiuni iradiate GI / musculo-scheletale</span><div class="alg-detail">Colecistită · Ulcer peptic · BRGE · Discita · Discopatii cervico-toracale · Sindrom Tietze.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-block"><p>O altă modalitate de abordare a durerii toracice ține seama de <strong>organul afectat</strong> (Tabelul 4.1.2.1).</p></div>
+
+<h3>Tabelul 4.1.2.1 — Cauze ale durerii toracice după organul afectat (după Tse, Lip, Coats, modificat)</h3>
+<div class="table-wrapper" data-block-id="durerea_toracica_v2_table_cauze_organ"><table>
+  <thead><tr><th>Cauze</th><th>Afecțiunile cele mai frecvente</th></tr></thead>
+  <tbody><tr><td><strong>Cardiovasculare</strong></td><td>IMA, angina instabilă, angina stabilă, spasm coronarian (angina Prinzmetal, abuzul de cocaină), anomalii coronariene, sindrom tako-tsubo, pericardită, miocardită, colecție pericardică, cardiomiopatie hipertrofică, prolaps de valvă mitrală, anevrism de aortă, disecție de aortă</td></tr>
+<tr><td><strong>Pulmonare</strong></td><td>Colecție pleurală, pneumotorax, pneumonie, tromboembolism, carcinom bronhopulmonar, hipertensiune pulmonară</td></tr>
+<tr><td><strong>Musculoscheletale</strong></td><td>Zona zoster (preveziculară), afecțiuni ale coloanei cervicale (discale, inflamatorii, tumorale), inflamația mușchilor centurii scapulare, fractură de coaste, sindrom Tietze, infecția mușchilor intercostali (boala Bornholm)</td></tr>
+<tr><td><strong>Aparatul gastro-intestinal</strong></td><td>Ulcer peptic, colecistită, pancreatită, spasm esofagian, cancer esofagian, sindrom Mallory-Weiss</td></tr></tbody>
+</table></div>
+
+<div class="quiz-container" data-block-id="durerea_toracica_v2_quiz_cauze"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Conform cap. 4.1.2.1 din <em>Esențialul în Medicina de Familie</em>, care dintre următoarele este una dintre cele <strong>cinci cauze amenințătoare de viață</strong> ale durerii toracice?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) Sindromul Tietze</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) Sindromul Mallory-Weiss</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) Carcinomul bronhopulmonar</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">D) Ruptura de esofag</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">E) Pancreatita acută</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Ruptura de esofag (sindrom Boerhaave) e a 5-a cauză amenințătoare de viață, alături de SCA, disecția aortă, TEP și pneumotoraxul în tensiune.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Sindromul Tietze e afecțiune musculo-scheletală, pasul 4 (costocondrita sternală).<br><strong>B)</strong> GREȘIT — Sindromul Mallory-Weiss e cauză GI (Tabel 4.1.2.1) — sângerare gastrică după vărsături, nu printre cele 5 urgențe.<br><strong>C)</strong> GREȘIT — Carcinomul bronhopulmonar e cauză pulmonară (Tabel 4.1.2.1), nu amenințătoare de viață acut.<br><strong>E)</strong> GREȘIT — Pancreatita e afecțiune gastro-intestinală cu durere iradiată, pasul 4.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic-clinic" data-block-id="diagnostic-clinic">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Diagnostic clinic — triajul pacienților cu DT</h2>
+</div>
+
+<div class="text-block"><p>Triajul pacienților cu durere toracică cuprinde: <strong>istoricul/anamneza țintită, examenul fizic orientat, ECG</strong>, iar acolo unde este posibil, <strong>radiografia toracică și examenele de laborator</strong>.</p>
+<h3 class="md-subtitle" data-block-id="anamneza-trebuie-sa-stabileasca-cu-exactitate">Anamneza trebuie să stabilească cu exactitate</h3></div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_anamneza">
+  <div class="list-titlu">Cele 9 elemente ale anamnezei țintite</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Prezența durerii în momentul examinării</strong> — identifică pacienții cu risc crescut.</div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Localizarea DT</strong> — epigastrică, retrosternală, laterotoracică, posterioară. Durerea anginoasă este centrală, retrosternală.</div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Iradierea DT</strong> — în umeri, brațe, gât, maxilarul inferior, epigastru.</div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Tipul durerii toracice</strong> — junghi, ascuțită, ca o presiune, ca o greutate, arsură sau constrictivă.</div></li>
+<li class="list-item"><span class="list-badge">5</span><div class="list-content"><strong>Debutul durerii</strong> — când a debutat și dacă debutul este brusc sau insidios.</div></li>
+<li class="list-item"><span class="list-badge">6</span><div class="list-content"><strong>Antecedentele patologice de boală coronariană</strong> — IMA, by-pass aortocoronarian, angioplastie coronariană, stroke; și dacă DT prezentă seamănă cu cea anterioară.</div></li>
+<li class="list-item"><span class="list-badge">7</span><div class="list-content"><strong>Factorii de risc pentru boală coronariană</strong> — diabetul zaharat, HTA, hipercolesterolemia, fumatul, istoricul familial de boală coronariană.</div></li>
+<li class="list-item"><span class="list-badge">8</span><div class="list-content"><strong>Alte simptome</strong> — transpirații, dispnee, palpitații, sincopă, oboseală, greață, vărsături.</div></li>
+<li class="list-item"><span class="list-badge">9</span><div class="list-content"><strong>Ce influențează DT</strong> — ameliorează la repaus, la aplecarea înainte, sau la NTG; se accentuează la efort, emoții, inspirul profund, ingestie, tuse, poziția sau mișcările trunchiului, abuzul de cocaină. Severitatea durerii pe o scală de la 1 la 10.</div></li>
+
+  </ol>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="examenul-clinic">Examenul clinic</h3>
+<p><strong>Examenul clinic</strong> la pacientul cu durere toracică este un examen fizic rapid, insistând asupra aparatului cardiovascular și respirator, folosind metodele de <strong>inspecție, palpare, percuție, auscultație</strong>.</p></div>
+
+<div class="img-component" data-block-id="durerea_toracica_v2_image_iradiere">
+  <img src="images/img2_iradiere_angina.jpg" alt="Iradierea durerii anginoase — umeri, brațe, gât, maxilarul inferior, epigastru" data-titlu="Iradierea durerii anginoase — umeri, brațe, gât, maxilarul inferior, epigastru" data-desc="<ul><li><strong>Ce observi:</strong> zonele de iradiere tipice menționate în anamneză (elementul 3) — umeri, brațe, gât, maxilarul inferior, epigastru.</li><li><strong>Ce sugerează:</strong> durere cardiacă anginoasă când se asociază cu localizare retrosternală constrictivă.</li><li><strong>Diferențial vizual:</strong> iradiere interscapulară = disecție aortă; durere laterotoracică fără iradiere = pleurală.</li></ul>" data-sursa="https://en.wikipedia.org/wiki/Referred_pain">
+  <div class="img-caption">
+    <div class="caption-title">Iradierea durerii anginoase — umeri, brațe, gât, maxilarul inferior, epigastru</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Ce observi:</strong> zonele de iradiere tipice menționate în anamneză (elementul 3) — umeri, brațe, gât, maxilarul inferior, epigastru.</li></ul></div><div class="img-cap-full"><ul><li><strong>Ce observi:</strong> zonele de iradiere tipice menționate în anamneză (elementul 3) — umeri, brațe, gât, maxilarul inferior, epigastru.</li><li><strong>Ce sugerează:</strong> durere cardiacă anginoasă când se asociază cu localizare retrosternală constrictivă.</li><li><strong>Diferențial vizual:</strong> iradiere interscapulară = disecție aortă; durere laterotoracică fără iradiere = pleurală.</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<h3>Tabelul 4.1.2.2 — Examenul fizic al pacientului cu durere toracică</h3>
+<div class="table-wrapper" data-block-id="durerea_toracica_v2_table_examen_fizic"><table>
+  <thead><tr><th>Examenul fizic</th><th>Aspectul</th><th>Semnificația</th></tr></thead>
+  <tbody><tr><td><strong>Aspectul general, inspecția și palparea</strong></td><td>Anemie, icter, aspectul unghiilor, mucoaselor, tegumentelor pentru cianoza de tip central, aspectul tiroidei</td><td></td></tr>
+<tr><td><strong>Inspecția și palparea Vv jugulare</strong></td><td>Turgescența venelor jugulare</td><td>Insuficiență cardiacă</td></tr>
+<tr><td></td><td>Reflux hepatojugular</td><td>Insuficiență cardiacă</td></tr>
+<tr><td></td><td>Semnul Kussmaul în inspir</td><td>Constricție</td></tr>
+<tr><td><strong>Palparea Aa carotide</strong></td><td>Puls slab și întârziat (<em>Pulsus parvus et tardus</em>)</td><td>Stenoza aortică</td></tr>
+<tr><td><strong>Tensiunea arterială</strong></td><td>Diferențe semnificative la cele 2 brațe</td><td>Disecția aortică</td></tr>
+<tr><td></td><td>HTA/hipotensiune severă</td><td>Necesită intervenție urgentă</td></tr>
+<tr><td></td><td>Puls paradoxal (scăderea TAS cu peste 10 mmHg la sfârșitul inspirului)</td><td>Tamponadă cardiacă</td></tr>
+<tr><td><strong>Palparea șocului apexian</strong></td><td>Deplasat lateral față de LMV</td><td>HVS</td></tr>
+<tr><td></td><td>Deplasat lateral și inferior</td><td>VD mărit</td></tr>
+<tr><td><strong>Palparea toracelui</strong></td><td>Rash toracic</td><td>Posibil zona zoster preveziculară</td></tr>
+<tr><td></td><td>Reproducerea durerii la presiune</td><td>Rar este durere toracică</td></tr>
+<tr><td><strong>Auscultația zgomotelor cardiace</strong></td><td>Zgomot 3 audibil</td><td>Insuficiență cardiacă</td></tr>
+<tr><td></td><td>Zgomot 4 audibil</td><td>HTA, insuficiență cardiacă</td></tr>
+<tr><td><strong>Auscultația suflurilor cardiace</strong></td><td>Frecătură pericardică</td><td>Pericardită</td></tr>
+<tr><td></td><td>Suflu sistolic rugos crescendo-descrescendo, aria aortică, iradiere carotidiană</td><td>Stenoza aortică</td></tr>
+<tr><td></td><td>Suflu sistolic aspirativ constant apical</td><td>Regurgitare mitrală (ischemia miocardică/dilatarea VS, endocardită)</td></tr>
+<tr><td></td><td>Suflu diastolic aspirativ în aria aortică</td><td>Regurgitare aortică (endocardită, disecția de aortă)</td></tr>
+<tr><td></td><td>Suflu sistolic dur la 3-7 zile de la IMA</td><td>DSV post-infarct miocardic</td></tr>
+<tr><td><strong>Percuția toracelui</strong></td><td>Matitate toracică</td><td>Pneumonie, colecție pleurală</td></tr>
+<tr><td><strong>Auscultația plămânilor</strong></td><td>Wheezing</td><td>Bronhoconstricție, insuficiență cardiacă</td></tr>
+<tr><td></td><td>Raluri crepitante</td><td>Pneumonie</td></tr>
+<tr><td></td><td>Raluri subcrepitante</td><td>Edem pulmonar acut în IMA</td></tr>
+<tr><td></td><td>Absența murmurului vezicular</td><td>Pneumotorax în tensiune</td></tr>
+<tr><td><strong>Inspecția, palparea abdomenului</strong></td><td>Ascită, ficat pulsatil, mărit de volum</td><td>Insuficiență cardiacă</td></tr>
+<tr><td></td><td>Durere în hipocondrul drept</td><td>Colecistită</td></tr>
+<tr><td></td><td>Durere epigastrică</td><td>Ulcer peptic, pancreatită</td></tr>
+<tr><td><strong>Membrele inferioare</strong></td><td>Edem unilateral al gambei/coapsei</td><td>Tromboză venoasă profundă</td></tr>
+<tr><td></td><td>Edem bilateral</td><td>Insuficiență cardiacă</td></tr></tbody>
+</table></div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="caracteristici-clinice-in-functie-de-organul-afectat">Caracteristici clinice în funcție de organul afectat</h3>
+<p>Caracteristicile durerii toracice diferă în funcție de organul afectat, fiind însoțite și de alte simptome sau semne:</p>
+<ul><li><strong>Astmul bronșic, pneumonia, pneumotoraxul sau pleurita-colecția pleurală</strong> sunt acompaniate de dispnee sau tuse. În aceste cazuri, durerea toracică se accentuează deseori la respirație (inspirație) profundă ori la tuse. Wheezing-ul însoțește obstrucția căilor aerifere mici din astmul bronșic.</li><li><strong>Contractura și inflamațiile peretelui toracic</strong> precum condrita costală din sindromul Tietze produc durere toracică.</li><li><strong>Durerea toracică iradiată dată de afecțiuni digestive</strong>: boala de reflux gastroesofagian (BRGE), litiaza veziculară, dischinezia biliară, ulcerul gastric, indigestia, gastrita. Durerea din afecțiunile veziculei biliare se accentuează de obicei după un prânz bogat în grăsimi. Durerea din ulcerul duodenal este accentuată când stomacul este gol și este diminuată de alimentație.</li><li><strong>Junghiul toracic, cu dispnee</strong>, în special după o lungă călătorie sau după un repaus la pat prelungit (peste 3 zile), în urma unei intervenții chirurgicale sau a unei tromboze venoase profunde a membrelor inferioare poate fi semnificativ pentru <strong>tromboembolismul pulmonar</strong>.</li><li><strong>La copii</strong>, cele mai frecvente dureri toracice nu sunt de cauză cardiacă. Dacă traumatismul, tusea produc afectare musculară, atunci peretele toracic este dureros la palpare în locul respectiv.</li></ul>
+<h3 class="md-subtitle" data-block-id="intensitatea-durerii">Intensitatea durerii</h3>
+<p>În funcție de intensitatea durerii, durerile toracice pot fi împărțite în <strong>dureri toracice intense chiar atroce, persistente</strong> (infarctul miocardic, pericardita, pleurezia, pneumotoraxul, anevrismul disecant de aortă) și <strong>dureri toracice de intensitate mai mică, intermitente</strong> (angina pectorală stabilă de efort, durerile parietale toracice, durerile toracice cu componentă psihoneurotică), bolnavul prezentând o stare de sănătate aparent normală între accese.</p></div>
+
+<div class="quiz-container" data-block-id="durerea_toracica_v2_quiz_anamneza"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">Conform cap. 4.1.2.2 din <em>Esențialul în Medicina de Familie</em>, care dintre următoarele NU face parte din cele 9 elemente ale anamnezei țintite a pacientului cu durere toracică?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Factorii de risc pentru boală coronariană</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">B) Grupul sanguin și factorul Rh</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">C) Ce influențează durerea (agravare/ameliorare)</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) Localizarea durerii</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">E) Iradierea durerii</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — Grupul sanguin NU e printre cele 9 elemente. Anamneza include: prezența durerii, localizare, iradiere, tip, debut, antecedente coronariene, factori de risc, alte simptome, factori modulatori și severitate.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Factorii de risc sunt elementul 7 (diabet, HTA, hipercolesterolemie, fumat, istoric familial).<br><strong>C)</strong> GREȘIT — Factorii modulatori sunt elementul 9 (repaus, aplecare înainte, NTG pentru ameliorare; efort, inspir, tuse pentru agravare).<br><strong>D)</strong> GREȘIT — Localizarea e elementul 2 al anamnezei (retrosternală, epigastrică, laterotoracică, posterioară).<br><strong>E)</strong> GREȘIT — Iradierea e elementul 3 (umeri, brațe, gât, maxilar, epigastru).</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic-paraclinic" data-block-id="diagnostic-paraclinic">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Diagnostic paraclinic — ECG, radiografie, teste</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="ecg-obligatoriu-in-durerea-toracica">ECG — obligatoriu în durerea toracică</h3>
+<p><strong>Examenul ECG este obligatoriu în durerea toracică.</strong> Este importantă comparația cu examenele ECG anterioare pentru sesizarea modificărilor nou apărute.</p></div>
+
+<div class="list-component list-stil-bullet" data-block-id="durerea_toracica_v2_list_ecg">
+  <div class="list-titlu">Modificări ECG de recunoscut în durerea toracică</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Supradenivelarea tipică a segmentului ST</strong> („sad face") în 2 derivații alăturate și subdenivelarea ST în oglindă → <strong>STEMI</strong> (infarctul miocardic cu supradenivelare de segment ST).</div></li>
+<li class="list-item"><div class="list-content"><strong>Supradenivelarea ST în aVR</strong> → sugerează o leziune de trunchi coronarian stâng sau de boală tricoronariană.</div></li>
+<li class="list-item"><div class="list-content"><strong>Supradenivelarea difuză concordantă cu unda T</strong>, cu subdenivelarea segmentului PR („happy face") → sugerează o <strong>pericardită</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Subdenivelarea segmentului ST</strong> (orizontală sau descendentă) → sugestivă pentru ischemia miocardică, apare în <strong>NSTEMI</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Blocul complet de ramură stângă (BRS) nou apărut</strong> → echivalentul unei supradenivelări de segment ST în contextul durerii toracice.</div></li>
+<li class="list-item"><div class="list-content"><strong>Apariția undei T negative</strong> (inversarea undei T) → nu este specifică, dar poate sugera ischemia în contextul durerii toracice.</div></li>
+<li class="list-item"><div class="list-content"><strong>Aspectul S1Q3T3</strong> (undă S în derivația D1, undă Q în derivația D3, inversarea undei T în derivația D3) → puțin sensibil, dar atunci când apare sugerează <strong>tromboembolismul pulmonar</strong>.</div></li>
+
+  </ul>
+</div>
+
+<div class="img-component" data-block-id="durerea_toracica_v2_image_ecg">
+  <img src="images/img1_ecg_comparativ.jpg" alt="ECG comparativ — STEMI („sad face") vs pericardită („happy face") vs TEP (S1Q3T3)" data-titlu="ECG comparativ — STEMI („sad face&quot;) vs pericardită („happy face&quot;) vs TEP (S1Q3T3)" data-desc="<p>Tool diagnostic pentru cele 3 modificări ECG cheie menționate în cap. 4.1.2.2. Supradenivelarea ST localizată cu imagine în oglindă = STEMI. Supradenivelarea difuză concordantă cu unda T + subdenivelarea PR = pericardită. Aspectul S1Q3T3 sugerează TEP. Compararea cu ECG-uri anterioare e esențială pentru a depista modificări nou apărute.</p>" data-sursa="https://journalfeed.org/article-a-day/2020/differentiating-stemi-from-pericarditis/">
+  <div class="img-caption">
+    <div class="caption-title">ECG comparativ — STEMI („sad face") vs pericardită („happy face") vs TEP (S1Q3T3)</div>
+    <div class="caption-text"><div class="img-cap-truncated"><p>Tool diagnostic pentru cele 3 modificări ECG cheie menționate în cap. 4.1.2.2. Supradenivelarea ST localizată cu imagine în oglindă = STEMI. Supradenivelarea difuză concordantă cu unda T + subdenivelarea PR = pericardită. Aspectul S1Q3T3 sugerează TEP....</p></div><div class="img-cap-full"><p>Tool diagnostic pentru cele 3 modificări ECG cheie menționate în cap. 4.1.2.2. Supradenivelarea ST localizată cu imagine în oglindă = STEMI. Supradenivelarea difuză concordantă cu unda T + subdenivelarea PR = pericardită. Aspectul S1Q3T3 sugerează TEP. Compararea cu ECG-uri anterioare e esențială pentru a depista modificări nou apărute.</p></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="radiografia-toracica-complementara-celorlalte-investigatii">Radiografia toracică — complementară celorlalte investigații</h3>
+<p><strong>Examenul radiologic al toracelui</strong> este complementar celorlalte investigații.</p></div>
+
+<div class="list-component list-stil-bullet" data-block-id="durerea_toracica_v2_list_rx">
+  <div class="list-titlu">Semne radiologice de orientare</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Lărgirea mediastinului</strong> → sugerează <strong>disecția de aortă</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Lărgirea umbrei cardiace</strong> → sugerează <strong>colecție pericardică</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Semnul lui Hampton</strong> → sugerează <strong>TEP</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Condensarea pulmonară</strong> → sugerează <strong>pneumonia acută bacteriană</strong>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Colecția de aer localizată apical</strong>, cu dispariția desenului bronho-vascular → sugerează <strong>pneumotoraxul</strong>.</div></li>
+
+  </ul>
+</div>
+
+<div class="img-component" data-block-id="durerea_toracica_v2_image_rx">
+  <img src="images/img3_rx_panel.jpg" alt="Semne radiologice în urgențele toracice — mediastin lărgit, pneumotorax, semnul Hampton, colecție pericardică" data-titlu="Semne radiologice în urgențele toracice — mediastin lărgit, pneumotorax, semnul Hampton, colecție pericardică" data-desc="<p>Panel radiografic corespunzător celor 5 semne descrise în cap. 4.1.2.2: mediastin lărgit (disecție aortă), umbră cardiacă lărgită (colecție pericardică), semnul Hampton (TEP), pneumotorax apical cu dispariția desenului bronho-vascular, condensare (pneumonie).</p>" data-sursa="https://www.facebook.com/santanaheartsd/posts/different-radio-graphical-signs-on-chest-x-ray-of-pulmonary-embolism%EF%B8%8F-foamed-med/572667765528266/">
+  <div class="img-caption">
+    <div class="caption-title">Semne radiologice în urgențele toracice — mediastin lărgit, pneumotorax, semnul Hampton, colecție pericardică</div>
+    <div class="caption-text"><p>Panel radiografic corespunzător celor 5 semne descrise în cap. 4.1.2.2: mediastin lărgit (disecție aortă), umbră cardiacă lărgită (colecție pericardică), semnul Hampton (TEP), pneumotorax apical cu dispariția desenului bronho-vascular, condensare (pneumonie).</p></div>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="testele-diagnostice-folosite">Testele diagnostice folosite</h3>
+<p><strong>Testele diagnostice folosite sunt:</strong> analize biochimice (hemoleucograma, glicemia, fibrinogen, VSH, colesterol total, HDL-colesterol, LDL-colesterol, trigliceride, troponină, CPK, saturația sângelui arterial în oxigen SaO₂), <strong>ECG, ECG la efort, radiografia pulmonară, cateterism cardiac, ecocardiografia, ecografia abdominală</strong>.</p></div>
+
+<div class="quiz-container" data-block-id="durerea_toracica_v2_quiz_ecg"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Conform cap. 4.1.2.2 din <em>Esențialul în Medicina de Familie</em>, supradenivelarea segmentului ST în aVR sugerează:</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Bloc complet de ramură stângă nou apărut</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) NSTEMI cu subdenivelare ST în oglindă</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">C) Leziune de trunchi coronarian stâng sau boală tricoronariană</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">D) Pericardită acută</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Tromboembolism pulmonar masiv</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — C)</strong> CORECT — Supradenivelarea ST în aVR sugerează leziune de trunchi coronarian stâng sau boală tricoronariană (cap. 4.1.2.2).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — BRS nou apărut e considerat echivalent de STEMI, dar e un aspect de morfologie QRS, nu supradenivelare ST în aVR.<br><strong>B)</strong> GREȘIT — NSTEMI are subdenivelare ST orizontală sau descendentă, nu supradenivelare în aVR.<br><strong>D)</strong> GREȘIT — Pericardita dă supradenivelare difuză concordantă cu unda T + subdenivelare PR („happy face"), nu în aVR izolat.<br><strong>E)</strong> GREȘIT — TEP se asociază cu aspectul S1Q3T3, nu cu supradenivelare în aVR.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic-diferential" data-block-id="diagnostic-diferential">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Diagnostic diferențial</h2>
+</div>
+
+<div class="text-block"><p>Diagnosticul diferențial al durerii toracice se face pe baza <strong>caracteristicilor clinice ale anginei</strong> (cap. 4.1.2.3) și pe baza <strong>organului afectat</strong> (Tabel 4.1.2.1).</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_tipuri_angina">
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Angină tipică (3/3)</h4>
+    <ul><li>Durere retrosternală <strong>constrictivă, cu iradiere în brațe, maxilar sau gât</strong></li><li><strong>Apare la efort</strong></li><li><strong>Cedează în repaus</strong></li><li>Probabilitate pre-test mai mare de boală coronariană</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Angină atipică (2/3) · Non-anginoasă (0-1/3)</h4>
+    <ul><li>Are <strong>2 din 3 caracteristici</strong> (angină atipică) sau <strong>0-1 din 3</strong> (durere ne-anginoasă)</li><li>Poate lipsi componenta de efort sau cea de ameliorare în repaus</li><li>Probabilitate pre-test mai mică de boală coronariană</li><li>Necesită evaluare diferențială atentă</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><p>Pentru diagnosticul diferențial pe organ, <strong>Tabelul 4.1.2.1</strong> (prezentat în Capitolul 1) enumeră toate afecțiunile grupate pe sistem: cardiovascular, pulmonar, musculoscheletal, gastro-intestinal.</p></div>
+
+<div class="divider"></div>
+
+<div class="section" id="management" data-block-id="management">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Managementul pacienților cu DT de cauză coronariană</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="stemi-nstemi-angina-instabila">STEMI, NSTEMI, angina instabilă</h3>
+<p>Pentru pacienții cu durere toracică tipică pentru IMA (cu modificări ECG de STEMI sau NSTEMI) sau angină instabilă, planul este <strong>urgent</strong>, fiind imediat îndrumați, de preferat cu o ambulanță dotată corespunzător, către cea mai apropiată <strong>unitate de primiri urgențe cu o clinică de cardiologie</strong> apropiată.</p>
+<h3 class="md-subtitle" data-block-id="angina-stabila-cu-debut-recent">Angina stabilă cu debut recent</h3>
+<p>Pentru pacienții care se prezintă la medicul de familie cu durere toracică stabilă cu debut recent, după o evaluare clinică inițială, protocolul de lucru presupune <strong>stabilirea probabilității existenței unei boli coronariene</strong>, pe baza:</p>
+<ul><li>istoricului,</li><li>vârstei,</li><li>sexului,</li><li>factorilor de risc ai pacienților.</li></ul>
+<p><strong>Angina tipică</strong> este definită ca fiind durerea toracică retrosternală cu următoarele caracteristici:
+1. de natură constrictivă, la nivel retrosternal, cu iradiere în brațe, maxilar sau gât;
+2. apare la efort;
+3. cedează în repaus.</p>
+<p><strong>Angina atipică</strong> are 2 din cele 3 caracteristici, iar <strong>durerea ne-anginoasă</strong> are una sau niciuna din cele trei caracteristici.</p>
+<h3 class="md-subtitle" data-block-id="evaluarea-clinica">Evaluarea clinică</h3>
+<p>În evaluarea clinică se iau în considerare:</p></div>
+
+<div class="list-component list-stil-numerotat" data-block-id="durerea_toracica_v2_list_evaluare">
+  <div class="list-titlu">Cei 5 pași ai evaluării clinice (cap. 4.1.2.3)</div>
+  <ol class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>ECG de repaus</strong> — BRS complet, undă Q, modificări ST/T ce pot indica un eveniment ischemic.</div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Tratamentul factorilor de risc CV</strong>.</div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Diagnosticele alternative</strong> (ex: BRGD, musculo-scheletal).</div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Excluderea altor cauze ne-coronariene de angină</strong>, precum stenoza aortică severă sau cardiomiopatia hipertrofică.</div></li>
+<li class="list-item"><span class="list-badge">5</span><div class="list-content"><strong>Reevaluarea testelor de sânge</strong> pentru identificarea cauzelor care ar putea exacerba angina (ex: anemia).</div></li>
+
+  </ol>
+</div>
+
+<div class="text-block"><p><strong>Planul de lucru pentru pacienții cu angină stabilă este menționat la capitolul 4.3.3 (angina cronică).</strong></p></div>
+
+<div class="quiz-container" data-block-id="durerea_toracica_v2_quiz_management"><div class="quiz-q" id="q4">
+  <div class="q-label">Întrebare · 4</div>
+  <div class="q-text">Conform cap. 4.1.2.3 din <em>Esențialul în Medicina de Familie</em>, pentru a fi definită ca <strong>angină tipică</strong>, durerea toracică retrosternală trebuie să întrunească:</div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) 4 caracteristici, incluzând răspunsul la NTG</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">B) Toate cele 3 caracteristici (natură constrictivă cu iradiere, apare la efort, cedează în repaus)</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) 2 din cele 3 caracteristici</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) Doar apariția la efort și cedarea în repaus</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Cel puțin 1 din cele 3 caracteristici</button>
+  <div class="quiz-explanation" id="q4-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — Angina tipică = durere retrosternală cu TOATE 3 caracteristicile: (1) constrictivă cu iradiere în brațe/maxilar/gât, (2) apare la efort, (3) cedează în repaus.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Cartea specifică 3 caracteristici, nu 4. Răspunsul la NTG nu e printre cele 3 criterii definitorii de angină tipică în ESMF.<br><strong>C)</strong> GREȘIT — 2 din 3 caracteristici = angină atipică (nu tipică).<br><strong>D)</strong> GREȘIT — Sunt doar 2 criterii din cele 3 — ar încadra pacientul ca angină atipică.<br><strong>E)</strong> GREȘIT — 1 sau 0 caracteristici = durere ne-anginoasă (nu tipică).</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="ghiduri-vs-carte" data-block-id="ghiduri-vs-carte">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Ghidurile actuale vs Esențialul în Medicina de Familie</h2>
+</div>
+
+<div class="text-block"><p>Conținutul cărții <em>Esențialul în Medicina de Familie</em> este concordant cu principiile fundamentale ale ghidurilor actuale. Ghidurile <strong><a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC Acute Coronary Syndromes 2023</a></strong> și <strong><a href="https://academic.oup.com/eurheartj/article/45/36/3415/7721608" class="md-link" target="_blank" rel="noopener noreferrer">ESC Chronic Coronary Syndromes 2024</a></strong> au adus totuși actualizări importante pe care un practician trebuie să le cunoască.</p>
+<p><strong>Pentru examen, rămâne valid conținutul din carte.</strong> Pentru practica clinică actuală, mai jos sunt evidențiate discrepanțele principale, cu linkuri către ghiduri.</p>
+<h3 class="md-subtitle" data-block-id="1-terminologie-sca-nste-acs-unificat">1. Terminologie SCA — NSTE-ACS unificat</h3>
+<p>Ghidul <a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC ACS 2023</a> tratează <strong>NSTEMI + angina instabilă</strong> împreună ca <strong>NSTE-ACS</strong>.</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_terminologie">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>3 entități:</strong> STEMI · NSTEMI · Angină instabilă</li><li>Angina instabilă = troponină normală + modificări ECG ischemice</li><li>Pentru examen: folosește 3 entități separate</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESC 2023</h4>
+    <ul><li><strong>2 entități:</strong> STEMI · NSTE-ACS (include NSTEMI + UA)</li><li>Angina instabilă rară în era hs-troponinei — reclasificată ca NSTEMI</li><li>Pentru practică: NSTE-ACS e termenul standard</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="2-algoritm-troponina-0-1h">2. Algoritm troponină 0/1h</h3>
+<p>Ghidul <a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC ACS 2023</a> (Section 4.2 — Diagnosis) validează algoritmul <strong>0/1h cu hs-troponină</strong> ca Clasa I pentru rule-in/rule-out rapid al NSTEMI.</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_troponina">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Troponină + CPK-MB</strong> la prezentare</li><li>CPK ca alternativă</li><li>Rezultat în ore</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESC 2023</h4>
+    <ul><li><strong>hs-troponină 0/1h</strong> algoritm Clasa I</li><li>CPK-MB obsolet în rutină</li><li>Rezultat în 1 oră</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="3-stratificarea-riscului-cu-heart-score">3. Stratificarea riscului cu HEART score</h3>
+<p>Cartea nu menționează un scor standardizat. Practica actuală în UPU europeană folosește frecvent <a href="https://www.mdcalc.com/calc/1752/heart-score-major-cardiac-events" class="md-link" target="_blank" rel="noopener noreferrer">HEART score</a> (History, ECG, Age, Risk factors, Troponin) ca suport decizional. Publicație originală: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3540826/" class="md-link" target="_blank" rel="noopener noreferrer">Backus et al. 2013 (free full-text PMC)</a>.</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_heart">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li>Evaluare clinică + ECG + troponină, decizie clinică</li><li>Fără scor cantitativ</li><li>Adecvat cabinetului MF</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">Practică UPU actuală</h4>
+    <ul><li><strong>HEART score</strong> (0-10) · ≤3 = risc scăzut · ≥7 = risc înalt</li><li>Scor reproductibil standardizat</li><li>Adecvat UPU</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="4-probabilitatea-pre-test-risk-factor-weighted-clinical-likelihood">4. Probabilitatea pre-test — Risk Factor-weighted Clinical Likelihood</h3>
+<p>Ghidul <a href="https://academic.oup.com/eurheartj/article/45/36/3415/7721608" class="md-link" target="_blank" rel="noopener noreferrer">ESC CCS 2024</a> recomandă <strong>RF-CL</strong> (Risk Factor-weighted Clinical Likelihood) care integrează simptome + vârstă + sex + factori de risc ponderați.</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_pretest">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>3 criterii clinice</strong> (tipică/atipică/non-anginoasă) + judecata clinică</li><li>Decizie: test efort / angio-CT</li><li>Didactic și simplu</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESC CCS 2024</h4>
+    <ul><li><strong>RF-CL</strong> — 3 criterii + vârstă + sex + 5 FR ponderați</li><li>RF-CL <5% → nu testa · 5-15% → angio-CT · 15-85% → test funcțional · >85% → coronarografie</li><li>Reduce testele inutile</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="5-brs-nou-aparut-criterii-sgarbossa-smith">5. BRS nou apărut — criterii Sgarbossa/Smith</h3>
+<p>Ghidul <a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC ACS 2023</a> nuanțează: BRS nou fără criterii <a href="https://www.mdcalc.com/calc/2059/sgarbossa-criteria-mi-left-bundle-branch-block" class="md-link" target="_blank" rel="noopener noreferrer">Sgarbossa/Smith-modified</a> NU se tratează automat ca STEMI.</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_brs">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>BRS nou = echivalent STEMI</strong> → reperfuzie imediată</li><li>Trimitere directă la cateterism</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESC 2023</h4>
+    <ul><li>BRS nou → aplică criterii Sgarbossa / Smith-modified</li><li>Sgarbossa pozitive → cateterism · Negative → monitorizare + troponină dinamic</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="6-oxigen-si-morfina">6. Oxigen și morfină</h3>
+<p>Ghidul <a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC ACS 2023</a> (Section 5 — Pharmacological therapy) recomandă:</p></div>
+
+<div class="comparison-grid" data-block-id="durerea_toracica_v2_comparison_oxigen_morfina">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">Practică clasică</h4>
+    <ul><li>Oxigen rutinier la toți</li><li>Morfină ca rutină pentru durere</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESC 2023</h4>
+    <ul><li>Oxigen <strong>doar dacă SaO₂ <90%</strong> (hiperoxia e nocivă)</li><li>Morfină <strong>doar la durere refractară la NTG</strong> (întârzie P2Y12)</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="sinteza">Sinteză</h3>
+<p>Cartea <strong>rămâne</strong> un instrument didactic valid și concordant cu principiile fundamentale ale ghidurilor actuale. Diferențele țin de:</p>
+<ul><li>terminologie (NSTE-ACS unificat),</li><li>instrumente cantitative (hs-troponină 0/1h, HEART, RF-CL),</li><li>ajustări fine (oxigen restrictiv, morfină restrictivă, BRS nuanțat).</li></ul>
+<p><strong>Referințe complete:</strong></p>
+<ul><li><a href="https://academic.oup.com/eurheartj/article/44/38/3720/7243210" class="md-link" target="_blank" rel="noopener noreferrer">ESC Guidelines for Acute Coronary Syndromes 2023 (Byrne et al., European Heart Journal)</a></li><li><a href="https://academic.oup.com/eurheartj/article/45/36/3415/7721608" class="md-link" target="_blank" rel="noopener noreferrer">ESC Guidelines for Chronic Coronary Syndromes 2024 (Vrints et al., European Heart Journal)</a></li><li><a href="https://www.mdcalc.com/calc/1752/heart-score-major-cardiac-events" class="md-link" target="_blank" rel="noopener noreferrer">HEART score calculator — MDCalc</a></li><li><a href="https://www.mdcalc.com/calc/2059/sgarbossa-criteria-mi-left-bundle-branch-block" class="md-link" target="_blank" rel="noopener noreferrer">Sgarbossa criteria calculator — MDCalc</a></li><li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3540826/" class="md-link" target="_blank" rel="noopener noreferrer">HEART score original publication — Backus 2013, free PMC</a></li></ul></div>
+
+<div class="divider"></div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_5urgente" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 5 cauze amenințătoare de viață ale durerii toracice (pasul 1)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>(1) Sindroamele coronariene acute · (2) Disecția de aortă · (3) Tromboembolismul pulmonar · (4) Pneumotoraxul în tensiune · (5) Ruptura de esofag.</strong></p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_angina_tipica" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 3 caracteristici ale anginei tipice (cap. 4.1.2.3)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>(1) Natură constrictivă, retrosternală, cu iradiere în brațe, maxilar sau gât; (2) Apare la efort; (3) Cedează în repaus.</strong> 3/3 = tipică · 2/3 = atipică · 0-1/3 = non-anginoasă.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_ecg_stemi" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Cum diferențiezi „sad face" (STEMI) de „happy face" (pericardită) pe ECG?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>STEMI</strong> = supradenivelare ST tipică în 2 derivații alăturate + subdenivelare ST în oglindă. <strong>Pericardită</strong> = supradenivelare difuză concordantă cu unda T + subdenivelare PR.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_s1q3t3" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce sugerează aspectul S1Q3T3 pe ECG?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Tromboembolism pulmonar.</strong> Componente: undă S în D1, undă Q în D3, inversarea undei T în D3. Puțin sensibil — absența NU exclude TEP.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_rx_semne" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q"><strong>Mediastin lărgit</strong> → disecție aortă · <strong>Umbră cardiacă lărgită</strong> → colecție pericardică · <strong>Semnul Hampton</strong> → TEP · <strong>Condensare</strong> → pneumonie bacteriană · <strong>Aer apical cu dispariția desenului bronho-vascular</strong> → pneumotorax.</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Mediastin lărgit</strong> → disecție aortă · <strong>Umbră cardiacă lărgită</strong> → colecție pericardică · <strong>Semnul Hampton</strong> → TEP · <strong>Condensare</strong> → pneumonie bacteriană · <strong>Aer apical cu dispariția desenului bronho-vascular</strong> → pneumotorax.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="durerea_toracica_v2_flashcard_evaluare_5pasi" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cei 5 pași ai evaluării clinice a anginei stabile cu debut recent (cap. 4.1.2.3)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>(1) ECG de repaus · (2) Tratamentul factorilor de risc CV · (3) Diagnostice alternative · (4) Excluderea cauzelor ne-coronariene de angină · (5) Reevaluarea testelor de sânge.</strong></p></div>
+  </div>
+</div></div></div>
+
+<div class="divider"></div>
+
+<div class="case-box" data-block-id="durerea_toracica_v2_caz">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 4 Etape</div>
+    <h4>Pacient cu durere toracică tipică</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Bărbat 62 ani, fumător, HTA cu tratament inconstant, diabet zaharat tip 2. Se prezintă la cabinetul MF pentru durere toracică retrosternală, debutată în urmă cu ~40 min, persistentă, cu iradiere în brațul stâng și mandibulă, asociată cu transpirații și greață.</p>
+<p>Examen fizic: TA 165/95 (simetric ambele brațe), puls 88, SaO₂ 95%, murmur vezicular prezent bilateral, zgomote cardiace ritmice fără sufluri.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Clasificarea durerii</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Conform cap. 4.1.2.3, durerea prezintă iradiere în brațul stâng și mandibulă (caracteristica 1), a debutat la efort (urcat scări — caracteristica 2), dar persistă în repaus (caracteristica 3 — „cedează în repaus" — absentă). Câte caracteristici de angină tipică prezintă pacientul?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Nu se poate clasifica fără ECG</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">B) 3 din 3 — angină tipică</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">C) 2 din 3 — angină atipică</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) 1 din 3 — durere ne-anginoasă</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) 0 din 3 — durere non-anginoasă pură</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Prezintă 2 din 3 caracteristici (constrictivă cu iradiere + apariție la efort). Lipsește „cedează în repaus" — persistă peste 40 min. 2/3 = angină atipică.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Clasificarea în 3/2/1 se face clinic, independent de ECG.<br><strong>B)</strong> GREȘIT — a 3-a caracteristică („cedează în repaus") nu e îndeplinită — durerea persistă.<br><strong>D)</strong> GREȘIT — are 2 caracteristici (iradiere constrictivă + apariție la efort), nu doar una.<br><strong>E)</strong> GREȘIT — are cel puțin 2 caracteristici prezente.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Triajul imediat</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Conform cap. 4.1.2.2, pacientul prezintă durere în momentul examinării (elementul 1 al anamnezei — risc crescut) + factori de risc multipli pentru boală coronariană (element 7) + alte simptome (transpirații, element 8). Care este primul gest obligatoriu?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Trimitere la ecografie cardiacă ambulatorie</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">B) Paracetamol oral pentru durere</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">C) Reevaluare peste 24h la cabinet</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Test de efort la cardiolog programat</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">E) ECG în momentul prezentării</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era E).</div><div class="case-exp-detail"><strong>E)</strong> CORECT — ECG este obligatoriu în durerea toracică (cap. 4.1.2.2) și trebuie comparat cu ECG-uri anterioare. E prima investigație care orientează diagnosticul.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Ecografia cardiacă ambulatorie întârzie diagnosticul unui STEMI posibil.<br><strong>B)</strong> GREȘIT — Paracetamolul nu tratează ischemia miocardică.<br><strong>C)</strong> GREȘIT — Întârzierea evaluării unei dureri toracice persistente la un pacient cu factori de risc = eroare majoră.<br><strong>D)</strong> GREȘIT — Test de efort programat e util pentru angina stabilă, nu pentru DT acută cu factori de risc multipli.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">ECG</div>
+  <p>ECG-ul arată <strong>supradenivelare ST 3 mm în D II, D III, aVF</strong>, cu <strong>subdenivelare ST în oglindă</strong> în D I și aVL.</p>
+<div style="text-align:center;margin:14px 0"><img src="images/img1_ecg_comparativ.jpg" alt="ECG STEMI inferior cu modificare în oglindă" style="max-width:60%;border-radius:8px;cursor:pointer" onclick="openLightbox(this.src,'ECG STEMI inferior cu modificare în oglindă')"><div style="font-size:0.82rem;color:#8b949e;margin-top:6px">ECG STEMI inferior cu modificare în oglindă</div></div>
+  <div style="margin-top:14px">
+  <div class="q-text"> Conform cap. 4.1.2.2, acest aspect sugerează:</div>
+  <button class="quiz-option" onclick="ansCase(3,this,false)">A) Tromboembolism pulmonar (aspect S1Q3T3)</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">B) Pericardită acută („happy face")</button>
+<button class="quiz-option" onclick="ansCase(3,this,true)">C) STEMI (supradenivelare tipică „sad face" în 2 derivații alăturate + subdenivelare în oglindă)</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">D) NSTEMI (subdenivelare ST orizontală sau descendentă)</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) BRS nou apărut</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Supradenivelare ST tipică în derivații alăturate (D II, D III, aVF — teritoriul inferior) + subdenivelare ST în oglindă (D I, aVL) = STEMI conform cap. 4.1.2.2 („sad face").</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — TEP dă aspectul S1Q3T3 (S în D1, Q în D3, T inversat în D3), nu supradenivelare localizată.<br><strong>B)</strong> GREȘIT — Pericardita dă supradenivelare <strong>difuză</strong> concordantă cu unda T + subdenivelare PR. Aici avem supradenivelare localizată teritorial (inferior).<br><strong>D)</strong> GREȘIT — NSTEMI e definit prin subdenivelare ST orizontală/descendentă — nu supradenivelare.<br><strong>E)</strong> GREȘIT — BRS e modificare de morfologie QRS, nu supradenivelare ST.</div>
+    <button class="case-btn" onclick="showCaseStep(4)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep4">
+  <div class="step-label">Management</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Conform cap. 4.1.2.3, pentru pacient cu DT tipică pentru IMA și modificări ECG de STEMI, planul este:</div>
+  <button class="quiz-option" onclick="ansCase(4,this,false)">A) Administrarea trombolizei în cabinet</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">B) Trimitere la cabinet cardiologic ambulator programat</button>
+<button class="quiz-option" onclick="ansCase(4,this,true)">C) Îndrumare imediată cu ambulanță dotată corespunzător către cea mai apropiată UPU cu clinică de cardiologie</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">D) Internare în secția de medicină internă a celui mai apropiat spital (fără specificarea cardiologiei)</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">E) Tratament ambulator cu aspirină și NTG, reevaluare peste 7 zile</button>
+
+  <div class="quiz-explanation" id="caseQ4-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Cap. 4.1.2.3: „planul este urgent, fiind imediat îndrumați, de preferat cu o ambulanță dotată corespunzător, către cea mai apropiată unitate de primiri urgențe cu o clinică de cardiologie apropiată."</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Tromboliza nu e menționată în cartea ESMF ca intervenție la nivelul cabinetului MF.<br><strong>B)</strong> GREȘIT — Trimiterea programată e pentru angina stabilă, nu pentru STEMI acut.<br><strong>D)</strong> GREȘIT — Cartea specifică UPU <strong>cu clinică de cardiologie</strong>, nu medicină internă generică.<br><strong>E)</strong> GREȘIT — STEMI NU se tratează ambulator.</div>
+    <button class="case-btn" onclick="showCaseStep(5)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep5">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic final:</strong> STEMI inferior (supradenivelare ST în D II, D III, aVF + subdenivelare în oglindă), pacient cu multipli factori de risc CV (fumător, HTA, DZ tip 2).</p>
+<p><strong>Lecții cheie din ESMF:</strong></p>
+<ul><li>Angina <strong>atipică</strong> = 2 din 3 caracteristici (cap. 4.1.2.3).</li><li><strong>ECG obligatoriu</strong> în orice durere toracică + comparație cu trasee anterioare (cap. 4.1.2.2).</li><li>STEMI = <strong>supradenivelare ST tipică</strong> în 2 derivații alăturate + <strong>subdenivelare în oglindă</strong> (cap. 4.1.2.2).</li><li>Plan pentru DT tipică pentru IMA = <strong>ambulanță la cea mai apropiată UPU cu clinică de cardiologie</strong> (cap. 4.1.2.3).</li></ul>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/4</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · Durerea toracică — v2 (ESMF strict)</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="alg-ks-container" id="algKsContainer"></div>
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"etiologie": {"titlu": "Cauzele DT", "continut": "4 pași ierarhici · Pas 1 — 5 cauze amenințătoare de viață · Pas 2 — 3 cronice severe · Pas 3 — 4 acute tratabile · Pas 4 — GI/musculo-scheletale", "referinta": "", "pmid": "", "url": "", "hint": "Abordarea pe organ (Tabelul 4.1.2.1) e complementară celei în 4 pași — folosește ambele perspective.", "mnemonic": "<strong>5 URGENȚE</strong> · <strong>S</strong>indroame coronariene acute · <strong>D</strong>isecție de aortă · <strong>T</strong>EP · <strong>P</strong>neumotorax în tensiune · <strong>R</strong>uptură de esofag", "fiziopatologie": "Orice țesut toracic (miocard, pericard, pleură, esofag, mușchi, nervi, coaste) poate fi sursă. Inervația comună T1-T5 explică <em>durerea iradiată</em>.", "stiati_ca": "Cele 4 trepte sunt ierarhice — NU sari pașii. Ordinea reflectă urgența descrescătoare: dacă pasul 1 e exclus, treci la 2, apoi 3, apoi 4."}, "diagnostic-clinic": {"titlu": "Triaj DT", "continut": "Anamneză țintită (9 elemente) · Examen fizic orientat (CV + respirator) · Compară cu ECG anterior · Rx torace + labs unde e posibil", "referinta": "", "pmid": "", "url": "", "hint": "Reproducerea durerii la presiune = rar este durere toracică (Tabel 4.1.2.2).", "mnemonic": "<strong>O.L.I.D.S.</strong> · <strong>O</strong>nset — debut brusc/insidios · <strong>L</strong>ocalizare — retrosternal, epigastric, lateral · <strong>I</strong>radiere — braț, mandibulă · <strong>D</strong>urată și caracter · <strong>S</strong>everitate + modulatori", "fiziopatologie": "Aferențele viscerale cardiace intră prin T1-T5 — aceleași rădăcini care primesc aferențe somatice de la piele torace anterior, braț stâng, gât, mandibulă. Creierul nu discriminează originea → <em>convergență viscero-somatică</em>.", "stiati_ca": "Prezența durerii în momentul examinării identifică pacienții cu risc crescut — primul element al anamnezei nu e întâmplător pe lista din carte."}, "diagnostic-paraclinic": {"titlu": "Paraclinic DT", "continut": "ECG obligatoriu (comparație cu anterior) · Rx torace complementar · Biologic (HLG, glicemie, fibrinogen, VSH, lipide, troponină, CPK, SaO₂) · ECG efort, eco cardiac, cateterism", "referinta": "", "pmid": "", "url": "", "hint": "Radiografia nu înlocuiește ECG-ul și nici nu-l precede — e complementară.", "mnemonic": "<strong>ECG — STEMI sau pericardită?</strong> · <strong>S</strong>ad face = ST local + oglindă (STEMI) · <strong>H</strong>appy face = ST difuz + PR subdenivelat (pericardită) · <strong>S</strong>1Q3T3 = TEP", "fiziopatologie": "Supradenivelarea ST în aVR sugerează leziune de trunchi coronarian stâng sau boală tricoronariană. BRS nou = echivalent STEMI în context de DT.", "stiati_ca": "Subdenivelarea ST orizontală sau descendentă = sugestivă pentru ischemie miocardică (NSTEMI). Aspectul S1Q3T3 e puțin sensibil dar când apare sugerează TEP."}, "diagnostic-diferential": {"titlu": "DDx DT", "continut": "Angină tipică (3/3) vs atipică (2/3) vs non-anginoasă (0-1/3) · Intensitate mare persistentă vs mică intermitentă · DDx pe organ (Tabel 4.1.2.1)", "referinta": "", "pmid": "", "url": "", "hint": "Durerea non-anginoasă NU înseamnă absența bolii — înseamnă probabilitate pre-test scăzută, care nu exclude investigarea dacă context clinic o impune.", "mnemonic": "", "fiziopatologie": "Angina tipică reflectă ischemie miocardică reproductibilă la efort. Atipică = prezentare incompletă (ex: fără iradiere, fără răspuns la NTG). Non-anginoasă = probabilitate scăzută de boală coronariană.", "stiati_ca": "Clasificarea în 3 tipuri (tipică/atipică/non-anginoasă) e baza pentru evaluarea probabilității de boală coronariană la pacientul cu debut recent."}, "management": {"titlu": "Management DT coronariană", "continut": "STEMI/NSTEMI/angină instabilă → ambulanță la UPU cu cardiologie · Angină stabilă cu debut recent → evaluare probabilitate + factori de risc · Plan angină stabilă = cap. 4.3.3", "referinta": "", "pmid": "", "url": "", "hint": "Planul complet pentru pacienții cu angină stabilă e în cap. 4.3.3 (angina cronică).", "mnemonic": "<strong>5 pași evaluare</strong> · <strong>E</strong>CG de repaus · <strong>T</strong>ratament FR CV · <strong>D</strong>iagnostice alternative · <strong>E</strong>xcludere cauze ne-coronariene · <strong>R</strong>eevaluare teste sânge", "fiziopatologie": "În STEMI ocluzia trombotică totală a unei coronare → necroză transmurală. NSTEMI = subdenivelare ST orizontală/descendentă. Angina instabilă = durere la repaus fără necroză.", "stiati_ca": "Cauzele ne-coronariene de angină menționate în carte sunt stenoza aortică severă și cardiomiopatia hipertrofică — ambele cu auscultație cardiacă patognomonică."}, "ghiduri-vs-carte": {"titlu": "Actualizări post-ESMF", "continut": "Cartea e concordantă pe principii · Diferențele țin de terminologie (NSTE-ACS), instrumente cantitative (hs-troponină, HEART, RF-CL), ajustări fine (oxigen, morfină, BRS)", "referinta": "ESC Guidelines for Acute Coronary Syndromes (2023) · ESC Guidelines for Chronic Coronary Syndromes (2024)", "pmid": "", "url": "https://academic.oup.com/eurheartj/article/44/38/3720/7243210", "hint": "Principiile fundamentale (4 pași, 5 urgențe, ECG, Rx) sunt IDENTICE cu ghidurile actuale.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Auto-open knowledge sidebar on desktop
+if(window.innerWidth>1360){var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');if(ks){ks.classList.add('open');if(cw)cw.style.marginRight='320px'}}
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Generic Clinical Calculator Engine
+var calcState={};
+function calcSet(uid,key,val,btn){
+  if(!calcState[uid])calcState[uid]={};
+  calcState[uid][key]=val;
+  btn.parentElement.querySelectorAll('button').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  calcRun(uid);
+}
+function calcRun(uid){
+  var el=document.getElementById(uid);if(!el)return;
+  var cfg;try{cfg=JSON.parse(el.dataset.calcConfig)}catch(e){return}
+  var state=calcState[uid]||{};
+  // Check all params filled
+  var allFilled=cfg.params.every(function(p){return state[p]!==undefined&&state[p]!==null});
+  if(!allFilled)return;
+  // Calculate score
+  var score=0;
+  var scoring=cfg.scoring;
+  if(scoring.rules==='use_option_values'){
+    cfg.params.forEach(function(p){var v=state[p];if(v!==undefined)score+=parseInt(v)||0});
+  }else{
+    scoring.rules.forEach(function(r){
+      var v=state[r.param];
+      if(v===r.value||(r.value===true&&v===true)||(r.value===false&&v===false)||String(v)===String(r.value)){
+        score+=r.points;
+      }
+    });
+  }
+  if(scoring.min_score!==undefined&&score<scoring.min_score)score=scoring.min_score;
+  // Interpret
+  var risk='',action='',cls='low';
+  cfg.interpretation.forEach(function(i){
+    if(score>=i.range[0]&&score<=i.range[1]){risk=i.risk;action=i.action;cls=i['class']||'low'}
+  });
+  var resEl=document.getElementById(uid+'_result');if(resEl)resEl.style.display='block';
+  var sEl=document.getElementById(uid+'_score');if(sEl)sEl.textContent=score;
+  var rEl=document.getElementById(uid+'_risk');if(rEl)rEl.textContent=risk;
+  var aEl=document.getElementById(uid+'_action');if(aEl){aEl.textContent=action;aEl.className='score-action risk-'+cls}
+}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style=\"color:var(--green)\">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  function mdi(s){return s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^\*])\*([^\*\n]+?)\*(?!\*)/g,'$1<em>$2</em>')}
+  let html='<div class="ks-title">'+mdi(data.titlu)+'</div>';
+  html+='<div id="ksSrcSlot"></div>';
+  if(data.continut){
+    var items=data.continut.split('·').map(function(s){return s.trim()}).filter(function(s){return s.length>0});
+    var listHtml=items.map(function(it){return '<li>'+mdi(it)+'</li>'}).join('');
+    var lbl='Rezumat'+(data.titlu?' · '+data.titlu:'');
+    html+='<div class="ks-card"><div class="ks-label">'+lbl+'</div><ul class="ks-list">'+listHtml+'</ul></div>';
+  }
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+mdi(data.fiziopatologie)+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+mdi(data.stiati_ca)+'</div>'}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+mdi(data.hint)+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease';
+  updateSourcesCard(sectionId)
+}
+
+function srcItemHtml(s){
+  var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+  var h='<div class="ks-src-item"><div class="ks-src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="ks-src-item-meta">';
+  if(s.pmid)h+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank" onclick="event.stopPropagation()">PubMed</a>';
+  else if(s.url)h+='<a href="'+s.url+'" target="_blank" onclick="event.stopPropagation()">Link</a>';
+  if(s.nbk_id)h+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank" onclick="event.stopPropagation()">NCBI Books</a>';
+  h+='</div></div>';return h
+}
+function buildSourcesHtml(bid){
+  if(!window.sourcesData||!window.sourcesData[bid]||!window.sourcesData[bid].sources||!window.sourcesData[bid].sources.length)return'';
+  var ss=window.sourcesData[bid].sources;
+  var h='<div class="ks-sources"><div class="ks-src-title-static">&#x1F4DA; Citeste mai mult</div>';
+  h+=srcItemHtml(ss[0]);
+  if(ss.length>1){
+    var uid='kssrc_'+bid.replace(/[^a-z0-9]/g,'_');
+    h+='<button class="src-more-toggle" onclick="event.stopPropagation();var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(ss.length-1)+' resurse</button>';
+    h+='<div class="src-more-items" id="'+uid+'">';
+    for(var j=1;j<ss.length;j++)h+=srcItemHtml(ss[j]);
+    h+='</div>';
+  }
+  h+='</div>';return h
+}
+
+function updateSourcesCard(bid){
+  var slot=document.getElementById('ksSrcSlot');
+  if(!slot)return;
+  slot.innerHTML=buildSourcesHtml(bid)
+}
+
+// Mobile: track h3 headings for sources in sidebar
+var isMobile=window.innerWidth<=768;
+if(isMobile&&window.sourcesData){
+  var h3els=Array.from(document.querySelectorAll('h3.md-subtitle[data-block-id]'));
+  var curH3='';
+  window.addEventListener('scroll',function(){
+    var cur='';
+    for(var i=0;i<h3els.length;i++){if(window.scrollY>=h3els[i].offsetTop-120)cur=h3els[i].getAttribute('data-block-id')}
+    if(cur&&cur!==curH3){curH3=cur;updateSourcesCard(cur)}
+  })
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(window.innerWidth<=1360&&ks&&ks.classList.contains('open')&&!ks.contains(e.target)){ks.classList.remove('open')}}})
+
+// Algoritm Clinic — SVG connectors
+function drawAlgConnectors(){
+  document.querySelectorAll('.alg-grid').forEach(function(grid){
+    var ed=grid.dataset.edges;if(!ed)return;
+    var edges;try{edges=JSON.parse(ed)}catch(ex){return}
+    var canvas=grid.parentElement;
+    var svg=canvas.querySelector('.alg-svg');if(!svg)return;
+    var w=canvas.scrollWidth,h=canvas.scrollHeight;
+    svg.setAttribute('width',w);svg.setAttribute('height',h);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.innerHTML='<defs><marker id="algArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(0,191,165,0.5)"/></marker></defs>';
+    var cRect=canvas.getBoundingClientRect();
+    // Count edges per source node for label staggering
+    var edgesPerSource={};edges.forEach(function(e){edgesPerSource[e.from]=(edgesPerSource[e.from]||0)+1});
+    var edgeSourceIdx={};
+    edges.forEach(function(e){
+      var fromEl=grid.querySelector('[data-id="'+e.from+'"]');
+      var toEl=grid.querySelector('[data-id="'+e.to+'"]');
+      if(!fromEl||!toEl)return;
+      var fR=fromEl.getBoundingClientRect();
+      var tR=toEl.getBoundingClientRect();
+      var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var d='';
+      var sameRow=Math.abs(fR.top-tR.top)<10;
+      if(sameRow){
+        var sx,sy,ex,ey;
+        if(fR.left<tR.left){sx=fR.right-cRect.left;ex=tR.left-cRect.left}
+        else{sx=fR.left-cRect.left;ex=tR.right-cRect.left}
+        sy=fR.top+fR.height/2-cRect.top;ey=tR.top+tR.height/2-cRect.top;
+        d='M'+sx+','+sy+'L'+ex+','+ey;
+      }else{
+        var x1=fR.left+fR.width/2-cRect.left,y1=fR.bottom-cRect.top;
+        var x2=tR.left+tR.width/2-cRect.left,y2=tR.top-cRect.top;
+        if(Math.abs(x1-x2)<3){d='M'+x1+','+y1+'L'+x2+','+y2}
+        else{
+          // Find max bottom of all nodes on the source row to avoid overlap
+          var fRow=fromEl.style.gridRow||'1';
+          var maxBottom=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){
+            var nRow=n.style.gridRow||'1';
+            if(nRow===fRow){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBottom)maxBottom=nb}
+          });
+          var dropY=maxBottom+14;
+          d='M'+x1+','+y1+'L'+x1+','+dropY+'L'+x2+','+dropY+'L'+x2+','+y2
+        }
+      }
+      path.setAttribute('d',d);path.setAttribute('stroke','rgba(0,191,165,0.4)');
+      path.setAttribute('stroke-width','2');path.setAttribute('fill','none');
+      path.setAttribute('marker-end','url(#algArr)');svg.appendChild(path);
+      if(e.label){
+        // Track stagger index for this source node
+        if(!edgeSourceIdx[e.from])edgeSourceIdx[e.from]=0;
+        var stIdx=edgeSourceIdx[e.from]++;
+        var totalFromSource=edgesPerSource[e.from]||1;
+        var lx,ly;
+        if(sameRow){var sx2=fR.left<tR.left?fR.right-cRect.left:fR.left-cRect.left;var ex2=fR.left<tR.left?tR.left-cRect.left:tR.right-cRect.left;lx=(sx2+ex2)/2;ly=Math.min(fR.top,tR.top)+Math.min(fR.height,tR.height)/2-cRect.top-14}
+        else{var x1b=fR.left+fR.width/2-cRect.left,x2b=tR.left+tR.width/2-cRect.left;if(Math.abs(x1b-x2b)<3){lx=x1b+10;ly=(fR.bottom-cRect.top+tR.top-cRect.top)/2}else{
+          var fRow2=fromEl.style.gridRow||'1';var maxBot2=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){var nR=n.style.gridRow||'1';if(nR===fRow2){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBot2)maxBot2=nb}});
+          lx=(x1b+x2b)/2;ly=maxBot2+12}}
+        // Place label near target node (above it) when fan-out is wide
+        if(totalFromSource>=4){lx=tR.left+tR.width/2-cRect.left;ly=tR.top-cRect.top-14}
+        var bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        var tw=e.label.length*7+10;
+        bg.setAttribute('x',lx-tw/2);bg.setAttribute('y',ly-10);bg.setAttribute('width',tw);bg.setAttribute('height',18);
+        bg.setAttribute('rx','4');bg.setAttribute('fill','#1c2333');bg.setAttribute('stroke','rgba(255,255,255,0.08)');bg.setAttribute('stroke-width','1');
+        svg.appendChild(bg);
+        var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x',lx);txt.setAttribute('y',ly+3);txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');txt.setAttribute('fill','#9ca3af');
+        txt.setAttribute('font-family','Space Grotesk,sans-serif');txt.textContent=e.label;svg.appendChild(txt);
+      }
+    });
+  });
+}
+// Draw connectors after layout is stable
+requestAnimationFrame(function(){setTimeout(drawAlgConnectors,200)});
+window.addEventListener('resize',function(){setTimeout(drawAlgConnectors,100)});
+
+// Algoritm Clinic — click to push detail to knowledge sidebar
+document.addEventListener('click',function(e){
+  var node=e.target.closest('.alg-node.has-detail');
+  if(!node)return;
+  var detailEl=node.querySelector('.alg-detail');
+  if(!detailEl)return;
+  var container=document.getElementById('algKsContainer');
+  var ksSidebar=document.querySelector('.knowledge-sidebar');
+  if(!container||!ksSidebar)return;
+  var labelEl=node.querySelector('.alg-node-label');
+  var fullLabel=labelEl?labelEl.textContent:'';
+  var shortTitle=fullLabel.length>30?fullLabel.substring(0,30)+'\u2026':fullLabel;
+  var nodeId=node.dataset.id;
+  // Check if card already exists
+  var existing=container.querySelector('[data-node="'+nodeId+'"]');
+  if(existing){existing.style.animation='none';existing.offsetHeight;existing.style.animation='algKsFlash .4s ease';existing.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  // Determine color from node type
+  var tc='var(--teal)';
+  if(node.classList.contains('alg-start'))tc='var(--green)';
+  else if(node.classList.contains('alg-decizie'))tc='var(--amber)';
+  else if(node.classList.contains('alg-actiune'))tc='var(--blue)';
+  else if(node.classList.contains('alg-alerta'))tc='var(--coral)';
+  // Brief highlight on node
+  node.style.boxShadow='0 0 0 3px '+tc;setTimeout(function(){node.style.boxShadow=''},600);
+  // Build card
+  var card=document.createElement('div');card.className='alg-ks-card';card.dataset.node=nodeId;card.style.borderLeftColor=tc;
+  card.innerHTML='<button class="alg-ks-close" title="\xd7">\xd7</button><div class="alg-ks-title" style="color:'+tc+'">'+shortTitle+'</div><div class="alg-ks-content">'+detailEl.innerHTML+'</div>';
+  card.querySelector('.alg-ks-close').addEventListener('click',function(ev){ev.stopPropagation();card.style.animation='algKsOut .2s ease forwards';setTimeout(function(){card.remove()},200)});
+  container.appendChild(card);
+  // Open sidebar if closed
+  if(!ksSidebar.classList.contains('open')){ksSidebar.classList.add('open');var cw=document.querySelector('.content-wrapper');if(cw&&window.innerWidth>1360)cw.style.marginRight='320px'}
+  setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
+});
+
+// Source Provenance — attach buttons from embedded sourcesData
+(function(){
+  var blocks=document.querySelectorAll('[data-block-id]');
+  if(!blocks.length)return;
+  var data=window.sourcesData;
+  if(!data)return;
+  blocks.forEach(function(el){
+    var bid=el.getAttribute('data-block-id');if(!bid)return;
+    var btn=document.createElement('button');btn.className='src-btn';btn.title='Citeste mai mult';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="3"/><path d="M6.5 20c-.3 0-.5-.2-.5-.5v-7c0-1.7 1.3-3 3-3h6c1.7 0 3 1.3 3 3v7c0 .3-.2.5-.5.5-.3 0-.5-.2-.5-.5v-5.5L12 16l-5-3.5v7c0 .3-.2.5-.5.5z"/></svg>';
+    var popup=document.createElement('div');popup.className='src-popup';
+    var blockData=data[bid];
+    if(blockData&&blockData.sources&&blockData.sources.length){
+      var srcs=blockData.sources;
+      function srcHtml(s){
+        var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+        var r='<div class="src-item"><div class="src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="src-item-meta">';
+        if(s.pmid)r+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank">PubMed</a>';
+        else if(s.url)r+='<a href="'+s.url+'" target="_blank">Link</a>';
+        if(s.nbk_id)r+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank">NCBI Books</a>';
+        r+='</div></div>';return r;
+      }
+      var h='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div>';
+      h+=srcHtml(srcs[0]);
+      if(srcs.length>1){
+        var uid='src_more_'+bid.replace(/[^a-z0-9]/g,'_');
+        h+='<button class="src-more-toggle" onclick="var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(srcs.length-1)+' resurse</button>';
+        h+='<div class="src-more-items" id="'+uid+'">';
+        for(var j=1;j<srcs.length;j++)h+=srcHtml(srcs[j]);
+        h+='</div>';
+      }
+      popup.innerHTML=h;
+    }else{
+      popup.innerHTML='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div><div class="src-none">Nicio resursa gasita pentru aceasta sectiune.</div>';
+    }
+    el.appendChild(btn);el.appendChild(popup);
+    btn.addEventListener('click',function(ev){
+      ev.stopPropagation();
+      document.querySelectorAll('.src-popup.show').forEach(function(p){if(p!==popup)p.classList.remove('show')});
+      popup.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click',function(ev){if(!ev.target.closest('.src-popup')&&!ev.target.closest('.src-btn')){document.querySelectorAll('.src-popup.show').forEach(function(p){p.classList.remove('show')})}});
+})();
+
+</script>
+</body>
+</html>

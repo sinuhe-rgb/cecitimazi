@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boala diareică acută la copil — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:block;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw;padding-top:52px}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:-340px;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary);transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 14px 10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.5}
+.ks-card strong{color:var(--text-primary)}
+.ks-card em{color:var(--text-primary);font-style:italic}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;line-height:1.35}
+.ks-list{list-style:none;padding:0;margin:0}
+.ks-list li{position:relative;padding:2px 0 2px 12px;font-size:12px;line-height:1.45}
+.ks-list li:before{content:"·";position:absolute;left:2px;color:var(--teal);font-weight:700}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.src-btn{position:absolute;top:6px;right:6px;background:var(--bg-primary);border:1px solid rgba(77,199,191,0.2);color:var(--teal);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,transform .2s;z-index:10;padding:0;line-height:1}
+[data-block-id]{position:relative}[data-block-id]:hover .src-btn{opacity:.6}.src-btn:hover{opacity:1!important;transform:scale(1.1);border-color:var(--teal)}
+@media(max-width:768px){.src-btn{display:none!important}}
+.ks-sources{background:var(--bg-card);border:1px solid rgba(77,199,191,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px}
+.ks-sources .ks-src-title-static{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.ks-sources .ks-src-item{padding:6px 0;border-bottom:1px solid var(--border)}.ks-sources .ks-src-item:last-child{border-bottom:none}
+.ks-sources .ks-src-item-title{color:var(--text-primary);font-weight:500;font-size:11.5px;margin-bottom:2px}
+.ks-sources .ks-src-item-meta{color:var(--text-muted);font-size:10.5px}
+.ks-sources .ks-src-item-meta a{color:var(--blue);text-decoration:none}
+.ks-sources .ks-src-item-meta a:hover{text-decoration:underline}
+.src-popup{display:none;position:absolute;top:36px;right:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:14px;min-width:280px;max-width:360px;z-index:20;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-size:12px;max-height:320px;overflow-y:auto}
+.src-popup.show{display:block;animation:fadeIn .2s ease}
+.src-popup-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.src-item{padding:8px 0;border-bottom:1px solid var(--border)}.src-item:last-child{border-bottom:none}
+.src-item-title{color:var(--text-primary);font-weight:500;font-size:12px;margin-bottom:3px}
+.src-item-meta{color:var(--text-muted);font-size:11px}.src-item-meta a{color:var(--blue);text-decoration:none}.src-item-meta a:hover{text-decoration:underline}
+.src-tag-free{display:inline-block;background:rgba(76,175,80,0.15);color:var(--green);padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:4px;letter-spacing:.5px;vertical-align:middle}
+.src-none{color:var(--text-muted);font-style:italic;font-size:11px}
+.src-more-toggle{display:flex;align-items:center;gap:4px;color:var(--text-muted);font-size:11px;cursor:pointer;padding:6px 0;border:none;background:none;width:100%}
+.src-more-toggle:hover{color:var(--teal)}
+.src-more-toggle svg{transition:transform .2s}
+.src-more-toggle.open svg{transform:rotate(180deg)}
+.src-more-items{display:none}.src-more-items.open{display:block}
+@media(max-width:1360px){.content-wrapper{margin-right:0;max-width:780px}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.md-link{color:var(--teal);text-decoration:underline;text-decoration-color:rgba(0,191,165,0.35);text-decoration-thickness:1px;text-underline-offset:2px;transition:text-decoration-color 0.15s ease,color 0.15s ease}
+.md-link:visited{color:var(--teal)}
+.md-link:hover{color:var(--teal);text-decoration-color:var(--teal);text-decoration-thickness:2px}
+.md-link::after{content:' ↗';font-size:0.82em;opacity:0.55;margin-left:1px}
+.list-component{margin:18px 0;padding:16px 18px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px}
+.list-component .list-titlu{font-size:13px;font-weight:600;color:var(--teal);margin-bottom:12px;letter-spacing:0.3px}
+.list-component .list-body{list-style:none;padding:0;margin:0;counter-reset:none}
+.list-component .list-item{display:flex;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.list-component .list-item:last-child{border-bottom:none}
+.list-component .list-content{flex:1;color:var(--text);line-height:1.55;font-size:14.5px}
+.list-component .list-content strong{color:var(--text);font-weight:600}
+.list-component .list-badge{flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,191,165,0.12);color:var(--teal);font-weight:700;font-size:12px;font-family:var(--mono,monospace);margin-top:1px;border:1px solid var(--teal-border)}
+.list-component .list-badge.list-check{background:rgba(76,175,80,0.12);color:var(--green);border-color:rgba(76,175,80,0.3)}
+.list-component.list-stil-bullet .list-item::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:10px}
+.list-component.list-stil-bullet .list-badge{display:none}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.card-icon{flex-shrink:0}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-desc{color:var(--text-muted);font-size:13px;margin-bottom:14px;font-style:italic}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.md-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--teal);line-height:1.4}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Algoritm Clinic */
+.algoritm-clinic{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.alg-header{background:linear-gradient(135deg,rgba(0,191,165,0.12),rgba(0,191,165,0.04));border-bottom:1px solid var(--border);padding:14px 22px}
+.alg-badge{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.alg-header h4{font-size:17px;margin-top:3px;color:var(--text-primary)}
+.alg-desc{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.alg-body{padding:30px 22px;overflow-x:auto}
+.alg-canvas{position:relative;min-width:fit-content}
+.alg-grid{display:grid;gap:52px 28px;justify-items:center;align-items:center;position:relative;z-index:2}
+.alg-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.alg-node{padding:12px 18px;border-radius:8px;text-align:center;font-size:13px;font-weight:500;max-width:220px;min-width:100px;position:relative;cursor:default;transition:transform .2s,box-shadow .2s;word-wrap:break-word;z-index:2;justify-self:center}
+.alg-node:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.alg-node-label{color:var(--text-primary);line-height:1.4}
+.alg-start{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));border:2px solid var(--green);border-radius:20px}
+.alg-start .alg-node-label{color:var(--green);font-weight:600}
+.alg-decizie{background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(255,193,7,0.05));border:2px solid var(--amber);border-left:4px solid var(--amber);border-radius:4px}
+.alg-decizie .alg-node-label{color:var(--amber)}
+.alg-actiune{background:linear-gradient(135deg,rgba(100,181,246,0.15),rgba(100,181,246,0.05));border:2px solid var(--blue);border-radius:8px}
+.alg-actiune .alg-node-label{color:var(--blue)}
+.alg-final{background:linear-gradient(135deg,rgba(0,191,165,0.15),rgba(0,191,165,0.05));border:3px solid var(--teal);border-radius:20px}
+.alg-final .alg-node-label{color:var(--teal);font-weight:600}
+.alg-alerta{background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:2px solid var(--coral);border-radius:8px;animation:algPulse 2s ease-in-out infinite}
+.alg-alerta .alg-node-label{color:var(--coral);font-weight:600}
+.alg-node.has-detail{cursor:pointer}
+.alg-node.has-detail:hover{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,191,165,0.2)}
+.alg-detail{display:none}
+@keyframes algDetailIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.alg-ks-container:empty{display:none}
+.alg-ks-container{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.alg-ks-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:14px 16px 14px 14px;margin-bottom:12px;animation:algKsIn .3s ease;font-size:13px;line-height:1.65}
+.alg-ks-card .alg-ks-title{font-size:13px;font-weight:700;margin-bottom:8px;padding-right:20px}
+.alg-ks-card .alg-ks-content{color:var(--text-secondary);font-size:12.5px}
+.alg-ks-card .alg-ks-content strong{color:var(--text-primary)}
+.alg-ks-close{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;transition:color .2s;border-radius:4px}
+.alg-ks-close:hover{color:var(--coral);background:rgba(255,107,107,0.1)}
+@keyframes algKsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes algKsOut{to{opacity:0;transform:translateX(20px)}}
+@keyframes algKsFlash{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 0 4px rgba(0,191,165,0.2)}100%{box-shadow:none}}
+@keyframes algPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.2)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+@media(max-width:600px){.alg-grid{grid-template-columns:1fr!important;gap:12px 0!important}.alg-node{grid-column:1!important;grid-row:auto!important;max-width:100%}.alg-svg{display:none}.alg-node::after{content:'↓';display:block;color:var(--teal-border);font-size:18px;margin-top:6px;line-height:1}.alg-node:last-child::after{display:none}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#etiologie">Definiție, epidemiologie și etiologie</a></li>
+<li><a href="#deshidratare">Evaluarea clinică — deshidratarea</a></li>
+<li><a href="#diagnostic-paraclinic">Diagnostic paraclinic</a></li>
+<li><a href="#cdifficile">Colita pseudomembranoasă — <em>Clostridium difficile</em></a></li>
+<li><a href="#rehidratare">Conduita terapeutică — rehidratarea</a></li>
+<li><a href="#tratament-etiologic">Tratament etiologic și simptomatic</a></li>
+<li><a href="#algoritm">Algoritm clinic — evaluare și conduită BDA</a></li>
+<li><a href="#ghiduri-vs-carte">Ghiduri actuale vs <em>Esențialul în Medicina de Familie</em></a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Pediatrie · ESMF Medicina de Familie</div>
+  <h1>Boala diareică acută la copil</h1>
+  <p>2.2.12 · Etiologie · Evaluarea deshidratării · Rehidratare orală · Colita pseudomembranoasă · Esențialul în Medicina de Familie (Matei, Gherghina, Codreanu)</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează</div>
+  <p><strong>BDA este a doua cauză de deces la copiii sub 5 ani pe plan mondial</strong> — 1,5-2 milioane de decese anual, majoritatea evitabile prin <strong>rehidratare orală corectă</strong>. În țările cu resurse limitate, un sugar face în medie 6 episoade diareice/an. Pentru MF, decizia corectă se ia în cabinet: rehidratare acasă sau internare? Antibiotic sau nu? Formule delactozate sau alimentație obișnuită? <strong>Majoritatea erorilor terapeutice</strong> (abuz antibiotice, antidiareice, înfometare prelungită, perfuzii inutile) întrețin cercul vicios diaree-malnutriție-imunosupresie.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="etiologie" data-block-id="etiologie">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Definiție, epidemiologie și etiologie</h2>
+</div>
+
+<div class="text-block"><p>Boala diareică acută (BDA) este definită prin <strong>creșterea frecvenței și scăderea consistenței scaunelor</strong>. <em>Sine qua non</em> pentru diagnostic e diareea — asociată variabil cu vărsături, inapetență, febră și dureri abdominale.</p>
+<p>Importanța clinică a BDA pentru medicul de familie depășește episodul acut. <strong>Diareea e una dintre cauzele principale ale malnutriției la sugar și preșcolar</strong>, iar cazurile neglijate sau tratate greșit alimentează un cerc vicios diaree-malnutriție-imunosupresie-infecții recurente.</p>
+<p>În țările dezvoltate, <strong>etiologia virală domină net</strong>. <em>Rotavirusul</em> este agent cauzal în 11-71% dintre cazuri (media 33%), fiind principal responsabil la <strong>copilul de 6-24 luni</strong>. Bacteriile rămân relevante mai ales în sezoanele calde și în contexte de igienă precară.</p></div>
+
+<div class="list-component list-stil-bullet" data-block-id="bda_copil_list_etiologii">
+  <div class="list-titlu">Cele 3 categorii etiologice ale BDA</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Bacterii enteropatogene</strong> — <em>Escherichia coli</em> (enteropatogen, enteroaderent, enterotoxigen, <strong>enterohemoragic</strong>, enteroinvaziv), <em>Shigella</em> (4 grupuri), <em>Campylobacter jejuni</em>, <em>Salmonella</em>, <em>Vibrio cholerae</em>, <em>Yersinia enterocolitica</em>, <em>Plesiomonas</em>.</div></li>
+<li class="list-item"><div class="list-content"><strong>Paraziți intestinali</strong> — protozoare (<em>Giardia lamblia</em>, <em>Entamoeba histolytica</em>, <em>Cryptosporidium</em>, <em>Cyclospora</em>), nematode (<em>Ascaris lumbricoides</em>, <em>Trichiuris trichiura</em>, <em>Strongyloides</em>), alte metazoare (<em>Fasciola hepatica</em>, <em>Enterobius vermicularis</em>, <em>Taenia</em>).</div></li>
+<li class="list-item"><div class="list-content"><strong>Virusuri</strong> — Rotavirus (dominant), Norovirus (Virusul Norwalk), Adenovirusuri enterale, Calicivirusuri umane.</div></li>
+
+  </ul>
+</div>
+
+<div class="tags-row"><span class="tag tag-viral">Rotavirus 33%</span> <span class="tag tag-viral">Norovirus 15%</span> <span class="tag tag-viral">Adenovirus enteral 5%</span> <span class="tag tag-bact">E. coli 10%</span> <span class="tag tag-bact">Salmonella 5%</span> <span class="tag tag-bact">Shigella 5%</span> <span class="tag tag-bact">Campylobacter 5%</span> <span class="tag tag-bact">C. difficile post-antibiotic</span> <span class="tag tag-fungic">Giardia 3%</span> </div>
+
+<div class="card pearl" data-block-id="bda_copil_pearl_sugar_vulnerabilitate">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> De ce sugarul deshidratează mai rapid decât adultul?</div>
+  <p>Sugarul are un <strong>raport apă totală / suprafață corporală</strong> mai mare decât adultul și o <strong>rată metabolică dublă</strong> raportată la greutate. Pierderile lichidiene prin scaun reprezintă un procent semnificativ mai mare din volumul extracelular. La asta se adaugă capacitatea limitată a rinichiului imatur de a concentra urina (< 400 mOsm/L la sugar vs. 1200 mOsm/L la adult) — deci compensarea prin retenție renală e ineficientă. <strong>Un sugar cu 6-8 scaune apoase/zi poate pierde 10% din greutate în 24h</strong>, în timp ce un adult cu același ritm ar fi doar inconfortabil.</p>
+</div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_apoasa_invaziva">
+  <div class="comparison-card" style="border-top:3px solid var(--blue)">
+    <h4 style="color:var(--blue)">Diaree apoasă</h4>
+    <ul><li>Scaune <strong>lichidiene fără elemente patologice</strong></li><li>Etiologie dominantă: <strong>Rotavirus</strong>, Norovirus, E. coli enterotoxigen, V. cholerae</li><li>Copil < 2 ani, sezon rece</li><li><strong>NU antibiotic</strong> (self-limiting)</li><li>Mecanism: secretor/osmotic</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--coral)">
+    <h4 style="color:var(--coral)">Diaree invazivă (dizenterică)</h4>
+    <ul><li>Scaune apoase <strong>cu mucus și sânge</strong></li><li>Etiologie dominantă: <strong>Shigella</strong>, Campylobacter, E. coli enteroinvaziv, Salmonella, Entamoeba</li><li>Orice vârstă, deseori febră înaltă, dureri abdominale intense</li><li><strong>Antibiotic indicat</strong> în formele documentate (azitromicină pentru Shigella/Campylobacter)</li><li>Mecanism: invaziv cu ulcerații mucosale</li></ul>
+  </div>
+</div>
+
+<div class="quiz-container" data-block-id="bda_copil_quiz_etiologie"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">Conform datelor din cap. 2.2.12 din <em>Esențialul în Medicina de Familie</em>, care este agentul etiologic principal al BDA la copilul de 6-24 luni în țările dezvoltate?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) <em>Clostridium difficile</em></button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) <em>Giardia lamblia</em></button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) <em>Escherichia coli</em> enterotoxigen</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">D) Rotavirusul</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">E) <em>Shigella sonnei</em></button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Rotavirusul e agent cauzal în 11-71% dintre cazuri (media 33% global), cu vârf de incidență la copilul de 6-24 luni. Etiologia virală domină net în țările dezvoltate.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — C. difficile apare aproape exclusiv post-expunere la antibiotice sau nozocomial, nu e cauza principală de BDA la sugar sănătos în comunitate.<br><strong>B)</strong> GREȘIT — Giardia determină tipic diaree cronică cu steatoree și distensie abdominală, nu BDA tipică de sugar.<br><strong>C)</strong> GREȘIT — E. coli enterotoxigen e o cauză de "diaree a călătorului" la adulți și de enterocolite în contexte de igienă precară, nu agentul principal la sugar în țări dezvoltate.<br><strong>E)</strong> GREȘIT — Shigella determină diaree invazivă, sanguinolentă, cu febră înaltă — nu e agentul principal la sugar în țări dezvoltate, unde prevalența bacteriană e mică.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="deshidratare" data-block-id="deshidratare">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Evaluarea clinică — deshidratarea</h2>
+</div>
+
+<div class="text-block"><p><strong>Examenul clinic trebuie să aprecieze</strong>: statusul nutrițional, gradul de deshidratare, aspectul scaunelor și eventualele comorbidități.</p>
+<p>Aprecierea gradului de deshidratare trebuie realizată cu rigurozitate pentru <strong>evitarea posibilelor complicații</strong> precum convulsiile, șocul hipovolemic și chiar decesul. Clasificarea se face în 3 grade (Tabelul 2.2.12.1 din <em>ESMF</em>):</p></div>
+
+<div class="img-component" data-block-id="bda_copil_image_semne_deshidratare">
+  <img src="images/img1.webp" alt="Semnele clinice ale deshidratării la sugar — hartă didactică" data-titlu="Semnele clinice ale deshidratării la sugar — hartă didactică" data-desc="<ul><li><strong>Ce observi:</strong> schemă didactică a celor 6 semne cardinale ale deshidratării la sugar — fontanelă deprimată (<em>sunken fontanelle</em>), ochi înfundați cu cearcăne (<em>sunken eyes and cheeks</em>), absența lacrimilor (<em>few or no tears</em>), gură/limbă uscate (<em>dry mouth or tongue</em>), turgor cutanat scăzut (<em>decreased skin turgor</em> — pliu persistent la pensulare), abdomen retractat (<em>sunken abdomen</em>).</li><li><strong>Ce sugerează:</strong> prezența concomitentă a 3 sau mai multe semne din acestea plasează copilul în categoria <strong>deshidratare moderată-severă</strong> (>5%) → necesită rehidratare supravegheată conform Planului B sau C.</li><li><strong>Diferențial vizual:</strong> <strong>fontanela deprimată</strong> apare TARDIV (~7-8% pierdere) — absența ei nu exclude deshidratarea. <strong>Pliul cutanat persistent</strong> are valoare crescută când se pensulează peretele abdominal, NU pielea mobilă a brațelor (care poate da fals-pozitiv la sugarul cu țesut adipos redus).</li></ul>" data-sursa="https://newsletter.kokilabenhospital.com/its-precious/dehydration-on-how-to-prevent-fluid-loss/">
+  <div class="img-caption">
+    <div class="caption-title">Semnele clinice ale deshidratării la sugar — hartă didactică</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Ce observi:</strong> schemă didactică a celor 6 semne cardinale ale deshidratării la sugar — fontanelă deprimată (<em>sunken fontanelle</em>), ochi înfundați cu cearcăne (<em>sunken eyes and cheeks</em>), absența lacrimilor (<em>few or no tears</em>), gură/limbă uscate (<em>dry mouth or tongue</em>), turgor cutanat scăzut (<em>decreased skin turgor</em> — pliu persistent la pensulare), abdomen retractat (<em>sunken abdomen</em>).</li></ul></div><div class="img-cap-full"><ul><li><strong>Ce observi:</strong> schemă didactică a celor 6 semne cardinale ale deshidratării la sugar — fontanelă deprimată (<em>sunken fontanelle</em>), ochi înfundați cu cearcăne (<em>sunken eyes and cheeks</em>), absența lacrimilor (<em>few or no tears</em>), gură/limbă uscate (<em>dry mouth or tongue</em>), turgor cutanat scăzut (<em>decreased skin turgor</em> — pliu persistent la pensulare), abdomen retractat (<em>sunken abdomen</em>).</li><li><strong>Ce sugerează:</strong> prezența concomitentă a 3 sau mai multe semne din acestea plasează copilul în categoria <strong>deshidratare moderată-severă</strong> (>5%) → necesită rehidratare supravegheată conform Planului B sau C.</li><li><strong>Diferențial vizual:</strong> <strong>fontanela deprimată</strong> apare TARDIV (~7-8% pierdere) — absența ei nu exclude deshidratarea. <strong>Pliul cutanat persistent</strong> are valoare crescută când se pensulează peretele abdominal, NU pielea mobilă a brațelor (care poate da fals-pozitiv la sugarul cu țesut adipos redus).</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<h3>Tabelul 2.2.12.1 — Aprecierea gradului de deshidratare (după <em>ESMF</em> cap. 2.2.12)</h3>
+<div class="table-wrapper" data-block-id="bda_copil_table_grade_deshidratare"><table>
+  <thead><tr><th>Semne clinice</th><th>Deshidratare < 5%</th><th>Deshidratare 5-10%</th><th>Deshidratare > 10%</th></tr></thead>
+  <tbody><tr><td><strong>Stare generală</strong></td><td>Bună, alert</td><td>Iritabil</td><td>Letargic</td></tr>
+<tr><td><strong>Ochi</strong></td><td>Normali</td><td>Înfundați în orbite</td><td>Înfundați profund în orbite</td></tr>
+<tr><td><strong>Pliu cutanat abdominal</strong></td><td>Elastic</td><td>Tendință la persistență</td><td>Persistent</td></tr>
+<tr><td><strong>Prezența setei</strong></td><td>Normală</td><td>Însetat, bea viguros</td><td>Sete absentă sau slabă</td></tr>
+<tr><td><strong>Estimarea deficitului lichidian</strong></td><td>< 50 ml/kg corp</td><td>50-100 ml/kg corp</td><td>> 100 ml/kg corp</td></tr>
+<tr><td><strong>Conduita terapeutică</strong></td><td>Plan A — ORS la domiciliu</td><td>Plan B — ORS supravegheat 4-6h</td><td>Plan C — Spitalizare + rehidratare i.v.</td></tr></tbody>
+</table></div>
+
+<div class="card highlight" data-block-id="bda_copil_highlight_3grade">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Regula de aur — 3 grade, 3 planuri</div>
+  <ul><li><strong>< 5% = Plan A</strong> → ORS la domiciliu + alimentație continuă.</li><li><strong>5-10% = Plan B</strong> → ORS 50-100 ml/kg în 4-6h sub supraveghere.</li><li><strong>> 10% = Plan C</strong> → SPITALIZARE obligatorie + rehidratare i.v.</li></ul>
+<p>Evaluarea corectă a gradului decide locul tratamentului.</p>
+</div>
+
+<div class="card pearl" data-block-id="bda_copil_pearl_pliu_cutanat">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> De ce pliul cutanat abdominal, și nu cel al brațelor?</div>
+  <p>Pliul cutanat persistent reflectă scăderea <strong>turgorului tegumentar</strong> secundar pierderii volumului extracelular. Pe brațe, țesutul adipos subcutanat variază foarte mult cu vârsta și starea de nutriție — la sugarul slab, pliul poate fi fals-pozitiv fără deshidratare. <strong>Peretele abdominal anterior</strong> are grosime tegumentară mai uniformă între copii și e mai sensibil la modificările de hidratare — se pensulează între police și index, lateral de ombilic. Revenire <2 sec = normal; >2 sec = deshidratare semnificativă.</p>
+</div>
+
+<div class="quiz-container" data-block-id="bda_copil_quiz_deshidratare_severa"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">Un sugar de 11 luni, cu diaree apoasă de 3 zile, cântărește azi 8,5 kg (greutatea pre-îmbolnăvire notată în carnet: 9,4 kg). Este <strong>letargic</strong>, cu <strong>ochi profund înfundați</strong>, <strong>pliu cutanat persistent</strong> peste 3 secunde și <strong>nu a urinat de 10 ore</strong>. Care este gradul de deshidratare și conduita corectă?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) 5-10%, Plan B — ORS supravegheat 4-6h în cabinet</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Sugarul are doar gastroenterită virală simplă, se tratează la domiciliu cu ceai de mentă</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">C) > 10%, Plan C — spitalizare obligatorie + rehidratare i.v.</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) < 5%, Plan A — ORS la domiciliu</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">E) Deshidratare izolată fără risc, reevaluare peste 24h</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — C)</strong> CORECT — Pierderea de 9,6% din greutate + letargie + ochi profund înfundați + pliu persistent + oligurie >10h = <strong>deshidratare severă (> 10%)</strong>. Plan C: spitalizare obligatorie pentru rehidratare i.v. cu ser Ringer sau NaCl 0,9% (bolus 20 ml/kg repetat) + corectarea tulburărilor hidroelectrolitice și acidobazice (metoda ASTRUP).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — 9,6% pierdere + letargie + oligurie >8h indică evoluție spre deshidratare severă (>10%), care NU se tratează în cabinet.<br><strong>B)</strong> GREȘIT — "Ceaiul de mentă" nu e rehidratare. Și chiar gastroenterita virală cu deshidratare severă necesită spitalizare, nu se tratează simplu la domiciliu.<br><strong>D)</strong> GREȘIT — pierderea în greutate este 9,4 kg → 8,5 kg = 0,9 kg din 9,4 kg = <strong>9,6%</strong> — nu < 5%. Plus, letargia și pliul persistent sunt semne de deshidratare severă.<br><strong>E)</strong> GREȘIT — lăsarea unui sugar cu deshidratare severă la domiciliu = risc de șoc hipovolemic, convulsii, deces.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="diagnostic-paraclinic" data-block-id="diagnostic-paraclinic">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Diagnostic paraclinic</h2>
+</div>
+
+<div class="text-block"><p>Diagnosticul pozitiv se bazează pe <strong>anamneză, examen clinic, coprocitogramă</strong> și — după caz — pe coprocultură, teste rapide antigenice și probe biologice.</p></div>
+
+<div class="list-component list-stil-bullet" data-block-id="bda_copil_list_paraclinic">
+  <div class="list-titlu">Investigațiile paraclinice — când și ce valoare</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Coprocitograma</strong> — de rutină. PMN neutrofile <strong>> 10/câmp</strong> sugerează <strong>diaree bacteriană invazivă</strong> și justifică antibioterapia empirică. Rezultat rapid, ieftin.</div></li>
+<li class="list-item"><div class="list-content"><strong>Coprocultura</strong> — NU de rutină. Indicată la: diaree sanguinolentă, imunodeprimat, evoluție atipică, outbreak. Rezultat la 72h, pozitivă doar 50-60%.</div></li>
+<li class="list-item"><div class="list-content"><strong>Teste rapide antigenice fecale</strong> — detectează Rotavirus, Norovirus, Adenovirus prin ELISA/imunofluorescență. Atenție: fals-pozitive/negative posibile — interpretare în context.</div></li>
+<li class="list-item"><div class="list-content"><strong>Hemoleucograma</strong> — nu de rutină. În diareea bacteriană: leucocitoză cu neutrofilie și deviere la stânga. Leucopenie < 5.000/mm³ la sugar sever = semn de gravitate.</div></li>
+<li class="list-item"><div class="list-content"><strong>Ionograma + ASTRUP</strong> — la deshidratare severă, tulburări neurologice, hipoglicemie suspectată. Corectează acidoză metabolică, hipo-/hipernatremie, hipokaliemie.</div></li>
+
+  </ul>
+</div>
+
+<div class="card pearl" data-block-id="bda_copil_pearl_coprocitograma">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> De ce coprocitograma bate coprocultura ca screening?</div>
+  <p>Coprocitograma detectează <strong>semnatura inflamatorie</strong> a diareei invazive în minute (PMN neutrofile >10/câmp), cu cost minim. Coprocultura detectează patogenul specific dar cu <strong>trei limite majore</strong>: (1) rezultatul în 72h — prea târziu pentru decizia terapeutică inițială; (2) sensibilitate 50-60% — jumătate din cazurile invazive rămân neconfirmate bacteriologic; (3) cost ridicat pentru un rezultat cu impact clinic incert. Pentru <strong>decizia empirică "antibiotic DA / NU"</strong> în primele 24-48h, coprocitograma (combinată cu aspectul scaunelor) e suficientă. Coprocultura se face țintit, când rezultatul schimbă tratamentul.</p>
+</div>
+
+<div class="card warning" data-block-id="bda_copil_warning_coprocultura">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Capcană clinică — coprocultura negativă</div>
+  <p><strong>O coprocultură negativă NU exclude etiologia bacteriană</strong> (tehnici imperfecte, prelevare suboptimă, antibioterapie anterioară) și NU exclude diagnosticul de BDA. NU întârzia rehidratarea așteptând rezultatele.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="cdifficile" data-block-id="cdifficile">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Colita pseudomembranoasă — <em>Clostridium difficile</em></h2>
+</div>
+
+<div class="text-block"><p><strong>Colita cu <em>Clostridium difficile</strong></em> (ICD) — numită și <em>colita determinată de antibioticoterapie</em> sau <em>colita pseudomembranoasă</em> — este o inflamație a mucoasei colonului cauzată de proliferarea bacteriei <em>C. difficile</em> (bacil anaerob gram-pozitiv, toxinogen).</p>
+<p>Infecția e consecința <strong>dezechilibrului florei intestinale</strong> produs de antibiotice: clindamicina, penicilinele (amoxicilină, ampicilină) și cefalosporinele (ex. cefalexina) sunt cel mai frecvent implicate, dar aproape orice antibiotic poate cauza dezechilibrul. Eritromicina, sulfonamidele, cloramfenicolul, tetraciclinele și fluorochinolonele sunt și ele implicate.</p></div>
+
+<div class="img-component" data-block-id="bda_copil_image_colita_pseudomembranoasa">
+  <img src="images/pseudomemxq2.jpg" alt="Aspectul endoscopic al colitei pseudomembranoase cu *C. difficile*" data-titlu="Aspectul endoscopic al colitei pseudomembranoase cu *C. difficile*" data-desc="<ul><li><strong>Ce observi:</strong> mucoasă colonică intens inflamată, cu multiple <strong>plăci galbene-alburii aderente</strong> (pseudomembrane) dispuse pe fond eritematos. Pseudomembranele reprezintă exudat fibrino-purulent format din fibrină, neutrofile, mucus și celule epiteliale necrozate — aderente de mucoasa ulcerată subiacent.</li><li><strong>Ce sugerează:</strong> aspect <strong>patognomonic</strong> pentru colita pseudomembranoasă — foarte specific pentru ICD. Confirmarea se face prin determinarea toxinelor A/B în scaun.</li><li><strong>Diferențial vizual:</strong> colita ischemică (distribuție segmentară, mai frecvent colon stâng, absența pseudomembranelor clasice), boala Crohn activă (ulcerații „în hartă geografică&quot;, fisuri), colita virală CMV la imunodeprimat (ulcerații profunde fără pseudomembrane).</li></ul>" data-sursa="https://www.gastrointestinalatlas.com/english/pseudomembranous_colitis.html">
+  <div class="img-caption">
+    <div class="caption-title">Aspectul endoscopic al colitei pseudomembranoase cu *C. difficile*</div>
+    <div class="caption-text"><div class="img-cap-truncated"><ul><li><strong>Ce observi:</strong> mucoasă colonică intens inflamată, cu multiple <strong>plăci galbene-alburii aderente</strong> (pseudomembrane) dispuse pe fond eritematos. Pseudomembranele reprezintă exudat fibrino-purulent format din fibrină, neutrofile, mucus și celule epiteliale necrozate — aderente de mucoasa ulcerată subiacent.</li></ul></div><div class="img-cap-full"><ul><li><strong>Ce observi:</strong> mucoasă colonică intens inflamată, cu multiple <strong>plăci galbene-alburii aderente</strong> (pseudomembrane) dispuse pe fond eritematos. Pseudomembranele reprezintă exudat fibrino-purulent format din fibrină, neutrofile, mucus și celule epiteliale necrozate — aderente de mucoasa ulcerată subiacent.</li><li><strong>Ce sugerează:</strong> aspect <strong>patognomonic</strong> pentru colita pseudomembranoasă — foarte specific pentru ICD. Confirmarea se face prin determinarea toxinelor A/B în scaun.</li><li><strong>Diferențial vizual:</strong> colita ischemică (distribuție segmentară, mai frecvent colon stâng, absența pseudomembranelor clasice), boala Crohn activă (ulcerații „în hartă geografică", fisuri), colita virală CMV la imunodeprimat (ulcerații profunde fără pseudomembrane).</li></ul></div><button class="img-details-toggle" onclick="var w=this.parentElement;var t=w.querySelector('.img-cap-truncated');var f=w.querySelector('.img-cap-full');var open=f.classList.contains('show');t.style.display=open?'block':'none';f.classList.toggle('show');this.textContent=f.classList.contains('show')?'Ascunde detalii ▲':'Afișează detalii ▼'">Afișează detalii ▼</button></div>
+  </div>
+</div>
+
+<div class="card warning" data-block-id="bda_copil_warning_suspiciune_icd">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Red flag — când să suspicionezi ICD la copil</div>
+  <p>Diaree nou apărută în primele <strong>2 luni post-antibioticoterapie</strong> sau în primele <strong>72h de la internare în spital</strong> — cere determinare toxine A/B în scaun. Întrerupe antibioticul inițial (dacă nu e esențial) și NU prescrie antidiareice — pot declanșa megacolon toxic.</p>
+</div>
+
+<div class="list-component list-stil-bullet" data-block-id="bda_copil_list_simptome_icd">
+  <div class="list-titlu">Spectrul clinic al ICD</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Forme ușoare</strong> — diaree apoasă 3-6 scaune/zi, crampe abdominale, febră joasă.</div></li>
+<li class="list-item"><div class="list-content"><strong>Forme moderate</strong> — scaune diareice abundente, deseori cu sânge, febră 38-39°C, leucocitoză.</div></li>
+<li class="list-item"><div class="list-content"><strong>Forme severe</strong> — leucocitoză ≥ 15.000/mm³, creatinină > 1,5× bazal, dureri abdominale intense.</div></li>
+<li class="list-item"><div class="list-content"><strong>Formă fulminantă</strong> — sindrom grav de deshidratare cu pericol vital, hipotensiune, <strong>megacolon toxic</strong>, perforație colonică. Rară dar potențial letală.</div></li>
+
+  </ul>
+</div>
+
+<h3>Protocol tratament ICD la copil (cap. 2.2.12 din <em>ESMF</em>)</h3>
+<div class="table-wrapper" data-block-id="bda_copil_table_tratament_icd"><table>
+  <thead><tr><th>Situație clinică</th><th>Tratament</th><th>Durată</th></tr></thead>
+  <tbody><tr><td><strong>Prima măsură</strong></td><td>Oprirea antibioticului cauzal (dacă nu e esențial) + NU antidiareice</td><td>Imediat</td></tr>
+<tr><td><strong>Infecție ușoară-moderată</strong></td><td>Metronidazol 500 mg la 8h (la copil — doză corelată cu vârsta/greutatea)</td><td>10 zile</td></tr>
+<tr><td><strong>Infecție severă</strong> (L ≥ 15.000/mm³, creatinină > 1,5× normal)</td><td>Vancomicină PO 125 mg de 4 ori/zi</td><td>10-14 zile</td></tr>
+<tr><td><strong>Prima recurență</strong></td><td>Același tratament ca pentru episodul inițial</td><td>10-14 zile</td></tr>
+<tr><td><strong>A doua recurență</strong></td><td>Vancomicină PO în tapering progresiv (125 mg × 4/zi 10-14 zile → × 2/zi 7 zile → × 1/zi 7 zile → la 2-3 zile 2-8 săptămâni)</td><td>Variabil</td></tr>
+<tr><td><strong>Recurențe multiple</strong></td><td>Vancomicină + <em>S. boulardii</em>, secvențial cu rifaximină, imunoglobuline 400 mg/kg/lună</td><td>Individualizat</td></tr>
+<tr><td><strong>Formă fulminantă</strong> (ileus, megacolon)</td><td>Vancomicină pe sondă naso-gastrică sau clismă + metronidazol i.v. ± tigeciclină i.v.</td><td>Individualizat</td></tr>
+<tr><td><strong>Non-răspuns medical</strong></td><td>Colectomie ca măsură salvatoare de viață</td><td>—</td></tr></tbody>
+</table></div>
+
+<div class="quiz-container" data-block-id="bda_copil_quiz_icd"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">Un copil de 4 ani, tratat în urmă cu 2 săptămâni cu amoxicilină-clavulanat 10 zile pentru otită medie acută, se prezintă azi cu <strong>diaree apoasă cu mucus și sânge</strong> (5-6 scaune/zi), <strong>febră 38,5°C</strong> și <strong>dureri abdominale intense</strong>. Care este conduita corectă?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">A) Recomandă doar dietă BRAT (banane, orez, mere, pâine prăjită) și reevaluare peste 7 zile</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) Administrează imediat loperamid 0,1 mg/kg pentru a opri diareea</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">C) Suspicionează ICD, cere determinare toxine A/B în scaun, NU prescrie antidiareice, inițiază metronidazol (forma ușoară-moderată) sau vancomicină PO (forma severă)</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">D) Internează copilul pentru colonoscopie diagnostică de urgență</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Prescrie ciprofloxacină empiric și așteaptă rezultatul coproculturii</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — C)</strong> CORECT — Context clinic clasic pentru ICD: diaree apoasă ± sanguinolentă, cu febră și dureri abdominale, în primele 2 luni de la antibioticoterapie. <strong>Cere determinare toxine A/B în scaun</strong>, NU prescrie antidiareice, inițiază <strong>metronidazol PO</strong> (ușoară-moderată) sau <strong>vancomicină PO 125 mg × 4/zi</strong> (severă). Oprirea antibioticului cauzal = prima măsură.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — "dieta BRAT" întârzie diagnosticul unei posibile ICD severe. Plus, dieta BRAT nu are evidență clinică pentru BDA la copil.<br><strong>B)</strong> GREȘIT — <strong>antidiareicele sunt CONTRAINDICATE în ICD</strong>; prelungesc contactul toxinei cu mucoasa colonului și pot precipita megacolonul toxic și perforația.<br><strong>D)</strong> GREȘIT — colonoscopia de urgență NU e necesară de rutină; diagnosticul se face prin determinarea toxinelor. Colonoscopia se rezervă pentru cazuri selectate (diagnostic incert, formă fulminantă).<br><strong>E)</strong> GREȘIT — ciprofloxacina e printre antibioticele care pot declanșa ICD; plus, coprocultura standard NU detectează toxinele C. difficile — necesită test specific.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="rehidratare" data-block-id="rehidratare">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Conduita terapeutică — rehidratarea</h2>
+</div>
+
+<div class="text-block"><p><strong>Rehidratarea este componenta cheie a tratamentului BDA.</strong> În cazurile fără semne de deshidratare și în cele cu deshidratare moderată (5-10%), <strong>calea orală — în absența vărsăturilor incoercibile — este practic singura cale recomandabilă</strong>.</p>
+<h3 class="md-subtitle" data-block-id="planurile-de-rehidratare">Planurile de rehidratare</h3></div>
+
+<h3>Planurile de rehidratare în funcție de gradul deshidratării</h3>
+<div class="table-wrapper" data-block-id="bda_copil_table_planuri"><table>
+  <thead><tr><th>Plan</th><th>Indicație</th><th>Schema terapeutică</th><th>Locul tratamentului</th></tr></thead>
+  <tbody><tr><td><strong>Plan A</strong></td><td>Fără deshidratare (< 5%)</td><td>SRO 10 ml/kg după fiecare scaun + alimentație continuă</td><td>Domiciliu</td></tr>
+<tr><td><strong>Plan B</strong></td><td>Deshidratare moderată (5-10%)</td><td>SRO <strong>50-100 ml/kg în 4-6h</strong>, apoi reevaluare</td><td>Cabinet MF / spital (supraveghere)</td></tr>
+<tr><td><strong>Plan C</strong></td><td>Deshidratare severă (> 10%)</td><td><strong>Rehidratare i.v.</strong> (Ringer lactat 20 ml/kg bolus, repetat) + SRO paralel când tolerează</td><td>Spital (± terapie intensivă)</td></tr></tbody>
+</table></div>
+
+<div class="card highlight" data-block-id="bda_copil_highlight_mentinere">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Întreținerea post-rehidratare</div>
+  <p>După faza de rehidratare, <strong>se administrează SRO 50-100 ml pentru fiecare scaun diareic</strong> emis la sugar și <strong>100-150 ml la copilul mai mare</strong>, pentru a compensa pierderile continue.</p>
+</div>
+
+<div class="card pearl" data-block-id="bda_copil_pearl_sro_glucoza">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> De ce SRO funcționează când apa simplă eșuează?</div>
+  <p>În diareea secretorie (Rotavirus, V. cholerae), mucoasa intestinală continuă să piardă apă și Na — dar <strong>transportorul Na-glucoză SGLT1 rămâne funcțional</strong>. SRO conține Na și glucoză în raport ~1:1 (molar), ceea ce activează co-transportul: Na intră în enterocit împreună cu glucoza, iar apa urmează pasiv osmotic. Apa simplă, fără glucoză, NU poate declanșa acest mecanism — ba mai mult, diluează Na-ul seric și poate precipita <strong>hiponatremie de diluție</strong>. Concluzia clinică: <strong>NU da apă simplă în cantități mari</strong> unui copil cu BDA — dă SRO.</p>
+</div>
+
+<div class="card warning" data-block-id="bda_copil_warning_varsaturi_biberon">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Vărsăturile nu sunt o contraindicație pentru SRO</div>
+  <p>În <strong>vărsăturile incoercibile</strong>, se indică SRO prin <strong>sondă naso-gastrică</strong>, nu trecerea automată la rehidratare i.v. Pentru vărsăturile ne-incoercibile: <strong>lingurița sau pipeta</strong>, 1-5 ml la 2-3 minute. <strong>NU biberonul</strong> — debitul mare declanșează vărsătură nouă.</p>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="realimentarea-principii-actuale">Realimentarea — principii actuale</h3>
+<p><strong>Dieta clasică</strong> (faza de rehidratare urmată de dietă de tranziție — supă de morcovi, mucilagiu de orez — timp de 24h) a fost <strong>ABANDONATĂ</strong>. Recomandarea actuală este <strong>realimentarea rapidă</strong>, după rehidratarea orală, <strong>păstrând alimentația pe care copilul o prezenta anterior</strong> debutului BDA.</p></div>
+
+<div class="list-component list-stil-bullet" data-block-id="bda_copil_list_realimentare">
+  <div class="list-titlu">Realimentarea — schema pe grupe de vârstă</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Sugar alimentat exclusiv la sân</strong> — se continuă alimentația naturală. SRO cu lingurița, nu cu biberonul. <strong>NU antibiotice, NU simptomatice</strong>. Diagnostic diferențial: diareea post-prandială la sân (benignă).</div></li>
+<li class="list-item"><div class="list-content"><strong>Sugar alimentat mixt / artificial</strong> — se păstrează formula obișnuită. <strong>Formulele delactozate</strong> NU sunt recomandate de rutină — doar la sindrom post-enteritic sau deficit de lactază documentat.</div></li>
+<li class="list-item"><div class="list-content"><strong>Copil peste 6 luni cu alimentație diversificată</strong> — SRO + alimentație corespunzătoare vârstei, fără dieta BRAT. <strong>NU suprima laptele matern</strong>.</div></li>
+
+  </ul>
+</div>
+
+<div class="card warning" data-block-id="bda_copil_warning_erori_frecvente">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Cele 7 erori frecvente în tratamentul BDA (cap. 2.2.12)</div>
+  <ul><li><strong>(1) Abuzul de antibiotice</strong> injectabile în forme virale.</li><li><strong>(2) Prelungirea repausului digestiv</strong> (dieta hidrosalină > 24h).</li><li><strong>(3) Fetișizarea aspectului scaunelor</strong> cu înfometarea sugarului.</li><li><strong>(4) Perfuzii i.v. inutile</strong> la cazuri care tolerează oral.</li><li><strong>(5) Antidiareicele</strong> (loperamidul CONTRAINDICAT la copil < 12 ani).</li><li><strong>(6) Preparatele delactozate</strong> de rutină.</li><li><strong>(7) Suprimarea laptelui matern</strong>.</li></ul>
+</div>
+
+<div class="quiz-container" data-block-id="bda_copil_quiz_rehidratare"><div class="quiz-q" id="q4">
+  <div class="q-label">Întrebare · 4</div>
+  <div class="q-text">Un sugar de 9 luni, cu deshidratare estimată la 7%, greutate 9 kg, toleranță digestivă bună (fără vărsături). Care este schema optimă de rehidratare orală conform <em>ESMF</em>?</div>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">A) SRO administrată doar la biberon, 200 ml × 3/zi</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,true)">B) SRO hipotonă 50-100 ml/kg în 4-6h (≈ 450-900 ml în 4-6h), apoi 50-100 ml SRO per scaun suplimentar + alimentație continuă</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">C) Ceai de mușețel 50 ml/kg în 24 ore</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">D) Apă plată 100 ml la fiecare 30 de minute × 4 ore</button>
+    <button class="quiz-option" onclick="checkQuiz('q4',this,false)">E) Perfuzie i.v. cu ser glucozat 5% 100 ml/kg în 24h</button>
+  <div class="quiz-explanation" id="q4-exp"><div class="fb-correct"><strong>Răspuns corect — B)</strong> CORECT — <strong>Plan B</strong>: SRO hipotonă 50-100 ml/kg în 4-6h = ≈ 450-900 ml la un sugar de 9 kg. După rehidratare, <strong>continuă cu 50-100 ml SRO pentru fiecare scaun diareic</strong> suplimentar. Alimentația (lapte matern/formulă) <strong>se continuă simultan</strong> — NU se suspendă.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — biberonul are debit prea mare, precipită vărsături. <strong>Lingurița sau pipeta</strong>, 1-5 ml la 2-3 minute.<br><strong>C)</strong> GREȘIT — ceaiurile "tradiționale" (mușețel, mentă) NU sunt rehidratare; au osmolaritate inadecvată și nu conțin Na.<br><strong>D)</strong> GREȘIT — apa simplă NU poate declanșa transportul Na-glucoză SGLT1 și poate precipita hiponatremie de diluție. În plus, nu compensează pierderile de Na.<br><strong>E)</strong> GREȘIT — perfuzia i.v. se rezervă pentru deshidratare SEVERĂ (>10%) sau vărsături incoercibile. Cu toleranță digestivă bună, calea orală e de elecție.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="tratament-etiologic" data-block-id="tratament-etiologic">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Tratament etiologic și simptomatic</h2>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="antibioterapia-indicatii-precise">Antibioterapia — indicații precise</h3>
+<p><strong>BDA este unul dintre domeniile pediatriei în care se face abuz de antibiotice.</strong> Indicațiile antibioterapiei sunt limitate:</p></div>
+
+<h3>Indicațiile antibioterapiei în BDA la copil (cap. 2.2.12 din <em>ESMF</em>)</h3>
+<div class="table-wrapper" data-block-id="bda_copil_table_antibiotice"><table>
+  <thead><tr><th>Situație</th><th>Antibiotic de elecție</th><th>Observații</th></tr></thead>
+  <tbody><tr><td><strong>Shigelloză dovedită</strong></td><td>Azitromicină 10 mg/kg/zi × 3 zile; alternativă: Ceftriaxonă 50 mg/kg/zi × 5 zile</td><td>Tratamentul reduce durata și contagiozitatea</td></tr>
+<tr><td><strong>Gastroenterită cu Salmonella</strong></td><td>Ceftriaxonă 50 mg/kg/zi</td><td><strong>Doar</strong> la sugari < 3 luni, imunodeprimați, asplenie, risc bacteriemie</td></tr>
+<tr><td><strong>Gastroenterită cu Campylobacter</strong></td><td>Azitromicină 10 mg/kg/zi × 3 zile</td><td>Doar formele dizenteriforme</td></tr>
+<tr><td><strong>Gastroenterită cu E. coli enterotoxigen</strong></td><td>Azitromicină 10 mg/kg/zi × 3 zile</td><td>Forme severe</td></tr>
+<tr><td><strong>Holera</strong></td><td>Azitromicină</td><td>Rară în Europa</td></tr>
+<tr><td><strong>Forme invazive cu toxemie, bacteriemie</strong></td><td>Ceftriaxonă 50 mg/kg/zi i.v.</td><td>Spitalizare</td></tr>
+<tr><td><strong>Sugari < 3 luni cu febră + diaree</strong></td><td>Antibioterapie empirică parenterală</td><td>Risc bacteriemie/sepsis</td></tr>
+<tr><td><strong>Infecții sistemice asociate</strong></td><td>Conform etiologiei</td><td>—</td></tr></tbody>
+</table></div>
+
+<div class="card warning" data-block-id="bda_copil_warning_ehec">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Atenție</div>
+  <p><strong>NU administra antibiotic</strong> în suspiciunea de EHEC (diaree sanguinolentă acută, mai ales la copil, fără febră înaltă). Antibioticele cresc riscul de <strong>sindrom hemolitic-uremic (SHU)</strong> prin eliberare masivă de toxină Shiga din liza bacteriană. Tratamentul e pur suportiv + monitorizare renală.</p>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="terapia-simptomatica">Terapia simptomatică</h3></div>
+
+<div class="list-component list-stil-bullet" data-block-id="bda_copil_list_simptomatic">
+  <div class="list-titlu">Tratament simptomatic — ce funcționează, ce e contraindicat</div>
+  <ul class="list-body">
+    <li class="list-item"><div class="list-content"><strong>Antivirale</strong> — <strong>NU sunt indicate</strong> (etiologia virală domină, dar nu avem antivirale specifice eficiente).</div></li>
+<li class="list-item"><div class="list-content"><strong>Antiemetice</strong> — <strong>Ondansetron</strong> oral sau i.v. (ESPGHAN) — eficace pentru vărsăturile care însoțesc BDA, o doză unică înainte de rehidratare. Metoclopramid, granisetron, dexametazonă, dimenhidraminat — fără evidență suficientă la copil.</div></li>
+<li class="list-item"><div class="list-content"><strong>Antiperistaltice</strong> — <strong>CONTRAINDICATE la copil</strong> (Loperamid, Difenoxilat) — prelungesc contactul toxinei cu mucoasa, risc de megacolon toxic în ICD.</div></li>
+<li class="list-item"><div class="list-content"><strong>Diosmectită</strong> — recomandare slabă, poate reduce durata episodului. Opțional.</div></li>
+<li class="list-item"><div class="list-content"><strong>Racecadotril</strong> — inhibitor al enkefalinzei, efect antisecretor — reduce numărul de scaune apoase vs placebo.</div></li>
+<li class="list-item"><div class="list-content"><strong>Zinc</strong> — administrat la copii > 6 luni, reduce durata episodului de BDA.</div></li>
+<li class="list-item"><div class="list-content"><strong>Probiotice</strong> — evidență ÎNALTĂ. Recomandate: <em>Lactobacillus rhamnosus GG</em> (LGG), <em>Saccharomyces boulardii</em>. Alături de SRO, reduc durata și intensitatea simptomelor.</div></li>
+
+  </ul>
+</div>
+
+<div class="quiz-container" data-block-id="bda_copil_quiz_antibiotic"><div class="quiz-q" id="q5">
+  <div class="q-label">Întrebare · 5</div>
+  <div class="q-text">Care dintre următoarele situații <strong>NU reprezintă indicație</strong> de antibioterapie în BDA la copil, conform cap. 2.2.12 din <em>ESMF</em>?</div>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">A) Shigelloză dovedită bacteriologic</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">B) Holera confirmată</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">C) Gastroenterită cu Salmonella la sugar de 2 luni cu febră</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,false)">D) Formă invazivă cu semne de toxemie și suspiciune de bacteriemie</button>
+    <button class="quiz-option" onclick="checkQuiz('q5',this,true)">E) Diaree apoasă de 2 zile la copil de 14 luni, afebril, cu scaune fără mucus/sânge</button>
+  <div class="quiz-explanation" id="q5-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — <strong>Diaree apoasă</strong> la copil afebril, fără elemente patologice (sânge/mucus), sugerează etiologie virală (Rotavirus, Norovirus). <strong>NU e indicație de antibiotic</strong> — tratament simptomatic: SRO + probiotice + zinc + realimentare rapidă.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Shigelloza dovedită <strong>este</strong> indicație — tratamentul de elecție = <strong>Azitromicină</strong>. Reduce durata bolii, severitatea și contagiozitatea.<br><strong>B)</strong> GREȘIT — Holera <strong>este</strong> indicație absolută de antibiotic (Azitromicină), alături de rehidratare masivă.<br><strong>C)</strong> GREȘIT — Sugar < 3 luni + febră + Salmonella = risc crescut de bacteriemie → <strong>indicație</strong> de antibioterapie (Ceftriaxonă).<br><strong>D)</strong> GREȘIT — Forma invazivă cu toxemie/bacteriemie e <strong>indicație</strong> de antibioterapie empirică parenterală (Ceftriaxonă) + spitalizare.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="algoritm" data-block-id="algoritm">
+  <div class="section-label">Capitolul 7</div>
+  <h2>Algoritm clinic — evaluare și conduită BDA</h2>
+</div>
+
+<div class="text-block"><p>Algoritmul de mai jos sintetizează conduita în BDA la copil — de la recunoașterea semnelor de deshidratare până la decizia finală privind tratamentul etiologic și monitorizarea.</p></div>
+
+<div class="algoritm-clinic" id="alg_9ddabf" data-block-id="bda_copil_algoritm_evaluare">
+  <div class="alg-header">
+    <div class="alg-badge">ALGORITM CLINIC</div>
+    <h4>Evaluarea și conduita terapeutică în BDA la copil</h4>
+    <p class="alg-desc">Bazat pe <em>ESMF</em> cap. 2.2.12 și ghidurile ESPGHAN 2014</p>
+  </div>
+  <div class="alg-body">
+    <div class="alg-canvas">
+      <svg class="alg-svg"></svg>
+      <div class="alg-grid" style="grid-template-columns:repeat(3,minmax(170px,1fr));grid-template-rows:repeat(6,auto)"
+           data-edges='[{"from": "s1", "to": "s2", "label": ""}, {"from": "s2", "to": "s3", "label": "<5%"}, {"from": "s2", "to": "s4", "label": "5-10%"}, {"from": "s2", "to": "s5", "label": ">10%"}, {"from": "s3", "to": "s6", "label": ""}, {"from": "s4", "to": "s6", "label": ""}, {"from": "s5", "to": "s6", "label": ""}, {"from": "s6", "to": "s7", "label": "DA"}, {"from": "s6", "to": "s8", "label": "NU"}, {"from": "s7", "to": "s9", "label": ""}, {"from": "s8", "to": "s9", "label": ""}]'>
+        <div class="alg-node alg-start has-detail" data-id="s1" style="grid-row:1;grid-column:1/-1"><span class="alg-node-label">Copil cu diaree acută (≥3 scaune moi/apoase în 24h)</span><div class="alg-detail">Anamneză: durată, aspect scaune, asociere vărsături, febră, expunere antibiotice recente. Examen: stare generală, semne de deshidratare (Tabel 2.2.12.1).</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s2" style="grid-row:2;grid-column:1/-1"><span class="alg-node-label">Evaluarea gradului de deshidratare</span><div class="alg-detail">Evaluează: stare generală · ochi · pliu cutanat · sete · diureză. 3 grade: < 5% (fără semne), 5-10% (moderată), > 10% (severă).</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s3" style="grid-row:3;grid-column:1"><span class="alg-node-label">Plan A — ORS la domiciliu</span><div class="alg-detail">Fără deshidratare (<5%). SRO 10 ml/kg după fiecare scaun. Alimentație continuă. Educația mamei pentru red flags.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s4" style="grid-row:3;grid-column:2"><span class="alg-node-label">Plan B — ORS supravegheat 4-6h</span><div class="alg-detail">Deshidratare moderată (5-10%). SRO 50-100 ml/kg în 4-6h. Reevaluare la finalul perioadei — decizie externare sau escaladare.</div></div>
+      <div class="alg-node alg-alerta has-detail" data-id="s5" style="grid-row:3;grid-column:3"><span class="alg-node-label">Plan C — Spitalizare urgentă</span><div class="alg-detail">Deshidratare severă (>10%) sau vărsături incoercibile. Rehidratare i.v. (Ringer lactat 20 ml/kg bolus) + corectare ASTRUP.</div></div>
+      <div class="alg-node alg-decizie has-detail" data-id="s6" style="grid-row:4;grid-column:1/-1"><span class="alg-node-label">Semne de diaree invazivă / sugar <3 luni febril / imunodeprimat?</span><div class="alg-detail">Diaree sanguinolentă, PMN >10/câmp, febră înaltă persistentă. Sugar <3 luni febril sau imunodeprimat.</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s7" style="grid-row:5;grid-column:1"><span class="alg-node-label">Antibioterapie țintită</span><div class="alg-detail">Azitromicină (Shigella, Campylobacter dizenteriform, E. coli ETEC). Ceftriaxonă (Salmonella la sugar <3 luni/imunocompromis, toxemie). NU antibiotic la EHEC (risc SHU).</div></div>
+      <div class="alg-node alg-actiune has-detail" data-id="s8" style="grid-row:5;grid-column:2"><span class="alg-node-label">Tratament simptomatic</span><div class="alg-detail">Zinc (>6 luni conform ESMF), probiotice (S. boulardii, LGG). Diosmectită / racecadotril opțional. NU antidiareice, NU formule delactozate de rutină.</div></div>
+      <div class="alg-node alg-final has-detail" data-id="s9" style="grid-row:6;grid-column:1/-1"><span class="alg-node-label">Monitorizare + educație MF</span><div class="alg-detail">Red flags pentru mamă: letargie, ochi înfundați, oligurie >8h, sânge în scaun. Reevaluare la 24-48h în diareea ne-severă.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="ghiduri-vs-carte" data-block-id="ghiduri-vs-carte">
+  <div class="section-label">Capitolul 8</div>
+  <h2>Ghiduri actuale vs <em>Esențialul în Medicina de Familie</em></h2>
+</div>
+
+<div class="text-block"><p>Conținutul cărții <em>Esențialul în Medicina de Familie</em> (cap. 2.2.12) este <strong>concordant cu principiile fundamentale</strong> ale ghidurilor actuale privind BDA la copil. Totuși, ghidurile <strong><a href="https://pubmed.ncbi.nlm.nih.gov/24739189/" class="md-link" target="_blank" rel="noopener noreferrer">ESPGHAN 2014</a></strong> (Guarino et al.), <strong><a href="https://pubmed.ncbi.nlm.nih.gov/29462280/" class="md-link" target="_blank" rel="noopener noreferrer">IDSA/SHEA 2017 CDI Update</a></strong> (McDonald et al.), <strong><a href="https://pubmed.ncbi.nlm.nih.gov/39250962/" class="md-link" target="_blank" rel="noopener noreferrer">ghidul german S2k 2024</a></strong> (Posovszky et al.) și <strong><a href="https://pubmed.ncbi.nlm.nih.gov/40437180/" class="md-link" target="_blank" rel="noopener noreferrer">ghidul chinez 2024</a></strong> (Fang et al.) au adus <strong>actualizări importante</strong> pe care un practician de medicina familiei trebuie să le cunoască.</p>
+<p><strong>Pentru examen, rămâne valid conținutul din carte.</strong> Pentru practica clinică actuală, mai jos sunt evidențiate principalele discrepanțe.</p>
+<h3 class="md-subtitle" data-block-id="1-tratamentul-c-difficile-tendinta-spre-vancomicina-po">1. Tratamentul C. difficile — tendință spre vancomicină PO</h3>
+<p>Ghidul <a href="https://pubmed.ncbi.nlm.nih.gov/29462280/" class="md-link" target="_blank" rel="noopener noreferrer">IDSA/SHEA 2017</a> (McDonald et al.) și <strong><a href="https://www.idsociety.org/practice-guideline/clostridioides-difficile-2021-focused-update/" class="md-link" target="_blank" rel="noopener noreferrer">IDSA/SHEA 2021 Focused Update</a></strong> au inversat recomandarea: <strong>vancomicina PO</strong> (și nu metronidazolul) devine prima linie pentru episoadele inițiale și recurente la adult, iar <strong>fidaxomicina</strong> apare ca alternativă preferată în cazurile recurente. La copil, ghidul 2017 admite <strong>atât metronidazol, cât și vancomicină</strong> ca opțiuni pentru episoadele inițiale non-severe, dar <strong>preferă vancomicina PO</strong> pentru formele severe și recurente.</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_cdi_tratament">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Formă ușoară-moderată:</strong> Metronidazol 500 mg × 3/zi × 10 zile</li><li><strong>Formă severă:</strong> Vancomicină PO 125 mg × 4/zi × 10-14 zile</li><li><strong>Recurențe multiple:</strong> Vancomicină tapering + <em>S. boulardii</em> ± rifaximină ± imunoglobuline</li><li>Metronidazol și vancomicină alternative</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">IDSA/SHEA 2017 + 2021 Update</h4>
+    <ul><li><strong>Copil:</strong> Metronidazol SAU vancomicină PO (preferată tendință) 10 mg/kg/doză × 4/zi (max 125 mg × 4) × 10 zile</li><li><strong>Adult:</strong> Fidaxomicină 200 mg × 2/zi × 10 zile (preferat) sau vancomicină PO</li><li>Vancomicină tapering SAU <strong>fidaxomicină</strong> SAU <strong>transplant de microbiotă fecală</strong> (FMT) — opțiune validată la copii cu CDI recurente refractare</li><li><strong>Metronidazol = rezervă</strong> când vancomicina/fidaxomicina nu sunt disponibile</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="2-suplimentarea-cu-zinc-extindere-la-toti-sugarii">2. Suplimentarea cu zinc — extindere la toți sugarii</h3>
+<p>Ghidul <strong><a href="https://apps.who.int/iris/handle/10665/43209" class="md-link" target="_blank" rel="noopener noreferrer">WHO/UNICEF 2004</a></strong> (reconfirmat în reviziile ulterioare) recomandă zinc la <strong>toți copiii cu BDA sub 5 ani</strong>, nu doar la cei peste 6 luni cum specifică <em>ESMF</em>. Doza variază pe grupe de vârstă.</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_zinc">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Doar > 6 luni</strong></li><li>Efect: reduce durata episodului</li><li>Doza nespecificată</li><li>Recomandare cu clasă de evidență moderată</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">WHO/UNICEF 2004 + update-uri</h4>
+    <ul><li><strong>Toți copiii < 5 ani cu BDA</strong></li><li>Efect: reduce durata cu ~25% + previne recurențele următoarele 2-3 luni</li><li><strong>< 6 luni: 10 mg/zi × 10-14 zile</strong> · <strong>≥ 6 luni: 20 mg/zi × 10-14 zile</strong></li><li>Recomandare puternică, mai ales în țări cu resurse limitate / malnutriție</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><p><strong>Notă:</strong> ESPGHAN 2014 nuanțează că beneficiul zincului în <strong>țările europene dezvoltate</strong> cu malnutriție rară e redus — rămâne puternic recomandat în contexte cu resurse limitate.</p>
+<h3 class="md-subtitle" data-block-id="3-probiotice-downgrade-lgg-confirmare-s-boulardii">3. Probiotice — downgrade LGG, confirmare S. boulardii</h3>
+<p>Cartea citează <em>Lactobacillus rhamnosus GG</em> (LGG) și <em>Saccharomyces boulardii</em> ca probiotice recomandate. <strong>Două studii RCT mari din 2018</strong> (Schnadower et al. și Freedman et al., NEJM) au arătat <strong>lipsa eficacității LGG</strong> la copii în setting de UPU. <strong>ESPGHAN Position Paper 2020</strong> (actualizat 2023) a <strong>downgradat recomandarea pentru LGG</strong> — rămân recomandate cu evidență înaltă doar <strong>S. boulardii</strong> și <strong>Lactobacillus reuteri DSM 17938</strong>.</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_probiotice">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Recomandate:</strong> LGG + <em>S. boulardii</em></li><li>LGG — evidență înaltă</li><li>Fără menționare L. reuteri</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESPGHAN 2020/2023 Update</h4>
+    <ul><li><strong>Recomandate (evidență înaltă):</strong> <em>S. boulardii</em> + <em>L. reuteri DSM 17938</em></li><li><strong>LGG — DOWNGRADAT</strong> după PROBIOT + Freedman studies (NEJM 2018)</li><li><em>L. reuteri DSM 17938</em> — confirmat în meta-analize 2020-2023</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="4-vaccinarea-anti-rotavirus-lipsa-din-carte">4. Vaccinarea anti-rotavirus — LIPSĂ din carte</h3>
+<p>Cartea <strong>NU menționează vaccinarea anti-rotavirus</strong> în capitolul 2.2.12. WHO recomandă din 2013 vaccinarea universală a sugarilor — cu <strong>Rotarix</strong> (monovalent, 2 doze) sau <strong>RotaTeq</strong> (pentavalent, 3 doze). În țările care au implementat programe de vaccinare universală, spitalizările pentru BDA cu Rotavirus au scăzut cu <strong>70-90%</strong>.</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_vaccinare_rotavirus">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Nemenționată</strong> în cap. 2.2.12</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">WHO/ESPID/ESPGHAN 2014+</h4>
+    <ul><li>Recomandare universală pentru toți sugarii: <strong>Rotarix</strong> (2 doze la 2 și 4 luni) sau <strong>RotaTeq</strong> (3 doze la 2, 4, 6 luni)</li><li>Primul doză <strong>înainte de 15 săptămâni</strong>; ultima doză <strong>înainte de 8 luni</strong></li><li><strong>România:</strong> opțional (nu în programul obligatoriu) — MF poate recomanda și prescrie privat</li><li>Prevenție primară > tratament în BDA Rotavirus</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="5-diagnostic-pcr-multiplex-gi">5. Diagnostic — PCR multiplex GI</h3>
+<p>Cartea menționează coprocultura (72h, sensibilitate 50-60%) și testele rapide antigenice. <strong>PCR multiplex GI</strong> (BioFire FilmArray, Luminex xTAG) — detectează <strong>22+ patogeni</strong> (bacterii, virusuri, paraziți) în <strong>1-2 ore</strong>, cu sensibilitate > 95%.</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_diagnostic">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Coprocultura</strong> — 72h, sensibilitate 50-60%</li><li>Teste rapide antigenice pentru Rotavirus/Norovirus/Adenovirus</li><li>Indicată doar la cazuri severe/sanguinolente</li><li>Rezultatul la 72h → decizie empirică între timp</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESPGHAN 2014 + IDSA 2017</h4>
+    <ul><li><strong>PCR multiplex GI</strong> — 1-2h, sensibilitate >95% pentru 22+ patogeni</li><li>PCR multiplex <strong>include și viruși</strong> (Rotavirus, Norovirus, Adenovirus, Sapovirus, Astrovirus)</li><li>Indicată la: sanguinolente, imunodeprimați, evoluție prelungită, outbreak</li><li>Rezultatul în 1-2h → decizie țintită imediat</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><p><strong>Atenție la interpretare:</strong> PCR multiplex poate detecta colonizarea asimptomatică — rezultatul trebuie interpretat în context clinic, nu tratat automat.</p>
+<h3 class="md-subtitle" data-block-id="6-ondansetron-precizari-de-siguranta">6. Ondansetron — precizări de siguranță</h3>
+<p>Cartea menționează recomandarea ESPGHAN pentru ondansetron oral sau i.v. ESPGHAN 2014 a precizat ulterior:</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_ondansetron">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte) — formulare generică</h4>
+    <ul><li>"Oral sau i.v., eficacitate în vărsături ce însoțesc BDA"</li><li>Fără precizări de siguranță</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">ESPGHAN 2014 + FDA warning</h4>
+    <ul><li><strong>O SINGURĂ doză orală</strong> (0,1-0,15 mg/kg, max 4-8 mg) înainte de rehidratarea orală</li><li><strong>FDA Black Box Warning 2012</strong> — risc QT prolongation la doze mari</li><li><strong>Contraindicat</strong> la sindrom QT lung congenital, dezechilibre electrolitice severe (hipoK, hipoMg)</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="7-antibiotice-rezistenta-shigella">7. Antibiotice — rezistența Shigella</h3>
+<p>Cartea recomandă <strong>Azitromicină</strong> ca prima linie pentru shigelloză. <strong>IDSA 2017 și WHO 2023</strong> confirmă recomandarea, dar semnalează <strong>rezistența crescândă la azitromicină</strong> (mai ales <em>S. flexneri</em> și <em>S. sonnei</em> circumscrise geografic — Asia, unele regiuni din Africa și America Latină).</p></div>
+
+<div class="comparison-grid" data-block-id="bda_copil_comparison_shigella_rezistenta">
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">ESMF (carte)</h4>
+    <ul><li><strong>Azitromicină</strong> ± Ceftriaxonă</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">WHO Priority Pathogen List 2024 + IDSA 2017</h4>
+    <ul><li>Azitromicină — <strong>prima linie</strong> local, dar monitorizează rezistența regional</li><li><strong>Ceftriaxonă</strong> preferată pentru cazuri severe sau suspiciune de rezistență (Asia, Africa)</li><li><strong>Shigella XDR</strong> (extensively drug-resistant) — patogen prioritar WHO 2024 → ia în considerare fluorochinolone dacă susceptibilitate confirmată</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="sinteza">Sinteză</h3>
+<p>Cartea <strong>rămâne un instrument didactic valid</strong> și concordant cu principiile fundamentale. Principalele actualizări post-2014 sunt:</p></div>
+
+<div class="list-component list-stil-numerotat" data-block-id="bda_copil_list_sinteza_actualizari">
+  <div class="list-titlu">Ce să actualizezi mental față de carte</div>
+  <ul class="list-body">
+    <li class="list-item"><span class="list-badge">1</span><div class="list-content"><strong>Tratament C. difficile</strong> → tendință spre vancomicină PO prima linie; fidaxomicină ca alternativă; FMT pentru recurențe multiple.</div></li>
+<li class="list-item"><span class="list-badge">2</span><div class="list-content"><strong>Zinc</strong> → extinde la toți sugarii cu BDA sub 5 ani (10 mg/zi la <6 luni, 20 mg/zi la ≥6 luni).</div></li>
+<li class="list-item"><span class="list-badge">3</span><div class="list-content"><strong>Probiotice</strong> → LGG downgradat; preferă <em>S. boulardii</em> sau <em>L. reuteri DSM 17938</em>.</div></li>
+<li class="list-item"><span class="list-badge">4</span><div class="list-content"><strong>Vaccinare anti-rotavirus</strong> → recomandă proactiv Rotarix sau RotaTeq la sugarii consultați (România: opțional, privat).</div></li>
+<li class="list-item"><span class="list-badge">5</span><div class="list-content"><strong>Diagnostic microbiologic</strong> → PCR multiplex GI — disponibilă în centre terțiare pentru cazuri complexe.</div></li>
+<li class="list-item"><span class="list-badge">6</span><div class="list-content"><strong>Ondansetron</strong> → o singură doză orală, cu precauție QT.</div></li>
+<li class="list-item"><span class="list-badge">7</span><div class="list-content"><strong>Shigella</strong> → monitorizează rezistența la azitromicină; ceftriaxona rămâne alternativă sigură.</div></li>
+
+  </ul>
+</div>
+
+<div class="text-block"><p><strong>Referințe complete:</strong></p>
+<ul><li><a href="https://pubmed.ncbi.nlm.nih.gov/24739189/" class="md-link" target="_blank" rel="noopener noreferrer">ESPGHAN/ESPID Guidelines 2014 (Guarino et al., J Pediatr Gastroenterol Nutr) — PMID 24739189</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/29462280/" class="md-link" target="_blank" rel="noopener noreferrer">IDSA/SHEA Clinical Practice Guidelines for CDI 2017 Update (McDonald et al., Clin Infect Dis) — PMID 29462280</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/39250962/" class="md-link" target="_blank" rel="noopener noreferrer">Ghid german S2k Acute Infectious Gastroenteritis 2024 (Posovszky et al.) — free full-text, PMID 39250962</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/40437180/" class="md-link" target="_blank" rel="noopener noreferrer">Clinical practice guidelines for acute infectious diarrhea in children in China 2024 (Fang et al., World J Pediatr) — PMID 40437180</a></li><li><a href="https://pubmed.ncbi.nlm.nih.gov/34003176/" class="md-link" target="_blank" rel="noopener noreferrer">ACG Clinical Guidelines: CDI 2021 (Kelly et al., Am J Gastroenterol) — PMID 34003176</a></li><li><a href="https://www.nice.org.uk/guidance/cg84" class="md-link" target="_blank" rel="noopener noreferrer">NICE Clinical Guideline CG84 — Diarrhoea and vomiting in children under 5</a></li><li><a href="https://www.who.int/publications/i/item/9241593180" class="md-link" target="_blank" rel="noopener noreferrer">WHO — The treatment of diarrhoea: a manual for physicians and other senior health workers</a></li><li><a href="https://www.idsociety.org/practice-guideline/clostridioides-difficile-2021-focused-update/" class="md-link" target="_blank" rel="noopener noreferrer">IDSA/SHEA 2021 Focused Update on CDI Management</a></li></ul></div>
+
+<div class="divider"></div>
+
+<div class="match-game" data-block-id="bda_copil_matching_patogeni">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Rotavirus</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Shigella</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Giardia lamblia</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">Clostridium difficile</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">E. coli enterohemoragic</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">Diaree persistentă > 14 zile + steatoree + flatulență + distensie abdominală</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Diaree sanguinolentă + risc SHU → NU antibiotic (agravează)</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Diaree sanguinolentă cu mucus + febră înaltă → Azitromicină</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Diaree post-antibiotic + colită pseudomembranoasă → vancomicină PO</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Diaree apoasă la sugar 6-24 luni, sezon rece, deshidratare rapidă, fără antibiotic</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/5</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" data-block-id="bda_copil_flashcard_3grade" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 3 grade de deshidratare și conduita asociată (cap. 2.2.12)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>< 5%</strong> = fără semne clinice → <strong>Plan A</strong> (ORS la domiciliu). <strong>5-10%</strong> = moderată (ochi înfundați, pliu persistent, sete intensă) → <strong>Plan B</strong> (ORS 50-100 ml/kg/4-6h supravegheat). <strong>> 10%</strong> = severă (letargie, pliu persistent, oligurie) → <strong>Plan C</strong> (SPITALIZARE + rehidratare i.v.).</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="bda_copil_flashcard_indicatii_antibiotic" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt indicațiile antibiotic în BDA la copil (cap. 2.2.12)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>(1)</strong> Shigelloză dovedită (Azitromicină). <strong>(2)</strong> Salmonella la sugar <3 luni, imunodeprimat, asplenie (Ceftriaxonă). <strong>(3)</strong> Campylobacter formă dizenteriformă (Azitromicină). <strong>(4)</strong> Forme invazive cu toxemie/bacteriemie (Ceftriaxonă). <strong>(5)</strong> Holera (Azitromicină). <strong>(6)</strong> Sugar <3 luni cu febră + diaree (empirică). <strong>NU antibiotic</strong> la diaree apoasă virală, nici la EHEC (risc SHU).</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="bda_copil_flashcard_antiperistaltice" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">De ce sunt <strong>contraindicate</strong> antiperistalticele (Loperamid, Difenoxilat) la copil cu BDA?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>Prelungesc contactul toxinelor bacteriene cu mucoasa intestinală, cresc riscul de <strong>megacolon toxic</strong> (mai ales în ICD) și pot declanșa sindromul hemolitic-uremic în infecția cu EHEC. Loperamidul este <strong>contraindicat la copilul < 12 ani</strong> — risc toxicitate SNC + depresie respiratorie.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="bda_copil_flashcard_ors_glucoza" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">De ce <strong>SRO</strong> funcționează când <strong>apa simplă</strong> eșuează?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p>SRO conține <strong>Na + glucoză în raport ~1:1</strong> — glucoza activează co-transportul Na-glucoză <strong>SGLT1</strong> enterocitar, care rămâne funcțional chiar în diareea secretorie. Na intră cu glucoza, apa urmează osmotic. <strong>Apa simplă</strong> NU declanșează acest mecanism și poate precipita <strong>hiponatremie de diluție</strong>.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="bda_copil_flashcard_probiotice_update" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce probiotice rămân recomandate ferm în BDA la copil (ESPGHAN update 2020/2023)?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Saccharomyces boulardii</strong> și <strong>Lactobacillus reuteri DSM 17938</strong> — evidență înaltă. <strong>LGG a fost DOWNGRADAT</strong> după studiile PROBIOT (Schnadower 2018 NEJM) și Freedman 2018 NEJM care au arătat lipsa eficacității în setting de UPU.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="bda_copil_flashcard_zinc_who" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este diferența cheie pe zinc între <em>ESMF</em> și ghidurile WHO/UNICEF?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>ESMF:</strong> zinc doar la <strong>> 6 luni</strong>. <strong>WHO/UNICEF:</strong> zinc la <strong>toți copiii <5 ani</strong> cu BDA. Doze: <strong>< 6 luni = 10 mg/zi</strong> × 10-14 zile; <strong>≥ 6 luni = 20 mg/zi</strong> × 10-14 zile. Reduce durata cu ~25% și previne recurențele 2-3 luni.</p></div>
+  </div>
+</div></div></div>
+
+<div class="divider"></div>
+
+<div class="case-box" data-block-id="bda_copil_caz">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 5 Etape</div>
+    <h4>Sugar cu diaree de 3 zile</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>Sugar de 10 luni, masculin, 9 kg (greutatea de acum 2 săptămâni, notată la vizita de rutină: 9,5 kg). Mama îl aduce <strong>duminică dimineața</strong> la cabinet pentru <strong>diaree apoasă de 3 zile</strong> — 6-8 scaune/zi, fără sânge sau mucus, culoare galbenă. Asociere: <strong>vărsături</strong> 2-3/zi primele 24h, apoi diminuate. <strong>Ultima urinare acum ~6 ore</strong> (mama observă scutec uscat). Febrilitate joasă (37,8°C ieri).</p>
+<p><strong>Status de vaccinare:</strong> la zi conform schemei naționale (fără Rotavirus — opțional, nu a fost administrat).</p>
+<p><strong>Examen clinic:</strong> tahicardic (140/min), <strong>iritabil dar consolabil</strong>, <strong>ochi ușor înfundați</strong>, <strong>mucoase bucale uscate</strong>, <strong>pliu cutanat abdominal cu tendință la persistență</strong> (~2 secunde), <strong>setea intensă</strong> (bea avid apa oferită). Abdomen suplu, ușor balonat. Fontanela anterioară — ușor deprimată. SaO₂ 98%.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Clasificarea gradului de deshidratare</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Pe baza examenului clinic (iritabil, ochi înfundați, pliu cu tendință la persistență, sete intensă) și a pierderii în greutate (9,5 → 9 kg = ~5,3%), care este gradul de deshidratare?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Deshidratare severă (> 10%), Plan C — spitalizare pentru rehidratare i.v.</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">B) Fără deshidratare (< 5%), Plan A — ORS la domiciliu</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">C) Deshidratare moderată (5-10%), Plan B — ORS 50-100 ml/kg supravegheat 4-6h</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) Deshidratare izolată fără risc, urmărire clinică peste 72h</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">E) Nu se poate evalua fără ionogramă + ASTRUP</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — <strong>5,3% pierdere ponderală + semnele clinice prezente (iritabil, ochi înfundați, pliu cu tendință la persistență, sete intensă)</strong> = <strong>deshidratare moderată (5-10%)</strong>. Conduita: Plan B — <strong>SRO 50-100 ml/kg (≈ 450-900 ml) în 4-6h supravegheat</strong> în cabinet sau cu reevaluare la domiciliu.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — <strong>lipsesc semnele de deshidratare severă</strong>: nu e letargic (ci iritabil), pliul nu e <strong>persistent</strong> ci are tendință la persistență, sete prezentă, SaO₂ normal.<br><strong>B)</strong> GREȘIT — prezența a <strong>multiple semne clinice</strong> (iritabilitate, ochi înfundați, pliu persistent, sete, mucoase uscate, fontanela deprimată ușor) + pierdere ponderală 5,3% = <strong>NU este sub 5%</strong> — e deshidratare moderată.<br><strong>D)</strong> GREȘIT — deshidratarea moderată necesită <strong>rehidratare activă acum</strong>, nu doar urmărire la 72h — riscul progresiei la severă e real.<br><strong>E)</strong> GREȘIT — evaluarea gradului de deshidratare este <strong>clinică</strong> (Tabel 2.2.12.1). Ionograma + ASTRUP se adaugă în deshidratare severă sau semne neurologice.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Investigații — ce e necesar?</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Ce investigație paraclinică e <strong>cea mai utilă acum</strong> pentru orientarea deciziei terapeutice, conform cap. 2.2.12?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Echografie abdominală pentru excluderea invaginației</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">B) Hemoleucogramă + VSH + CRP pentru stratificarea etiologiei</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">C) Nu sunt necesare investigații — diareea apoasă fără sânge/mucus la sugar de 10 luni sugerează etiologie virală; se poate face coprocitogramă dacă evoluția e atipică</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Test antigen Rotavirus + ASTRUP + ionogramă</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">E) Coprocultură pentru identificarea patogenului</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — <strong>Diaree apoasă fără elemente patologice la sugar 6-24 luni = foarte probabil Rotavirus sau alt virus</strong>. Cartea specifică: "coprocultura nu se recomandă de rutină". Tratamentul e simptomatic (rehidratare + probiotice + zinc), NU bazat pe identificarea etiologiei. Coprocitograma se poate face dacă evoluția e atipică sau apare sânge.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — invaginația se suspicionează la <strong>durere abdominală paroxistică colicativă, scaune „în gelée de coacăze", masă palpabilă</strong> — nu la diaree apoasă simplă.<br><strong>B)</strong> GREȘIT — hemoleucograma nu e recomandată de rutină în BDA simplă la copil. Ar fi utilă doar dacă suspicionăm sepsis (febră înaltă, stare toxică), nu în BDA apoasă moderată.<br><strong>D)</strong> GREȘIT — testul antigenic Rotavirus e opțional (schimbă conduita? NU, e tot tratament simptomatic). ASTRUP + ionograma se rezervă pentru deshidratare severă, nu moderată.<br><strong>E)</strong> GREȘIT — coprocultura NU e recomandată de rutină (72h, 50-60% sensibilitate, cost ridicat). Rezervată pentru diaree sanguinolentă, imunodeprimat, outbreak.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Rehidratarea practică</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">Copilul cântărește 9 kg și e clasificat Plan B. Calculezi <strong>volumul de SRO pentru faza de rehidratare (4-6h)</strong>. Mama însă spune că "copilul nu vrea să bea cu pipeta, vrea biberonul". Care e abordarea corectă?</div>
+  <button class="quiz-option" onclick="ansCase(3,this,false)">A) Administrează loperamid 0,1 mg/kg pentru a opri diareea și apoi SRO</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">B) Instalează perfuzie i.v. pentru a evita conflictul</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">C) Oprește alimentația la sân timp de 24h pentru "repaus intestinal"</button>
+<button class="quiz-option" onclick="ansCase(3,this,true)">D) Volum total SRO = 50-100 ml/kg × 9 = <strong>450-900 ml în 4-6h</strong>. <strong>Lingurița sau pipeta</strong>, 1-5 ml la 2-3 minute interval — NU biberonul (debit prea mare → vărsături noi). Explică mamei mecanismul</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) Acceptă biberonul — orice e mai bine decât nimic</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era D).</div><div class="case-exp-detail"><strong>D)</strong> CORECT — <strong>9 kg × 50-100 ml/kg = 450-900 ml SRO în 4-6h</strong>, administrat cu <strong>lingurița sau pipeta, 1-5 ml la 2-3 minute interval</strong>. Biberonul are debit prea mare. Educația mamei = parte integrată a tratamentului. După rehidratare, <strong>50-100 ml SRO per scaun suplimentar</strong>.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — <strong>loperamidul e CONTRAINDICAT la copil < 12 ani</strong> (risc depresie SNC, megacolon toxic). Antidiareicele NU sunt indicate în BDA pediatrică.<br><strong>B)</strong> GREȘIT — perfuzia i.v. NU e indicată la un copil care tolerează oral și are deshidratare moderată. Resursă, riscuri (flebită, erori de compoziție), cost inutil.<br><strong>C)</strong> GREȘIT — <strong>NU suprima laptele matern</strong> — e printre cele 7 erori frecvente enumerate în cap. 2.2.12. Alimentația continuă simultan cu SRO.<br><strong>E)</strong> GREȘIT — biberonul dă <strong>debit prea mare</strong> → reactivează vărsăturile → elimină SRO-ul abia administrat. Lingurița sau pipeta = 1-5 ml la 2-3 min.</div>
+    <button class="case-btn" onclick="showCaseStep(4)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep4">
+  <div class="step-label">Tratament complementar — zinc, probiotice</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">În timpul rehidratării orale, ce tratamente complementare sunt susținute de evidență pentru acest sugar de 10 luni?</div>
+  <button class="quiz-option" onclick="ansCase(4,this,false)">A) Nystatin oral preventiv + vitamine B complex</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">B) Smectită diocatedrică + rifaximină + Saccharomyces boulardii</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">C) Ceftriaxonă i.m. 50 mg/kg × 3 zile pentru "acoperire empirică"</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">D) Niciun tratament complementar — doar SRO e suficientă</button>
+<button class="quiz-option" onclick="ansCase(4,this,true)">E) Zinc 20 mg/zi × 10-14 zile + probiotic (<em>Saccharomyces boulardii</em> sau <em>L. reuteri DSM 17938</em>, conform actualizării ESPGHAN 2020)</button>
+
+  <div class="quiz-explanation" id="caseQ4-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era E).</div><div class="case-exp-detail"><strong>E)</strong> CORECT — <strong>Zinc 20 mg/zi × 10-14 zile</strong> (WHO pentru copii ≥6 luni; ESMF confirmă >6 luni) reduce durata episodului cu ~25% și previne recurențele 2-3 luni. <strong>Probiotic</strong> cu evidență înaltă — <em>S. boulardii</em> sau <em>L. reuteri DSM 17938</em> (ESPGHAN 2020 update: LGG a fost downgradat).</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — nystatinul preventiv nu e indicat; vitaminele B complex nu au rol în BDA acută.<br><strong>B)</strong> GREȘIT — <strong>rifaximina nu are indicație</strong> în BDA virală la sugar. Smectita e opțională (recomandare slabă). Probioticul e corect, dar schema e dezechilibrată.<br><strong>C)</strong> GREȘIT — <strong>antibiotic = contraindicat</strong> în diaree apoasă virală. Sugarul de 10 luni nu are indicație de antibiotic empiric (nu e < 3 luni, nu are sânge în scaun, nu are semne de toxemie).<br><strong>D)</strong> GREȘIT — zinc și probiotice AU evidență clinică susținută în meta-analize — reduc durata bolii și recurențele.</div>
+    <button class="case-btn" onclick="showCaseStep(5)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep5">
+  <div class="step-label">Educație și sfat MF — red flags</div>
+  
+  <div style="margin-top:14px">
+  <div class="q-text">După rehidratarea reușită în cabinet (2h, copilul a băut ~250 ml SRO, a urinat, ochii sunt mai puțin înfundați), externezi cu recomandări. Care sunt <strong>red flags-urile obligatorii</strong> de comunicat mamei?</div>
+  <button class="quiz-option" onclick="ansCase(5,this,true)">A) Să revină URGENT la: <strong>letargie</strong>, <strong>incapacitate de a bea/supt</strong>, <strong>ochi înfundați accentuați</strong>, <strong>oligurie > 8h</strong>, <strong>sânge în scaun</strong>, <strong>vărsături incoercibile</strong>, <strong>iritabilitate extremă sau apatic</strong></button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">B) Să oprească laptele matern pentru 48h și să dea ceai de mentă</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">C) Să dea aspirină dacă apare febra</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">D) Să revină doar dacă diareea continuă peste 14 zile</button>
+<button class="quiz-option" onclick="ansCase(5,this,false)">E) Să revină doar la apariția febrei > 40°C</button>
+
+  <div class="quiz-explanation" id="caseQ5-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era A).</div><div class="case-exp-detail"><strong>A)</strong> CORECT — <strong>Red flags clasice</strong> de recunoscut de mamă: <strong>letargie</strong> (NU iritabilitate — aceasta e normală la sugar deshidratat moderat), <strong>incapacitate de a bea</strong>, <strong>ochi profund înfundați</strong>, <strong>oligurie > 8h</strong>, <strong>sânge în scaun</strong>, <strong>vărsături incoercibile</strong> (toate eliminate imediat), <strong>iritabilitate extremă cu stare de apatie</strong>. Reevaluare la 24-48h pentru a documenta ameliorarea.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>B)</strong> GREȘIT — suprimarea laptelui matern e una dintre <strong>cele 7 erori frecvente</strong> enumerate în cap. 2.2.12. Ceaiurile tradiționale NU sunt rehidratare.<br><strong>C)</strong> GREȘIT — <strong>aspirina e CONTRAINDICATĂ la copil</strong> (risc sindrom Reye în context viral). Paracetamol 10-15 mg/kg/doză la 4-6h dacă e necesar antipiretic.<br><strong>D)</strong> GREȘIT — 14 zile e prea târziu. Deshidratarea severă se poate instala în 24-48h. Red flags trebuie comunicate acum.<br><strong>E)</strong> GREȘIT — deshidratarea poate progresa FĂRĂ febră crescută. Febra 40°C e red flag, dar NU singurul. Absența febrei NU exclude deteriorarea.</div>
+    <button class="case-btn" onclick="showCaseStep(6)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep6">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic final:</strong> Boală diareică acută virală (cel mai probabil Rotavirus — sugar 10 luni, sezon rece, diaree apoasă, fără sânge), cu <strong>deshidratare moderată (5-10%) — Plan B</strong>. Copil nevaccinat anti-Rotavirus.</p>
+<p><strong>Plan terapeutic aplicat:</strong></p>
+<ul><li>SRO hipotonă 50-100 ml/kg în 4-6h = 450-900 ml (cu lingurița, 1-5 ml la 2-3 min)</li><li>După rehidratare: 50-100 ml SRO per scaun + continuarea alăptării/formulei</li><li><strong>Zinc 20 mg/zi × 10-14 zile</strong></li><li><strong>Probiotic: <em>S. boulardii</em> sau <em>L. reuteri DSM 17938</strong></em> (nu LGG — downgradat 2020)</li><li>Paracetamol 10-15 mg/kg/doză dacă febră</li><li>Reevaluare la 24-48h</li></ul>
+<p><strong>Recomandări proactive (ghiduri actuale vs carte):</strong></p>
+<ul><li><strong>Vaccinare anti-Rotavirus</strong> — discutat cu mama pentru viitor / frații mai mici (Rotarix 2 doze sau RotaTeq 3 doze, înainte de 8 luni). În România: opțional, privat.</li></ul>
+<p><strong>Lecții cheie din ESMF + actualizări:</strong></p>
+<ul><li>Evaluarea gradului de deshidratare = <strong>CLINICĂ</strong> (Tabel 2.2.12.1), nu paraclinică.</li><li><strong>SRO hipotonă + lingurița/pipeta</strong> (NU biberonul) = piatra de temelie a Planului B.</li><li><strong>NU antibiotic</strong> în diaree apoasă virală. <strong>NU antidiareice</strong> (loperamidul CONTRAINDICAT la copil).</li><li><strong>Realimentarea rapidă</strong> după rehidratare — NU suprima laptele matern, NU formule delactozate de rutină.</li><li><strong>Zinc + probiotic</strong> = terapie complementară susținută de evidență.</li><li><strong>Actualizare probiotice 2020:</strong> LGG downgradat → preferă <em>S. boulardii</em> sau <em>L. reuteri</em>.</li><li><strong>Actualizare WHO zinc:</strong> extinde la toți sugarii < 5 ani (10 mg < 6 luni, 20 mg ≥ 6 luni).</li><li><strong>Red flags</strong> obligatoriu comunicate mamei — letargie, incapacitate de a bea, oligurie > 8h, sânge în scaun.</li></ul>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/5</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · Boala diareică acută la copil — ESMF 2.2.12 + ghiduri actuale</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="alg-ks-container" id="algKsContainer"></div>
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"etiologie": {"titlu": "Etiologia BDA", "continut": "Definiție: creșterea frecvenței + scăderea consistenței scaunelor · Rotavirus dominant (33% global) la 6-24 luni · 3 categorii etiologice: virale · bacteriene · parazitare", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>V.B.P.</strong> etiologii · <strong>V</strong>irale (Rotavirus, Norovirus, Adenovirus) · <strong>B</strong>acteriene (Shigella, Salmonella, Campylobacter, E. coli, V. cholerae, C. difficile) · <strong>P</strong>arazitare (Giardia, Entamoeba, Cryptosporidium)", "fiziopatologie": "Rotavirusul distruge enterocitele vilozitare mature → malabsorbție dizaharidelor → diaree osmotică. Shigella invadează mucoasa colonului → ulcerații și exudat inflamator → diaree sanguinolentă.", "stiati_ca": "Aproximativ 50% dintre coproculturi rămân negative — parte prin imperfecțiunea tehnicilor bacteriologice, parte pentru că etiologia virală predomină și nu crește pe medii bacteriene."}, "deshidratare": {"titlu": "Evaluare deshidratare", "continut": "3 grade: < 5% (fără semne) · 5-10% (moderată) · > 10% (severă) · Semne cheie: stare generală · ochi · pliu cutanat · sete · diureză", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>O.P.S.D.</strong> · <strong>O</strong>chi (normali/înfundați) · <strong>P</strong>liu cutanat (elastic/persistent) · <strong>S</strong>etea (normală/intensă/absentă) · <strong>D</strong>iureza (normală/redusă/absentă)", "fiziopatologie": "Pierderea de 5% din greutate = pierdere extracelulară predominant izotonă → semne clinice încep (ochi înfundați, mucoase uscate). >10% = colaps cardiovascular — hipoperfuzie, oligurie, letargie, convulsii.", "stiati_ca": "Fontanela deprimată e semn TARDIV la sugar (apare la ~7-8% pierdere) — absența ei NU exclude deshidratarea semnificativă. La sugarul alimentat la sân, diureza e greu de apreciat din scutec."}, "diagnostic-paraclinic": {"titlu": "Paraclinic BDA", "continut": "Coprocitograma = examen de rutină · Coprocultura = rezervată (sanguinolente, imunodeprimați) · Teste rapide antigenice (Rotavirus, Norovirus, Adenovirus) · ASTRUP pentru severitate", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>C.C.T.A.</strong> examinări · <strong>C</strong>oprocitograma (PMN >10/câmp → bacterian) · <strong>C</strong>oprocultura (rezervată) · <strong>T</strong>este rapide antigenice · <strong>A</strong>STRUP (dezechilibru hidroelectrolitic)", "fiziopatologie": "PMN neutrofile în scaun >10/câmp microscopic sugerează proces invaziv — invazia mucoasei de către Shigella/Salmonella/Campylobacter declanșează migrare neutrofilică în lumen.", "stiati_ca": "Numărul mic de leucocite (< 5.000/mm³) la un sugar sever infectat are semnificație GRAVĂ — sugerează sepsis cu depresie medulară, NU lipsa infecției. Trombocitopenia intra-infecțioasă e marker de severitate în gram-negativi."}, "cdifficile": {"titlu": "Colita C. difficile", "continut": "Diaree post-antibiotic · Toxine A + B cauzează inflamație · Endoscopie = pseudomembrane caracteristice · Antibiotice incriminate cel mai frecvent: clindamicină · penicilină (ampicilină, amoxicilină) · cefalosporine", "referinta": "", "pmid": "", "url": "", "hint": "Antidiareicele (loperamidul, difenoxilatul) sunt **CONTRAINDICATE** în suspiciune de ICD — prelungesc contactul toxinei cu mucoasa și favorizează megacolonul toxic.", "mnemonic": "<strong>C.L.A.R.</strong> factori de risc · <strong>C</strong>lindamicină · <strong>L</strong>actamine (amoxicilină, ampicilină, cefalosporine) · <strong>A</strong>zil / spitalizare prelungită · <strong>R</strong>eductori de aciditate (IPP cronic)", "fiziopatologie": "*C. difficile* (bacil anaerob gram-pozitiv) produce toxina A (enterotoxină) și toxina B (citotoxină) + toxină binară în tulpinile epidemice — care distrug joncțiunile strânse enterocitare, declanșează apoptoza și inflamația neutrofilică cu formare de pseudomembrane (fibrină + resturi celulare + neutrofile).", "stiati_ca": "*C. difficile* e prezent în intestinul a 15-70% dintre nou-născuți și la o proporție considerabilă de adulți sănătoși. Starea de purtător NU înseamnă boală — antibioticele decimează flora competitivă și permit proliferarea bacteriei cu toxinogeneză."}, "rehidratare": {"titlu": "Rehidratare BDA", "continut": "Rehidratarea orală = piatra de temelie · SRO hipotonă 50-60 mmol Na/L · 50-100 ml/kg în 4-6h pentru deshidratare moderată · Realimentare RAPIDĂ · NU dietă hidrosalină prelungită", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>3 piloni</strong> rehidratare · <strong>S</strong>RO hipotonă (50-100 ml/kg/4-6h) · <strong>R</strong>ealimentare rapidă · <strong>O</strong>prirea pierderilor (ORS 50-100 ml/scaun suplimentar)", "fiziopatologie": "Glucoza din SRO activează co-transportul Na-glucoză (SGLT1) la nivelul enterocitului — Na intră pasiv, apa urmează osmotic. Acest mecanism persistă inclusiv în diaree, fiind baza fiziologică a SRO: **transportul Na-glucoză salvează viețile, nu antibioticul**.", "stiati_ca": "SRO a fost inclusă de *The Lancet* printre **cele mai mari 10 descoperiri medicale ale secolului XX** — a redus mortalitatea prin diaree cu peste 90% unde a fost implementată corect."}, "tratament-etiologic": {"titlu": "Antibiotic + simptomatic", "continut": "Antibiotic DOAR în indicații specifice (shigelloză, toxemie, sugar <3 luni febril) · Antivirale NU indicate · Antiemetice: ondansetron (ESPGHAN) · Antiperistaltice CONTRAINDICATE · Diosmectită + racecadotril opțional · Probiotice + zinc", "referinta": "", "pmid": "", "url": "", "hint": "", "mnemonic": "<strong>S.T.H.E.N.</strong> indicații antibiotic · <strong>S</strong>higelloză dovedită · <strong>T</strong>oxemie / bacteriemie · <strong>H</strong>oleră · <strong>E</strong> coli enterotoxigen / enteroinvaziv · <strong>N</strong>ou-născuți și sugari <3 luni febrili", "fiziopatologie": "Probioticele (LGG, S. boulardii) acționează prin: (1) competiție pentru situsuri de adeziune, (2) producere de bacteriocine, (3) modularea răspunsului imun, (4) refacerea joncțiunilor strânse enterocitare.", "stiati_ca": "Salmonella non-typhi **NU se tratează cu antibiotic** la copilul imunocompetent — antibioticul prelungește eliminarea fecală a germenului și nu scurtează boala. Excepție: sugar <3 luni, imunodeprimat, asplenie."}, "algoritm": {"titlu": "Algoritm BDA", "continut": "Algoritm decizional în 4 pași · Evaluarea deshidratării · Plan A/B/C rehidratare · Decizie antibiotic · Monitorizare și sfat MF", "referinta": "", "pmid": "", "url": "", "hint": "Click pe fiecare nod pentru detalii suplimentare. Urmează flow-ul decizional în practica clinică.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "ghiduri-vs-carte": {"titlu": "Actualizări post-ESMF", "continut": "Principiile cărții = concordante · Diferențe pe: tratament C. difficile (vancomicină prima linie) · zinc (toți <5 ani) · probiotice (LGG downgradat) · rotavirus vaccin (lipsă) · PCR multiplex (nouă tehnologie)", "referinta": "ESPGHAN Acute Gastroenteritis Guidelines (Guarino et al., 2014) · IDSA/SHEA C. difficile Guidelines Update (McDonald et al., 2017)", "pmid": "", "url": "https://pubmed.ncbi.nlm.nih.gov/24739189/", "hint": "Principiile fundamentale (3 grade deshidratare, planuri A/B/C, realimentare rapidă, abuz antibiotic, antidiareice contraindicate) sunt IDENTICE cu ghidurile actuale.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Auto-open knowledge sidebar on desktop
+if(window.innerWidth>1360){var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');if(ks){ks.classList.add('open');if(cw)cw.style.marginRight='320px'}}
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Generic Clinical Calculator Engine
+var calcState={};
+function calcSet(uid,key,val,btn){
+  if(!calcState[uid])calcState[uid]={};
+  calcState[uid][key]=val;
+  btn.parentElement.querySelectorAll('button').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  calcRun(uid);
+}
+function calcRun(uid){
+  var el=document.getElementById(uid);if(!el)return;
+  var cfg;try{cfg=JSON.parse(el.dataset.calcConfig)}catch(e){return}
+  var state=calcState[uid]||{};
+  // Check all params filled
+  var allFilled=cfg.params.every(function(p){return state[p]!==undefined&&state[p]!==null});
+  if(!allFilled)return;
+  // Calculate score
+  var score=0;
+  var scoring=cfg.scoring;
+  if(scoring.rules==='use_option_values'){
+    cfg.params.forEach(function(p){var v=state[p];if(v!==undefined)score+=parseInt(v)||0});
+  }else{
+    scoring.rules.forEach(function(r){
+      var v=state[r.param];
+      if(v===r.value||(r.value===true&&v===true)||(r.value===false&&v===false)||String(v)===String(r.value)){
+        score+=r.points;
+      }
+    });
+  }
+  if(scoring.min_score!==undefined&&score<scoring.min_score)score=scoring.min_score;
+  // Interpret
+  var risk='',action='',cls='low';
+  cfg.interpretation.forEach(function(i){
+    if(score>=i.range[0]&&score<=i.range[1]){risk=i.risk;action=i.action;cls=i['class']||'low'}
+  });
+  var resEl=document.getElementById(uid+'_result');if(resEl)resEl.style.display='block';
+  var sEl=document.getElementById(uid+'_score');if(sEl)sEl.textContent=score;
+  var rEl=document.getElementById(uid+'_risk');if(rEl)rEl.textContent=risk;
+  var aEl=document.getElementById(uid+'_action');if(aEl){aEl.textContent=action;aEl.className='score-action risk-'+cls}
+}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style=\"color:var(--green)\">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  function mdi(s){return s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^\*])\*([^\*\n]+?)\*(?!\*)/g,'$1<em>$2</em>')}
+  let html='<div class="ks-title">'+mdi(data.titlu)+'</div>';
+  html+='<div id="ksSrcSlot"></div>';
+  if(data.continut){
+    var items=data.continut.split('·').map(function(s){return s.trim()}).filter(function(s){return s.length>0});
+    var listHtml=items.map(function(it){return '<li>'+mdi(it)+'</li>'}).join('');
+    var lbl='Rezumat'+(data.titlu?' · '+data.titlu:'');
+    html+='<div class="ks-card"><div class="ks-label">'+lbl+'</div><ul class="ks-list">'+listHtml+'</ul></div>';
+  }
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+mdi(data.fiziopatologie)+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+mdi(data.stiati_ca)+'</div>'}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+mdi(data.hint)+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease';
+  updateSourcesCard(sectionId)
+}
+
+function srcItemHtml(s){
+  var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+  var h='<div class="ks-src-item"><div class="ks-src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="ks-src-item-meta">';
+  if(s.pmid)h+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank" onclick="event.stopPropagation()">PubMed</a>';
+  else if(s.url)h+='<a href="'+s.url+'" target="_blank" onclick="event.stopPropagation()">Link</a>';
+  if(s.nbk_id)h+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank" onclick="event.stopPropagation()">NCBI Books</a>';
+  h+='</div></div>';return h
+}
+function buildSourcesHtml(bid){
+  if(!window.sourcesData||!window.sourcesData[bid]||!window.sourcesData[bid].sources||!window.sourcesData[bid].sources.length)return'';
+  var ss=window.sourcesData[bid].sources;
+  var h='<div class="ks-sources"><div class="ks-src-title-static">&#x1F4DA; Citeste mai mult</div>';
+  h+=srcItemHtml(ss[0]);
+  if(ss.length>1){
+    var uid='kssrc_'+bid.replace(/[^a-z0-9]/g,'_');
+    h+='<button class="src-more-toggle" onclick="event.stopPropagation();var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(ss.length-1)+' resurse</button>';
+    h+='<div class="src-more-items" id="'+uid+'">';
+    for(var j=1;j<ss.length;j++)h+=srcItemHtml(ss[j]);
+    h+='</div>';
+  }
+  h+='</div>';return h
+}
+
+function updateSourcesCard(bid){
+  var slot=document.getElementById('ksSrcSlot');
+  if(!slot)return;
+  slot.innerHTML=buildSourcesHtml(bid)
+}
+
+// Mobile: track h3 headings for sources in sidebar
+var isMobile=window.innerWidth<=768;
+if(isMobile&&window.sourcesData){
+  var h3els=Array.from(document.querySelectorAll('h3.md-subtitle[data-block-id]'));
+  var curH3='';
+  window.addEventListener('scroll',function(){
+    var cur='';
+    for(var i=0;i<h3els.length;i++){if(window.scrollY>=h3els[i].offsetTop-120)cur=h3els[i].getAttribute('data-block-id')}
+    if(cur&&cur!==curH3){curH3=cur;updateSourcesCard(cur)}
+  })
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(window.innerWidth<=1360&&ks&&ks.classList.contains('open')&&!ks.contains(e.target)){ks.classList.remove('open')}}})
+
+// Algoritm Clinic — SVG connectors
+function drawAlgConnectors(){
+  document.querySelectorAll('.alg-grid').forEach(function(grid){
+    var ed=grid.dataset.edges;if(!ed)return;
+    var edges;try{edges=JSON.parse(ed)}catch(ex){return}
+    var canvas=grid.parentElement;
+    var svg=canvas.querySelector('.alg-svg');if(!svg)return;
+    var w=canvas.scrollWidth,h=canvas.scrollHeight;
+    svg.setAttribute('width',w);svg.setAttribute('height',h);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.innerHTML='<defs><marker id="algArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(0,191,165,0.5)"/></marker></defs>';
+    var cRect=canvas.getBoundingClientRect();
+    // Count edges per source node for label staggering
+    var edgesPerSource={};edges.forEach(function(e){edgesPerSource[e.from]=(edgesPerSource[e.from]||0)+1});
+    var edgeSourceIdx={};
+    edges.forEach(function(e){
+      var fromEl=grid.querySelector('[data-id="'+e.from+'"]');
+      var toEl=grid.querySelector('[data-id="'+e.to+'"]');
+      if(!fromEl||!toEl)return;
+      var fR=fromEl.getBoundingClientRect();
+      var tR=toEl.getBoundingClientRect();
+      var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var d='';
+      var sameRow=Math.abs(fR.top-tR.top)<10;
+      if(sameRow){
+        var sx,sy,ex,ey;
+        if(fR.left<tR.left){sx=fR.right-cRect.left;ex=tR.left-cRect.left}
+        else{sx=fR.left-cRect.left;ex=tR.right-cRect.left}
+        sy=fR.top+fR.height/2-cRect.top;ey=tR.top+tR.height/2-cRect.top;
+        d='M'+sx+','+sy+'L'+ex+','+ey;
+      }else{
+        var x1=fR.left+fR.width/2-cRect.left,y1=fR.bottom-cRect.top;
+        var x2=tR.left+tR.width/2-cRect.left,y2=tR.top-cRect.top;
+        if(Math.abs(x1-x2)<3){d='M'+x1+','+y1+'L'+x2+','+y2}
+        else{
+          // Find max bottom of all nodes on the source row to avoid overlap
+          var fRow=fromEl.style.gridRow||'1';
+          var maxBottom=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){
+            var nRow=n.style.gridRow||'1';
+            if(nRow===fRow){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBottom)maxBottom=nb}
+          });
+          var dropY=maxBottom+14;
+          d='M'+x1+','+y1+'L'+x1+','+dropY+'L'+x2+','+dropY+'L'+x2+','+y2
+        }
+      }
+      path.setAttribute('d',d);path.setAttribute('stroke','rgba(0,191,165,0.4)');
+      path.setAttribute('stroke-width','2');path.setAttribute('fill','none');
+      path.setAttribute('marker-end','url(#algArr)');svg.appendChild(path);
+      if(e.label){
+        // Track stagger index for this source node
+        if(!edgeSourceIdx[e.from])edgeSourceIdx[e.from]=0;
+        var stIdx=edgeSourceIdx[e.from]++;
+        var totalFromSource=edgesPerSource[e.from]||1;
+        var lx,ly;
+        if(sameRow){var sx2=fR.left<tR.left?fR.right-cRect.left:fR.left-cRect.left;var ex2=fR.left<tR.left?tR.left-cRect.left:tR.right-cRect.left;lx=(sx2+ex2)/2;ly=Math.min(fR.top,tR.top)+Math.min(fR.height,tR.height)/2-cRect.top-14}
+        else{var x1b=fR.left+fR.width/2-cRect.left,x2b=tR.left+tR.width/2-cRect.left;if(Math.abs(x1b-x2b)<3){lx=x1b+10;ly=(fR.bottom-cRect.top+tR.top-cRect.top)/2}else{
+          var fRow2=fromEl.style.gridRow||'1';var maxBot2=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){var nR=n.style.gridRow||'1';if(nR===fRow2){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBot2)maxBot2=nb}});
+          lx=(x1b+x2b)/2;ly=maxBot2+12}}
+        // Place label near target node (above it) when fan-out is wide
+        if(totalFromSource>=4){lx=tR.left+tR.width/2-cRect.left;ly=tR.top-cRect.top-14}
+        var bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        var tw=e.label.length*7+10;
+        bg.setAttribute('x',lx-tw/2);bg.setAttribute('y',ly-10);bg.setAttribute('width',tw);bg.setAttribute('height',18);
+        bg.setAttribute('rx','4');bg.setAttribute('fill','#1c2333');bg.setAttribute('stroke','rgba(255,255,255,0.08)');bg.setAttribute('stroke-width','1');
+        svg.appendChild(bg);
+        var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x',lx);txt.setAttribute('y',ly+3);txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');txt.setAttribute('fill','#9ca3af');
+        txt.setAttribute('font-family','Space Grotesk,sans-serif');txt.textContent=e.label;svg.appendChild(txt);
+      }
+    });
+  });
+}
+// Draw connectors after layout is stable
+requestAnimationFrame(function(){setTimeout(drawAlgConnectors,200)});
+window.addEventListener('resize',function(){setTimeout(drawAlgConnectors,100)});
+
+// Algoritm Clinic — click to push detail to knowledge sidebar
+document.addEventListener('click',function(e){
+  var node=e.target.closest('.alg-node.has-detail');
+  if(!node)return;
+  var detailEl=node.querySelector('.alg-detail');
+  if(!detailEl)return;
+  var container=document.getElementById('algKsContainer');
+  var ksSidebar=document.querySelector('.knowledge-sidebar');
+  if(!container||!ksSidebar)return;
+  var labelEl=node.querySelector('.alg-node-label');
+  var fullLabel=labelEl?labelEl.textContent:'';
+  var shortTitle=fullLabel.length>30?fullLabel.substring(0,30)+'\u2026':fullLabel;
+  var nodeId=node.dataset.id;
+  // Check if card already exists
+  var existing=container.querySelector('[data-node="'+nodeId+'"]');
+  if(existing){existing.style.animation='none';existing.offsetHeight;existing.style.animation='algKsFlash .4s ease';existing.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  // Determine color from node type
+  var tc='var(--teal)';
+  if(node.classList.contains('alg-start'))tc='var(--green)';
+  else if(node.classList.contains('alg-decizie'))tc='var(--amber)';
+  else if(node.classList.contains('alg-actiune'))tc='var(--blue)';
+  else if(node.classList.contains('alg-alerta'))tc='var(--coral)';
+  // Brief highlight on node
+  node.style.boxShadow='0 0 0 3px '+tc;setTimeout(function(){node.style.boxShadow=''},600);
+  // Build card
+  var card=document.createElement('div');card.className='alg-ks-card';card.dataset.node=nodeId;card.style.borderLeftColor=tc;
+  card.innerHTML='<button class="alg-ks-close" title="\xd7">\xd7</button><div class="alg-ks-title" style="color:'+tc+'">'+shortTitle+'</div><div class="alg-ks-content">'+detailEl.innerHTML+'</div>';
+  card.querySelector('.alg-ks-close').addEventListener('click',function(ev){ev.stopPropagation();card.style.animation='algKsOut .2s ease forwards';setTimeout(function(){card.remove()},200)});
+  container.appendChild(card);
+  // Open sidebar if closed
+  if(!ksSidebar.classList.contains('open')){ksSidebar.classList.add('open');var cw=document.querySelector('.content-wrapper');if(cw&&window.innerWidth>1360)cw.style.marginRight='320px'}
+  setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
+});
+
+// Source Provenance — attach buttons from embedded sourcesData
+(function(){
+  var blocks=document.querySelectorAll('[data-block-id]');
+  if(!blocks.length)return;
+  var data=window.sourcesData;
+  if(!data)return;
+  blocks.forEach(function(el){
+    var bid=el.getAttribute('data-block-id');if(!bid)return;
+    var btn=document.createElement('button');btn.className='src-btn';btn.title='Citeste mai mult';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="3"/><path d="M6.5 20c-.3 0-.5-.2-.5-.5v-7c0-1.7 1.3-3 3-3h6c1.7 0 3 1.3 3 3v7c0 .3-.2.5-.5.5-.3 0-.5-.2-.5-.5v-5.5L12 16l-5-3.5v7c0 .3-.2.5-.5.5z"/></svg>';
+    var popup=document.createElement('div');popup.className='src-popup';
+    var blockData=data[bid];
+    if(blockData&&blockData.sources&&blockData.sources.length){
+      var srcs=blockData.sources;
+      function srcHtml(s){
+        var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+        var r='<div class="src-item"><div class="src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="src-item-meta">';
+        if(s.pmid)r+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank">PubMed</a>';
+        else if(s.url)r+='<a href="'+s.url+'" target="_blank">Link</a>';
+        if(s.nbk_id)r+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank">NCBI Books</a>';
+        r+='</div></div>';return r;
+      }
+      var h='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div>';
+      h+=srcHtml(srcs[0]);
+      if(srcs.length>1){
+        var uid='src_more_'+bid.replace(/[^a-z0-9]/g,'_');
+        h+='<button class="src-more-toggle" onclick="var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(srcs.length-1)+' resurse</button>';
+        h+='<div class="src-more-items" id="'+uid+'">';
+        for(var j=1;j<srcs.length;j++)h+=srcHtml(srcs[j]);
+        h+='</div>';
+      }
+      popup.innerHTML=h;
+    }else{
+      popup.innerHTML='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div><div class="src-none">Nicio resursa gasita pentru aceasta sectiune.</div>';
+    }
+    el.appendChild(btn);el.appendChild(popup);
+    btn.addEventListener('click',function(ev){
+      ev.stopPropagation();
+      document.querySelectorAll('.src-popup.show').forEach(function(p){if(p!==popup)p.classList.remove('show')});
+      popup.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click',function(ev){if(!ev.target.closest('.src-popup')&&!ev.target.closest('.src-btn')){document.querySelectorAll('.src-popup.show').forEach(function(p){p.classList.remove('show')})}});
+})();
+
+</script>
+</body>
+</html>
