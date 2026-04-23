@@ -335,6 +335,46 @@ D) CORECT — Context clinic clasic pentru ICD: diaree apoasă ± sanguinolentă
 E) GREȘIT — colonoscopia de urgență NU e necesară de rutină; diagnosticul se face prin determinarea toxinelor. Colonoscopia se rezervă pentru cazuri selectate (diagnostic incert, formă fulminantă).
 :::
 
+:::quiz
+titlu: Criterii de severitate și tratamentul ICD
+id: bda_copil_quiz_icd_severitate
+---
+Un copil de 8 ani, cunoscut cu leucemie acută limfoblastică în tratament de consolidare (ultima cură chimioterapică acum 10 zile, cu profilaxie cu ceftriaxonă), se prezintă cu **diaree apoasă sanguinolentă** de 3 zile, **febră 39°C**, **dureri abdominale intense**. Laborator: **leucocite 22.000/mm³** (82% neutrofile), **creatinină 1,8× valoarea bazală**, PCR 195 mg/L. Toxina A/B pozitivă în scaun. Care este tratamentul de primă linie?
+
+A) Metronidazol PO 500 mg × 3/zi, 10 zile
+B) Ciprofloxacină PO 15 mg/kg/zi, 7 zile
+*C) Internare + Vancomicină PO 125 mg × 4/zi, 10-14 zile
+D) Rehidratare orală + *Saccharomyces boulardii*, fără antibiotic specific
+E) Metronidazol i.v. + loperamid pentru controlul diareei
+
+FEEDBACK:
+A) GREȘIT — metronidazolul e prima linie DOAR în **forma ușoară-moderată**. Acest pacient îndeplinește criteriile de **formă severă** (leucocite ≥ 15.000/mm³, creatinină ≥ 1,5× bazal) și necesită vancomicină PO + spitalizare.
+B) GREȘIT — fluorochinolonele sunt printre antibioticele care DECLANȘEAZĂ ICD, nu o tratează. NU au indicație în ICD.
+C) CORECT — **Criteriile de formă severă** (cap. 2.2.12 ESMF): leucocite ≥ 15.000/mm³ SAU creatinină ≥ 1,5× valoarea normală/bazală. Pacientul are AMBELE. Tratament: **spitalizare + vancomicină PO 125 mg × 4/zi, 10-14 zile**. Metronidazolul i.v. se adaugă doar în forma fulminantă (ileus, megacolon). Nu uita: **oprirea antibioticului cauzal** (aici ceftriaxona) e prima măsură.
+D) GREȘIT — *S. boulardii* e util ca adjuvant pentru prevenirea recurențelor, NU ca tratament unic. Forma severă cu confirmare de toxine necesită antibiotic specific.
+E) GREȘIT — două erori majore: (1) metronidazolul i.v. singur NU e prima linie în forma severă (vancomicina PO e); (2) **loperamidul e CONTRAINDICAT** — riscă megacolon toxic și perforație.
+:::
+
+:::quiz
+titlu: Interpretarea testului toxinei A/B
+id: bda_copil_quiz_icd_diagnostic
+---
+Un copil de 6 ani internat pentru pneumonie comunitară, tratat cu ceftriaxonă i.v. de 6 zile, dezvoltă **diaree apoasă 6-7 scaune/zi** fără sânge, **febră joasă 37,8°C**, fără dureri abdominale semnificative. Laborator: leucocite 11.000/mm³, creatinină normală. Suspectezi ICD formă ușoară-moderată și ceri **toxina A/B în scaun — rezultatul e NEGATIV**. Care e conduita corectă?
+
+A) Exclude diagnosticul de ICD și continuă cu ceftriaxona (nu e C. difficile)
+B) Schimbă antibioticul la ciprofloxacină pentru a acoperi enterobacterii
+*C) Repetă determinarea toxinei A/B în 1-2 zile (poate necesita 2-3 probe); menține suspiciunea clinică; inițiază metronidazol empiric și oprește ceftriaxona dacă starea se agravează sau proba a doua e pozitivă
+D) Efectuează colonoscopie de urgență pentru a vizualiza direct pseudomembranele
+E) Administrează loperamid pentru controlul simptomatic al diareei până la rezultat
+
+FEEDBACK:
+A) GREȘIT — **sensibilitatea testului toxinei la forme ușoare este doar ~20%**. Un test negativ în context clinic sugestiv NU exclude diagnosticul. La forme severe sensibilitatea crește la >90%, dar aici suntem la formă ușoară.
+B) GREȘIT — ciprofloxacina e un alt antibiotic care declanșează ICD; în plus, schimbarea oarbă a antibioticului fără diagnostic clar nu e rațională.
+C) CORECT — Toxina A/B are **sensibilitate ~20% în formele ușoare** vs >90% în cele severe. Standardul clinic: dacă suspiciunea e înaltă și primul test e negativ, **repetă proba — uneori sunt necesare 2-3 recoltări**. Între timp, menții vigilența clinică, poți iniția metronidazol empiric dacă evoluția sugerează agravare, și **oprești antibioticul cauzal** dacă nu e esențial.
+D) GREȘIT — colonoscopia NU se face de rutină. Se rezervă pentru cazuri cu diagnostic incert după investigații repetate sau pentru suspiciunea de formă fulminantă. În plus, e un gest invaziv cu risc de perforație pe colon inflamat.
+E) GREȘIT — **antidiareicele sunt CONTRAINDICATE în orice suspiciune de ICD**, indiferent de rezultatul testului — riscul de megacolon toxic + perforație e inacceptabil.
+:::
+
 :::divider
 :::
 
