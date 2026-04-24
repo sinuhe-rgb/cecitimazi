@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astmul Acut Sever — CeCitimAzi Pre-Stagiu</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* See cecitimazi_theme.css for the full version */
+:root{--bg-primary:#0d1117;--bg-secondary:#161b22;--bg-tertiary:#1c2333;--bg-card:#1e2736;--bg-card-hover:#243044;--teal:#00bfa5;--teal-dim:#00897b;--teal-glow:rgba(0,191,165,0.15);--teal-border:rgba(0,191,165,0.3);--coral:#ff6b6b;--amber:#ffc107;--green:#4caf50;--purple:#bb86fc;--blue:#64b5f6;--orange:#ff9800;--text-primary:#e6edf3;--text-secondary:#9ca3af;--text-muted:#6b7280;--border:rgba(255,255,255,0.08);--font-main:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;overflow-x:hidden}body{background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-main);line-height:1.7;font-size:16px;overflow-x:hidden}::selection{background:var(--teal);color:var(--bg-primary)}
+.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(13,17,23,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;max-width:100vw;overflow:hidden}
+.top-nav .logo{color:var(--teal);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+.progress-bar-container{flex:1;max-width:300px;margin:0 24px;height:4px;background:var(--bg-tertiary);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-dim));width:0%;transition:width 0.5s ease}
+.xp-badge{background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:4px 12px;border-radius:20px;font-size:13px;font-weight:600}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);color:var(--teal);padding:6px 10px;border-radius:6px;cursor:pointer;font-size:18px}
+.ks-toggle{display:block;background:none;border:1px solid var(--border);padding:5px 9px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1}
+.page-container{display:flex;min-height:100vh;justify-content:center;overflow-x:hidden;max-width:100vw;padding-top:52px}
+.sidebar{width:240px;background:var(--bg-secondary);border-right:1px solid var(--border);padding:24px 0;position:fixed;left:0;height:calc(100vh - 52px);overflow-y:auto;top:52px;z-index:50}
+.sidebar::-webkit-scrollbar{width:5px}.sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.toc-title{color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:0 20px 12px;border-bottom:1px solid var(--border)}
+.toc-list{list-style:none;padding:12px 0}.toc-list a{display:block;padding:9px 20px;color:var(--text-secondary);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.toc-list a:hover{color:var(--teal);background:var(--bg-card)}.toc-list a.active{color:var(--teal);border-left-color:var(--teal);background:var(--bg-tertiary)}
+.content-wrapper{margin-left:240px;margin-right:320px;flex:1;padding:0 48px 80px;max-width:780px;min-width:0;overflow-x:hidden}
+.knowledge-sidebar{width:320px;position:fixed;right:-340px;top:52px;height:calc(100vh - 52px);overflow-y:auto;padding:20px 18px;border-left:1px solid var(--border);background:var(--bg-secondary);transition:right .3s;z-index:200}.knowledge-sidebar.open{right:0}
+.knowledge-sidebar::-webkit-scrollbar{width:5px}.knowledge-sidebar::-webkit-scrollbar-thumb{background:var(--teal-dim);border-radius:3px}
+.ks-inner{animation:fadeIn .4s ease}
+.ks-placeholder{text-align:center;padding:40px 12px;color:var(--text-muted)}
+.ks-placeholder-icon{font-size:28px;margin-bottom:10px;opacity:.5}
+.ks-placeholder-text{font-size:12px;line-height:1.6}
+.ks-title{font-size:13px;font-weight:700;color:var(--teal);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.ks-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 14px 10px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.5}
+.ks-card strong{color:var(--text-primary)}
+.ks-card em{color:var(--text-primary);font-style:italic}
+.ks-card .ks-label{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;line-height:1.35}
+.ks-list{list-style:none;padding:0;margin:0}
+.ks-list li{position:relative;padding:2px 0 2px 12px;font-size:12px;line-height:1.45}
+.ks-list li:before{content:"·";position:absolute;left:2px;color:var(--teal);font-weight:700}
+.ks-ref{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:11px}
+.ks-ref .ref-icon{color:var(--blue);margin-right:4px}
+.ks-ref a{color:var(--blue);text-decoration:none;font-weight:500;word-break:break-word}
+.ks-ref a:hover{text-decoration:underline}
+.ks-hint{background:linear-gradient(135deg,rgba(255,193,7,0.08),rgba(255,193,7,0.02));border:1px solid rgba(255,193,7,0.2);border-radius:8px;padding:12px;font-size:12px;color:var(--amber);line-height:1.6}
+.ks-hint .hint-icon{margin-right:4px}
+.ks-mnemonic{background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(0,191,165,0.02));border:1px solid var(--teal-border);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-mnemonic .mn-title{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-mnemonic strong{color:var(--teal);font-size:16px;font-family:var(--font-mono)}
+.mn-list{list-style:none;padding:0;margin:4px 0 0}.mn-list li{padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;line-height:1.5}.mn-list li:last-child{border-bottom:none}
+.ks-fiziopatologie{background:linear-gradient(135deg,rgba(187,134,252,0.08),rgba(187,134,252,0.02));border:1px solid rgba(187,134,252,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+.ks-fiziopatologie .fp-title{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.ks-stiati{background:linear-gradient(135deg,rgba(100,181,246,0.08),rgba(100,181,246,0.02));border:1px solid rgba(100,181,246,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px;color:var(--blue);line-height:1.6}
+.ks-stiati .st-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.src-btn{position:absolute;top:6px;right:6px;background:var(--bg-primary);border:1px solid rgba(77,199,191,0.2);color:var(--teal);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s,transform .2s;z-index:10;padding:0;line-height:1}
+[data-block-id]{position:relative}[data-block-id]:hover .src-btn{opacity:.6}.src-btn:hover{opacity:1!important;transform:scale(1.1);border-color:var(--teal)}
+@media(max-width:768px){.src-btn{display:none!important}}
+.ks-sources{background:var(--bg-card);border:1px solid rgba(77,199,191,0.2);border-radius:8px;padding:12px;margin-bottom:10px;font-size:12px}
+.ks-sources .ks-src-title-static{font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.ks-sources .ks-src-item{padding:6px 0;border-bottom:1px solid var(--border)}.ks-sources .ks-src-item:last-child{border-bottom:none}
+.ks-sources .ks-src-item-title{color:var(--text-primary);font-weight:500;font-size:11.5px;margin-bottom:2px}
+.ks-sources .ks-src-item-meta{color:var(--text-muted);font-size:10.5px}
+.ks-sources .ks-src-item-meta a{color:var(--blue);text-decoration:none}
+.ks-sources .ks-src-item-meta a:hover{text-decoration:underline}
+.src-popup{display:none;position:absolute;top:36px;right:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:14px;min-width:280px;max-width:360px;z-index:20;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-size:12px;max-height:320px;overflow-y:auto}
+.src-popup.show{display:block;animation:fadeIn .2s ease}
+.src-popup-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.src-item{padding:8px 0;border-bottom:1px solid var(--border)}.src-item:last-child{border-bottom:none}
+.src-item-title{color:var(--text-primary);font-weight:500;font-size:12px;margin-bottom:3px}
+.src-item-meta{color:var(--text-muted);font-size:11px}.src-item-meta a{color:var(--blue);text-decoration:none}.src-item-meta a:hover{text-decoration:underline}
+.src-tag-free{display:inline-block;background:rgba(76,175,80,0.15);color:var(--green);padding:1px 6px;border-radius:4px;font-size:9px;font-weight:700;margin-left:4px;letter-spacing:.5px;vertical-align:middle}
+.src-none{color:var(--text-muted);font-style:italic;font-size:11px}
+.src-more-toggle{display:flex;align-items:center;gap:4px;color:var(--text-muted);font-size:11px;cursor:pointer;padding:6px 0;border:none;background:none;width:100%}
+.src-more-toggle:hover{color:var(--teal)}
+.src-more-toggle svg{transition:transform .2s}
+.src-more-toggle.open svg{transform:rotate(180deg)}
+.src-more-items{display:none}.src-more-items.open{display:block}
+@media(max-width:1360px){.content-wrapper{margin-right:0;max-width:780px}}
+@media(max-width:1024px){.content-wrapper{margin-left:0;padding:0 24px 80px}.sidebar{left:-240px;transition:left .3s}.sidebar.open{left:0;z-index:200}.menu-toggle{display:block}}
+@media(max-width:480px){.content-wrapper{padding:0 12px 80px}.section-title{font-size:20px}.section-label{font-size:10px}.text-block,.text-block p{font-size:14px;line-height:1.65;word-break:break-word}.quiz-option{font-size:13px;padding:10px 12px}.q-text{font-size:14px}.case-box{margin:14px -4px}.match-item{font-size:12px;padding:10px}.highlight-box{padding:14px 12px}.comparison-card{padding:12px 10px}.data-table{font-size:12px;display:block;overflow-x:auto}.data-table td,.data-table th{padding:8px 6px}.hero{padding:40px 0 30px}.hero-title{font-size:26px}.why-card{padding:16px}.pearl-box,.warning-box{padding:14px 12px}}
+.hero{padding:60px 0 40px;text-align:left}
+.hero-badge{display:inline-block;background:var(--teal-glow);border:1px solid var(--teal-border);color:var(--teal);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:700;margin-bottom:10px;line-height:1.2;background:linear-gradient(135deg,var(--teal),var(--teal-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .hero-accent{color:var(--teal)}.hero p{color:var(--text-secondary);font-size:17px;max-width:620px}
+.section{margin-bottom:48px;scroll-margin-top:70px}.section-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+h2{font-size:26px;font-weight:700;margin-bottom:18px;line-height:1.3;color:var(--teal);border-bottom:2px solid var(--teal-border);padding-bottom:10px}
+h3{font-size:19px;font-weight:600;margin:28px 0 10px;color:var(--text-primary)}
+.text-block{margin-bottom:16px;color:var(--text-secondary)}.text-block p{margin-bottom:12px}.text-block strong{color:var(--text-primary)}
+.text-block ul{margin:8px 0 12px 20px}.text-block li{margin-bottom:4px;color:var(--text-secondary)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;transition:border-color .3s}
+.card:hover{border-color:var(--teal-border)}
+.card.highlight{border-left:3px solid var(--teal);background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04))}
+.card.warning{border-left:3px solid var(--coral);background:linear-gradient(135deg,var(--bg-card),rgba(255,107,107,0.04))}
+.card.pearl{border-left:3px solid var(--amber);background:linear-gradient(135deg,var(--bg-card),rgba(255,193,7,0.04))}
+.md-link{color:var(--teal);text-decoration:underline;text-decoration-color:rgba(0,191,165,0.35);text-decoration-thickness:1px;text-underline-offset:2px;transition:text-decoration-color 0.15s ease,color 0.15s ease}
+.md-link:visited{color:var(--teal)}
+.md-link:hover{color:var(--teal);text-decoration-color:var(--teal);text-decoration-thickness:2px}
+.md-link::after{content:' ↗';font-size:0.82em;opacity:0.55;margin-left:1px}
+.list-component{margin:18px 0;padding:16px 18px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px}
+.list-component .list-titlu{font-size:13px;font-weight:600;color:var(--teal);margin-bottom:12px;letter-spacing:0.3px}
+.list-component .list-body{list-style:none;padding:0;margin:0;counter-reset:none}
+.list-component .list-item{display:flex;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.list-component .list-item:last-child{border-bottom:none}
+.list-component .list-content{flex:1;color:var(--text);line-height:1.55;font-size:14.5px}
+.list-component .list-content strong{color:var(--text);font-weight:600}
+.list-component .list-badge{flex-shrink:0;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,191,165,0.12);color:var(--teal);font-weight:700;font-size:12px;font-family:var(--mono,monospace);margin-top:1px;border:1px solid var(--teal-border)}
+.list-component .list-badge.list-check{background:rgba(76,175,80,0.12);color:var(--green);border-color:rgba(76,175,80,0.3)}
+.list-component.list-stil-bullet .list-item::before{content:'';flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:10px}
+.list-component.list-stil-bullet .list-badge{display:none}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.card-icon{flex-shrink:0}
+.card.highlight .card-label{color:var(--teal)}.card.warning .card-label{color:var(--coral)}.card.pearl .card-label{color:var(--amber)}
+.why-box{background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;padding:22px;margin-bottom:28px;position:relative;overflow:hidden;max-width:100%;word-break:break-word}
+.why-box::before{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(0,191,165,0.1),transparent 70%);pointer-events:none}
+.why-box .label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.table-wrapper{overflow-x:auto;margin:16px 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}thead th{background:var(--teal-dim);color:white;padding:11px 14px;text-align:left;font-weight:600;font-size:12px;letter-spacing:.5px;text-transform:uppercase}
+tbody td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}tbody tr{background:var(--bg-card)}tbody tr:nth-child(even){background:var(--bg-tertiary)}tbody tr:hover{background:var(--bg-card-hover)}td strong{color:var(--teal)}
+.quiz-container{margin:28px 0}.quiz-q{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:14px}
+.q-label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.q-text{font-size:15px;font-weight:500;margin-bottom:14px}
+.afirmatii{margin:10px 0;padding:12px;background:var(--bg-card);border-radius:8px;font-size:13px}
+.grila-hint{font-size:12px;color:var(--text-muted)}
+.quiz-option{display:block;width:100%;text-align:left;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px}
+.quiz-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.quiz-option.correct{border-color:var(--green);background:rgba(76,175,80,0.1)}.quiz-option.wrong{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.quiz-option:disabled{cursor:default}
+.quiz-explanation{display:none;margin-top:12px;padding:14px;background:rgba(0,191,165,0.05);border-radius:8px;border:1px solid var(--teal-border);font-size:14px;color:var(--text-secondary)}
+.quiz-explanation.show{display:block;animation:fadeIn .3s ease}
+.fb-correct{color:var(--green);margin-bottom:8px;line-height:1.5}
+.fb-toggle{cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85}
+.fb-toggle:hover{opacity:1;text-decoration:underline}
+.fb-wrong{display:none;margin-top:8px;padding-top:10px;border-top:1px solid var(--border);color:var(--text-secondary);line-height:1.6;font-size:13px}
+.fb-wrong.show{display:block;animation:fadeIn .3s ease}
+.qm-option{display:flex;align-items:flex-start;gap:10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-primary);padding:11px 14px;border-radius:8px;margin-bottom:7px;cursor:pointer;transition:all .2s;font-family:var(--font-main);font-size:14px;line-height:1.5}
+.qm-option:hover{border-color:var(--teal-border);background:var(--bg-card-hover)}
+.qm-option.selected{border-color:var(--teal);background:rgba(0,191,165,0.08)}
+.qm-option.correct-pick{border-color:var(--green);background:rgba(76,175,80,0.12)}
+.qm-option.wrong-pick{border-color:var(--coral);background:rgba(255,107,107,0.1);opacity:.7}
+.qm-option.missed{border-color:var(--amber);background:rgba(255,193,7,0.08)}
+.qm-option.locked{pointer-events:none}
+.qm-check{accent-color:var(--teal);width:18px;height:18px;margin-top:2px;flex-shrink:0;cursor:pointer}
+.qm-option.locked .qm-check{pointer-events:none}
+.qm-letter{font-weight:600;color:var(--text-secondary);flex-shrink:0}
+.qm-hint{font-weight:400;color:var(--amber);font-size:10px;letter-spacing:0.5px}
+.qm-verify-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px;transition:filter .2s}
+.qm-verify-btn:hover{filter:brightness(1.15)}
+.qm-verify-btn:disabled{opacity:.5;cursor:not-allowed}
+.img-details-toggle{display:block;background:none;border:none;cursor:pointer;color:var(--teal);font-size:13px;padding:6px 0;user-select:none;opacity:0.85;font-family:inherit;margin-top:2px}
+.img-details-toggle:hover{opacity:1;text-decoration:underline}
+.img-cap-full{display:none;animation:fadeIn .3s ease}
+.img-cap-full.show{display:block}
+.img-cap-full.show+.img-details-toggle{margin-top:4px}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}@media(max-width:600px){.comparison-grid{grid-template-columns:1fr}}
+.comparison-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:18px}
+.comparison-card h4{margin-bottom:10px;font-size:15px}.comparison-card ul{list-style:none;padding:0}
+.comparison-card ul li{padding:3px 0;font-size:13px;color:var(--text-secondary)}.comparison-card ul li::before{content:'→ ';color:var(--teal);font-weight:600}
+.img-component{margin:18px auto;border-radius:10px;overflow:hidden;border:1px solid var(--border);max-width:100%}
+@media(min-width:1025px){.img-component{max-width:70%}}
+.img-component img{width:100%;display:block;height:auto;cursor:zoom-in}
+.lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;padding:0;overflow:auto}
+.lightbox.active{display:flex;align-items:center;justify-content:center}
+.lb-close{position:fixed;top:20px;right:28px;z-index:10001;background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);color:#fff;font-size:24px;cursor:pointer;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{background:rgba(255,255,255,0.12);border-color:var(--teal)}
+.lb-layout{display:flex;align-items:center;gap:0;max-width:95vw;max-height:92vh;margin:auto}
+.lb-left{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-width:0}
+.lb-left img{max-width:100%;max-height:85vh;border-radius:10px;object-fit:contain;animation:fadeIn .3s ease}
+.lb-sursa{margin-top:10px;text-align:center;min-height:18px}
+.lb-sursa a{color:var(--teal);font-size:11px;text-decoration:none;opacity:0.7;transition:opacity .2s}
+.lb-sursa a:hover{opacity:1;text-decoration:underline}
+.lb-right{width:340px;flex-shrink:0;background:rgba(22,27,34,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px 22px;overflow-y:auto;max-height:80vh;margin-left:-20px;align-self:center;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.lb-titlu{font-size:15px;font-weight:700;color:var(--teal);margin-bottom:14px;line-height:1.4}
+.lb-desc{font-size:13px;color:rgba(230,237,243,0.85);line-height:1.7}
+.lb-desc strong{color:#fff}
+.lb-desc ul{list-style:none;padding:0;margin:0}.lb-desc li{padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.lb-desc li:last-child{border-bottom:none}
+@media(max-width:1024px){.lb-layout{flex-direction:column;max-height:none;padding:20px}.lb-right{width:100%;max-height:40vh;margin-left:0;margin-top:12px}}
+.img-caption{background:var(--bg-tertiary);padding:14px 18px;border-top:1px solid var(--border)}
+.caption-title{font-size:14px;font-weight:600;color:var(--teal);margin-bottom:6px}
+.caption-text{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.image-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.image-pair .image-pair-item{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--bg-secondary);display:flex;flex-direction:column}
+.image-pair .img-component{max-width:100%;margin:0;border:none;border-radius:0;height:260px;overflow:hidden}
+.image-pair .img-component img{width:100%;height:100%;object-fit:cover;object-position:center}
+.image-pair .img-caption{padding:12px 14px;flex:1}
+.image-pair .caption-title{font-size:13px}
+.image-pair .caption-text{font-size:12px}
+@media(max-width:1024px){.image-pair{grid-template-columns:1fr}.image-pair .img-component{height:300px}}
+.tags-row{margin:14px 0}.tag{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px 3px 2px 0}
+.tag-bact{background:rgba(255,107,107,0.15);color:var(--coral)}.tag-viral{background:rgba(100,181,246,0.15);color:var(--blue)}.tag-fungic{background:rgba(187,134,252,0.15);color:var(--purple)}.tag-alergic{background:rgba(255,193,7,0.15);color:var(--amber)}
+.collapsible{margin-bottom:10px}
+.collapsible-header{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--border);padding:12px 18px;border-radius:8px;cursor:pointer;transition:all .2s;user-select:none;font-size:14px}
+.collapsible-header:hover{border-color:var(--teal-border)}.collapsible-header .icon{color:var(--teal);font-size:16px;transition:transform .3s}
+.collapsible-header.active .icon{transform:rotate(180deg)}.collapsible-header.active{border-radius:8px 8px 0 0;border-bottom-color:transparent}
+.collapsible-body{display:none;padding:18px;background:var(--bg-card);border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;font-size:14px;color:var(--text-secondary);line-height:1.8}
+.collapsible-body.show{display:block;animation:fadeIn .3s ease}
+.timeline{position:relative;margin:20px 0;padding-left:30px}.timeline::before{content:'';position:absolute;left:11px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--teal),var(--purple))}
+.timeline-item{position:relative;margin-bottom:22px}.timeline-item::before{content:'';position:absolute;left:-24px;top:5px;width:10px;height:10px;border-radius:50%;border:2px solid var(--teal);background:var(--bg-primary)}
+.timeline-item:nth-child(even)::before{border-color:var(--purple)}.timeline-item h4{font-size:14px;font-weight:600;margin-bottom:3px}.timeline-item p{font-size:13px;color:var(--text-secondary)}
+.mnemonic{background:linear-gradient(135deg,var(--bg-card),rgba(0,191,165,0.04));border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:22px;margin-bottom:16px}
+.mnemonic .card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;color:var(--teal)}
+.mnemonic-grid{display:grid;grid-template-columns:60px 1fr;gap:6px;align-items:center}
+.mnemonic-letter{color:var(--teal);font-size:28px;font-weight:700;font-family:var(--font-mono)}.mnemonic-text{font-size:15px;color:var(--text-secondary)}
+.calc-box{background:linear-gradient(135deg,var(--bg-card),var(--bg-tertiary));border:1px solid var(--border);border-radius:10px;padding:22px;margin:20px 0}
+.calc-box h4{color:var(--teal);margin-bottom:14px;font-size:17px}
+.calc-num-input{background:var(--bg-tertiary);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:14px;font-family:inherit;width:120px;transition:border-color 0.15s}
+.calc-num-input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,191,165,0.15)}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.calc-row:last-of-type{border-bottom:none}
+.calc-row label{font-size:13px;flex:1}.calc-toggle{display:flex;gap:4px}
+.calc-toggle button{background:var(--bg-secondary);border:1px solid var(--border);color:var(--text-secondary);padding:5px 12px;border-radius:6px;cursor:pointer;font-family:var(--font-main);font-size:12px;transition:all .2s}
+.calc-toggle button.active{background:var(--teal);color:var(--bg-primary);border-color:var(--teal);font-weight:600}
+.calc-toggle button:hover:not(.active){border-color:var(--teal-border)}
+.calc-result{margin-top:18px;padding:18px;background:var(--bg-secondary);border-radius:10px;text-align:center;border:1px solid var(--border)}
+.calc-result .score-num{font-size:44px;font-weight:700;color:var(--teal)}.calc-result .score-risk{font-size:15px;color:var(--text-secondary);margin-top:3px}
+.calc-desc{color:var(--text-muted);font-size:13px;margin-bottom:14px;font-style:italic}
+.calc-result .score-action{margin-top:10px;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:500}
+.risk-low{background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);color:var(--green)}
+.risk-med{background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);color:var(--orange)}
+.risk-high{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3);color:var(--coral)}
+.severity-game{margin:24px 0}
+.sev-header{font-size:15px;color:var(--teal);margin-bottom:6px;letter-spacing:0.3px;font-weight:700}
+.sev-subtitle{font-size:14px;color:var(--text-secondary);margin-bottom:6px;line-height:1.5}
+.sev-instructions{font-size:12.5px;color:var(--text-muted);margin-bottom:20px;line-height:1.4;font-style:italic}
+.severity-layout{display:flex;gap:14px;margin:16px 0}
+.severity-bar{width:8px;border-radius:8px;background:linear-gradient(to bottom,var(--green),var(--amber),var(--coral));flex-shrink:0;position:relative;min-height:100%}
+.bar-label{position:absolute;font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap}
+.bar-label.top-l{top:-20px;left:50%;transform:translateX(-50%);color:var(--green)}.bar-label.bot-l{bottom:-20px;left:50%;transform:translateX(-50%);color:var(--coral)}
+.severity-items{flex:1;display:flex;flex-direction:column;gap:10px}
+.sev-item{display:flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .2s;cursor:pointer}
+.sev-item:hover{border-color:var(--teal-border)}
+.sev-item-text{flex:1;font-size:13.5px;line-height:1.5;color:var(--text-primary)}
+.sev-select{flex-shrink:0;width:52px;height:40px;background:var(--bg-primary);color:var(--text-primary);border:2px solid var(--border);border-radius:8px;font-size:15px;font-weight:600;font-family:var(--font-main);text-align:center;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;padding:0 4px}
+@media(max-width:600px){.severity-layout{gap:8px}.severity-bar{width:6px}.sev-item{padding:10px 10px;gap:8px}.sev-item-text{font-size:12.5px;line-height:1.4}.sev-select{width:44px;height:36px;font-size:14px}.sev-subtitle{font-size:13px}.bar-label{font-size:9px}}
+.sev-select:focus{outline:none;border-color:var(--teal)}.sev-select option{background:var(--bg-card);color:var(--text-primary)}
+.sev-item.correct{border-color:var(--green);background:rgba(76,175,80,0.08)}.sev-item.correct .sev-select{border-color:var(--green);color:var(--green)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-4px)}30%,70%{transform:translateX(4px)}}
+.sev-item.shake{animation:shake .5s ease;border-color:var(--coral)}
+.sev-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:10px 24px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:18px;transition:filter .2s}.sev-btn:hover{filter:brightness(1.15)}.sev-btn:disabled{opacity:.5;cursor:not-allowed}
+.sev-explanation{display:none;margin-top:14px;padding:14px 18px;background:rgba(0,191,165,0.05);border:1px solid var(--teal-border);border-radius:10px;font-size:13.5px;color:var(--text-secondary);line-height:1.6}
+.sev-explanation.show{display:block;animation:fadeIn .4s ease}
+.severity-items{position:relative}.sev-item{transition:transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94),border-color 0.3s,background 0.3s,box-shadow 0.3s,opacity 0.3s}
+.sev-item.animating{z-index:10;box-shadow:0 4px 20px rgba(0,191,165,0.2)}
+.sev-success-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity 0.5s}
+.sev-success-overlay.show{opacity:1}
+.sev-success-burst{font-size:60px;animation:sevBurst 1s ease-out forwards}
+@keyframes sevBurst{0%{transform:scale(0) rotate(-20deg);opacity:0}40%{transform:scale(1.3) rotate(5deg);opacity:1}60%{transform:scale(0.95) rotate(-2deg)}80%{transform:scale(1.05) rotate(1deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+.sev-item.correct .sev-position-badge{display:inline-flex}.sev-position-badge{display:none;width:26px;height:26px;border-radius:50%;background:var(--green);color:var(--bg-primary);font-size:12px;font-weight:700;align-items:center;justify-content:center;flex-shrink:0;animation:popIn 0.4s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes sevGlow{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 20px 4px rgba(0,191,165,0.15)}100%{box-shadow:0 0 0 0 rgba(0,191,165,0)}}
+.sev-item.glow{animation:sevGlow 0.8s ease-out}
+.sev-banner{text-align:center;margin-top:16px;padding:14px;background:linear-gradient(135deg,rgba(0,191,165,0.08),rgba(76,175,80,0.08));border:1px solid var(--green);border-radius:10px;opacity:0;transform:translateY(10px);transition:all 0.6s ease}
+.sev-banner.show{opacity:1;transform:translateY(0)}
+.sev-banner-title{font-size:18px;font-weight:700;color:var(--green);margin-bottom:4px}
+.sev-banner-sub{font-size:13px;color:var(--text-secondary)}
+.match-game{margin:24px 0}.match-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:6px}.match-header{font-size:12.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.4;font-style:italic}
+.flip-cards-wrapper{margin:20px 0}.flip-cards-title{font-size:16px;font-weight:700;color:var(--teal);margin-bottom:10px}.match-columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.match-columns{grid-template-columns:1fr;gap:0}.match-col{padding:10px 0}#mL{border-bottom:2px solid var(--border);padding-bottom:14px;margin-bottom:4px}#mL .match-item{background:linear-gradient(180deg,rgba(0,191,165,0.08),var(--bg-card))}#mR .match-item{background:linear-gradient(0deg,rgba(0,191,165,0.08),var(--bg-card))}}
+.match-col{display:grid;grid-auto-rows:1fr;gap:7px}
+.match-item{border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:13px;cursor:pointer;transition:all .2s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:48px}
+#mL .match-item{background:linear-gradient(90deg,rgba(0,191,165,0.08),var(--bg-card))}
+#mR .match-item{background:linear-gradient(270deg,rgba(0,191,165,0.08),var(--bg-card))}
+.match-item:hover{border-color:var(--teal-border)}
+.match-item.selected{border-color:var(--teal);background:var(--teal-glow);box-shadow:0 0 10px rgba(0,191,165,0.15)}
+.match-item.matched{border-color:var(--green);background:rgba(76,175,80,0.08);opacity:.7;cursor:default}
+.match-item.wrong-match{border-color:var(--coral);background:rgba(255,107,107,0.08);animation:shake .4s ease}
+.match-score{margin-top:12px;text-align:center;color:var(--text-muted);font-size:14px}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.flip-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:20px 0}@media(max-width:500px){.flip-cards{grid-template-columns:1fr}}
+.flip-card{perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;min-height:180px;transition:transform .6s;transform-style:preserve-3d}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.flip-card-front,.flip-card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;border:1px solid var(--border)}
+.flip-card-front{background:var(--bg-card);flex-direction:column;gap:8px}
+.flip-card-front .flip-q{font-size:14px;font-weight:600}.flip-card-front .flip-hint{font-size:10px;color:var(--text-muted)}
+.flip-card-back{background:linear-gradient(135deg,rgba(0,191,165,0.08),var(--bg-card));transform:rotateY(180deg);font-size:12px;color:var(--text-secondary);flex-direction:column;gap:3px;overflow-y:auto;align-items:flex-start;text-align:left}
+.flip-card-back strong{color:var(--teal)}
+.fc-star{position:absolute;top:8px;right:10px;background:none;border:none;font-size:18px;color:var(--text-muted);cursor:pointer;padding:2px;line-height:1;transition:color .2s,transform .2s;z-index:2}
+.fc-star:hover{color:var(--amber);transform:scale(1.2)}
+.fc-star.starred{color:var(--amber)}
+.score-card{text-align:center;padding:28px;background:linear-gradient(135deg,rgba(0,191,165,0.1),rgba(0,191,165,0.03));border:1px solid var(--teal-border);border-radius:10px;margin:24px 0}
+.score-card .score-num{font-size:44px;font-weight:700;color:var(--teal)}.score-card .score-label{color:var(--text-secondary);font-size:14px}
+.case-box{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.case-header{background:linear-gradient(135deg,rgba(187,134,252,0.15),rgba(187,134,252,0.05));border-bottom:1px solid var(--border);padding:14px 22px}
+.case-header .label{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.case-header h4{font-size:17px;margin-top:3px}
+.case-body{padding:22px}
+.case-step{display:none}
+.case-step.active{display:block;animation:fadeIn .3s ease}
+.case-step .step-label{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.case-btn{display:inline-block;background:var(--teal);color:var(--bg-primary);padding:9px 22px;border-radius:8px;border:none;font-family:var(--font-main);font-size:14px;font-weight:600;cursor:pointer;margin-top:10px}
+.case-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.case-result{display:none;font-weight:700;font-size:15px;margin-bottom:10px}
+.case-correct-msg{color:var(--green)}
+.case-wrong-msg{color:var(--coral)}
+.quiz-explanation.was-correct .case-correct-msg{display:block}
+.quiz-explanation.was-wrong .case-wrong-msg{display:block}
+.quiz-explanation.was-correct .case-correct-msg~.case-wrong-msg{display:none}
+.quiz-explanation.was-wrong .case-wrong-msg~.case-correct-msg{display:none}
+.case-exp-detail{margin-top:6px}
+.md-subtitle{font-size:16px;font-weight:600;color:var(--text-primary);margin:28px 0 12px;padding-left:14px;border-left:3px solid var(--teal);line-height:1.4}
+.divider{height:1px;background:var(--border);margin:36px 0}
+.footer{text-align:center;padding:28px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* Algoritm Clinic */
+.algoritm-clinic{background:linear-gradient(135deg,var(--bg-tertiary),var(--bg-card));border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:24px 0}
+.alg-header{background:linear-gradient(135deg,rgba(0,191,165,0.12),rgba(0,191,165,0.04));border-bottom:1px solid var(--border);padding:14px 22px}
+.alg-badge{color:var(--teal);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.alg-header h4{font-size:17px;margin-top:3px;color:var(--text-primary)}
+.alg-desc{font-size:13px;color:var(--text-secondary);margin-top:4px}
+.alg-body{padding:30px 22px;overflow-x:auto}
+.alg-canvas{position:relative;min-width:fit-content}
+.alg-grid{display:grid;gap:52px 28px;justify-items:center;align-items:center;position:relative;z-index:2}
+.alg-svg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible}
+.alg-node{padding:12px 18px;border-radius:8px;text-align:center;font-size:13px;font-weight:500;max-width:220px;min-width:100px;position:relative;cursor:default;transition:transform .2s,box-shadow .2s;word-wrap:break-word;z-index:2;justify-self:center}
+.alg-node:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.alg-node-label{color:var(--text-primary);line-height:1.4}
+.alg-start{background:linear-gradient(135deg,rgba(76,175,80,0.15),rgba(76,175,80,0.05));border:2px solid var(--green);border-radius:20px}
+.alg-start .alg-node-label{color:var(--green);font-weight:600}
+.alg-decizie{background:linear-gradient(135deg,rgba(255,193,7,0.15),rgba(255,193,7,0.05));border:2px solid var(--amber);border-left:4px solid var(--amber);border-radius:4px}
+.alg-decizie .alg-node-label{color:var(--amber)}
+.alg-actiune{background:linear-gradient(135deg,rgba(100,181,246,0.15),rgba(100,181,246,0.05));border:2px solid var(--blue);border-radius:8px}
+.alg-actiune .alg-node-label{color:var(--blue)}
+.alg-final{background:linear-gradient(135deg,rgba(0,191,165,0.15),rgba(0,191,165,0.05));border:3px solid var(--teal);border-radius:20px}
+.alg-final .alg-node-label{color:var(--teal);font-weight:600}
+.alg-alerta{background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:2px solid var(--coral);border-radius:8px;animation:algPulse 2s ease-in-out infinite}
+.alg-alerta .alg-node-label{color:var(--coral);font-weight:600}
+.alg-node.has-detail{cursor:pointer}
+.alg-node.has-detail:hover{border-color:var(--teal);box-shadow:0 0 0 2px rgba(0,191,165,0.2)}
+.alg-detail{display:none}
+@keyframes algDetailIn{from{opacity:0;transform:translateX(-50%) translateY(4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.alg-ks-container:empty{display:none}
+.alg-ks-container{padding-bottom:12px;margin-bottom:8px;border-bottom:1px solid var(--border)}
+.alg-ks-card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:8px;padding:14px 16px 14px 14px;margin-bottom:12px;animation:algKsIn .3s ease;font-size:13px;line-height:1.65}
+.alg-ks-card .alg-ks-title{font-size:13px;font-weight:700;margin-bottom:8px;padding-right:20px}
+.alg-ks-card .alg-ks-content{color:var(--text-secondary);font-size:12.5px}
+.alg-ks-card .alg-ks-content strong{color:var(--text-primary)}
+.alg-ks-close{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--text-muted);font-size:18px;cursor:pointer;padding:0 4px;line-height:1;transition:color .2s;border-radius:4px}
+.alg-ks-close:hover{color:var(--coral);background:rgba(255,107,107,0.1)}
+@keyframes algKsIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes algKsOut{to{opacity:0;transform:translateX(20px)}}
+@keyframes algKsFlash{0%{box-shadow:0 0 0 0 rgba(0,191,165,0.4)}50%{box-shadow:0 0 0 4px rgba(0,191,165,0.2)}100%{box-shadow:none}}
+@keyframes algPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,107,107,0.2)}50%{box-shadow:0 0 0 6px rgba(255,107,107,0)}}
+@media(max-width:600px){.alg-grid{grid-template-columns:1fr!important;gap:12px 0!important}.alg-node{grid-column:1!important;grid-row:auto!important;max-width:100%}.alg-svg{display:none}.alg-node::after{content:'↓';display:block;color:var(--teal-border);font-size:18px;margin-top:6px;line-height:1}.alg-node:last-child::after{display:none}}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open');document.querySelector('.knowledge-sidebar').classList.remove('open')">☰</button>
+  <a href="../../index.html" class="logo" style="text-decoration:none">CeCitimAzi</a>
+  <div class="progress-bar-container"><div class="progress-bar" id="progressBar"></div></div>
+  <button class="ks-toggle" onclick="var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');ks.classList.toggle('open');if(ks.classList.contains('open')&&window.innerWidth>1360){cw.style.marginRight='320px'}else{cw.style.marginRight='0'};document.querySelector('.sidebar').classList.remove('open')">💡</button>
+  <div class="xp-badge" id="xpBadge">0 XP</div>
+</nav>
+<div class="page-container">
+  <aside class="sidebar">
+    <div class="toc-title">Cuprins</div>
+    <ul class="toc-list">
+      <li><a href="#astmul_acut_sever_cap1">Definiție, Declanșatori și Factori de Risc</a></li>
+<li><a href="#astmul_acut_sever_cap2">Red Flags — Factori de Risc pentru Deces</a></li>
+<li><a href="#astmul_acut_sever_cap3">Evaluare Clinică și Diagnostic</a></li>
+<li><a href="#astmul_acut_sever_cap4">Diagnostic Diferențial</a></li>
+<li><a href="#astmul_acut_sever_cap5">Management în Asistența Medicală Primară</a></li>
+<li><a href="#astmul_acut_sever_cap6">Criterii de Transfer de Urgență</a></li>
+<li><a href="#astmul_acut_sever_cap7">Clinical Pearls — Erori de Evitat</a></li>
+<li><a href="#astmul_acut_sever_ghiduri_vs_carte">Ghiduri actuale vs <em>Esențialul în Medicina de Familie</em></a></li>
+    </ul>
+  </aside>
+  <main class="content-wrapper">
+    <section class="hero">
+  <div class="hero-badge">Medicină de Familie · Pre-Stagiu</div>
+  <h1>Astmul Acut Sever</h1>
+  <p>Evaluare clinică · Factori de risc pentru deces · Management în prespital · Criterii de transfer</p>
+</section>
+
+<div class="why-box">
+  <div class="label">De ce contează</div>
+  <p><strong>Astmul acut sever este o urgență respiratorie pe care medicul de familie o întâlnește primul</strong> — și decizia din primele minute poate face diferența între viață și moarte. România are una dintre cele mai ridicate rate de mortalitate prin astm din Europa, iar o mare parte din decese sunt evitabile prin recunoașterea precoce a pacientului cu risc înalt și inițierea corectă a tratamentului. <strong>Cunoașterea red flag-urilor, a protocolului de bronhodilatație și a criteriilor de transfer</strong> este competența de bază a oricărui rezident MF.</p>
+</div>
+
+<div class="section" id="astmul_acut_sever_cap1" data-block-id="astmul_acut_sever_cap1">
+  <div class="section-label">Capitolul 1</div>
+  <h2>Definiție, Declanșatori și Factori de Risc</h2>
+</div>
+
+<div class="text-block"><p><strong>Astmul acut sever</strong> (cunoscut istoric drept <em>status astmaticus</em>) reprezintă agravarea rapid progresivă a simptomelor respiratorii — dispnee, tuse, wheezing, constricție toracică — însoțită de reducerea funcției pulmonare (scăderea VEMS sau PEF) și alterarea stării de bază a pacientului. Necesită intervenție medicală de urgență.</p>
+<p>Debutul poate fi <strong>brusc</strong> (în câteva ore, de obicei declanșat de alergen sau efort) sau <strong>progresiv</strong> (în câteva zile, de obicei pe fond de infecție virală sau aderență scăzută la tratament). Exacerbarea poate fi prima manifestare a bolii sau poate apărea pe parcursul evoluției unui astm cunoscut.</p>
+<h3 class="md-subtitle" data-block-id="factori-declansatori-frecventi">Factori declanșatori frecvenți</h3>
+<p>Exacerbările sunt adesea precipitate de:</p>
+<ul><li><strong>Infecții virale</strong> ale căilor respiratorii superioare (cel mai frecvent trigger)</li><li>Expunere la <strong>aeroalergene</strong> (polen, acarieni, mucegaiuri, păr de animale)</li><li><strong>Poluare atmosferică</strong> și variații bruște de temperatură</li><li><strong>Efort fizic</strong> — mai ales în aer rece și uscat</li><li><strong>Aderență scăzută</strong> la tratamentul de fond sau tehnică incorectă de inhalare</li></ul>
+<h3 class="md-subtitle" data-block-id="factori-care-cresc-riscul-de-exacerbare">Factori care cresc riscul de exacerbare</h3>
+<p>Independent de controlul de fond al bolii, riscul de exacerbare este crescut la pacienții cu:</p>
+<ul><li>Consum excesiv de <strong>BADSA</strong> (<em>beta2-agoniști cu durată scurtă de acțiune</em>) — ≥1 flacon/lună</li><li><strong>Absența corticoterapiei inhalatorii (CSI)</strong> din schemă</li><li><strong>Comorbidități:</strong> obezitate, boală de reflux gastroesofagian, rinosinuzită cronică, alergii alimentare, sarcină</li><li><strong>Expuneri nocive:</strong> aeroalergene, poluare, fumat (inclusiv țigări electronice)</li><li><strong>Funcție respiratorie bazală alterată:</strong> VEMS < 60% din prezis</li><li><strong>Markeri ai inflamației Th2:</strong> eozinofilie sanguină, FeNO crescut</li></ul></div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap2" data-block-id="astmul_acut_sever_cap2">
+  <div class="section-label">Capitolul 2</div>
+  <h2>Red Flags — Factori de Risc pentru Deces</h2>
+</div>
+
+<div class="text-block"><p>Identificarea factorilor de risc pentru deces este <strong>obligatorie la evaluarea oricărei exacerbări</strong>. Prezența oricăruia dintre aceștia impune o atitudine terapeutică mult mai agresivă și un prag scăzut pentru transfer de urgență.</p></div>
+
+<div class="card warning" data-block-id="astmul_acut_sever_warning_red_flags">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Red Flags — Risc de Deces în Exacerbarea de Astm</div>
+  <p>Oricare din următoarele impune atitudine agresivă imediată:</p>
+<ul><li>Istoric de exacerbare care a necesitat <strong>intubație și ventilație mecanică</strong></li><li><strong>Spitalizare sau prezentare la urgențe</strong> pentru astm în ultimul an</li><li>Tratament actual sau <strong>cură recentă cu corticosteroizi orali (CSO)</strong></li><li><strong>Absența CSI</strong> și abuz de BADSA (≥1 flacon/lună)</li><li>Istoric de <strong>patologie psihiatrică</strong>, condiții socio-economice precare, aderență scăzută</li><li><strong>Alergii alimentare</strong> coexistente</li><li><strong>Comorbidități</strong> asociate: pneumonie, diabet zaharat, aritmii</li></ul>
+</div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_cso_red_flag">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Cura recentă de CSO = semnal de alarmă, nu de liniște</div>
+  <p>O cură recentă de corticosteroizi orali trebuie privită ca un <strong>„red flag" de severitate</strong>, nu ca dovadă că pacientul a fost tratat. Indică un <strong>fenotip instabil</strong>, cu inflamație eozinofilică necontrolată și risc crescut de exacerbare fatală la orice trigger ulterior. Acești pacienți necesită reevaluarea completă a schemei de fond.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap3" data-block-id="astmul_acut_sever_cap3">
+  <div class="section-label">Capitolul 3</div>
+  <h2>Evaluare Clinică și Diagnostic</h2>
+</div>
+
+<div class="text-block"><p>Evaluarea rapidă și sistematică este esențială pentru stratificarea severității și luarea deciziei terapeutice corecte.</p>
+<h3 class="md-subtitle" data-block-id="anamneza-tintita">Anamneza țintită</h3>
+<ul><li><strong>Momentul debutului</strong> și <strong>cauza probabilă</strong> (infecție, alergen, efort)</li><li><strong>Severitatea</strong> — limitarea activităților, tulburările de somn</li><li><strong>Simptome de anafilaxie</strong> — urticarie, angioedem, hipotensiune (excludere obligatorie)</li><li><strong>Factorii de risc pentru deces</strong> (vezi Capitolul 2)</li><li><strong>Istoricul medicamentos</strong> — schema actuală, ultima doză de BADSA, utilizarea CSO</li></ul>
+<h3 class="md-subtitle" data-block-id="examenul-fizic">Examenul fizic</h3></div>
+
+<div class="list-component list-stil-check" data-block-id="astmul_acut_sever_list_examen_fizic">
+  <div class="list-titlu">Parametri de evaluat la examenul fizic</div>
+  <ul class="list-body">
+    <li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Capacitatea de a vorbi în fraze</strong> — incapacitatea indică severitate extremă.</div></li>
+<li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Frecvența respiratorie (FR)</strong> — tahipneea >30/min este semn de severitate.</div></li>
+<li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Frecvența cardiacă (FC)</strong> — tahicardia >120/min sau bradicardia (semn ominous).</div></li>
+<li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Utilizarea mușchilor accesori</strong> — tiraj intercostal, supraclavicular, contracție SCM.</div></li>
+<li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Auscultație pulmonară</strong> — wheezing difuz bilateral; absența wheezingului la pacient dispneic sever = semn de alarmă (obstrucție completă, „plămân mut").</div></li>
+<li class="list-item"><span class="list-badge list-check">✓</span><div class="list-content"><strong>Pulsoximetrie (SaO₂)</strong> — sub 90% indică insuficiență respiratorie severă.</div></li>
+
+  </ul>
+</div>
+
+<div class="text-block"><h3 class="md-subtitle" data-block-id="investigatii-paraclinice">Investigații paraclinice</h3>
+<ul><li><strong>VEMS sau PEF</strong> — măsurare obligatorie dacă pacientul poate coopera</li><li>PEF < 50% din prezis = exacerbare severă</li><li>PEF < 33% din prezis = exacerbare cu risc vital</li><li><strong>Pulsoximetrie</strong> — SaO₂ < 92% impune oxigenoterapie imediată</li><li><strong>Gazometrie arterială</strong> — în formele severe sau când SaO₂ < 92% (evaluare hipercapnie)</li></ul></div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_plamun_mut">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Plămânul mut — semnul cel mai periculos</div>
+  <p>Absența wheezingului la un pacient cu dispnee severă și efort respirator maxim NU este un semn de ameliorare — este un <strong>semn de alarmă critic</strong>. Indică obstrucție bronșică atât de severă încât fluxul de aer este insuficient pentru a genera wheezing. Acest pacient necesită transfer de urgență imediat.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap4" data-block-id="astmul_acut_sever_cap4">
+  <div class="section-label">Capitolul 4</div>
+  <h2>Diagnostic Diferențial</h2>
+</div>
+
+<div class="text-block"><p>Wheezing-ul și dispneea acută au multiple cauze. Diagnosticul diferențial corect este esențial deoarece <strong>tratamentul diferă radical</strong> între entități.</p></div>
+
+<div class="comparison-grid" data-block-id="astmul_acut_sever_comparison_astm_bpoc">
+  <div class="comparison-card" style="border-top:3px solid var(--teal)">
+    <h4 style="color:var(--teal)">Astm Acut Sever</h4>
+    <ul><li><strong>Vârstă:</strong> Orice vârstă, frecvent tânăr</li><li><strong>Fumat:</strong> Posibil, dar nu obligatoriu</li><li><strong>Debut:</strong> Brusc (ore) sau progresiv (zile)</li><li><strong>Spută:</strong> Rareori purulentă</li><li><strong>Reversibilitate:</strong> Complet reversibil cu tratament</li><li><strong>Spirometrie:</strong> Obstrucție reversibilă</li></ul>
+  </div>
+  <div class="comparison-card" style="border-top:3px solid var(--amber)">
+    <h4 style="color:var(--amber)">Exacerbare BPOC</h4>
+    <ul><li><strong>Vârstă:</strong> De obicei >40 ani</li><li><strong>Fumat:</strong> Istoric semnificativ (pachete-an)</li><li><strong>Debut:</strong> Mai lent, progresiv (zile)</li><li><strong>Spută:</strong> Frecvent purulentă, volum crescut</li><li><strong>Reversibilitate:</strong> Parțial reversibil</li><li><strong>Spirometrie:</strong> Obstrucție fixă sau parțial reversibilă</li></ul>
+  </div>
+</div>
+
+<div class="text-block"><p><table>
+  <thead>
+    <tr><th>Entitate</th><th>Semne clinice cheie</th><th>Recunoaștere rapidă</th><th>Următorul pas</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>Anafilaxie</strong></td><td>Debut brusc post-expunere la alergen, urticarie, angioedem, hipotensiune</td><td>Wheezing + manifestări cutanate + șoc</td><td>Adrenalină IM imediat</td></tr>
+    <tr><td><strong>Insuficiență cardiacă acută</strong></td><td>Ortopnee, raluri subcrepitante bazale, edeme gambiere, istoric cardiac</td><td>Dispnee paroxistică nocturnă, jugulare turgescente</td><td>NT-proBNP, ecocardiografie, Rx toracic</td></tr>
+    <tr><td><strong>Corp străin aspirat</strong></td><td>Debut brusc în plină sănătate, wheezing unilateral, stridor</td><td>Copil mic sau vârstnic cu episod de sufocare bruscă</td><td>Bronhoscopie, Rx toracic inspir/expir</td></tr>
+    <tr><td><strong>Embolie pulmonară</strong></td><td>Dispnee bruscă, durere pleuritică, tahicardie, hemoptizie, factori de risc TEV</td><td>Dispnee disproporționată față de examenul pulmonar</td><td>Scor Wells, Angio-CT pulmonar, D-dimeri</td></tr>
+  </tbody>
+</table></p></div>
+
+<div class="quiz-container" data-block-id="quiz_astmul_acut_sever_1"><div class="quiz-q" id="q1">
+  <div class="q-label">Întrebare · 1</div>
+  <div class="q-text">O femeie de 68 de ani, fumătoare 40 pachete-an, se prezintă la cabinet cu dispnee progresivă instalată în ultimele 3 zile, tuse cu expectorație galben-verzuie și wheezing. Nu are antecedente de astm. La examenul fizic: FR 24/min, FC 96/min, SaO₂ 91%, raluri bronșice difuze bilateral. Care este diagnosticul cel mai probabil?</div>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">A) Insuficiență cardiacă acută decompensată</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">B) Astm acut sever — prima exacerbare</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">C) Embolie pulmonară acută</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,true)">D) Exacerbare acută de BPOC</button>
+    <button class="quiz-option" onclick="checkQuiz('q1',this,false)">E) Anafilaxie cu bronhospasm</button>
+  <div class="quiz-explanation" id="q1-exp"><div class="fb-correct"><strong>Răspuns corect — D)</strong> CORECT — Tabloul clinic este clasic pentru exacerbare BPOC: vârstă >40 ani, fumătoare cu istoric semnificativ, debut progresiv, spută purulentă (sugerând trigger bacterian), wheezing și hipoxemie moderată. Managementul diferă de cel al astmului acut.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Insuficiența cardiacă acută produce dispnee cu ortopnee, raluri subcrepitante bazale și edeme gambiere, nu wheezing cu spută purulentă. Absența istoricului cardiac și prezența sputei purulente pledează împotriva acestui diagnostic.<br><strong>B)</strong> GREȘIT — Vârsta >40 ani, istoricul de fumat semnificativ (40 pachete-an), debutul progresiv și sputa purulentă orientează puternic spre BPOC, nu spre astm. Astmul debutează de obicei la vârste mai tinere și nu se asociază cu spută purulentă.<br><strong>C)</strong> GREȘIT — Embolia pulmonară se prezintă cu dispnee bruscă, durere pleuritică și tahicardie, fără wheezing și fără spută purulentă. Debutul progresiv pe 3 zile și sputa purulentă nu sunt caracteristice EP.<br><strong>E)</strong> GREȘIT — Anafilaxia are debut brusc (minute), se asociază cu urticarie, angioedem și hipotensiune, și apare post-expunere la un alergen identificabil. Debutul progresiv pe 3 zile și sputa purulentă exclud anafilaxia.</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap5" data-block-id="astmul_acut_sever_cap5">
+  <div class="section-label">Capitolul 5</div>
+  <h2>Management în Asistența Medicală Primară</h2>
+</div>
+
+<div class="text-block"><p>Managementul în asistența medicală primară presupune <strong>evaluarea riscului, inițierea tratamentului și reevaluarea la 3-4 ore</strong> pentru a decide necesitatea spitalizării.</p>
+<h3 class="md-subtitle" data-block-id="1-bronhodilatatoare-cu-actiune-scurta-badsa">1. Bronhodilatatoare cu acțiune scurtă (BADSA)</h3>
+<p>Salbutamol inhalator, <strong>preferabil prin spacer</strong> (eficiență superioară față de inhalare directă):</p>
+<ul><li><strong>Prima oră:</strong> 4 pufuri la fiecare 20 de minute</li><li><strong>Ulterior:</strong> la 3-4 ore</li><li><strong>Oprire:</strong> dacă răspunsul este favorabil (PEF > 60-80% din prezis, menținut 3-4 ore)</li></ul>
+<h3 class="md-subtitle" data-block-id="2-oxigenoterapie">2. Oxigenoterapie</h3>
+<ul><li>Se administrează și se <strong>ajustează sub ghidaj pulsoximetric</strong></li><li><strong>Țintă:</strong> SaO₂ 93-95% (nu 100% — hiperozigenarea poate masca deteriorarea)</li></ul>
+<h3 class="md-subtitle" data-block-id="3-corticoterapie-sistemica-cso">3. Corticoterapie sistemică (CSO)</h3>
+<ul><li>Se inițiază <strong>prompt</strong>, mai ales dacă pacientul se deteriorează rapid sau a crescut necesarul de medicație de salvare anterior prezentării</li><li><strong>Doză:</strong> Prednison (sau echivalent) <strong>40-50 mg/zi</strong></li><li><strong>Durată:</strong> maximum <strong>5-7 zile</strong></li></ul>
+<h3 class="md-subtitle" data-block-id="4-anticolinergice-cu-actiune-scurta-sama">4. Anticolinergice cu acțiune scurtă (SAMA)</h3>
+<ul><li>Se adaugă <strong>Ipratropium</strong> în formele <strong>moderate-severe</strong></li><li><strong>Beneficiu:</strong> ameliorează semnificativ funcția respiratorie și <strong>scade riscul de spitalizare</strong></li></ul>
+<h3 class="md-subtitle" data-block-id="5-antibioterapie">5. Antibioterapie</h3>
+<ul><li><strong>NU se recomandă de rutină</strong></li><li>Se administrează <strong>doar</strong> dacă există semne clare de infecție bacteriană: febră, spută purulentă, modificări radiologice de pneumonie</li></ul></div>
+
+<div class="calc-box" data-block-id="news2" id="calc_news2" data-calc-config="{&quot;params&quot;: [&quot;resp_rate&quot;, &quot;spo2&quot;, &quot;on_o2&quot;, &quot;sbp&quot;, &quot;pulse&quot;, &quot;consciousness&quot;, &quot;temp&quot;], &quot;scoring&quot;: {&quot;type&quot;: &quot;sum&quot;, &quot;rules&quot;: [{&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: &quot;&lt;=8&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: &quot;9-11&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: &quot;12-20&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: &quot;21-24&quot;, &quot;points&quot;: 2}, {&quot;param&quot;: &quot;resp_rate&quot;, &quot;value&quot;: &quot;>=25&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;spo2&quot;, &quot;value&quot;: &quot;&lt;=91&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;spo2&quot;, &quot;value&quot;: &quot;92-93&quot;, &quot;points&quot;: 2}, {&quot;param&quot;: &quot;spo2&quot;, &quot;value&quot;: &quot;94-95&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;spo2&quot;, &quot;value&quot;: &quot;>=96&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;on_o2&quot;, &quot;value&quot;: true, &quot;points&quot;: 2}, {&quot;param&quot;: &quot;sbp&quot;, &quot;value&quot;: &quot;&lt;=90&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;sbp&quot;, &quot;value&quot;: &quot;91-100&quot;, &quot;points&quot;: 2}, {&quot;param&quot;: &quot;sbp&quot;, &quot;value&quot;: &quot;101-110&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;sbp&quot;, &quot;value&quot;: &quot;111-219&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;sbp&quot;, &quot;value&quot;: &quot;>=220&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;&lt;=40&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;41-50&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;51-90&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;91-110&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;111-130&quot;, &quot;points&quot;: 2}, {&quot;param&quot;: &quot;pulse&quot;, &quot;value&quot;: &quot;>=131&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;consciousness&quot;, &quot;value&quot;: &quot;alert&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;consciousness&quot;, &quot;value&quot;: &quot;confusion&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;consciousness&quot;, &quot;value&quot;: &quot;voice&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;consciousness&quot;, &quot;value&quot;: &quot;pain&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;consciousness&quot;, &quot;value&quot;: &quot;unresponsive&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;temp&quot;, &quot;value&quot;: &quot;&lt;=35.0&quot;, &quot;points&quot;: 3}, {&quot;param&quot;: &quot;temp&quot;, &quot;value&quot;: &quot;35.1-36.0&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;temp&quot;, &quot;value&quot;: &quot;36.1-38.0&quot;, &quot;points&quot;: 0}, {&quot;param&quot;: &quot;temp&quot;, &quot;value&quot;: &quot;38.1-39.0&quot;, &quot;points&quot;: 1}, {&quot;param&quot;: &quot;temp&quot;, &quot;value&quot;: &quot;>=39.1&quot;, &quot;points&quot;: 2}]}, &quot;interpretation&quot;: [{&quot;range&quot;: [0, 0], &quot;risk&quot;: &quot;Risc scăzut&quot;, &quot;action&quot;: &quot;Monitorizare de rutină.&quot;, &quot;class&quot;: &quot;low&quot;}, {&quot;range&quot;: [1, 4], &quot;risk&quot;: &quot;Risc scăzut–mediu&quot;, &quot;action&quot;: &quot;Crește frecvența monitorizării. Scor 3 pe un singur parametru = evaluare urgentă.&quot;, &quot;class&quot;: &quot;low&quot;}, {&quot;range&quot;: [5, 6], &quot;risk&quot;: &quot;Risc mediu&quot;, &quot;action&quot;: &quot;Evaluare urgentă de către clinician. Escaladarea îngrijirilor.&quot;, &quot;class&quot;: &quot;med&quot;}, {&quot;range&quot;: [7, 20], &quot;risk&quot;: &quot;Risc înalt&quot;, &quot;action&quot;: &quot;Alertare echipă urgență/ATI. Evaluare imediată.&quot;, &quot;class&quot;: &quot;high&quot;}]}">
+  <h4>Calculator NEWS2 — Evaluarea severității și deteriorării clinice</h4>
+  <p class="calc-desc">National Early Warning Score 2 — detectare deteriorare clinică</p>
+  <div class="calc-row"><label>Frecvență respiratorie</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','resp_rate','<=8',this)">≤8/min</button><button onclick="calcSet('calc_news2','resp_rate','9-11',this)">9–11/min</button><button onclick="calcSet('calc_news2','resp_rate','12-20',this)">12–20/min</button><button onclick="calcSet('calc_news2','resp_rate','21-24',this)">21–24/min</button><button onclick="calcSet('calc_news2','resp_rate','>=25',this)">≥25/min</button></div></div>
+<div class="calc-row"><label>SpO₂ (Scala 1)</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','spo2','<=91',this)">≤91%</button><button onclick="calcSet('calc_news2','spo2','92-93',this)">92–93%</button><button onclick="calcSet('calc_news2','spo2','94-95',this)">94–95%</button><button onclick="calcSet('calc_news2','spo2','>=96',this)">≥96%</button></div></div>
+<div class="calc-row"><label>Oxigen suplimentar</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','on_o2',false,this)">Nu</button><button onclick="calcSet('calc_news2','on_o2',true,this)">Da</button></div></div>
+<div class="calc-row"><label>TA sistolică</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','sbp','<=90',this)">≤90 mmHg</button><button onclick="calcSet('calc_news2','sbp','91-100',this)">91–100 mmHg</button><button onclick="calcSet('calc_news2','sbp','101-110',this)">101–110 mmHg</button><button onclick="calcSet('calc_news2','sbp','111-219',this)">111–219 mmHg</button><button onclick="calcSet('calc_news2','sbp','>=220',this)">≥220 mmHg</button></div></div>
+<div class="calc-row"><label>Puls</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','pulse','<=40',this)">≤40 bpm</button><button onclick="calcSet('calc_news2','pulse','41-50',this)">41–50 bpm</button><button onclick="calcSet('calc_news2','pulse','51-90',this)">51–90 bpm</button><button onclick="calcSet('calc_news2','pulse','91-110',this)">91–110 bpm</button><button onclick="calcSet('calc_news2','pulse','111-130',this)">111–130 bpm</button><button onclick="calcSet('calc_news2','pulse','>=131',this)">≥131 bpm</button></div></div>
+<div class="calc-row"><label>Nivel conștiență</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','consciousness','alert',this)">Alert</button><button onclick="calcSet('calc_news2','consciousness','confusion',this)">Confuzie nouă</button><button onclick="calcSet('calc_news2','consciousness','voice',this)">Răspunde la voce</button><button onclick="calcSet('calc_news2','consciousness','pain',this)">Răspunde la durere</button><button onclick="calcSet('calc_news2','consciousness','unresponsive',this)">Fără răspuns</button></div></div>
+<div class="calc-row"><label>Temperatură</label><div class="calc-toggle"><button onclick="calcSet('calc_news2','temp','<=35.0',this)">≤35.0°C</button><button onclick="calcSet('calc_news2','temp','35.1-36.0',this)">35.1–36.0°C</button><button onclick="calcSet('calc_news2','temp','36.1-38.0',this)">36.1–38.0°C</button><button onclick="calcSet('calc_news2','temp','38.1-39.0',this)">38.1–39.0°C</button><button onclick="calcSet('calc_news2','temp','>=39.1',this)">≥39.1°C</button></div></div>
+  <div class="calc-result" id="calc_news2_result" style="display:none">
+    <div class="score-num" id="calc_news2_score">0</div>
+    <div class="score-risk" id="calc_news2_risk"></div>
+    <div class="score-action" id="calc_news2_action"></div>
+  </div>
+</div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_spacer">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Spacer-ul face diferența în criza acută</div>
+  <p>În exacerbarea acută, coordonarea inhalare-apăsare este adesea imposibilă din cauza dispneei severe. Utilizarea unui <strong>spacer</strong> crește depunerea bronșică a Salbutamolului de 2-3 ori față de inhalarea directă și elimină necesitatea coordonării. Dacă nu există spacer, o sticlă de plastic cu gaură în fund poate servi ca substitut de urgență.</p>
+</div>
+
+<div class="quiz-container" data-block-id="quiz_astmul_acut_sever_2"><div class="quiz-q" id="q2">
+  <div class="q-label">Întrebare · 2</div>
+  <div class="q-text">Un bărbat de 34 de ani, astmatic cunoscut, se prezintă la cabinetul MF cu dispnee moderată, wheezing difuz și imposibilitatea de a vorbi în fraze complete. SaO₂ = 89%, PEF = 42% din prezis. Nu a luat niciun medicament acasă. Care este conduita corectă în prima oră?</div>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">A) Transfer imediat la spital fără niciun tratament în cabinet</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">B) Salbutamol 2 pufuri o singură dată, reevaluare după 30 minute</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">C) Salbutamol 4 pufuri/20 min + Oxigen + așteptare 6 ore înainte de corticoterapie</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,false)">D) Adrenalină subcutanat 0,3 mg + Hidrocortizon IV 200 mg imediat</button>
+    <button class="quiz-option" onclick="checkQuiz('q2',this,true)">E) Salbutamol 4 pufuri/20 min + Oxigen titrat (țintă SaO₂ 93-95%) + Prednison 40-50 mg oral + Ipratropium</button>
+  <div class="quiz-explanation" id="q2-exp"><div class="fb-correct"><strong>Răspuns corect — E)</strong> CORECT — Conduita completă pentru exacerbarea moderată-severă: Salbutamol 4 pufuri/20 min (bronhodilatație rapidă), oxigen titrat la SaO₂ 93-95%, Prednison 40-50 mg oral (inițiat precoce pentru efect antiinflamator la 4-6 ore), Ipratropium adăugat pentru reducerea riscului de spitalizare. SaO₂ 89% și PEF 42% confirmă severitatea moderată-severă.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Transferul fără tratament este incorect. Tratamentul bronhodilatator și oxigenoterapia trebuie inițiate imediat, chiar dacă transferul este planificat. Amânarea tratamentului crește riscul de deteriorare în timpul transportului.<br><strong>B)</strong> GREȘIT — Doza de 2 pufuri o singură dată este insuficientă pentru o exacerbare moderată-severă. Protocolul corect prevede 4 pufuri la fiecare 20 de minute în prima oră.<br><strong>C)</strong> GREȘIT — Corticoterapia sistemică trebuie inițiată PRECOCE, nu amânată 6 ore. Efectul maxim apare la 4-6 ore de la administrare — cu cât se inițiază mai devreme, cu atât pacientul beneficiază mai rapid.<br><strong>D)</strong> GREȘIT — Adrenalina subcutanat este indicată în anafilaxie, nu în exacerbarea de astm. Hidrocortizonul IV este rezervat pentru formele severe care necesită spitalizare. Tabloul clinic nu sugerează anafilaxie (absența urticariei, angioedemului, hipotensiunii).</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap6" data-block-id="astmul_acut_sever_cap6">
+  <div class="section-label">Capitolul 6</div>
+  <h2>Criterii de Transfer de Urgență</h2>
+</div>
+
+<div class="text-block"><p>Decizia de transfer este una dintre cele mai importante competențe ale medicului de familie în managementul exacerbării de astm.</p></div>
+
+<div class="card warning" data-block-id="astmul_acut_sever_warning_transfer">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Criterii de transfer de urgență la spital / terapie intensivă</div>
+  <p>Transferul de urgență este obligatoriu în oricare din situațiile:</p>
+<ul><li><strong>Absența răspunsului favorabil</strong> sau agravarea simptomelor după 3-4 ore de tratament corect</li><li><strong>PEF < 33% din prezis</strong> după tratament bronhodilatator</li><li><strong>SaO₂ < 92%</strong> persistent sub oxigenoterapie</li><li><strong>Incapacitate de a vorbi</strong> sau semne de epuizare a musculaturii respiratorii</li><li>Pacienți cu <strong>risc crescut de deces</strong> (istoric de intubație, abuz de BADSA)</li><li><strong>Absența mijloacelor terapeutice</strong> de urgență în cabinet → transfer imediat, fără așteptare</li></ul>
+</div>
+
+<div class="quiz-container" data-block-id="quiz_astmul_acut_sever_3"><div class="quiz-q" id="q3">
+  <div class="q-label">Întrebare · 3</div>
+  <div class="q-text">O pacientă de 28 de ani cu astm sever persistent se prezintă la cabinetul MF cu exacerbare acută. A primit tratament corect: Salbutamol 4 pufuri/20 min × 3 doze, oxigen, Prednison 50 mg oral, Ipratropium. La reevaluarea după 3 ore: FR 28/min, FC 118/min, SaO₂ 91% sub oxigen, PEF 38% din prezis, vorbește în cuvinte izolate. Care este decizia corectă?</div>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,true)">A) Transfer de urgență la spital — criterii multiple de severitate persistentă</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">B) Administrează Adrenalină subcutanat și reevaluează după 30 minute</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">C) Continuă tratamentul ambulator încă 3-4 ore și reevaluează</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">D) Adaugă Teofilină orală și reevaluează după 2 ore</button>
+    <button class="quiz-option" onclick="checkQuiz('q3',this,false)">E) Dublează doza de Prednison la 100 mg și continuă ambulator</button>
+  <div class="quiz-explanation" id="q3-exp"><div class="fb-correct"><strong>Răspuns corect — A)</strong> CORECT — Pacienta îndeplinește multiple criterii de transfer: SaO₂ 91% persistent sub oxigen (sub pragul de 92%), PEF 38% (sub 50% din prezis), incapacitate de a vorbi în fraze (semn de severitate extremă), tahicardie și tahipnee persistente după 3 ore de tratament corect. Transferul de urgență este obligatoriu.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>B)</strong> GREȘIT — Adrenalina subcutanat este indicată în anafilaxie, nu în exacerbarea de astm. Nu există semne de anafilaxie (urticarie, angioedem, hipotensiune). Administrarea adrenalina în această situație este o eroare terapeutică.<br><strong>C)</strong> GREȘIT — Pacienta nu a răspuns la tratamentul corect după 3 ore. SaO₂ 91% sub oxigen, PEF 38% și incapacitatea de a vorbi în fraze sunt criterii clare de transfer. Continuarea ambulator crește riscul de deteriorare fatală.<br><strong>D)</strong> GREȘIT — Teofilina orală nu are loc în managementul exacerbării acute. Are efect bronhodilatator modest, debut lent de acțiune și marjă terapeutică îngustă cu risc de toxicitate (aritmii, convulsii). Nu este recomandată în ghidurile actuale pentru exacerbarea acută.<br><strong>E)</strong> GREȘIT — Dublarea dozei de Prednison nu este o strategie validă în exacerbarea acută și nu justifică amânarea transferului. Pacienta are criterii multiple de severitate care necesită îngrijire spitalicească (oxigenoterapie controlată, bronhodilatatoare nebulizate, posibil ventilație non-invazivă).</div></div>
+</div></div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_cap7" data-block-id="astmul_acut_sever_cap7">
+  <div class="section-label">Capitolul 7</div>
+  <h2>Clinical Pearls — Erori de Evitat</h2>
+</div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_badsa_mortalitate">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Un flacon pe lună = semnal de alarmă major</div>
+  <p>Consumul a <strong>mai mult de un flacon de Salbutamol pe lună</strong> nu este doar un semn de astm necontrolat — este un <strong>marker independent și major de mortalitate</strong>. Acești pacienți trebuie identificați activ la fiecare consultație, iar schema de fond trebuie reevaluată și intensificată imediat, indiferent dacă se prezintă sau nu cu exacerbare acută.</p>
+</div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_alergii_alimentare">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Alergiile alimentare — factor de risc subestimat</div>
+  <p>Alergiile alimentare coexistente la un pacient astmatic cresc semnificativ riscul de deces în timpul unei exacerbări. Mecanismul implică posibila <strong>anafilaxie concomitentă</strong> care poate fi mascată de tabloul de bronhospasm. La orice exacerbare severă la un pacient cu alergii alimentare cunoscute, <strong>excluderea anafilaxiei este obligatorie</strong> înainte de a trata exclusiv ca astm.</p>
+</div>
+
+<div class="card pearl" data-block-id="astmul_acut_sever_pearl_antibiotice">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V10C3 12.3637 4.74893 14.2266 7 14.8094V16C7 16.3701 7.2011 16.6933 7.5 16.8662V17.1413C7.5 19.2724 9.2276 21 11.3587 21C13.4898 21 15.2174 19.2724 15.2174 17.1413V16.1413C15.2174 15.2348 15.9522 14.5 16.8587 14.5C17.4651 14.5 17.9947 14.8289 18.2789 15.318C17.5157 15.746 17 16.5628 17 17.5C17 18.8807 18.1193 20 19.5 20C20.8807 20 22 18.8807 22 17.5C22 16.4231 21.3191 15.5053 20.3644 15.1535C19.9339 13.6224 18.5274 12.5 16.8587 12.5C14.8477 12.5 13.2174 14.1303 13.2174 16.1413V17.1413C13.2174 18.1678 12.3852 19 11.3587 19C10.3322 19 9.5 18.1678 9.5 17.1413V16.8662C9.7989 16.6933 10 16.3701 10 16V14.8094C12.2511 14.2266 14 12.3637 14 10V5C14 3.89543 13.1046 3 12 3H11C10.4477 3 10 3.44772 10 4C10 4.55228 10.4477 5 11 5H12V10C12 11.5494 10.547 13 8.5 13C6.45302 13 5 11.5494 5 10V5H6C6.55228 5 7 4.55228 7 4C7 3.44772 6.55228 3 6 3H5ZM19.5 18C19.7761 18 20 17.7761 20 17.5C20 17.2239 19.7761 17 19.5 17C19.2239 17 19 17.2239 19 17.5C19 17.7761 19.2239 18 19.5 18Z"/></svg> Antibioticele în exacerbarea de astm — o eroare frecventă</div>
+  <p>Antibioticele sunt <strong>inutile în exacerbarea tipică de astm</strong> — majoritatea triggerilor infecțioși sunt virali (rinovirusuri, virusuri gripale). Prescrierea lor fără spută purulentă sau focar pneumonic documentat radiologic este o <strong>eroare de practică</strong>, care expune pacientul la efecte adverse fără niciun beneficiu clinic și contribuie la rezistența antimicrobiană.</p>
+</div>
+
+<div class="severity-game" data-block-id="astmul_acut_sever_severity_sort">
+  <div class="sev-header">Ordonare severitate</div>
+  <div class="sev-subtitle">Ordonează semnele clinice după severitatea exacerbării de astm (de la cel mai puțin sever la cel mai sever)</div>
+  <div class="sev-instructions">Ordonează de la ușor la sever făcând click pe pătratul din dreapta. Pentru rapiditate, poți folosi și cifrele de pe tastatură!</div>
+  <div class="severity-layout">
+    <div class="severity-bar">
+      <span class="bar-label top-l">Ușor</span>
+      <span class="bar-label bot-l">Sever</span>
+    </div>
+    <div class="severity-items" id="sevItems">
+      <div class="sev-item" data-correct="5" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Plămân mut (absența wheezingului la pacient dispneic sever), bradicardie, alterarea stării de conștiență — iminență de stop respirator</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="3" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Dispnee severă, utilizarea mușchilor accesori — pacientul vorbește în cuvinte izolate, SaO₂ 90-92%, PEF 33-50%</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="1" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Wheezing la efort, dispnee ușoară — pacientul vorbește în fraze complete, SaO₂ >95%, PEF >80%</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="2" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Wheezing de repaus, dispnee moderată — pacientul vorbește în propoziții scurte, SaO₂ 92-95%, PEF 50-80%</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+<div class="sev-item" data-correct="4" onclick="const s=this.querySelector('.sev-select');if(s&&!s.disabled)s.focus();s.showPicker&&s.showPicker()">
+      <div class="sev-item-text">Epuizare respiratorie, tahicardie >120/min — pacientul nu poate vorbi, SaO₂ <90%, PEF <33%</div>
+      <select class="sev-select" aria-label="Poziție" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select>
+    </div>
+
+      <div class="sev-success-overlay" id="sevOverlay"><div class="sev-success-burst">🏆</div></div>
+    </div>
+  </div>
+  <button class="sev-btn" onclick="checkSev()">Verifică</button>
+  <div id="sevResult"></div>
+  <div class="sev-banner" id="sevBanner"><div class="sev-banner-title">Excelent! Ordinea perfectă!</div><div class="sev-banner-sub">Ai demonstrat raționament clinic solid.</div></div>
+  
+</div>
+
+<div class="match-game" data-block-id="astmul_acut_sever_matching">
+  <div class="match-title">Alege perechile:</div>
+  <div class="match-header">Fă click pe un card din stânga și găsește-i perechea în coloana din dreapta!</div>
+  <div class="match-columns">
+    <div class="match-col" id="mL"><div class="match-item" data-pair="1" onclick="selM(this,'left')">Salbutamol 4 pufuri/20 min</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'left')">Ipratropium</div>
+<div class="match-item" data-pair="3" onclick="selM(this,'left')">Prednison 40-50 mg/zi</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'left')">SaO₂ 93-95%</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'left')">PEF <33%</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'left')">Plămân mut</div></div>
+    <div class="match-col" id="mR"><div class="match-item" data-pair="3" onclick="selM(this,'right')">Corticosteroid sistemic inițiat precoce, efect maxim la 4-6 ore</div>
+<div class="match-item" data-pair="6" onclick="selM(this,'right')">Absența wheezingului la pacient dispneic sever — semn de alarmă critic</div>
+<div class="match-item" data-pair="2" onclick="selM(this,'right')">Anticolinergic adăugat în forme moderate-severe pentru reducerea spitalizării</div>
+<div class="match-item" data-pair="5" onclick="selM(this,'right')">Criteriu de transfer de urgență după tratament bronhodilatator</div>
+<div class="match-item" data-pair="1" onclick="selM(this,'right')">Bronhodilatator de primă linie în exacerbarea acută</div>
+<div class="match-item" data-pair="4" onclick="selM(this,'right')">Ținta oxigenoterapiei în exacerbarea de astm</div></div>
+  </div>
+  <div id="matchScore" class="match-score">Potriviri: 0/6</div>
+</div>
+
+<div class="divider"></div>
+
+<div class="flip-cards-wrapper"><div class="flip-cards-title">Flashcards interogative:</div><div class="flip-cards"><div class="flip-card" data-block-id="astmul_acut_sever_flashcard_1" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este doza de Salbutamol în prima oră de tratament al exacerbării acute de astm?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>4 pufuri la fiecare 20 de minute</strong>, preferabil prin spacer. Ulterior, la 3-4 ore. Se oprește dacă PEF >60-80% din prezis este menținut 3-4 ore.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="astmul_acut_sever_flashcard_2" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care este ținta SaO₂ în oxigenoterapia din exacerbarea de astm și de ce nu se vizează 100%?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Ținta SaO₂ este 93-95%</strong>. Hiperozigenarea (SaO₂ 100%) poate masca deteriorarea clinică și nu aduce beneficii suplimentare. Titrarea sub ghidaj pulsoximetric permite ajustarea continuă a debitului de oxigen.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="astmul_acut_sever_flashcard_3" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Ce semnifică absența wheezingului la un pacient cu dispnee severă și efort respirator maxim?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Plămânul mut</strong> — semn de alarmă critic. Indică obstrucție bronșică atât de severă încât fluxul de aer este insuficient pentru a genera wheezing. Necesită <strong>transfer de urgență imediat</strong>.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="astmul_acut_sever_flashcard_4" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Care sunt cele 5 red flags pentru risc de deces în exacerbarea de astm?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>I.S.A.F.P.:</strong> <strong>Intubație</strong> anterioară · <strong>Spitalizare</strong> recentă pentru astm · <strong>Abuz BADSA</strong> (≥1 flacon/lună) · <strong>Fără CSI</strong> în schemă · <strong>Psihiatrie</strong>/probleme socio-economice. Plus: cură recentă CSO, alergii alimentare, comorbidități (pneumonie, DZ, aritmii).</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="astmul_acut_sever_flashcard_5" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">De ce trebuie inițiată corticoterapia sistemică precoce în exacerbarea de astm?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>Efectul maxim al corticosteroizilor sistemici apare la 4-6 ore</strong> de la administrare. Inițierea precoce (Prednison 40-50 mg/zi) asigură că efectul antiinflamator este prezent când pacientul are cea mai mare nevoie de el. Amânarea corticoterapiei prelungește durata exacerbării și crește riscul de spitalizare.</p></div>
+  </div>
+</div>
+<div class="flip-card" data-block-id="astmul_acut_sever_flashcard_6" onclick="if(!event.target.closest('.fc-star'))this.classList.toggle('flipped')">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><div class="flip-q">Când sunt indicate antibioticele în exacerbarea de astm?</div><div class="flip-hint">click →</div></div>
+    <div class="flip-card-back"><button class="fc-star" onclick="this.classList.toggle('starred')" title="Salvează în colecția personală">&#9734;</button><p><strong>NU de rutină.</strong> Antibioticele se administrează <strong>doar</strong> dacă există semne clare de infecție bacteriană: febră + spută purulentă + modificări radiologice de pneumonie. Majoritatea exacerbărilor sunt declanșate de virusuri — prescrierea de rutină este o eroare de practică.</p></div>
+  </div>
+</div></div></div>
+
+<div class="divider"></div>
+
+<div class="case-box" data-block-id="caz_astmul_acut_sever_1">
+  <div class="case-header">
+    <div class="label">Caz Clinic Interactiv · 4 Etape</div>
+    <h4>Femeia cu astm și „tratament corect" acasă</h4>
+  </div>
+  <div class="case-body"><div class="case-step active" id="caseStep0">
+  <div class="step-label">Prezentare</div>
+  <p>O femeie de 41 de ani, astmatică de 15 ani, se prezintă la cabinetul MF la ora 10:00 cu dispnee progresivă instalată de 18 ore. Povestește că a folosit acasă „tot ce a avut" — a inhalat Salbutamol de aproximativ 15 ori în ultimele 12 ore fără ameliorare semnificativă. Menționează că a terminat al treilea flacon de Salbutamol în ultima lună. Tratamentul de fond prescris anterior: Salbutamol la nevoie (fără CSI). Antecedente: spitalizare pentru astm sever acum 8 luni, fără intubație. Alergii alimentare la alune.</p>
+  <button class="case-btn" onclick="showCaseStep(1)">Începe evaluarea →</button>
+</div>
+<div class="case-step" id="caseStep1">
+  <div class="step-label">Evaluare inițială și red flags</div>
+  <p>La intrarea în cabinet, pacienta este vizibil dispneică, se sprijină de tocul ușii, vorbește în cuvinte izolate. Înainte de a măsura orice parametru, trebuie să identifici rapid nivelul de risc.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care element din istoricul pacientei reprezintă cel mai important red flag pentru risc de deces?</div>
+  <button class="quiz-option" onclick="ansCase(1,this,false)">A) Utilizarea a 15 pufuri de Salbutamol în 12 ore</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">B) Absența tratamentului de fond cu CSI</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">C) Debutul progresiv al simptomelor pe 18 ore</button>
+<button class="quiz-option" onclick="ansCase(1,this,false)">D) Durata de 15 ani a bolii</button>
+<button class="quiz-option" onclick="ansCase(1,this,true)">E) Consumul a 3 flacoane de Salbutamol în ultima lună + spitalizare recentă + alergii alimentare</button>
+
+  <div class="quiz-explanation" id="caseQ1-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era E).</div><div class="case-exp-detail"><strong>E)</strong> CORECT — Pacienta acumulează TREI red flags majori simultan: (1) consumul a ≥1 flacon/lună (3 flacoane = marker independent de mortalitate), (2) spitalizare recentă pentru astm (în ultimul an), (3) alergii alimentare coexistente (cresc riscul de deces prin posibilă anafilaxie concomitentă). Combinația acestor factori definește un pacient cu risc vital extrem.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — Utilizarea excesivă acută este un semn de severitate a exacerbării curente, dar nu este cel mai important red flag pentru risc de deces. Este o consecință a exacerbării, nu un predictor independent.<br><strong>B)</strong> GREȘIT — Absența CSI este un factor de risc important pentru exacerbări, dar singur nu este cel mai puternic predictor de deces. Devine critic în combinație cu ceilalți factori identificați.<br><strong>C)</strong> GREȘIT — Debutul progresiv pe 18 ore descrie tipul de exacerbare, nu riscul de deces. Exacerbările cu debut progresiv pot fi la fel de severe ca cele cu debut brusc.<br><strong>D)</strong> GREȘIT — Durata bolii în sine nu este un red flag pentru deces. Contează controlul bolii și factorii de risc specifici, nu vechimea diagnosticului.</div>
+    <button class="case-btn" onclick="showCaseStep(2)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep2">
+  <div class="step-label">Examen fizic și parametri vitali</div>
+  <p>Măsori parametrii vitali: FR 32/min, FC 126/min, TA 118/72 mmHg, SaO₂ 88% în aer atmosferic, temperatură 37.1°C. La auscultație: wheezing difuz bilateral, murmur vezicular diminuat bilateral. Pacienta utilizează activ mușchii SCM și intercostali. PEF: 29% din prezis.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este interpretarea corectă a acestor date?</div>
+  <button class="quiz-option" onclick="ansCase(2,this,false)">A) Exacerbare moderată — SaO₂ 88% poate fi normală la o pacientă cu astm cronic</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">B) Exacerbare moderată — TA normală exclude insuficiența respiratorie severă</button>
+<button class="quiz-option" onclick="ansCase(2,this,true)">C) Exacerbare severă cu risc vital — PEF 29%, SaO₂ 88%, incapacitate de a vorbi, tahicardie</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">D) Exacerbare ușoară — wheezing prezent, deci obstrucția nu este completă</button>
+<button class="quiz-option" onclick="ansCase(2,this,false)">E) Posibilă anafilaxie — trebuie administrată Adrenalină imediat înainte de orice altceva</button>
+
+  <div class="quiz-explanation" id="caseQ2-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Pacienta îndeplinește toate criteriile de exacerbare severă cu risc vital: PEF 29% (<33% din prezis = criteriu de transfer), SaO₂ 88% (<92%), incapacitate de a vorbi în fraze (vorbește în cuvinte izolate), tahicardie 126/min, FR 32/min, utilizarea mușchilor accesori. Necesită tratament imediat și transfer de urgență.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — SaO₂ 88% NU este normală la niciun pacient, inclusiv la astmatici cronici. Pragul de transfer este SaO₂ <92%. Valoarea de 88% indică insuficiență respiratorie severă cu hipoxemie semnificativă.<br><strong>B)</strong> GREȘIT — TA normală nu exclude insuficiența respiratorie severă. Hipotensiunea apare tardiv, în stadiile terminale ale insuficienței respiratorii. Așteptarea hipotensiunii pentru a recunoaște severitatea este o eroare fatală.<br><strong>D)</strong> GREȘIT — Prezența wheezingului nu exclude severitatea extremă. Dimpotrivă, dacă wheezingul ar dispărea la un pacient cu această tablou clinic, ar fi un semn și mai alarmant (plămân mut). PEF 29% și SaO₂ 88% confirmă severitatea extremă.<br><strong>E)</strong> GREȘIT — Deși pacienta are alergii alimentare (red flag), tabloul clinic actual nu sugerează anafilaxie: absența urticariei, angioedemului, hipotensiunii. Adrenalina nu este indicată în absența semnelor de anafilaxie. Tratamentul de primă linie rămâne bronhodilatatorul.</div>
+    <button class="case-btn" onclick="showCaseStep(3)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep3">
+  <div class="step-label">Inițierea tratamentului</div>
+  <p>Recunoști exacerbarea severă cu risc vital. Trebuie să inițiezi tratamentul imediat și să pregătești transferul.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Care este schema de tratament corectă de inițiat în cabinet ÎNAINTE de sosirea ambulanței?</div>
+  <button class="quiz-option" onclick="ansCase(3,this,true)">A) Salbutamol 4 pufuri prin spacer + Oxigen titrat (țintă SaO₂ 93-95%) + Prednison 50 mg oral + Ipratropium</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">B) Adrenalină IM 0,5 mg + Hidrocortizon IV 200 mg + Oxigen</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">C) Numai Oxigen și monitorizare — tratamentul bronhodilatator se face doar în spital</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">D) Salbutamol 2 pufuri + Oxigen 15 L/min pe mască cu rezervor + așteptare ambulanță</button>
+<button class="quiz-option" onclick="ansCase(3,this,false)">E) Salbutamol nebulizat 5 mg + Oxigen 100% + Aminofilină IV</button>
+
+  <div class="quiz-explanation" id="caseQ3-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era A).</div><div class="case-exp-detail"><strong>A)</strong> CORECT — Schema completă pentru exacerbarea severă în cabinet: Salbutamol 4 pufuri prin spacer (bronhodilatație rapidă, spacer-ul crește eficiența), oxigen titrat la SaO₂ 93-95% (nu 100%), Prednison 50 mg oral (inițiat precoce, efect la 4-6 ore), Ipratropium (reduce riscul de spitalizare în forme moderate-severe). Tratamentul se inițiază ÎNAINTE de sosirea ambulanței.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>B)</strong> GREȘIT — Adrenalina IM este indicată în anafilaxie, nu în exacerbarea de astm fără semne de anafilaxie. Hidrocortizonul IV este rezervat pentru spital. Această schemă este incorectă pentru contextul dat.<br><strong>C)</strong> GREȘIT — Amânarea tratamentului bronhodilatator până la sosirea ambulanței este o eroare gravă. Tratamentul se inițiază imediat, în cabinet, indiferent de planul de transfer. Fiecare minut de întârziere crește riscul de deteriorare.<br><strong>D)</strong> GREȘIT — Doza de 2 pufuri este insuficientă. Oxigenul 15 L/min pe mască cu rezervor poate fi excesiv și nu este titrat. Protocolul corect prevede 4 pufuri/20 min și oxigen titrat la SaO₂ 93-95%, nu la maxim.<br><strong>E)</strong> GREȘIT — Aminofilina IV nu este recomandată în ghidurile actuale pentru exacerbarea acută (beneficiu marginal, toxicitate semnificativă). Oxigenul 100% nu este recomandat — se titrează la SaO₂ 93-95%. Salbutamol nebulizat 5 mg poate fi utilizat în spital, dar nu este disponibil de rutină în cabinetul MF.</div>
+    <button class="case-btn" onclick="showCaseStep(4)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep4">
+  <div class="step-label">Reevaluare și decizie finală</div>
+  <p>Pacienta a primit 3 doze de Salbutamol 4 pufuri, Prednison 50 mg oral, Ipratropium și oxigen. La reevaluarea după 40 de minute (ambulanța este în drum): FR 28/min, FC 112/min, SaO₂ 92% sub oxigen 4 L/min, PEF 35% din prezis. Vorbește acum în propoziții scurte.</p>
+  <div style="margin-top:14px">
+  <div class="q-text">Ce transmiți echipei de ambulanță ca informații esențiale?</div>
+  <button class="quiz-option" onclick="ansCase(4,this,false)">A) „Pacientă stabilizată, PEF ameliorat de la 29% la 35%, poate fi tratată ambulator"</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">B) „Pacientă cu BPOC exacerbat, a primit bronhodilatatoare, transfer la pneumologie"</button>
+<button class="quiz-option" onclick="ansCase(4,this,true)">C) „Pacientă cu astm sever, red flags multiple (3 flacoane/lună, spitalizare recentă, alergii alimentare), PEF 35% după tratament, SaO₂ 92% sub O₂ — transfer urgent la TI"</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">D) „Pacientă cu astm, a primit Salbutamol, se simte mai bine — transfer de rutină"</button>
+<button class="quiz-option" onclick="ansCase(4,this,false)">E) „Pacientă cu anafilaxie, necesită Adrenalină IV în ambulanță"</button>
+
+  <div class="quiz-explanation" id="caseQ4-exp"><div class="case-result case-correct-msg">Corect!</div><div class="case-result case-wrong-msg">Greșit! Răspunsul corect era C).</div><div class="case-exp-detail"><strong>C)</strong> CORECT — Transmiterea corectă include: diagnosticul precis, red flag-urile identificate (determină nivelul de îngrijire necesar), parametrii actuali (PEF 35% după tratament = criteriu de TI), tratamentul administrat și răspunsul parțial. Destinația corectă este Terapia Intensivă, nu secția de pneumologie generală.</div><div class="fb-toggle" onclick="this.nextElementSibling.classList.toggle('show');this.textContent=this.nextElementSibling.classList.contains('show')?'Ascunde explicații ▲':'Vezi explicații complete ▼'">Vezi explicații complete ▼</div><div class="fb-wrong"><strong>A)</strong> GREȘIT — PEF ameliorat de la 29% la 35% reprezintă o ameliorare minimă, insuficientă pentru tratament ambulator. Criteriul de tratament ambulator este PEF >60-80% din prezis menținut 3-4 ore. Pacienta rămâne în zona de risc vital.<br><strong>B)</strong> GREȘIT — Diagnosticul este astm, nu BPOC. Confuzia diagnostică poate duce la management inadecvat (ex: oxigen necontrolat în BPOC cu hipercapnie cronică, care nu este cazul aici).<br><strong>D)</strong> GREȘIT — Transmiterea incompletă a informațiilor poate duce la subevaluarea severității de către echipa de ambulanță. PEF 35% după tratament rămâne sub pragul de 50% — pacienta NU este stabilizată. Formularea „se simte mai bine" este înșelătoare.<br><strong>E)</strong> GREȘIT — Nu există semne de anafilaxie. Diagnosticul este exacerbare severă de astm, nu anafilaxie. Transmiterea unui diagnostic greșit poate duce la tratament inadecvat în ambulanță.</div>
+    <button class="case-btn" onclick="showCaseStep(5)" style="margin-top:6px">Continuă →</button>
+  </div>
+</div>
+</div>
+<div class="case-step" id="caseStep5">
+  <div class="step-label">Rezumat</div>
+  <p><strong>Diagnostic final:</strong> Exacerbare severă de astm bronșic cu risc vital, la pacientă cu factori de risc multipli pentru deces (consum ≥3 flacoane BADSA/lună, spitalizare recentă, alergii alimentare, absența CSI).</p>
+<p><strong>Lecții cheie:</strong></p>
+<ul><li>Consumul ≥1 flacon de Salbutamol/lună este un marker independent de mortalitate — identifică-l activ la fiecare consultație</li><li>Acumularea de red flags (spitalizare recentă + abuz BADSA + alergii alimentare) definește pacientul cu risc vital extrem</li><li>PEF <33% după tratament bronhodilatator = criteriu absolut de transfer la Terapie Intensivă</li><li>Tratamentul se inițiază IMEDIAT în cabinet, nu se așteaptă ambulanța</li><li>Ameliorarea parțială (PEF 29% → 35%) nu este suficientă pentru tratament ambulator — pragul este PEF >60-80%</li><li>Absența CSI din schema de fond este o eroare de management care trebuie corectată la externare</li></ul>
+  <div class="score-card" style="margin-top:18px">
+    <div class="score-num" id="caseScore">0/4</div>
+    <div class="score-label">Scor caz clinic</div>
+  </div>
+</div></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section" id="astmul_acut_sever_ghiduri_vs_carte" data-block-id="astmul_acut_sever_ghiduri_vs_carte">
+  <div class="section-label">Carte vs. Ghiduri actuale</div>
+  <h2>Ghiduri actuale vs <em>Esențialul în Medicina de Familie</em></h2>
+</div>
+
+<div class="text-block"><p>Conținutul cărții <em>Esențialul în Medicina de Familie</em> pe acest subiect a fost verificat împotriva a <strong>8 chunk-uri retrieved</strong> (4 ghiduri europene + 4 articole PubMed open-access) din baza de cunoștințe cecitimazi-rag.</p></div>
+
+<div class="card highlight" data-block-id="astmul_acut_sever_highlight_concordanta">
+  <div class="card-label"><svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg> Fără divergențe semnificative</div>
+  <p><strong>Cartea rămâne aliniată cu ghidurile actuale pentru managementul astmului acut sever.</strong> Nu s-au identificat schimbări de paradigmă, target-uri noi sau indicații inversate față de ghidurile GINA (Global Initiative for Asthma) și ghidurile europene de urgență respiratorie. Recomandările din manual — Salbutamol 4 pufuri/20 min, oxigen titrat la SaO₂ 93-95%, Prednison 40-50 mg/zi 5-7 zile, adăugarea Ipratropiumului în forme moderate-severe — pot fi folosite cu încredere în practica clinică curentă.</p>
+</div>
+
+<div class="score-card">
+  <div class="score-num" id="totalScore">0</div>
+  <div class="score-label">XP total · Astmul Acut Sever</div>
+</div>
+    <div class="footer">Platforma CeCitimAzi © 2024-2026 · Modul Pre-Stagiu</div>
+  </main>
+  <aside class="knowledge-sidebar" id="knowledgeSidebar">
+    <div class="alg-ks-container" id="algKsContainer"></div>
+    <div class="ks-inner" id="ksInner">
+      <div class="ks-placeholder">
+        <div class="ks-placeholder-icon">📚</div>
+        <div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale despre secțiunea curentă</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>window.sidebarData = {"astmul_acut_sever_cap1": {"titlu": "Cine face exacerbare severă?", "continut": "Agravare rapid progresivă a simptomelor · Scăderea VEMS/PEF · Necesită intervenție de urgență", "referinta": "", "pmid": "", "url": "", "hint": "Exacerbarea poate fi prima manifestare a bolii — nu presupune că pacientul are diagnostic anterior.", "mnemonic": "", "fiziopatologie": "Bronhospasmul acut suprapus pe inflamația cronică duce la obstrucție severă a căilor aeriene mici, cu hiperinflație dinamică, creșterea travaliului respirator și, în formele extreme, epuizarea musculaturii respiratorii și insuficiență ventilatorie.", "stiati_ca": "Utilizarea a ≥1 flacon de Salbutamol pe lună este un marker independent de mortalitate crescută — nu doar un semn de astm necontrolat."}, "astmul_acut_sever_cap2": {"titlu": "Pacientul cu risc vital", "continut": "Istoric de intubație · Abuz BADSA ≥1 flacon/lună · Absența CSI · Cură recentă CSO", "referinta": "", "pmid": "", "url": "", "hint": "O cură recentă de CSO nu înseamnă că pacientul e „tratat\" — înseamnă că boala este instabilă și riscul de exacerbare fatală este crescut.", "mnemonic": "<strong>I.S.A.F.P.</strong> · <strong>I</strong>ntubație anterioară · <strong>S</strong>pitalizare recentă pentru astm · <strong>A</strong>buz BADSA (≥1 flacon/lună) · <strong>F</strong>ără CSI în schemă · <strong>P</strong>sihiatrie / Probleme socio-economice", "fiziopatologie": "", "stiati_ca": "Alergiile alimentare coexistente la un pacient astmatic cresc semnificativ riscul de deces în timpul unei exacerbări — mecanismul implică anafilaxia concomitentă."}, "astmul_acut_sever_cap3": {"titlu": "Evaluare rapidă în cabinet", "continut": "Capacitate de a vorbi în fraze · FR, FC, SaO₂ · VEMS sau PEF · Gazometrie în forme severe", "referinta": "", "pmid": "", "url": "", "hint": "Capacitatea de a vorbi în fraze complete este un instrument clinic rapid și extrem de fidel pentru evaluarea severității — utilizabil imediat, fără aparatură.", "mnemonic": "", "fiziopatologie": "Severitatea clinică reflectă gradul de obstrucție bronșică. Incapacitatea de a vorbi în fraze complete indică un efort respirator extrem, cu utilizarea maximă a musculaturii accesorii și rezervă ventilatorie minimă.", "stiati_ca": ""}, "astmul_acut_sever_cap4": {"titlu": "Nu orice wheezing e astm", "continut": "BPOC exacerbat · Anafilaxie · Insuficiență cardiacă acută · Corp străin · Embolie pulmonară", "referinta": "", "pmid": "", "url": "", "hint": "Vârsta >40 ani + fumat + debut lent = gândește BPOC, nu astm.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "astmul_acut_sever_cap5": {"titlu": "Protocol de tratament prespital", "continut": "Salbutamol 4 pufuri/20 min prima oră · Oxigen țintă SaO₂ 93-95% · Prednison 40-50 mg/zi · Ipratropium în forme moderate-severe", "referinta": "", "pmid": "", "url": "", "hint": "Antibioticele NU se prescriu de rutină — majoritatea exacerbărilor sunt virale. Prescrierea fără spută purulentă sau focar pneumonic este o eroare de practică.", "mnemonic": "<strong>S.O.C.I.</strong> · <strong>S</strong>albutamol (bronhodilatator) · <strong>O</strong>xigen titrat (SaO₂ 93-95%) · <strong>C</strong>orticosteroizi sistemici (Prednison) · <strong>I</strong>pratropium (forme moderate-severe)", "fiziopatologie": "Salbutamolul activează receptorii β₂ din musculatura bronșică, producând bronhodilatație rapidă. Corticosteroizii sistemici reduc inflamația eozinofilică și edemul mucoasei, cu efect maxim la 4-6 ore de la administrare — de aceea trebuie inițiați PRECOCE.", "stiati_ca": ""}, "astmul_acut_sever_cap6": {"titlu": "Când trimiți la spital?", "continut": "Fără răspuns după 3-4 ore · Pacient cu risc crescut de deces · Lipsă mijloace terapeutice în cabinet", "referinta": "", "pmid": "", "url": "", "hint": "Dacă lipsesc mijloacele terapeutice de urgență în cabinet (oxigen, Salbutamol, Prednison), transferul se face IMEDIAT, fără a aștepta 3-4 ore.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}, "astmul_acut_sever_cap7": {"titlu": "Capcane frecvente în practică", "continut": "Abuzul BADSA = marker de mortalitate · Plămânul mut = urgență · Antibioticele nu sunt indicate de rutină", "referinta": "", "pmid": "", "url": "", "hint": "Absența wheezingului la un pacient dispneic sever NU este un semn bun — poate indica obstrucție completă (plămân mut).", "mnemonic": "", "fiziopatologie": "", "stiati_ca": "Capacitatea de a vorbi în fraze complete este un instrument clinic rapid și extrem de fidel pentru evaluarea severității insuficienței respiratorii — utilizabil imediat, fără aparatură, în orice context."}, "astmul_acut_sever_ghiduri_vs_carte": {"titlu": "Concordanță cu ghidurile", "continut": "Fără divergențe majore identificate · 8 surse verificate (4 ghiduri + 4 articole PubMed)", "referinta": "", "pmid": "", "url": "", "hint": "Principiile fundamentale din carte sunt concordante cu ghidurile actuale — diferențele sunt în detalii de management care nu afectează practica MF.", "mnemonic": "", "fiziopatologie": "", "stiati_ca": ""}};</script>
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+  <div class="lb-layout">
+    <div class="lb-left">
+      <img id="lightboxImg" src="" alt="">
+      <div class="lb-sursa" id="lbSursa"></div>
+    </div>
+    <div class="lb-right">
+      <div class="lb-titlu" id="lbTitlu"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
+<script>
+
+// XP System
+let totalXP=0,answered=0,totalQ=1;
+function initTotalQ(){totalQ=document.querySelectorAll('.quiz-option').length/5||1}
+setTimeout(initTotalQ,100);
+function addXP(p){totalXP+=p;document.getElementById('xpBadge').textContent=totalXP+' XP';const ts=document.getElementById('totalScore');if(ts)ts.textContent=totalXP;answered++}
+
+// Auto-open knowledge sidebar on desktop
+if(window.innerWidth>1360){var ks=document.querySelector('.knowledge-sidebar');var cw=document.querySelector('.content-wrapper');if(ks){ks.classList.add('open');if(cw)cw.style.marginRight='320px'}}
+// Scroll-based progress bar
+window.addEventListener('scroll',function(){const winScroll=document.documentElement.scrollTop;const height=document.documentElement.scrollHeight-document.documentElement.clientHeight;const scrolled=height>0?(winScroll/height)*100:0;document.getElementById('progressBar').style.width=scrolled+'%'})
+
+// Quiz
+function checkQuiz(id,btn,ok){const c=document.getElementById(id);c.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');addXP(ok?20:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Collapsible
+function toggleC(h){h.classList.toggle('active');h.nextElementSibling.classList.toggle('show')}
+
+// Generic Clinical Calculator Engine
+var calcState={};
+function calcSet(uid,key,val,btn){
+  if(!calcState[uid])calcState[uid]={};
+  calcState[uid][key]=val;
+  btn.parentElement.querySelectorAll('button').forEach(function(b){b.classList.remove('active')});
+  btn.classList.add('active');
+  calcRun(uid);
+}
+function calcSetNum(uid,key,val){
+  if(!calcState[uid])calcState[uid]={};
+  if(val===''||val===null||val===undefined){delete calcState[uid][key]}
+  else{var n=parseFloat(val);if(!isNaN(n))calcState[uid][key]=n}
+  calcRun(uid);
+}
+// Client-side formula calculators (for scoring.type === 'formula_js').
+// Each receives a `p` object with param key→value; returns numeric score.
+var CALC_FORMULAS={
+  cockcroft_gault:function(p){
+    var sexFactor=(p.sex==='female')?0.85:1;
+    return ((140-p.age)*p.weight*sexFactor)/(72*p.creatinine);
+  },
+  meld_na:function(p){
+    // MELD-Na: floor values at 1.0, cap creat at 4.0, dialysis sets creat=4.0
+    var bili=Math.max(1.0,p.bilirubin||1.0);
+    var inr=Math.max(1.0,p.inr||1.0);
+    var creat=Math.max(1.0,Math.min(4.0,p.creatinine||1.0));
+    if(p.dialysis===true)creat=4.0;
+    var meld=3.78*Math.log(bili)+11.2*Math.log(inr)+9.57*Math.log(creat)+6.43;
+    meld=Math.round(meld);
+    // Na adjustment: only if MELD > 11 and Na is 125-137
+    var na=Math.max(125,Math.min(137,p.sodium||137));
+    var meldNa=meld;
+    if(meld>11){meldNa=meld+1.32*(137-na)-0.033*meld*(137-na);meldNa=Math.round(meldNa)}
+    return Math.max(6,Math.min(40,meldNa));
+  }
+};
+function calcRun(uid){
+  var el=document.getElementById(uid);if(!el)return;
+  var cfg;try{cfg=JSON.parse(el.dataset.calcConfig)}catch(e){return}
+  var state=calcState[uid]||{};
+  // Check all params filled
+  var allFilled=cfg.params.every(function(p){return state[p]!==undefined&&state[p]!==null&&state[p]!==''});
+  if(!allFilled)return;
+  var scoring=cfg.scoring;
+  var score=0;
+  // Branch by scoring type
+  if(scoring.type==='formula_js'){
+    var fn=CALC_FORMULAS[scoring.formula];
+    if(!fn){return}
+    try{score=fn(state);if(isNaN(score))return}catch(e){return}
+    score=Math.round(score*10)/10;  // 1 decimal for numeric scores
+  }else if(scoring.rules==='use_option_values'){
+    cfg.params.forEach(function(p){var v=state[p];if(v!==undefined)score+=parseFloat(v)||0});
+  }else{
+    scoring.rules.forEach(function(r){
+      var v=state[r.param];
+      if(v===r.value||(r.value===true&&v===true)||(r.value===false&&v===false)||String(v)===String(r.value)){
+        score+=r.points;
+      }
+    });
+  }
+  if(scoring.min_score!==undefined&&score<scoring.min_score)score=scoring.min_score;
+  // Interpret
+  var risk='',action='',cls='low';
+  cfg.interpretation.forEach(function(i){
+    if(i.range&&score>=i.range[0]&&score<=i.range[1]){risk=i.risk;action=i.action;cls=i['class']||'low'}
+  });
+  var resEl=document.getElementById(uid+'_result');if(resEl)resEl.style.display='block';
+  var sEl=document.getElementById(uid+'_score');if(sEl){
+    var displayScore=score;
+    if(scoring.unit){displayScore=score+' '+scoring.unit}
+    sEl.textContent=displayScore;
+  }
+  var rEl=document.getElementById(uid+'_risk');if(rEl)rEl.textContent=risk;
+  var aEl=document.getElementById(uid+'_action');if(aEl){aEl.textContent=action;aEl.className='score-action risk-'+cls}
+}
+
+// Matching
+let mS={left:null,right:null,matched:0,total:0};
+function selM(el,side){if(el.classList.contains('matched'))return;document.getElementById(side==='left'?'mL':'mR').querySelectorAll('.match-item').forEach(i=>{if(!i.classList.contains('matched'))i.classList.remove('selected')});el.classList.add('selected');mS[side]=el;if(!mS.total)mS.total=document.querySelectorAll('#mL .match-item').length;if(mS.left&&mS.right){if(mS.left.dataset.pair===mS.right.dataset.pair){mS.left.classList.remove('selected');mS.right.classList.remove('selected');mS.left.classList.add('matched');mS.right.classList.add('matched');mS.matched++;document.getElementById('matchScore').textContent='Potriviri: '+mS.matched+'/'+mS.total;if(mS.matched===mS.total){document.getElementById('matchScore').innerHTML='🎉 <strong style=\"color:var(--green)\">Toate potrivite!</strong>';addXP(30)}}else{mS.left.classList.add('wrong-match');mS.right.classList.add('wrong-match');const l=mS.left,r=mS.right;setTimeout(()=>{l.classList.remove('wrong-match','selected');r.classList.remove('wrong-match','selected')},500)}mS.left=null;mS.right=null}}
+
+// Quiz Multi (checkbox)
+function checkQuizMulti(id,correctSet){const q=document.getElementById(id);const opts=q.querySelectorAll('.qm-option');const btn=q.querySelector('.qm-verify-btn');const checked=[];opts.forEach(o=>{if(o.querySelector('.qm-check').checked)checked.push(o.dataset.letter)});if(checked.length===0){return}btn.disabled=true;opts.forEach(o=>{o.classList.add('locked');const cb=o.querySelector('.qm-check');cb.disabled=true;const letter=o.dataset.letter;const wasChecked=checked.includes(letter);const isCorrect=correctSet.includes(letter);if(wasChecked&&isCorrect)o.classList.add('correct-pick');else if(wasChecked&&!isCorrect)o.classList.add('wrong-pick');else if(!wasChecked&&isCorrect)o.classList.add('missed')});const allCorrect=checked.length===correctSet.length&&checked.every(c=>correctSet.includes(c));addXP(allCorrect?25:5);const exp=document.getElementById(id+'-exp');if(exp)exp.classList.add('show')}
+
+// Severity Sorter (dropdown version with reorder animation)
+function checkSev(){const container=document.getElementById('sevItems');const items=Array.from(container.querySelectorAll('.sev-item'));let allFilled=true,allCorrect=true;items.forEach(i=>{if(!i.querySelector('.sev-select').value)allFilled=false});if(!allFilled){document.getElementById('sevResult').innerHTML='<span style="color:var(--amber)">Completează toate pozițiile înainte de verificare.</span>';return}items.forEach(i=>{const s=i.querySelector('.sev-select');i.classList.remove('correct','shake');if(s.value!==i.dataset.correct)allCorrect=false});const r=document.getElementById('sevResult');if(allCorrect){document.querySelector('.sev-btn').disabled=true;items.forEach(i=>i.querySelector('.sev-select').disabled=true);r.innerHTML='<span style="color:var(--teal)">Corect! Reordonare...</span>';const sorted=items.slice().sort((a,b)=>parseInt(a.dataset.correct)-parseInt(b.dataset.correct));const startRects=items.map(i=>i.getBoundingClientRect());const containerRect=container.getBoundingClientRect();const targetTops=sorted.map((_,idx)=>{let top=0;for(let j=0;j<idx;j++)top+=sorted[j].getBoundingClientRect().height+10;return top});items.forEach((item,i)=>{const currentTop=startRects[i].top-containerRect.top;const sortedIdx=sorted.indexOf(item);const targetTop=targetTops[sortedIdx];const dy=targetTop-currentTop;item.classList.add('animating');item.style.transform=`translateY(${dy}px)`;item.style.transitionDelay=`${sortedIdx*120}ms`});const totalAnimTime=800+sorted.length*120;setTimeout(()=>{items.forEach(i=>{i.style.transform='';i.style.transitionDelay='';i.classList.remove('animating')});sorted.forEach(i=>container.insertBefore(i,container.querySelector('.sev-success-overlay')));requestAnimationFrame(()=>{sorted.forEach((item,idx)=>{setTimeout(()=>{item.classList.add('correct','glow')},idx*150)});const overlayDelay=sorted.length*150+200;setTimeout(()=>{const overlay=document.getElementById('sevOverlay');if(overlay)overlay.classList.add('show')},overlayDelay);setTimeout(()=>{r.innerHTML='';const banner=document.getElementById('sevBanner');if(banner)banner.classList.add('show');const exp=document.getElementById('sevExplanation');if(exp)exp.classList.add('show');addXP(20)},overlayDelay+600)})},totalAnimTime)}else{items.forEach(i=>i.classList.add('shake'));r.innerHTML='<span style="color:var(--coral)">Ordine greșită, încearcă din nou!</span>';setTimeout(()=>{items.forEach(i=>{i.classList.remove('shake');i.querySelector('.sev-select').value=''});r.innerHTML=''},1200)}}
+
+// TOC highlight on scroll + Knowledge Sidebar update
+const sections=document.querySelectorAll('.section');const tocLinks=document.querySelectorAll('.toc-list a');
+tocLinks.forEach(a=>{a.addEventListener('click',function(){const sb=document.querySelector('.sidebar');if(sb)sb.classList.remove('open')})});
+let currentSectionId='';
+window.addEventListener('scroll',()=>{let cur='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});tocLinks.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+cur)a.classList.add('active')});if(cur!==currentSectionId){currentSectionId=cur;updateKnowledgeSidebar(cur)}})
+
+function updateKnowledgeSidebar(sectionId){
+  const ks=document.getElementById('ksInner');
+  if(!ks||!window.sidebarData)return;
+  const data=window.sidebarData[sectionId];
+  if(!data){ks.innerHTML='<div class="ks-placeholder"><div class="ks-placeholder-icon">📚</div><div class="ks-placeholder-text">Scrollează pentru a vedea informații contextuale</div></div>';return}
+  function mdi(s){return s.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/(^|[^\*])\*([^\*\n]+?)\*(?!\*)/g,'$1<em>$2</em>')}
+  let html='<div class="ks-title">'+mdi(data.titlu)+'</div>';
+  html+='<div id="ksSrcSlot"></div>';
+  if(data.continut){
+    var items=data.continut.split('·').map(function(s){return s.trim()}).filter(function(s){return s.length>0});
+    var listHtml=items.map(function(it){return '<li>'+mdi(it)+'</li>'}).join('');
+    var lbl='Rezumat'+(data.titlu?' · '+data.titlu:'');
+    html+='<div class="ks-card"><div class="ks-label">'+lbl+'</div><ul class="ks-list">'+listHtml+'</ul></div>';
+  }
+  if(data.mnemonic){var mn=data.mnemonic;var mnItems=mn.split('·');if(mnItems.length>1){var mnHtml='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div><ul class="mn-list">';mnItems.forEach(function(item){item=item.trim();if(item)mnHtml+='<li>'+item+'</li>'});mnHtml+='</ul></div>';html+=mnHtml}else{html+='<div class="ks-mnemonic"><div class="mn-title">🧠 Mnemonic</div>'+mn+'</div>'}}
+  if(data.fiziopatologie){html+='<div class="ks-fiziopatologie"><div class="fp-title">🔬 Fiziopatologie</div>'+mdi(data.fiziopatologie)+'</div>'}
+  if(data.stiati_ca){html+='<div class="ks-stiati"><div class="st-title">💡 Știați că?</div>'+mdi(data.stiati_ca)+'</div>'}
+  if(data.hint){html+='<div class="ks-hint"><span class="hint-icon">💡</span> '+mdi(data.hint)+'</div>'}
+  ks.innerHTML=html;ks.style.animation='none';ks.offsetHeight;ks.style.animation='fadeIn .4s ease';
+  updateSourcesCard(sectionId)
+}
+
+function srcItemHtml(s){
+  var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+  var h='<div class="ks-src-item"><div class="ks-src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="ks-src-item-meta">';
+  if(s.pmid)h+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank" onclick="event.stopPropagation()">PubMed</a>';
+  else if(s.url)h+='<a href="'+s.url+'" target="_blank" onclick="event.stopPropagation()">Link</a>';
+  if(s.nbk_id)h+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank" onclick="event.stopPropagation()">NCBI Books</a>';
+  h+='</div></div>';return h
+}
+function buildSourcesHtml(bid){
+  if(!window.sourcesData||!window.sourcesData[bid]||!window.sourcesData[bid].sources||!window.sourcesData[bid].sources.length)return'';
+  var ss=window.sourcesData[bid].sources;
+  var h='<div class="ks-sources"><div class="ks-src-title-static">&#x1F4DA; Citeste mai mult</div>';
+  h+=srcItemHtml(ss[0]);
+  if(ss.length>1){
+    var uid='kssrc_'+bid.replace(/[^a-z0-9]/g,'_');
+    h+='<button class="src-more-toggle" onclick="event.stopPropagation();var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(ss.length-1)+' resurse</button>';
+    h+='<div class="src-more-items" id="'+uid+'">';
+    for(var j=1;j<ss.length;j++)h+=srcItemHtml(ss[j]);
+    h+='</div>';
+  }
+  h+='</div>';return h
+}
+
+function updateSourcesCard(bid){
+  var slot=document.getElementById('ksSrcSlot');
+  if(!slot)return;
+  slot.innerHTML=buildSourcesHtml(bid)
+}
+
+// Mobile: track h3 headings for sources in sidebar
+var isMobile=window.innerWidth<=768;
+if(isMobile&&window.sourcesData){
+  var h3els=Array.from(document.querySelectorAll('h3.md-subtitle[data-block-id]'));
+  var curH3='';
+  window.addEventListener('scroll',function(){
+    var cur='';
+    for(var i=0;i<h3els.length;i++){if(window.scrollY>=h3els[i].offsetTop-120)cur=h3els[i].getAttribute('data-block-id')}
+    if(cur&&cur!==curH3){curH3=cur;updateSourcesCard(cur)}
+  })
+}
+
+// Lightbox
+// Lightbox with description + source
+document.querySelectorAll('.img-component img').forEach(img=>{img.addEventListener('click',function(){
+  const lb=document.getElementById('lightbox');
+  document.getElementById('lightboxImg').src=this.src;
+  const titlu=this.getAttribute('data-titlu')||'';
+  const desc=this.getAttribute('data-desc')||'';
+  const sursa=this.getAttribute('data-sursa')||'';
+  document.getElementById('lbTitlu').textContent=titlu;
+  document.getElementById('lbDesc').innerHTML=desc;
+  const sursaEl=document.getElementById('lbSursa');
+  if(sursa){
+    const domain=sursa.replace(/https?:\/\//,'').split('/')[0];
+    sursaEl.innerHTML='<a href="'+sursa+'" target="_blank" rel="noopener">📎 Sursă: '+domain+'</a>';
+  }else{sursaEl.innerHTML=''}
+  lb.classList.add('active');
+})});
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)this.classList.remove('active')})
+
+// Clinical Case
+let caseOk=0,caseTotalQ=0;
+function showCaseStep(n){document.querySelectorAll('.case-step').forEach(s=>s.classList.remove('active'));const el=document.getElementById('caseStep'+n);if(el){el.classList.add('active')}const cs=document.getElementById('caseScore');if(cs)cs.textContent=caseOk+'/'+caseTotalQ}
+function ansCase(qNum,btn,ok){const p=btn.parentElement;p.querySelectorAll('.quiz-option').forEach(b=>b.disabled=true);btn.classList.add(ok?'correct':'wrong');if(!ok){p.querySelectorAll('.quiz-option').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('correct')})}if(ok)caseOk++;caseTotalQ=Math.max(caseTotalQ,qNum);addXP(ok?25:5);const exp=document.getElementById('caseQ'+qNum+'-exp');if(exp){exp.classList.add('show');exp.classList.add(ok?'was-correct':'was-wrong')}}
+
+// Close sidebars when clicking outside (mobile overlay)
+document.addEventListener('click',function(e){const sb=document.querySelector('.sidebar');const ks=document.querySelector('.knowledge-sidebar');const isToggle=e.target.closest('.menu-toggle')||e.target.closest('.ks-toggle');if(!isToggle){if(sb&&sb.classList.contains('open')&&!sb.contains(e.target))sb.classList.remove('open');if(window.innerWidth<=1360&&ks&&ks.classList.contains('open')&&!ks.contains(e.target)){ks.classList.remove('open')}}})
+
+// Algoritm Clinic — SVG connectors
+function drawAlgConnectors(){
+  document.querySelectorAll('.alg-grid').forEach(function(grid){
+    var ed=grid.dataset.edges;if(!ed)return;
+    var edges;try{edges=JSON.parse(ed)}catch(ex){return}
+    var canvas=grid.parentElement;
+    var svg=canvas.querySelector('.alg-svg');if(!svg)return;
+    var w=canvas.scrollWidth,h=canvas.scrollHeight;
+    svg.setAttribute('width',w);svg.setAttribute('height',h);
+    svg.setAttribute('viewBox','0 0 '+w+' '+h);
+    svg.innerHTML='<defs><marker id="algArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="rgba(0,191,165,0.5)"/></marker></defs>';
+    var cRect=canvas.getBoundingClientRect();
+    // Count edges per source node for label staggering
+    var edgesPerSource={};edges.forEach(function(e){edgesPerSource[e.from]=(edgesPerSource[e.from]||0)+1});
+    var edgeSourceIdx={};
+    edges.forEach(function(e){
+      var fromEl=grid.querySelector('[data-id="'+e.from+'"]');
+      var toEl=grid.querySelector('[data-id="'+e.to+'"]');
+      if(!fromEl||!toEl)return;
+      var fR=fromEl.getBoundingClientRect();
+      var tR=toEl.getBoundingClientRect();
+      var path=document.createElementNS('http://www.w3.org/2000/svg','path');
+      var d='';
+      var sameRow=Math.abs(fR.top-tR.top)<10;
+      if(sameRow){
+        var sx,sy,ex,ey;
+        if(fR.left<tR.left){sx=fR.right-cRect.left;ex=tR.left-cRect.left}
+        else{sx=fR.left-cRect.left;ex=tR.right-cRect.left}
+        sy=fR.top+fR.height/2-cRect.top;ey=tR.top+tR.height/2-cRect.top;
+        d='M'+sx+','+sy+'L'+ex+','+ey;
+      }else{
+        var x1=fR.left+fR.width/2-cRect.left,y1=fR.bottom-cRect.top;
+        var x2=tR.left+tR.width/2-cRect.left,y2=tR.top-cRect.top;
+        if(Math.abs(x1-x2)<3){d='M'+x1+','+y1+'L'+x2+','+y2}
+        else{
+          // Find max bottom of all nodes on the source row to avoid overlap
+          var fRow=fromEl.style.gridRow||'1';
+          var maxBottom=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){
+            var nRow=n.style.gridRow||'1';
+            if(nRow===fRow){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBottom)maxBottom=nb}
+          });
+          var dropY=maxBottom+14;
+          d='M'+x1+','+y1+'L'+x1+','+dropY+'L'+x2+','+dropY+'L'+x2+','+y2
+        }
+      }
+      path.setAttribute('d',d);path.setAttribute('stroke','rgba(0,191,165,0.4)');
+      path.setAttribute('stroke-width','2');path.setAttribute('fill','none');
+      path.setAttribute('marker-end','url(#algArr)');svg.appendChild(path);
+      if(e.label){
+        // Track stagger index for this source node
+        if(!edgeSourceIdx[e.from])edgeSourceIdx[e.from]=0;
+        var stIdx=edgeSourceIdx[e.from]++;
+        var totalFromSource=edgesPerSource[e.from]||1;
+        var lx,ly;
+        if(sameRow){var sx2=fR.left<tR.left?fR.right-cRect.left:fR.left-cRect.left;var ex2=fR.left<tR.left?tR.left-cRect.left:tR.right-cRect.left;lx=(sx2+ex2)/2;ly=Math.min(fR.top,tR.top)+Math.min(fR.height,tR.height)/2-cRect.top-14}
+        else{var x1b=fR.left+fR.width/2-cRect.left,x2b=tR.left+tR.width/2-cRect.left;if(Math.abs(x1b-x2b)<3){lx=x1b+10;ly=(fR.bottom-cRect.top+tR.top-cRect.top)/2}else{
+          var fRow2=fromEl.style.gridRow||'1';var maxBot2=fR.bottom-cRect.top;
+          grid.querySelectorAll('.alg-node').forEach(function(n){var nR=n.style.gridRow||'1';if(nR===fRow2){var nb=n.getBoundingClientRect().bottom-cRect.top;if(nb>maxBot2)maxBot2=nb}});
+          lx=(x1b+x2b)/2;ly=maxBot2+12}}
+        // Place label near target node (above it) when fan-out is wide
+        if(totalFromSource>=4){lx=tR.left+tR.width/2-cRect.left;ly=tR.top-cRect.top-14}
+        var bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+        var tw=e.label.length*7+10;
+        bg.setAttribute('x',lx-tw/2);bg.setAttribute('y',ly-10);bg.setAttribute('width',tw);bg.setAttribute('height',18);
+        bg.setAttribute('rx','4');bg.setAttribute('fill','#1c2333');bg.setAttribute('stroke','rgba(255,255,255,0.08)');bg.setAttribute('stroke-width','1');
+        svg.appendChild(bg);
+        var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+        txt.setAttribute('x',lx);txt.setAttribute('y',ly+3);txt.setAttribute('text-anchor','middle');
+        txt.setAttribute('font-size','11');txt.setAttribute('font-weight','600');txt.setAttribute('fill','#9ca3af');
+        txt.setAttribute('font-family','Space Grotesk,sans-serif');txt.textContent=e.label;svg.appendChild(txt);
+      }
+    });
+  });
+}
+// Draw connectors after layout is stable
+requestAnimationFrame(function(){setTimeout(drawAlgConnectors,200)});
+window.addEventListener('resize',function(){setTimeout(drawAlgConnectors,100)});
+
+// Algoritm Clinic — click to push detail to knowledge sidebar
+document.addEventListener('click',function(e){
+  var node=e.target.closest('.alg-node.has-detail');
+  if(!node)return;
+  var detailEl=node.querySelector('.alg-detail');
+  if(!detailEl)return;
+  var container=document.getElementById('algKsContainer');
+  var ksSidebar=document.querySelector('.knowledge-sidebar');
+  if(!container||!ksSidebar)return;
+  var labelEl=node.querySelector('.alg-node-label');
+  var fullLabel=labelEl?labelEl.textContent:'';
+  var shortTitle=fullLabel.length>30?fullLabel.substring(0,30)+'\u2026':fullLabel;
+  var nodeId=node.dataset.id;
+  // Check if card already exists
+  var existing=container.querySelector('[data-node="'+nodeId+'"]');
+  if(existing){existing.style.animation='none';existing.offsetHeight;existing.style.animation='algKsFlash .4s ease';existing.scrollIntoView({behavior:'smooth',block:'nearest'});return}
+  // Determine color from node type
+  var tc='var(--teal)';
+  if(node.classList.contains('alg-start'))tc='var(--green)';
+  else if(node.classList.contains('alg-decizie'))tc='var(--amber)';
+  else if(node.classList.contains('alg-actiune'))tc='var(--blue)';
+  else if(node.classList.contains('alg-alerta'))tc='var(--coral)';
+  // Brief highlight on node
+  node.style.boxShadow='0 0 0 3px '+tc;setTimeout(function(){node.style.boxShadow=''},600);
+  // Build card
+  var card=document.createElement('div');card.className='alg-ks-card';card.dataset.node=nodeId;card.style.borderLeftColor=tc;
+  card.innerHTML='<button class="alg-ks-close" title="\xd7">\xd7</button><div class="alg-ks-title" style="color:'+tc+'">'+shortTitle+'</div><div class="alg-ks-content">'+detailEl.innerHTML+'</div>';
+  card.querySelector('.alg-ks-close').addEventListener('click',function(ev){ev.stopPropagation();card.style.animation='algKsOut .2s ease forwards';setTimeout(function(){card.remove()},200)});
+  container.appendChild(card);
+  // Open sidebar if closed
+  if(!ksSidebar.classList.contains('open')){ksSidebar.classList.add('open');var cw=document.querySelector('.content-wrapper');if(cw&&window.innerWidth>1360)cw.style.marginRight='320px'}
+  setTimeout(function(){card.scrollIntoView({behavior:'smooth',block:'nearest'})},50);
+});
+
+// Source Provenance — attach buttons from embedded sourcesData
+(function(){
+  var blocks=document.querySelectorAll('[data-block-id]');
+  if(!blocks.length)return;
+  var data=window.sourcesData;
+  if(!data)return;
+  blocks.forEach(function(el){
+    var bid=el.getAttribute('data-block-id');if(!bid)return;
+    var btn=document.createElement('button');btn.className='src-btn';btn.title='Citeste mai mult';btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="3"/><path d="M6.5 20c-.3 0-.5-.2-.5-.5v-7c0-1.7 1.3-3 3-3h6c1.7 0 3 1.3 3 3v7c0 .3-.2.5-.5.5-.3 0-.5-.2-.5-.5v-5.5L12 16l-5-3.5v7c0 .3-.2.5-.5.5z"/></svg>';
+    var popup=document.createElement('div');popup.className='src-popup';
+    var blockData=data[bid];
+    if(blockData&&blockData.sources&&blockData.sources.length){
+      var srcs=blockData.sources;
+      function srcHtml(s){
+        var free=s.collection==='pubmed_articles_free'||s.collection==='statpearls';
+        var r='<div class="src-item"><div class="src-item-title">'+s.title+(free?'<span class="src-tag-free">FREE</span>':'')+'</div><div class="src-item-meta">';
+        if(s.pmid)r+='<a href="https://pubmed.ncbi.nlm.nih.gov/'+s.pmid+'/" target="_blank">PubMed</a>';
+        else if(s.url)r+='<a href="'+s.url+'" target="_blank">Link</a>';
+        if(s.nbk_id)r+=(s.pmid?' &middot; ':'')+'<a href="https://www.ncbi.nlm.nih.gov/books/'+s.nbk_id+'/" target="_blank">NCBI Books</a>';
+        r+='</div></div>';return r;
+      }
+      var h='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div>';
+      h+=srcHtml(srcs[0]);
+      if(srcs.length>1){
+        var uid='src_more_'+bid.replace(/[^a-z0-9]/g,'_');
+        h+='<button class="src-more-toggle" onclick="var items=document.getElementById(\''+uid+'\');items.classList.toggle(\'open\');this.classList.toggle(\'open\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Inca '+(srcs.length-1)+' resurse</button>';
+        h+='<div class="src-more-items" id="'+uid+'">';
+        for(var j=1;j<srcs.length;j++)h+=srcHtml(srcs[j]);
+        h+='</div>';
+      }
+      popup.innerHTML=h;
+    }else{
+      popup.innerHTML='<div class="src-popup-title">&#x1F4DA; Citeste mai mult</div><div class="src-none">Nicio resursa gasita pentru aceasta sectiune.</div>';
+    }
+    el.appendChild(btn);el.appendChild(popup);
+    btn.addEventListener('click',function(ev){
+      ev.stopPropagation();
+      document.querySelectorAll('.src-popup.show').forEach(function(p){if(p!==popup)p.classList.remove('show')});
+      popup.classList.toggle('show');
+    });
+  });
+  document.addEventListener('click',function(ev){if(!ev.target.closest('.src-popup')&&!ev.target.closest('.src-btn')){document.querySelectorAll('.src-popup.show').forEach(function(p){p.classList.remove('show')})}});
+})();
+
+</script>
+</body>
+</html>
